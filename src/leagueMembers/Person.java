@@ -10,7 +10,7 @@ abstract class Person {
 	private String contractType;
 	
 	public Person(int id, String fName, String lName, Date DoB, String contractType) {
-		this.id = id;
+		this.setId(id);
 		this.fName = fName;
 		this.lName = lName;
 		this.DoB = DoB;
@@ -53,5 +53,13 @@ abstract class Person {
 	
 	public void setContractType(String type) {
 		this.contractType = type;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

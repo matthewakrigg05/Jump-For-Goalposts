@@ -9,13 +9,13 @@ abstract class Account {
 	
 	public Account(int id, String emailAddress, String password, boolean isAdmin) {
 		this.id = id;
-		this.emailAddress = emailAddress;
-		this.password = password;
+		this.setEmail(emailAddress);
+		this.setPassword(password);
 		this.isAdmin = isAdmin;
 	}
 	
 	public void changeUserPassword(String password) {
-		this.password = password;
+		this.setPassword(password);
 	}
 	
 	
@@ -35,6 +35,14 @@ abstract class Account {
 
 	public void setEmail(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
