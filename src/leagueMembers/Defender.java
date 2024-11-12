@@ -1,5 +1,5 @@
 package leagueMembers;
 
-public class Defender {
+public class Defender extends Player{
 
 }

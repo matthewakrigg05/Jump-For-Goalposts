@@ -1,5 +1,5 @@
 package leagueMembers;
 
-public class Goalkeeper {
+public class Goalkeeper extends Player {
 
 }
