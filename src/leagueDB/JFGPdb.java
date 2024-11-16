@@ -1,33 +1,33 @@
 package leagueDB;
-import java.io.FileReader;
 import java.sql.Connection;
-import org.apache.ibatis.jdbc.ScriptRunner;
 import java.sql.DriverManager;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Reader;
+import java.sql.PreparedStatement;
 
 public class JFGPdb {
 	
 	public JFGPdb() {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:./JFGP.db");
-			
-			try {
-				// Initialize object for ScripRunner
-				ScriptRunner sr = new ScriptRunner(connection);
-
-				// Give the input file to Reader
-				Reader reader = new BufferedReader(
-	                               new FileReader("E:/CW1_CIS2002/Jump-For-Goalposts/src/sqlQueries/tables.sql/"));
-
-				// Exctute script
-				sr.runScript(reader);
-
-			} catch (Exception e) {
-				System.err.println("Failed to Execute sqlQueries/tables.sql"
-						+ " The error is " + e.getMessage());
-			}
+			// https://www.sqliz.com/posts/java-basic-sqlite/
+			String createleaguetable = "CREATE TABLE IF NOT EXISTS league(\r\n"
+					+ "	leagueId INTEGER NOT NULL,\r\n"
+					+ "	leagueName VARCHAR(50), \r\n"
+					+ "	PRIMARY KEY (leagueId)\r\n"
+					+ "	);";
+            PreparedStatement leaguepreparedStatement = connection.prepareStatement(createleaguetable);
+            leaguepreparedStatement.executeUpdate();
+            
+            String createUserAccountTable = "CREATE TABLE IF NOT EXISTS userAccounts(\r\n"
+            		+ "	userId INTEGER NOT NULL,\r\n"
+            		+ "	userType VARCHAR(25) NOT NULL,\r\n"
+            		+ "	emailAddress VARCHAR(200) NOT NULL,\r\n"
+            		+ "	password VARCHAR(50) NOT NULL,\r\n"
+            		+ "	leagueId INTEGER NOT NULL,\r\n"
+            		+ "	PRIMARY KEY (userId),\r\n"
+            		+ "	FOREIGN KEY (leagueId) REFERENCES league(leagueId) \r\n"
+            		+ "	);";
+            PreparedStatement preparedStatement = connection.prepareStatement(createUserAccountTable);
+            preparedStatement.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
