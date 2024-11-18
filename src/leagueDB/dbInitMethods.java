@@ -5,8 +5,13 @@ import java.sql.PreparedStatement;
 public interface dbInitMethods {
 	
 	public static void initTables(Connection conn) {
-		// https://www.sqliz.com/posts/java-basic-sqlite/ - ref if possible
+		// https://www.sqliz.com/posts/java-basic-sqlite/ - ref 
 		
+		/*
+		 * Following set of statements are responsible for initialising the database,
+		 * creating all the tables that should be necessary for the db to function as 
+		 * expected.
+		 */
 		try {
 			String createleaguetable = "CREATE TABLE IF NOT EXISTS league(\r\n"
 					+ "	leagueId INTEGER NOT NULL,\r\n"
