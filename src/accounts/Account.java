@@ -18,8 +18,6 @@ abstract class Account {
 		this.setPassword(password);
 	}
 	
-	
-	
 	// Standard getter and setter methods
 	public boolean isUserAdmin() {
 		return this.isAdmin;
