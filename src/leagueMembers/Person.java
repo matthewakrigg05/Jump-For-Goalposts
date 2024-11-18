@@ -21,48 +21,21 @@ abstract class Person {
 		
 	}
 	
-	public String getFullName() {
-		return String.format(this.getFName(), this.getLName());
-	}
+	public String getFullName() { return String.format(this.getFName(), this.getLName()); }
 	
 	//Standard getters and setters
-	public String getFName() {
-		return this.fName;
-	}
+	public String getFName() { return this.fName; }
+	public void setFName(String fName) { this.fName = fName; }
 	
-	public void setFName(String fName) {
-		this.fName = fName;
-	}
+	public String getLName() { return this.lName; }
+	public void setLName(String lName) { this.lName = lName; }
 	
-	public String getLName() {
-		return this.lName;
-	}
+	public Date getDoB() { return this.DoB; }
+	public void setDoB(Date DoB) { this.DoB = DoB; }
 	
-	public void setLName(String lName) {
-		this.lName = lName;
-	}
-	
-	public Date getDoB() {
-		return this.DoB;
-	}
-	
-	public void setDoB(Date DoB) {
-		this.DoB = DoB;
-	}
-	
-	public String getContractType() {
-		return this.contractType;
-	}
-	
-	public void setContractType(String type) {
-		this.contractType = type;
-	}
+	public String getContractType() { return this.contractType; }
+	public void setContractType(String type) { this.contractType = type; }
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	public int getId() { return id; }
+	public void setId(int id) { this.id = id; }
 }

@@ -13,20 +13,10 @@ public class Manager extends Person {
 
 	}
 
-	public String getPreferredFormation() {
-		return preferredFormation;
-	}
+	public String getPreferredFormation() { return preferredFormation; }
+	public void setPreferredFormation(String preferredFormation) { this.preferredFormation = preferredFormation; }
 
-	public void setPreferredFormation(String preferredFormation) {
-		this.preferredFormation = preferredFormation;
-	}
-
-	public ManagerAccount getManagerAcc() {
-		return managerAcc;
-	}
-
-	public void setManagerAcc(ManagerAccount managerAcc) {
-		this.managerAcc = managerAcc;
-	}
+	public ManagerAccount getManagerAcc() { return managerAcc; }
+	public void setManagerAcc(ManagerAccount managerAcc) { this.managerAcc = managerAcc; }
 
 }

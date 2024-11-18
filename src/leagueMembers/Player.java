@@ -19,52 +19,22 @@ abstract class Player extends Person {
 
 
 	// Standard getters and setters
-	public String getPreferredFoot() {
-		return preferredFoot;
-	}
+	public String getPreferredFoot() { return preferredFoot; }
+	public void setPreferredFoot(String preferredFoot) { this.preferredFoot = preferredFoot; }
 
-	public void setPreferredFoot(String preferredFoot) {
-		this.preferredFoot = preferredFoot;
-	}
+	public Statistics getStats() { return stats; }
+	public void setStats(Statistics stats) { this.stats = stats; }
 
-	public Statistics getStats() {
-		return stats;
-	}
+	public boolean isInjured() { return isInjured; }
+	public void setInjured(boolean isInjured) { this.isInjured = isInjured; }
 
-	public void setStats(Statistics stats) {
-		this.stats = stats;
-	}
+	public boolean isSuspended() { return isSuspended; }
+	public void setSuspended(boolean isSuspended) { this.isSuspended = isSuspended;	}
 
-	public boolean isInjured() {
-		return isInjured;
-	}
+	public int getShirtNum() { return shirtNum;	}
+	public void setShirtNum(int shirtNum) { this.shirtNum = shirtNum; }
 
-	public void setInjured(boolean isInjured) {
-		this.isInjured = isInjured;
-	}
-
-	public boolean isSuspended() {
-		return isSuspended;
-	}
-
-	public void setSuspended(boolean isSuspended) {
-		this.isSuspended = isSuspended;
-	}
-
-	public int getShirtNum() {
-		return shirtNum;
-	}
-
-	public void setShirtNum(int shirtNum) {
-		this.shirtNum = shirtNum;
-	}
-
-	public String getPositionType() {
-		return positionType;
-	}
-
-	public void setPositionType(String positionType) {
-		this.positionType = positionType;
-	}
+	public String getPositionType() { return positionType; }
+	public void setPositionType(String positionType) { this.positionType = positionType; }
 
 }
