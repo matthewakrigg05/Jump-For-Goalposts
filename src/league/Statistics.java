@@ -11,10 +11,23 @@ public class Statistics {
 	private int draws;
 	private int losses;
 	
+	public Statistics(int assists, int goalsScored, int shotsTaken, int foulsCommitted,
+			int yellowCards, int redCards, int wins, int draws, int losses) {
+		this.setAssists(assists);
+		this.setGoalsScored(goalsScored);
+		this.setShotsTaken(shotsTaken);
+		this.setFoulsCommitted(foulsCommitted);
+		this.setYellowCards(yellowCards);
+		this.setRedCards(redCards);
+		this.setWins(wins);
+		this.setDraws(draws);
+		this.setLosses(losses);
+	}
+	
 	public Statistics() {}
 	
 	public int getAssits() { return assits; }
-	public void setAssits(int assits) { this.assits = assits; }
+	public void setAssists(int assits) { this.assits = assits; }
 	
 	public int getGoalsScored() { return goalsScored; }
 	public void setGoalsScored(int goalsScored) { this.goalsScored = goalsScored; }
