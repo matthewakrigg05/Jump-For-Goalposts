@@ -34,7 +34,7 @@ public interface dbInitMethods {
             		+ "	seasonEnd DATE,\r\n"
             		+ "	leagueId INTEGER NOT NULL,\r\n"
             		+ "	PRIMARY KEY (seasonId),\r\n"
-            		+ "	FOREIGN KEY leagueId REFERENCES league(leagueId) \r\n"
+            		+ "	FOREIGN KEY (leagueId) REFERENCES league(leagueId) \r\n"
             		+ "	);";
             		
             PreparedStatement seasonsPS = conn.prepareStatement(createSeasonsTable);
@@ -47,7 +47,7 @@ public interface dbInitMethods {
             		+ "	preferredLocation VARCHAR(50),\r\n"
             		+ "	leagueId INTEGER NOT NULL,\r\n"
             		+ "	PRIMARY KEY (refereeId),\r\n"
-            		+ "	FOREIGN KEY leagueId REFERENCES league(leagueId) \r\n"
+            		+ "	FOREIGN KEY (leagueId) REFERENCES league(leagueId) \r\n"
             		+ "	);";
             PreparedStatement refereePS = conn.prepareStatement(createRefereesTable);
             refereePS.executeUpdate();
@@ -73,7 +73,7 @@ public interface dbInitMethods {
             		+ "	teamName VARCHAR(100),\r\n"
             		+ "	statsId INTEGER NOT NULL,\r\n"
             		+ "	PRIMARY KEY (teamId),\r\n"
-            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId) NOT NULL\r\n"
+            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId)\r\n"
             		+ "	);";
             
             PreparedStatement teamsPS = conn.prepareStatement(createTeamsTable);
@@ -122,7 +122,7 @@ public interface dbInitMethods {
             		+ "	eventMinute TINYINT,\r\n"
             		+ "	resultId INTEGER NOT NULL,\r\n"
             		+ "	PRIMARY KEY (eventId),\r\n"
-            		+ "	FOREIGN KEY (resultId) REFERENCES results(resultId) NOT NULL\r\n"
+            		+ "	FOREIGN KEY (resultId) REFERENCES results(resultId)\r\n"
             		+ "	);";
             
             PreparedStatement matchEventsPS = conn.prepareStatement(createMatchEventsTable);
@@ -163,7 +163,7 @@ public interface dbInitMethods {
             		+ "	isSuspended BOOLEAN,\r\n"
             		+ "	isInjured BOOLEAN,\r\n"
             		+ "	teamEmployeeId INTEGER,\r\n"
-            		+ "	seasonId INTEGER NOT NULL,\r\n"
+            		+ "	statsId INTEGER NOT NULL,\r\n"
             		+ "	PRIMARY KEY (playerId),\r\n"
             		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId),\r\n"
             		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId)\r\n"
