@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 
 public class JfgpWindow {
 	private JTextField windowTitle;
+	private String currentPanel;
 
 	//Create the application.
-	public JfgpWindow() {
+	public JfgpWindow(String panel) {
+		this.currentPanel = panel;
 		initialize();
 	}
 
@@ -67,7 +69,7 @@ public class JfgpWindow {
 		toolBarLogInOrOut.setVerticalAlignment(SwingConstants.BOTTOM);
 		toolBar.add(toolBarLogInOrOut);
 		
-		windowTitle = new JTextField("Jump For Goalposts League");
+		windowTitle = new JTextField("Jump For Goalposts - " + this.currentPanel);
 		windowTitle.setEditable(false);
 		windowTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		windowTitle.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 11));
