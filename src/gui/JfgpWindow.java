@@ -25,13 +25,16 @@ import javax.swing.JLabel;
 import java.awt.Cursor;
 
 public class JfgpWindow {
+	
 	private JLabel windowTitle;
 	private String currentPanel;
+	
+	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
+	private JButton[] toolBarButton;
+	
 	Font toolBarFont = new Font("Tahoma", Font.PLAIN, 24);
 	Color fgColour = new Color(192, 192, 192);
 	EmptyBorder buttonBorder = new EmptyBorder(4, 5, 0, 0);
-	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
-	private JButton[] toolBarButton;
 
 	//Create the application.
 	public JfgpWindow(String panel) {
@@ -41,6 +44,7 @@ public class JfgpWindow {
 		for (int i = 0; i < 7; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
 		}
+		
 		initialize();
 	}
 
@@ -69,10 +73,10 @@ public class JfgpWindow {
 			toolBarButton[i].setForeground(fgColour);
 			toolBarButton[i].setFocusPainted(false);
 			toolBarButton[i].setBorderPainted(false);
-			toolBarButton[i].setHorizontalAlignment(SwingConstants.LEFT);
-			toolBarButton[i].setBorder(buttonBorder);
 			toolBarButton[i].setOpaque(false);
 			toolBarButton[i].setContentAreaFilled(false);
+			toolBarButton[i].setHorizontalAlignment(SwingConstants.LEFT);
+			toolBarButton[i].setBorder(buttonBorder);
 			toolBarButton[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 		
