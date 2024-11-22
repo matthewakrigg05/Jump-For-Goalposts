@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 
 public class JfgpWindow extends JFrame {
@@ -21,7 +22,8 @@ public class JfgpWindow extends JFrame {
 		
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setBackground(new Color(192, 192, 192));
-		setResizable(false);
+		setResizable(true);
+		setMinimumSize(new Dimension(600, 450));
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));

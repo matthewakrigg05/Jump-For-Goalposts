@@ -17,7 +17,6 @@ public class toolBar extends JToolBar {
 	
 	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
 	private JButton[] toolBarButton;
-	
 	Font toolBarFont = new Font("Tahoma", Font.PLAIN, 24);
 	Color fgColour = new Color(192, 192, 192);
 	EmptyBorder buttonBorder = new EmptyBorder(4, 5, 0, 0);
