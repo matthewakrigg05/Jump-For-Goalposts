@@ -22,19 +22,31 @@ import java.awt.Point;
 import javax.swing.border.EmptyBorder;
 import java.awt.Frame;
 import javax.swing.JLabel;
+import java.awt.Cursor;
 
 public class JfgpWindow {
 	private JLabel windowTitle;
 	private String currentPanel;
+	Font toolBarFont = new Font("Tahoma", Font.PLAIN, 24);
+	Color fgColour = new Color(192, 192, 192);
+	EmptyBorder buttonBorder = new EmptyBorder(4, 5, 0, 0);
+	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
+	private JButton[] toolBarButton;
 
 	//Create the application.
 	public JfgpWindow(String panel) {
 		this.currentPanel = panel;
+		
+		toolBarButton = new JButton[7];
+		for (int i = 0; i < 7; i++) {
+			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
+		}
 		initialize();
 	}
 
-	 // Initialize the contents of the frame.	 
+	 // Initialize the contents of the window.	 
 	private void initialize() {
+		
 		JFrame applicationFrame = new JFrame();
 		applicationFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		applicationFrame.setBackground(new Color(192, 192, 192));
@@ -43,79 +55,39 @@ public class JfgpWindow {
 		applicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JToolBar toolBar = new JToolBar();
+		toolBar.setBackground(new Color(0, 128, 128));
 		toolBar.setFloatable(false);
 		toolBar.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		toolBar.setBorder(new EmptyBorder(0, 0, 0, 20));
-		toolBar.setForeground(new Color(192, 192, 192));
-		toolBar.setBackground(new Color(0, 128, 128));
+		toolBar.setForeground(fgColour);
 		toolBar.setOrientation(SwingConstants.VERTICAL);
+		toolBar.setFont(toolBarFont);
 		applicationFrame.getContentPane().add(toolBar, BorderLayout.WEST);
 		
-		JButton toolBarHome = new JButton("Home");
-		toolBarHome.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarHome.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarHome.setForeground(new Color(192, 192, 192));
-		toolBarHome.setOpaque(false);
-		toolBarHome.setBackground(new Color(240, 240, 240));
-		
-		toolBar.add(toolBarHome);
-		JButton toolBarTeams = new JButton("Teams");
-		toolBarTeams.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarTeams.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarTeams.setForeground(new Color(192, 192, 192));
-		toolBarTeams.setOpaque(false);
-		toolBarTeams.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		toolBar.add(toolBarTeams);
-		
-		JButton toolBarPlayers = new JButton("Players");
-		toolBarPlayers.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarPlayers.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarPlayers.setForeground(new Color(192, 192, 192));
-		toolBarPlayers.setOpaque(false);
-		toolBar.add(toolBarPlayers);
-		
-		JButton toolBarFixtures = new JButton("Fixtures");
-		toolBarFixtures.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarFixtures.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarFixtures.setForeground(new Color(192, 192, 192));
-		toolBarFixtures.setOpaque(false);
-		toolBar.add(toolBarFixtures);
-		
-		JButton toolBarResults = new JButton("Results");
-		toolBarResults.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarResults.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarResults.setForeground(new Color(192, 192, 192));
-		toolBarResults.setOpaque(false);
-		toolBar.add(toolBarResults);
-		
-		JButton toolBarTable = new JButton("Table");
-		toolBarTable.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarTable.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarTable.setForeground(new Color(192, 192, 192));
-		toolBarTable.setOpaque(false);
-		toolBar.add(toolBarTable);
+		for (int i = 0; i < 7; i++) {
+			toolBarButton[i].setFont(toolBarFont);
+			toolBarButton[i].setForeground(fgColour);
+			toolBarButton[i].setFocusPainted(false);
+			toolBarButton[i].setBorderPainted(false);
+			toolBarButton[i].setHorizontalAlignment(SwingConstants.LEFT);
+			toolBarButton[i].setBorder(buttonBorder);
+			toolBarButton[i].setOpaque(false);
+			toolBarButton[i].setContentAreaFilled(false);
+			toolBarButton[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
 		
 		JSeparator toolBarSep = new JSeparator();
 		toolBarSep.setOrientation(SwingConstants.VERTICAL);
 		toolBarSep.setBounds(new Rectangle(0, 0, 0, 35));
+		
+		toolBar.add(toolBarButton[0]);
+		toolBar.add(toolBarButton[1]);
+		toolBar.add(toolBarButton[2]);
+		toolBar.add(toolBarButton[3]);
+		toolBar.add(toolBarButton[4]);
 		toolBar.add(toolBarSep);
-		
-		JButton toolBarRoleDependant = new JButton("Role");
-		toolBarRoleDependant.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarRoleDependant.setActionCommand("");
-		toolBarRoleDependant.setBorder(new EmptyBorder(4, 5, 0, 0));
-		toolBarRoleDependant.setForeground(new Color(192, 192, 192));
-		toolBarRoleDependant.setOpaque(false);
-		toolBar.add(toolBarRoleDependant);
-		
-		JButton toolBarLogInOrOut = new JButton("Log In");
-		toolBarLogInOrOut.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		toolBarLogInOrOut.setBorder(new EmptyBorder(4, 5, 4, 0));
-		toolBarLogInOrOut.setForeground(new Color(192, 192, 192));
-		toolBarLogInOrOut.setOpaque(false);
-		toolBar.add(toolBarLogInOrOut);
-		toolBarLogInOrOut.setVerticalAlignment(SwingConstants.BOTTOM);
+		toolBar.add(toolBarButton[5]);
+		toolBar.add(toolBarButton[6]);
 		
 		windowTitle = new JLabel("Jump For Goalposts - " + this.currentPanel);
 		windowTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,5 +98,4 @@ public class JfgpWindow {
 		applicationFrame.getContentPane().add(homePanel, BorderLayout.CENTER);
 		applicationFrame.setVisible(true);
 	}
-
 }
