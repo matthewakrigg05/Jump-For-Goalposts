@@ -52,8 +52,10 @@ public interface dbInitMethods {
             		+ "	lName VARCHAR(50),\r\n"
             		+ "	preferredLocation VARCHAR(50),\r\n"
             		+ "	leagueId INTEGER NOT NULL,\r\n"
+            		+ "	userId INTEGER NOT NULL, \r\n"
             		+ "	PRIMARY KEY (refereeId),\r\n"
             		+ "	FOREIGN KEY (leagueId) REFERENCES league(leagueId) \r\n"
+            		+ " FOREIGN KEY (userId) REFERENCES userAccounts(userId) \r\n"
             		+ "	);";
             PreparedStatement refereePS = conn.prepareStatement(createRefereesTable);
             refereePS.executeUpdate();
@@ -184,7 +186,6 @@ public interface dbInitMethods {
             leagueDataPS.executeUpdate();
             
             String createAdmin = "INSERT OR IGNORE INTO userAccounts (userId, userType, emailAddress, password, leagueId) VALUES (1, 'admin', 'admin@jfgp.org', 'password', 1);";
-
 
             PreparedStatement adminPS = conn.prepareStatement(createAdmin);
             adminPS.executeUpdate();

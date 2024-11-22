@@ -7,8 +7,8 @@ public class Manager extends Person {
 	private String preferredFormation;
 	private ManagerAccount managerAcc;
 
-	public Manager(int id, String fName, String lName, Date DoB, String contractType, ManagerAccount managerAcc) {
-		super(id, fName, lName, DoB, contractType);
+	public Manager(int id, String fName, String lName, int userId) {
+		super(id, fName, lName, userId);
 		this.setManagerAcc(managerAcc);
 
 	}

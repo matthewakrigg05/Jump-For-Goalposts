@@ -3,6 +3,9 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import leagueDB.JFGPdb;
+
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -72,6 +75,13 @@ public class logInWindow extends JFrame {
 		gbc_logInButton.gridx = 1;
 		gbc_logInButton.gridy = 6;
 		getContentPane().add(logInButton, gbc_logInButton);
+		
+		logInButton.addActionListener(e -> {
+			String email = emailField.getText();
+			String password = String.valueOf(passwordField.getPassword());
+			
+			JFGPdb.logIn(this, email, password);
+		});
 		
 		setVisible(true);
 	}

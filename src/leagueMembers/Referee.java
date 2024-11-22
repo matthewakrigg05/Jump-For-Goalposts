@@ -10,17 +10,16 @@ public class Referee extends Person {
 	private String[] gamesOfficiated;
 	private String[] matchesToAttend;
 	
-	public Referee(int id, String fName, String lName, Date DoB, String contractType, RefereeAccount refAcc) {
-		super(id, fName, lName, DoB, contractType);
-		this.setRefereesAccount(refAcc);
+	public Referee(int id, String fName, String lName, int userId) {
+		super(id, fName, lName, userId);
 	}
 
 	// Standard getters and setters
-	public String getPreferredLocation() { return preferredLocation; }
-	public void setPreferredLocation(String preferredLocation) { this.preferredLocation = preferredLocation; }
-
-	public RefereeAccount getRefereesAccount() { return refereesAccount; }
-	public void setRefereesAccount(RefereeAccount refereesAccount) { this.refereesAccount = refereesAccount; }
+//	public String getPreferredLocation() { return preferredLocation; }
+//	public void setPreferredLocation(String preferredLocation) { this.preferredLocation = preferredLocation; }
+//
+//	public RefereeAccount getRefereesAccount() { return refereesAccount; }
+//	public void setRefereesAccount(RefereeAccount refereesAccount) { this.refereesAccount = refereesAccount; }
 
 	public String[] getGamesOfficiated() { return gamesOfficiated; }
 	public void setGamesOfficiated(String[] gamesOfficiated) { this.gamesOfficiated = gamesOfficiated; }

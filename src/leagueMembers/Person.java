@@ -8,13 +8,13 @@ abstract class Person {
 	private String lName;
 	private Date DoB;
 	private String contractType;
+	private int userId;
 	
-	public Person(int id, String fName, String lName, Date DoB, String contractType) {
+	public Person(int id, String fName, String lName, int userId) {
 		this.setId(id);
 		this.fName = fName;
 		this.lName = lName;
-		this.DoB = DoB;
-		this.contractType = contractType;
+		this.userId = userId;
 	}
 	
 	public void updateStatistics() {
