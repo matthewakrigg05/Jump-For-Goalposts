@@ -15,10 +15,28 @@ import javax.swing.border.EmptyBorder;
 
 public class toolBar extends JToolBar {
 	
-	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
-	private JButton[] toolBarButton;
 	
-	public toolBar(JfgpWindow frame) {
+	private JButton[] toolBarButton;
+	private JPanel rolePanel;
+	
+	public toolBar(JfgpWindow frame, String userType) {
+		
+		String user = userType.substring(0, 1).toUpperCase() + userType.substring(1); 
+		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", user + " View", "Log In"};
+		
+		switch (userType) {
+		case "admin":
+			rolePanel =  new AdminPanel();
+			break;
+		
+		case "referee":
+			rolePanel = new RefereePanel();
+			break;
+			
+		case "manager":
+			rolePanel = new ManagerPanel();
+			break;
+		}
 		
 		toolBarButton = new JButton[7];
 		for (int i = 0; i < 7; i++) {
@@ -54,7 +72,11 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[3]);
 		add(toolBarButton[4]);
 		add(toolBarSep);
-		add(toolBarButton[5]);
+		
+		if (userType != "user") {
+			add(toolBarButton[5]);
+		}
+		
 		add(toolBarButton[6]);
 		
 		toolBarButton[0].addActionListener(e -> {
@@ -78,7 +100,7 @@ public class toolBar extends JToolBar {
 		});
 		
 		toolBarButton[5].addActionListener(e -> {
-			this.updateFrame(frame, new AdminPanel());
+			this.updateFrame(frame, rolePanel);
 		});
 		
 		toolBarButton[6].addActionListener(e -> {

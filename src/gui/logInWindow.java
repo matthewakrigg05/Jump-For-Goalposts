@@ -30,6 +30,13 @@ public class logInWindow extends JFrame {
 		gridBagLayout.rowHeights = new int[]{0, 14, 38, 20, 40, 40, 40};
 		getContentPane().setLayout(gridBagLayout);
 		
+		JButton backButton = new JButton("Back");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 0;
+		gbc_btnNewButton.gridy = 0;
+		getContentPane().add(backButton, gbc_btnNewButton);
+		
 		JLabel emailLabel = new JLabel("Email Address:");
 		GridBagConstraints gbc_emailLabel = new GridBagConstraints();
 		gbc_emailLabel.anchor = GridBagConstraints.NORTH;
@@ -75,6 +82,11 @@ public class logInWindow extends JFrame {
 		gbc_logInButton.gridx = 1;
 		gbc_logInButton.gridy = 6;
 		getContentPane().add(logInButton, gbc_logInButton);
+		
+		backButton.addActionListener(e -> {
+			new JfgpWindow().setVisible(true);
+			this.dispose();
+		});
 		
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
