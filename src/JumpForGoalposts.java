@@ -1,4 +1,5 @@
 import gui.JfgpWindow;
+import gui.logInWindow;
 import leagueDB.JFGPdb;
  
 public class JumpForGoalposts {
@@ -8,7 +9,7 @@ public class JumpForGoalposts {
 		JFGPdb dbConnection = new JFGPdb();
 		
 		try {
-			new JfgpWindow();
+			new logInWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
