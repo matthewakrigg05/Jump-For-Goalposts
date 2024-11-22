@@ -2,18 +2,41 @@ package gui;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import accounts.AdminAccount;
+import accounts.ManagerAccount;
+import accounts.RefereeAccount;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 
 public class JfgpWindow extends JFrame {
 
-	public JPanel currentPanel;
+	private JPanel currentPanel;
+	private boolean isLoggedIn;
+	private String userType;
 	
 	//Create the application.
 	public JfgpWindow() {	
+		this.setLoggedIn(false);
+		initialize();
+	}
+	
+	public JfgpWindow(AdminAccount admin) {	
+		this.setLoggedIn(false);
+		this.setUserType("admin");
+		initialize();
+	}
+	
+	public JfgpWindow(ManagerAccount manager) {	
+		this.setLoggedIn(false);
+		this.setUserType("manager");
+		initialize();
+	}
+	
+	public JfgpWindow(RefereeAccount referee) {	
+		this.setLoggedIn(false);
+		this.setUserType("referee");
 		initialize();
 	}
 
@@ -40,5 +63,21 @@ public class JfgpWindow extends JFrame {
 	
 	public void setCurrentPanel(JPanel panel) {
 		this.currentPanel = panel;
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 }

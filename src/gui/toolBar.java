@@ -17,9 +17,6 @@ public class toolBar extends JToolBar {
 	
 	private final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", "Role", "Log In"};
 	private JButton[] toolBarButton;
-	Font toolBarFont = new Font("Tahoma", Font.PLAIN, 24);
-	Color fgColour = new Color(192, 192, 192);
-	EmptyBorder buttonBorder = new EmptyBorder(4, 5, 0, 0);
 	
 	public toolBar(JfgpWindow frame) {
 		
@@ -32,19 +29,18 @@ public class toolBar extends JToolBar {
 		setFloatable(false);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setBorder(new EmptyBorder(0, 0, 0, 20));
-		setForeground(fgColour);
 		setOrientation(SwingConstants.VERTICAL);
-		setFont(toolBarFont);
 
+		// For loop loops through the different tool bar buttons and applies the same settings to them all in the order that appears in the toolBarButtonNames list.
 		for (int i = 0; i < 7; i++) {
-			toolBarButton[i].setFont(toolBarFont);
-			toolBarButton[i].setForeground(fgColour);
+			toolBarButton[i].setFont(new Font("Tahoma", Font.PLAIN, 24));
+			toolBarButton[i].setForeground(new Color(192, 192, 192));
 			toolBarButton[i].setFocusPainted(false);
 			toolBarButton[i].setBorderPainted(false);
 			toolBarButton[i].setOpaque(false);
 			toolBarButton[i].setContentAreaFilled(false);
 			toolBarButton[i].setHorizontalAlignment(SwingConstants.LEFT);
-			toolBarButton[i].setBorder(buttonBorder);
+			toolBarButton[i].setBorder(new EmptyBorder(4, 5, 0, 0));
 			toolBarButton[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 		
