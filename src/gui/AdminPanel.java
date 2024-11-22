@@ -10,6 +10,9 @@ import javax.swing.JButton;
 public class AdminPanel extends JPanel {
 
 	public AdminPanel() {
+		
+		Insets labelFieldInsets = new Insets(0, 0, 5, 5);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{84, 0, 0, 0, 100, 0};
 		gridBagLayout.rowHeights = new int[]{14, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -17,90 +20,89 @@ public class AdminPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblNewLabel = new JLabel("League Options:");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 1;
-		add(lblNewLabel, gbc_lblNewLabel);
+		JLabel leagueOptLabel = new JLabel("League Options:");
+		GridBagConstraints gbc_leagueOptLabel = new GridBagConstraints();
+		gbc_leagueOptLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_leagueOptLabel.gridx = 1;
+		gbc_leagueOptLabel.gridy = 1;
+		add(leagueOptLabel, gbc_leagueOptLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Match Options");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 3;
-		gbc_lblNewLabel_1.gridy = 1;
-		add(lblNewLabel_1, gbc_lblNewLabel_1);
+		JLabel matchOptLabel = new JLabel("Match Options:");
+		GridBagConstraints gbc_matchOptLabel = new GridBagConstraints();
+		gbc_matchOptLabel.insets = labelFieldInsets;
+		gbc_matchOptLabel.gridx = 3;
+		gbc_matchOptLabel.gridy = 1;
+		add(matchOptLabel, gbc_lblNewLabel_1);
 		
-		JButton btnNewButton = new JButton("League");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 3;
-		add(btnNewButton, gbc_btnNewButton);
+		JButton leagueButton = new JButton("League");
+		GridBagConstraints gbc_leagueButton = new GridBagConstraints();
+		gbc_leagueButton.insets = labelFieldInsets;
+		gbc_leagueButton.gridx = 1;
+		gbc_leagueButton.gridy = 3;
+		add(leagueButton, gbc_leagueButton);
 		
-		JButton btnNewButton_6 = new JButton("Generate Fixtures");
-		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
-		gbc_btnNewButton_6.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_6.gridx = 3;
-		gbc_btnNewButton_6.gridy = 3;
-		add(btnNewButton_6, gbc_btnNewButton_6);
+		JButton genFixturesButton = new JButton("Generate Fixtures");
+		GridBagConstraints gbc_genFixturesButton = new GridBagConstraints();
+		gbc_genFixturesButton.insets = labelFieldInsets;
+		gbc_genFixturesButton.gridx = 3;
+		gbc_genFixturesButton.gridy = 3;
+		add(genFixturesButton, gbc_genFixturesButton);
 		
-		JButton btnNewButton_1 = new JButton("Season");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 1;
-		gbc_btnNewButton_1.gridy = 4;
-		add(btnNewButton_1, gbc_btnNewButton_1);
+		JButton seasonButton = new JButton("Season");
+		GridBagConstraints gbc_seasonButton = new GridBagConstraints();
+		gbc_seasonButton.insets = labelFieldInsets;
+		gbc_seasonButton.gridx = 1;
+		gbc_seasonButton.gridy = 4;
+		add(seasonButton, gbc_seasonButton);
 		
-		JButton btnNewButton_7 = new JButton("Assign Match Referees");
-		GridBagConstraints gbc_btnNewButton_7 = new GridBagConstraints();
-		gbc_btnNewButton_7.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_7.gridx = 3;
-		gbc_btnNewButton_7.gridy = 4;
-		add(btnNewButton_7, gbc_btnNewButton_7);
+		JButton matchRefsButton = new JButton("Assign Match Referees");
+		GridBagConstraints gbc_matchRefsButton = new GridBagConstraints();
+		gbc_matchRefsButton.insets = labelFieldInsets;
+		gbc_matchRefsButton.gridx = 3;
+		gbc_matchRefsButton.gridy = 4;
+		add(matchRefsButton, gbc_matchRefsButton);
 		
-		JButton btnNewButton_2 = new JButton("Team");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_2.gridx = 1;
-		gbc_btnNewButton_2.gridy = 5;
-		add(btnNewButton_2, gbc_btnNewButton_2);
+		JButton teamButton = new JButton("Team");
+		GridBagConstraints gbc_teamButton = new GridBagConstraints();
+		gbc_teamButton.insets = labelFieldInsets;
+		gbc_teamButton.gridx = 1;
+		gbc_teamButton.gridy = 5;
+		add(teamButton, gbc_teamButton);
 		
-		JButton btnNewButton_8 = new JButton("Record Matches");
-
-		GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
-		gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_8.gridx = 3;
-		gbc_btnNewButton_8.gridy = 5;
-		add(btnNewButton_8, gbc_btnNewButton_8);
+		JButton recMatchButton = new JButton("Record Matches");
+		GridBagConstraints gbc_recMatchButton = new GridBagConstraints();
+		gbc_recMatchButton.insets = labelFieldInsets;
+		gbc_recMatchButton.gridx = 3;
+		gbc_recMatchButton.gridy = 5;
+		add(recMatchButton, gbc_recMatchButton);
 		
-		JButton btnNewButton_3 = new JButton("Manager");
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_3.gridx = 1;
-		gbc_btnNewButton_3.gridy = 6;
-		add(btnNewButton_3, gbc_btnNewButton_3);
+		JButton managersButton = new JButton("Managers");
+		GridBagConstraints gbc_managersButton = new GridBagConstraints();
+		gbc_managersButton.insets = labelFieldInsets;
+		gbc_managersButton.gridx = 1;
+		gbc_managersButton.gridy = 6;
+		add(managersButton, gbc_managersButton);
 		
-		JButton btnNewButton_9 = new JButton("Update League Data");
-		GridBagConstraints gbc_btnNewButton_9 = new GridBagConstraints();
-		gbc_btnNewButton_9.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_9.gridx = 3;
-		gbc_btnNewButton_9.gridy = 6;
-		add(btnNewButton_9, gbc_btnNewButton_9);
+		JButton updateLeagueDataButton = new JButton("Update League Data");
+		GridBagConstraints gbc_updateLeagueDataButton = new GridBagConstraints();
+		gbc_updateLeagueDataButton.insets = labelFieldInsets;
+		gbc_updateLeagueDataButton.gridx = 3;
+		gbc_updateLeagueDataButton.gridy = 6;
+		add(updateLeagueDataButton, gbc_updateLeagueDataButton);
 		
-		JButton btnNewButton_4 = new JButton("Referee");
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_4.gridx = 1;
-		gbc_btnNewButton_4.gridy = 7;
-		add(btnNewButton_4, gbc_btnNewButton_4);
+		JButton refereesButton = new JButton("Referees");
+		GridBagConstraints gbc_refereesButton = new GridBagConstraints();
+		gbc_refereesButton.insets = labelFieldInsets;
+		gbc_refereesButton.gridx = 1;
+		gbc_refereesButton.gridy = 7;
+		add(refereesButton, gbc_refereesButton);
 		
-		JButton btnNewButton_5 = new JButton("Player");
-		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_5.gridx = 1;
-		gbc_btnNewButton_5.gridy = 8;
-		add(btnNewButton_5, gbc_btnNewButton_5);
+		JButton playersButton = new JButton("Players");
+		GridBagConstraints gbc_playersButton = new GridBagConstraints();
+		gbc_playersButton.insets = labelFieldInsets;
+		gbc_playersButton.gridx = 1;
+		gbc_playersButton.gridy = 8;
+		add(playersButton, gbc_playersButton);
 
 	}
 
