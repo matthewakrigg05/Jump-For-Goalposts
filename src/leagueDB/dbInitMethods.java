@@ -180,6 +180,8 @@ public interface dbInitMethods {
             PreparedStatement playersPS = conn.prepareStatement(createPlayersTable);
             playersPS.executeUpdate();
             
+            // The only two default instances of information in the application - the league and the admin account.
+            // admin password set initially but is at liberty to be changed should the admin user deem it appropriate.
             String createLeague = "INSERT OR IGNORE INTO league (leagueId, leagueName) VALUES (1, 'Jump For Goalposts League');";
 
             PreparedStatement leagueDataPS = conn.prepareStatement(createLeague);

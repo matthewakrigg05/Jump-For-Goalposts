@@ -25,62 +25,64 @@ public class logInWindow extends JFrame {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		Insets labelFieldInsets = new Insets(0, 0, 5, 5);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{50, 300, 50};
-		gridBagLayout.rowHeights = new int[]{0, 14, 38, 20, 40, 40, 40};
+			gridBagLayout.columnWidths = new int[]{50, 300, 50};
+			gridBagLayout.rowHeights = new int[]{0, 14, 38, 20, 40, 40, 40};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JButton backButton = new JButton("Back");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 0;
-		getContentPane().add(backButton, gbc_btnNewButton);
+		GridBagConstraints gbc_backButton = new GridBagConstraints();
+			gbc_backButton.insets = labelFieldInsets;
+			gbc_backButton.gridx = 0;
+			gbc_backButton.gridy = 0;
+		getContentPane().add(backButton, gbc_backButton);
 		
 		JLabel emailLabel = new JLabel("Email Address:");
 		GridBagConstraints gbc_emailLabel = new GridBagConstraints();
-		gbc_emailLabel.anchor = GridBagConstraints.NORTH;
-		gbc_emailLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_emailLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_emailLabel.gridwidth = 3;
-		gbc_emailLabel.gridx = 1;
-		gbc_emailLabel.gridy = 1;
+			gbc_emailLabel.anchor = GridBagConstraints.NORTH;
+			gbc_emailLabel.fill = GridBagConstraints.HORIZONTAL;
+			gbc_emailLabel.insets = labelFieldInsets;
+			gbc_emailLabel.gridwidth = 3;
+			gbc_emailLabel.gridx = 1;
+			gbc_emailLabel.gridy = 1;
 		getContentPane().add(emailLabel, gbc_emailLabel);
 		
 		emailField = new JTextField();
 		emailField.setPreferredSize(new Dimension(6, 25));
 		GridBagConstraints gbc_emailField = new GridBagConstraints();
-		gbc_emailField.anchor = GridBagConstraints.WEST;
-		gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_emailField.insets = new Insets(0, 0, 5, 5);
-		gbc_emailField.gridx = 1;
-		gbc_emailField.gridy = 2;
+			gbc_emailField.anchor = GridBagConstraints.WEST;
+			gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_emailField.insets = labelFieldInsets;
+			gbc_emailField.gridx = 1;
+			gbc_emailField.gridy = 2;
 		getContentPane().add(emailField, gbc_emailField);
 		emailField.setColumns(10);
 		
 		JLabel passwordLabel = new JLabel("Password:");
 		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
-		gbc_passwordLabel.anchor = GridBagConstraints.WEST;
-		gbc_passwordLabel.fill = GridBagConstraints.VERTICAL;
-		gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_passwordLabel.gridx = 1;
-		gbc_passwordLabel.gridy = 4;
+			gbc_passwordLabel.anchor = GridBagConstraints.WEST;
+			gbc_passwordLabel.fill = GridBagConstraints.VERTICAL;
+			gbc_passwordLabel.insets = labelFieldInsets;
+			gbc_passwordLabel.gridx = 1;
+			gbc_passwordLabel.gridy = 4;
 		getContentPane().add(passwordLabel, gbc_passwordLabel);
 		
 		passwordField = new JPasswordField();
 		passwordField.setPreferredSize(new Dimension(7, 25));
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
-		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
-		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 5;
+			gbc_passwordField.insets = labelFieldInsets;
+			gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_passwordField.gridx = 1;
+			gbc_passwordField.gridy = 5;
 		getContentPane().add(passwordField, gbc_passwordField);
 		
 		JButton logInButton = new JButton("Log In");
 		GridBagConstraints gbc_logInButton = new GridBagConstraints();
-		gbc_logInButton.insets = new Insets(0, 0, 0, 5);
-		gbc_logInButton.gridx = 1;
-		gbc_logInButton.gridy = 6;
+			gbc_logInButton.insets = labelFieldInsets;
+			gbc_logInButton.gridx = 1;
+			gbc_logInButton.gridy = 6;
 		getContentPane().add(logInButton, gbc_logInButton);
 		
 		backButton.addActionListener(e -> {
@@ -91,7 +93,6 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			
 			JFGPdb.logIn(this, email, password);
 		});
 		

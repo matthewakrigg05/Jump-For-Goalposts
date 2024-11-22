@@ -72,11 +72,7 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[3]);
 		add(toolBarButton[4]);
 		add(toolBarSep);
-		
-		if (userType != "user") {
-			add(toolBarButton[5]);
-		}
-		
+		if (userType != "user") { add(toolBarButton[5]); }
 		add(toolBarButton[6]);
 		
 		toolBarButton[0].addActionListener(e -> {
