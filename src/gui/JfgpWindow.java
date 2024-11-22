@@ -2,7 +2,6 @@ package gui;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-
 import accounts.AdminAccount;
 import accounts.ManagerAccount;
 import accounts.RefereeAccount;
@@ -23,19 +22,19 @@ public class JfgpWindow extends JFrame {
 	}
 	
 	public JfgpWindow(AdminAccount admin) {	
-		this.setLoggedIn(false);
+		this.setLoggedIn(true);
 		this.setUserType("admin");
 		initialize();
 	}
 	
 	public JfgpWindow(ManagerAccount manager) {	
-		this.setLoggedIn(false);
+		this.setLoggedIn(true);
 		this.setUserType("manager");
 		initialize();
 	}
 	
 	public JfgpWindow(RefereeAccount referee) {	
-		this.setLoggedIn(false);
+		this.setLoggedIn(true);
 		this.setUserType("referee");
 		initialize();
 	}
@@ -57,6 +56,8 @@ public class JfgpWindow extends JFrame {
 		setVisible(true);
 	}
 	
+	
+	// standard getters and setters
 	public JPanel getCurrentPanel() {
 		return this.currentPanel;
 	}

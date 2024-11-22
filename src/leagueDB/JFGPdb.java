@@ -99,7 +99,6 @@ public class JFGPdb implements dbInitMethods {
 	                		JOptionPane.showMessageDialog(window, "Log In Failed");
 	                
 	                }
-	                
 	            }
 	            else { 
 		            JfgpWindow window = new JfgpWindow();
