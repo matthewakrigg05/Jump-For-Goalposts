@@ -17,6 +17,12 @@ abstract class Person {
 		this.userId = userId;
 	}
 	
+	public Person(int id, String fName, String lName) {
+		this.setId(id);
+		this.fName = fName;
+		this.lName = lName;
+	}
+	
 	public void updateStatistics() {
 		
 	}
