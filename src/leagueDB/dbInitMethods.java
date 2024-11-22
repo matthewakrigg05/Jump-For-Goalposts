@@ -178,6 +178,17 @@ public interface dbInitMethods {
             PreparedStatement playersPS = conn.prepareStatement(createPlayersTable);
             playersPS.executeUpdate();
             
+            String createLeague = "INSERT OR IGNORE INTO league (leagueId, leagueName) VALUES (1, 'Jump For Goalposts League');";
+
+            PreparedStatement leagueDataPS = conn.prepareStatement(createLeague);
+            leagueDataPS.executeUpdate();
+            
+            String createAdmin = "INSERT OR IGNORE INTO userAccounts (userId, userType, emailAddress, password, leagueId) VALUES (1, 'admin', 'admin@jfgp.org', 'password', 1);";
+
+
+            PreparedStatement adminPS = conn.prepareStatement(createAdmin);
+            adminPS.executeUpdate();
+            
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
