@@ -32,7 +32,7 @@ public class AdminPanel extends JPanel {
 		gbc_matchOptLabel.insets = labelFieldInsets;
 		gbc_matchOptLabel.gridx = 3;
 		gbc_matchOptLabel.gridy = 1;
-		add(matchOptLabel, gbc_lblNewLabel_1);
+		add(matchOptLabel, gbc_matchOptLabel);
 		
 		JButton leagueButton = new JButton("League");
 		GridBagConstraints gbc_leagueButton = new GridBagConstraints();
