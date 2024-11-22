@@ -9,7 +9,7 @@ public class JumpForGoalposts {
 		JFGPdb dbConnection = new JFGPdb();
 		
 		try {
-			new logInWindow();
+			new JfgpWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

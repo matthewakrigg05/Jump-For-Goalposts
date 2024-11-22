@@ -4,7 +4,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import accounts.AdminAccount;
@@ -45,6 +44,7 @@ public class JFGPdb implements dbInitMethods {
 	                
 	                String userType = resultSet.getString("userType");
 	                
+	                // log in as the correct kind of user - different views in the application depending on the type of user
 	                switch (userType) {
 	                	case "admin":
 	                		AdminAccount adminLogIn = new AdminAccount(userId, email, password);
@@ -75,8 +75,7 @@ public class JFGPdb implements dbInitMethods {
 	                		
 	                	case "manager":
 	                		PreparedStatement managerStatement = connection.prepareStatement(
-	        	                    "SELECT * FROM managers WHERE userId = ?"
-	        	            );
+	        	                    "SELECT * FROM managers WHERE userId = ?");
 
 	                		managerStatement.setInt(1, userId);
 	        	            ResultSet managerResult = managerStatement.executeQuery();
@@ -100,6 +99,13 @@ public class JFGPdb implements dbInitMethods {
 	                		JOptionPane.showMessageDialog(window, "Log In Failed");
 	                
 	                }
+	                
+	            }
+	            else { 
+		            JfgpWindow window = new JfgpWindow();
+	        		frame.dispose();
+	        		window.setVisible(true);
+	        		JOptionPane.showMessageDialog(window, "Log In Failed");
 	            }
 
 	        } catch (SQLException e) {
