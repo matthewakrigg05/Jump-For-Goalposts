@@ -12,6 +12,8 @@ public class AdminPanel extends JPanel {
 
 	public AdminPanel() {
 		
+		// look at having two panels side by side
+		
 		Insets labelFieldInsets = new Insets(0, 0, 10, 25);
 		Font labelFont = (new Font("Tahoma", Font.PLAIN, 25));
 		int numOfCols = 5;
