@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
@@ -91,9 +92,12 @@ public class toolBar extends JToolBar {
 		
 		toolBarButton[7].addActionListener(e -> {
 			
-			// add are you sure 
-			frame.dispose();
-			new JfgpWindow();
+			int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", 
+					"Log Out?",  JOptionPane.YES_NO_OPTION);
+			if(response == 0) {
+				frame.dispose();
+				new JfgpWindow();
+			}
 		});
 	}
 	
