@@ -1,0 +1,4 @@
+- Start getting admin buttons working
+- Add jdialogues for admin panel
+- Get league table functionality working
+	- take teams and order them based on some calculation of their points
