@@ -103,7 +103,7 @@ public class AdminPanel extends JPanel {
 		add(panelButton[9], gbc_playersButton);
 		
 		panelButton[0].addActionListener(e -> {
-			new leagueDialog();
+			new leagueDialog().setVisible(true);
 		});
 
 	}
