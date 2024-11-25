@@ -8,8 +8,9 @@ public class Season extends League {
 	private Match[] fixtures;
 	private Result[] results;
 	
-	public Season(int id, String name) {
+	public Season(int id, String name, String seasonYear) {
 		super(id, name);
+		setSeasonYear(seasonYear);
 	}
 
 	// Standard getters and setters

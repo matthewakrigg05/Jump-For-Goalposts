@@ -1,5 +1,4 @@
 package gui.admin;
-
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -12,27 +11,19 @@ public class AdminPanel extends JPanel {
 
 	public AdminPanel() {
 		
-		// look at having two panels side by side
-		
 		Insets labelFieldInsets = new Insets(0, 0, 10, 25);
 		Font labelFont = (new Font("Tahoma", Font.PLAIN, 25));
-		int numOfCols = 5;
-		int numOfRows = 11;
-		int colWidth = (getWidth() / numOfCols);
-		int rowHeight = (getHeight() / numOfRows);
-		
+
 		String[] buttonNames = {"League", "Generate Fixtures", "Season", "Assign Match Referees", 
 				"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"};
-		
 		JButton[] panelButton = new JButton[buttonNames.length];
+		
 		for(int i = 0; i < buttonNames.length; i++) {
 			panelButton[i] = new JButton(buttonNames[i]);
 			panelButton[i].setFont(labelFont);
 		}
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {colWidth, colWidth, colWidth, colWidth, colWidth};
-		gridBagLayout.rowHeights = new int[] {rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight, rowHeight};
 		setLayout(gridBagLayout);
 		
 		JLabel leagueOptLabel = new JLabel("League Options:");
@@ -110,7 +101,10 @@ public class AdminPanel extends JPanel {
 		gbc_playersButton.gridx = 1;
 		gbc_playersButton.gridy = 8;
 		add(panelButton[9], gbc_playersButton);
+		
+		panelButton[0].addActionListener(e -> {
+			new leagueDialog();
+		});
 
 	}
-
 }

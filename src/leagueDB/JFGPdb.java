@@ -4,19 +4,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import accounts.AdminAccount;
 import accounts.RefereeAccount;
 import accounts.ManagerAccount;
 import gui.JfgpWindow;
+import league.League;
 import leagueMembers.Referee;
 import leagueMembers.Manager;
 
 
 public class JFGPdb implements dbInitMethods {
 	
-	static Connection connection;
+	private static Connection connection;
 	
 	public JFGPdb() {
 		try {
@@ -29,7 +29,7 @@ public class JFGPdb implements dbInitMethods {
 		}
 	}
 	
-	public static void logIn(String email, String password) {
+	public void logIn(String email, String password) {
 		 try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
 	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
@@ -104,5 +104,17 @@ public class JFGPdb implements dbInitMethods {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
+	}
+	
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	public void closeConnection() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -10,10 +10,13 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.Connection;
+
 import javax.swing.JPasswordField;
 import java.awt.Dimension;
 
 public class logInWindow extends JFrame {
+	
 	private JTextField emailField;
 	private JPasswordField passwordField;
 
@@ -22,6 +25,7 @@ public class logInWindow extends JFrame {
 	}
 
 	private void initialize() {
+		JFGPdb dbCon = new JFGPdb(); 
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -93,7 +97,8 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			JFGPdb.logIn(email, password);
+			dbCon.logIn(email, password);
+			dbCon.closeConnection();
 			dispose();
 		});
 		

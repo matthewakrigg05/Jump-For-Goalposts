@@ -5,10 +5,14 @@ import javax.swing.JPanel;
 import accounts.AdminAccount;
 import accounts.ManagerAccount;
 import accounts.RefereeAccount;
+import leagueDB.JFGPdb;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.sql.Connection;
 
+@SuppressWarnings("serial")
 public class JfgpWindow extends JFrame {
 
 	private JPanel currentPanel  = new HomePanel();
@@ -18,29 +22,28 @@ public class JfgpWindow extends JFrame {
 	public JfgpWindow() {	
 		setLoggedIn(false);
 		setUserType("User");
-		initialize();
+		initialise();
 	}
 	
 	public JfgpWindow(AdminAccount admin) {	
 		setLoggedIn(true);
 		setUserType("Admin");
-		initialize();
+		initialise();
 	}
 	
 	public JfgpWindow(ManagerAccount manager) {	
 		setLoggedIn(true);
 		setUserType("Manager");
-		initialize();
+		initialise();
 	}
 	
 	public JfgpWindow(RefereeAccount referee) {	
 		setLoggedIn(true);
 		setUserType("Referee");
-		initialize();
+		initialise();
 	}
-
-	 // Initialize the contents of the window.	 
-	private void initialize() {
+	 
+	private void initialise() {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setBackground(new Color(192, 192, 192));
 		setResizable(true);
