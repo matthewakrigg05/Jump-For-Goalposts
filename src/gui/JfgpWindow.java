@@ -15,7 +15,6 @@ import java.sql.Connection;
 @SuppressWarnings("serial")
 public class JfgpWindow extends JFrame {
 
-	private JPanel currentPanel  = new HomePanel();
 	private boolean isLoggedIn;
 	private String userType;
 	
@@ -51,34 +50,23 @@ public class JfgpWindow extends JFrame {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		getContentPane().add(new toolBar(this, userType), BorderLayout.WEST);
-		getContentPane().add(currentPanel, BorderLayout.CENTER);
+		getContentPane().add(new toolBar(this), BorderLayout.WEST);
+		getContentPane().add(new HomePanel(), BorderLayout.CENTER);
 		setVisible(true);
 	}
 	
+	protected void addPanelComponents(JPanel panel) {}
 	
-	// standard getters and setters
-	public JPanel getCurrentPanel() {
-		return this.currentPanel;
-	}
+	protected void addActionListeners() {}
 	
-	public void setCurrentPanel(JPanel panel) {
-		this.currentPanel = panel;
-	}
+	protected JPanel getPanel() {
+		return null;}
 
-	public boolean isLoggedIn() {
-		return isLoggedIn;
-	}
+	public boolean isLoggedIn() { return isLoggedIn; }
 
-	public void setLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
-	}
+	public void setLoggedIn(boolean isLoggedIn) { this.isLoggedIn = isLoggedIn; }
 
-	public String getUserType() {
-		return userType;
-	}
+	public String getUserType() { return userType; }
 
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+	public void setUserType(String userType) { this.userType = userType; }
 }

@@ -2,9 +2,12 @@ package gui.manager;
 
 import javax.swing.JPanel;
 
-public class ManagerPanel extends JPanel {
+import gui.JfgpWindow;
+
+public class ManagerPanel extends JfgpWindow {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel ManagerPanel;
 
 	/**
 	 * Create the panel.
@@ -13,4 +16,8 @@ public class ManagerPanel extends JPanel {
 
 	}
 
+	@Override
+	protected JPanel getPanel() {
+		return this.ManagerPanel;
+	}
 }

@@ -47,8 +47,7 @@ public class JFGPdb implements dbInitMethods {
 	                // log in as the correct kind of user - different views in the application depending on the type of user
 	                switch (userType) {
 	                	case "admin":
-	                		AdminAccount adminLogIn = new AdminAccount(userId, email, password);
-	                		new JfgpWindow(adminLogIn).setVisible(true);
+	                		new JfgpWindow(new AdminAccount(userId, email, password));
 	                		break;
 	                		
 	                	case "referee":

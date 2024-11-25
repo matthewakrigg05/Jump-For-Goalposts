@@ -51,9 +51,5 @@ public class leagueDialog extends JDialog implements leagueData {
         	newName.getText();
         	dispose();
         });
-     
-        
-        // need league name, edit button, save button
-        // league stores all teams that ever featured in this league, not just ones in current season
 	}
 }

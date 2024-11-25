@@ -23,7 +23,7 @@ public class toolBar extends JToolBar {
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
 	
-	public toolBar(JfgpWindow frame, String userType) {
+	public toolBar(JfgpWindow frame) {
 		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
@@ -33,22 +33,8 @@ public class toolBar extends JToolBar {
 		
 		// toolbar buttons are indexed in this list
 		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
-				userType + " View", "Log In", "Log Out"};
+				frame.getUserType() + " View", "Log In", "Log Out"};
 		toolBarButton = new JButton[toolBarButtonNames.length];
-		
-		switch (userType) {
-			case "Admin":
-				rolePanel =  new AdminPanel();
-				break;
-			
-			case "Referee":
-				rolePanel = new RefereePanel();
-				break;
-				
-			case "Manager":
-				rolePanel = new ManagerPanel();
-				break;
-			}
 		
 		for (int i = 0; i < toolBarButtonNames.length; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
@@ -78,7 +64,31 @@ public class toolBar extends JToolBar {
 			add(toolBarButton[5]);
 			add(toolBarButton[7]); 
 			}
-		else { add(toolBarButton[6]); }
+		else { 
+			add(toolBarButton[6]);
+		
+			toolBarButton[6].addActionListener(e -> {
+				new logInWindow().setVisible(true);
+				frame.dispose();
+			});
+		}
+		
+		switch (frame.getUserType()) {
+			case "Admin":
+				AdminPanel admin = new AdminPanel();
+				rolePanel = admin.getPanel();
+				break;
+			
+			case "Referee":
+				RefereePanel refPanel = new RefereePanel();
+				rolePanel = refPanel.getPanel();
+				break;
+				
+			case "Manager":
+				RefereePanel manPanel = new RefereePanel();
+				rolePanel = manPanel.getPanel();
+				break;
+			}
 		
 		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
 		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
@@ -86,11 +96,6 @@ public class toolBar extends JToolBar {
 		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
 		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
 		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });
-		
-		toolBarButton[6].addActionListener(e -> {
-			new logInWindow().setVisible(true);
-			frame.dispose();
-		});
 		
 		toolBarButton[7].addActionListener(e -> {
 			

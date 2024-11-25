@@ -21,10 +21,10 @@ public class logInWindow extends JFrame {
 	private JPasswordField passwordField;
 
 	public logInWindow() {
-		initialize();
+		initialise();
 	}
 
-	private void initialize() {
+	private void initialise() {
 		JFGPdb dbCon = new JFGPdb(); 
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,6 +97,7 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
+			
 			dbCon.logIn(email, password);
 			dbCon.closeConnection();
 			dispose();

@@ -1,10 +1,10 @@
 package gui.referee;
-
 import javax.swing.JPanel;
+import gui.JfgpWindow;
 
-public class RefereePanel extends JPanel {
+public class RefereePanel extends JfgpWindow {
 
-	private static final long serialVersionUID = 1L;
+	private JPanel RefereePanel;
 
 	/**
 	 * Create the panel.
@@ -13,4 +13,8 @@ public class RefereePanel extends JPanel {
 
 	}
 
+	@Override
+	public JPanel getPanel() {
+		return this.RefereePanel;
+	}
 }
