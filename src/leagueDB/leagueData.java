@@ -25,5 +25,20 @@ public interface leagueData {
 		return null;
 		
 	}
+	
+	public static void changeLeagueName(JFGPdb connection, String newName) {
+		try {
+			PreparedStatement leagueStatement = (connection.getConnection()).prepareStatement(
+			        "UPDATE league SET leagueName = ? WHERE leagueId = 1;");
+			
+			leagueStatement.setString(1, newName);
+			leagueStatement.executeUpdate();
+			
+			connection.closeConnection();
+
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+	}
 
 }

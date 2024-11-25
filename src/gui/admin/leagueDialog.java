@@ -2,9 +2,12 @@ package gui.admin;
 import league.League;
 import leagueDB.JFGPdb;
 import leagueDB.leagueData;
+
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -21,7 +24,6 @@ public class leagueDialog extends JDialog implements leagueData {
 	
 	public void initialise() {
 		league = leagueData.getLeague(new JFGPdb());
-        league2 = leagueData.getLeague(new JFGPdb());
         
 		setFocusable(true);
         setSize(650, 375);
@@ -33,11 +35,23 @@ public class leagueDialog extends JDialog implements leagueData {
 
         
         JLabel lblNewLabel = new JLabel(league.getLeagueName());
-        JLabel lblNewLabel2 = new JLabel(league2.getLeagueName());
         lblNewLabel.setBounds(0, 0, 45, 13);
-        lblNewLabel2.setBounds(0, 0, 70, 13);
         getContentPane().add(lblNewLabel);
-        getContentPane().add(lblNewLabel2);
+        
+        JLabel changeLeagueName = new JLabel("Change League Name: ");
+        JTextArea newName = new JTextArea();
+        JButton saveButton = new JButton("Save");
+        
+        getContentPane().add(changeLeagueName);
+        getContentPane().add(newName);
+        getContentPane().add(saveButton);
+        
+        saveButton.addActionListener(e -> {
+        	leagueData.changeLeagueName(new JFGPdb(), newName.getText());
+        	newName.getText();
+        	dispose();
+        });
+     
         
         // need league name, edit button, save button
         // league stores all teams that ever featured in this league, not just ones in current season
