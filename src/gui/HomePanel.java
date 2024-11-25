@@ -9,6 +9,14 @@ public class HomePanel extends JPanel {
 	// some information on upcoming matches
 
 	public HomePanel() {
+		
+		// league table
+		
+		// top scorers
+		
+		// top assists
+		
+		// upcoming matches - game weeks
 
 	}
 

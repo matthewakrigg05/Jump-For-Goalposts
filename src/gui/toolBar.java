@@ -26,7 +26,7 @@ public class toolBar extends JToolBar {
 	public toolBar(JfgpWindow frame, String userType) {
 		
 		String user = userType.substring(0, 1).toUpperCase() + userType.substring(1); 
-		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", user + " View", "Log In"};
+		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", user + " View", "Log In", "Log Out"};
 		
 		switch (userType) {
 		case "admin":
@@ -42,19 +42,9 @@ public class toolBar extends JToolBar {
 			break;
 		}
 		
-		toolBarButton = new JButton[7];
-		for (int i = 0; i < 7; i++) {
+		toolBarButton = new JButton[8];
+		for (int i = 0; i < 8; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
-		}
-		
-		setBackground(new Color(0, 128, 128));
-		setFloatable(false);
-		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setBorder(new EmptyBorder(0, 0, 0, 20));
-		setOrientation(SwingConstants.VERTICAL);
-
-		// For loop loops through the different tool bar buttons and applies the same settings to them all in the order that appears in the toolBarButtonNames list.
-		for (int i = 0; i < 7; i++) {
 			toolBarButton[i].setFont(new Font("Tahoma", Font.PLAIN, 24));
 			toolBarButton[i].setForeground(new Color(192, 192, 192));
 			toolBarButton[i].setFocusPainted(false);
@@ -66,6 +56,12 @@ public class toolBar extends JToolBar {
 			toolBarButton[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 		
+		setBackground(new Color(0, 128, 128));
+		setFloatable(false);
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setBorder(new EmptyBorder(0, 0, 0, 20));
+		setOrientation(SwingConstants.VERTICAL);
+
 		JSeparator toolBarSep = new JSeparator();
 		toolBarSep.setOrientation(SwingConstants.VERTICAL);
 		toolBarSep.setBounds(new Rectangle(0, 0, 0, 35));
@@ -76,8 +72,11 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[3]);
 		add(toolBarButton[4]);
 		add(toolBarSep);
+		
 		if (userType != "user") { add(toolBarButton[5]); }
-		add(toolBarButton[6]);
+		
+		if(!frame.isLoggedIn()) { add(toolBarButton[6]); }
+		else { add(toolBarButton[7]); }
 		
 		toolBarButton[0].addActionListener(e -> {
 			this.updateFrame(frame, new HomePanel());
@@ -106,6 +105,13 @@ public class toolBar extends JToolBar {
 		toolBarButton[6].addActionListener(e -> {
 			new logInWindow().setVisible(true);
 			frame.dispose();
+		});
+		
+		toolBarButton[7].addActionListener(e -> {
+			
+			// add are you sure 
+			frame.dispose();
+			new JfgpWindow();
 		});
 	}
 	

@@ -17,26 +17,26 @@ public class JfgpWindow extends JFrame {
 	
 	//Create the application.
 	public JfgpWindow() {	
-		this.setLoggedIn(false);
-		this.setUserType("user");
+		setLoggedIn(false);
+		setUserType("user");
 		initialize();
 	}
 	
 	public JfgpWindow(AdminAccount admin) {	
-		this.setLoggedIn(true);
-		this.setUserType("admin");
+		setLoggedIn(true);
+		setUserType("admin");
 		initialize();
 	}
 	
 	public JfgpWindow(ManagerAccount manager) {	
-		this.setLoggedIn(true);
-		this.setUserType("manager");
+		setLoggedIn(true);
+		setUserType("manager");
 		initialize();
 	}
 	
 	public JfgpWindow(RefereeAccount referee) {	
-		this.setLoggedIn(true);
-		this.setUserType("referee");
+		setLoggedIn(true);
+		setUserType("referee");
 		initialize();
 	}
 
