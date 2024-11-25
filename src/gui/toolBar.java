@@ -13,6 +13,10 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import gui.admin.AdminPanel;
+import gui.manager.ManagerPanel;
+import gui.referee.RefereePanel;
+
 public class toolBar extends JToolBar {
 	
 	

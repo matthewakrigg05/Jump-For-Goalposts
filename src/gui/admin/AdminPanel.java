@@ -1,4 +1,4 @@
-package gui;
+package gui.admin;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;

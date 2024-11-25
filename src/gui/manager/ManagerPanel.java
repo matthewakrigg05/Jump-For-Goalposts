@@ -1,15 +1,15 @@
-package gui;
+package gui.manager;
 
 import javax.swing.JPanel;
 
-public class RefereePanel extends JPanel {
+public class ManagerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public RefereePanel() {
+	public ManagerPanel() {
 
 	}
 
