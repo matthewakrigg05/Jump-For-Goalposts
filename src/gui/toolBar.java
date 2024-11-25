@@ -19,14 +19,12 @@ import gui.referee.RefereePanel;
 
 public class toolBar extends JToolBar {
 	
-	
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
 	
 	public toolBar(JfgpWindow frame, String userType) {
 		
-		String user = userType.substring(0, 1).toUpperCase() + userType.substring(1); 
-		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", user + " View", "Log In", "Log Out"};
+		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", userType + " View", "Log In", "Log Out"};
 		
 		switch (userType) {
 		case "admin":
@@ -78,29 +76,12 @@ public class toolBar extends JToolBar {
 		if(!frame.isLoggedIn()) { add(toolBarButton[6]); }
 		else { add(toolBarButton[7]); }
 		
-		toolBarButton[0].addActionListener(e -> {
-			this.updateFrame(frame, new HomePanel());
-		});
-		
-		toolBarButton[1].addActionListener(e -> {
-			this.updateFrame(frame, new TeamsPanel());
-		});
-		
-		toolBarButton[2].addActionListener(e -> {
-			this.updateFrame(frame, new PlayersPanel());
-		});
-		
-		toolBarButton[3].addActionListener(e -> {
-			this.updateFrame(frame, new FixturesPanel());
-		});
-		
-		toolBarButton[4].addActionListener(e -> {
-			this.updateFrame(frame, new ResultsPanel());
-		});
-		
-		toolBarButton[5].addActionListener(e -> {
-			this.updateFrame(frame, rolePanel);
-		});
+		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
+		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
+		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel()); });
+		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
+		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
+		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });
 		
 		toolBarButton[6].addActionListener(e -> {
 			new logInWindow().setVisible(true);
