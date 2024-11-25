@@ -25,24 +25,32 @@ public class toolBar extends JToolBar {
 	
 	public toolBar(JfgpWindow frame, String userType) {
 		
-		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", userType + " View", "Log In", "Log Out"};
+		setBackground(new Color(0, 128, 128));
+		setFloatable(false);
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setBorder(new EmptyBorder(0, 0, 10, 20));
+		setOrientation(SwingConstants.VERTICAL);
+		
+		// toolbar buttons are indexed in this list
+		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
+				userType + " View", "Log In", "Log Out"};
+		toolBarButton = new JButton[toolBarButtonNames.length];
 		
 		switch (userType) {
-		case "Admin":
-			rolePanel =  new AdminPanel();
-			break;
-		
-		case "Referee":
-			rolePanel = new RefereePanel();
-			break;
+			case "Admin":
+				rolePanel =  new AdminPanel();
+				break;
 			
-		case "Manager":
-			rolePanel = new ManagerPanel();
-			break;
-		}
+			case "Referee":
+				rolePanel = new RefereePanel();
+				break;
+				
+			case "Manager":
+				rolePanel = new ManagerPanel();
+				break;
+			}
 		
-		toolBarButton = new JButton[8];
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < toolBarButtonNames.length; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
 			toolBarButton[i].setFont(new Font("Tahoma", Font.PLAIN, 24));
 			toolBarButton[i].setForeground(new Color(192, 192, 192));
@@ -54,12 +62,6 @@ public class toolBar extends JToolBar {
 			toolBarButton[i].setBorder(new EmptyBorder(4, 5, 0, 0));
 			toolBarButton[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
-		
-		setBackground(new Color(0, 128, 128));
-		setFloatable(false);
-		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setBorder(new EmptyBorder(0, 0, 10, 20));
-		setOrientation(SwingConstants.VERTICAL);
 
 		JSeparator toolBarSep = new JSeparator();
 		toolBarSep.setOrientation(SwingConstants.VERTICAL);
