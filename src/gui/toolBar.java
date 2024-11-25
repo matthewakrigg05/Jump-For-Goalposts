@@ -59,7 +59,7 @@ public class toolBar extends JToolBar {
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setBorder(new EmptyBorder(0, 0, 0, 20));
+		setBorder(new EmptyBorder(0, 0, 10, 20));
 		setOrientation(SwingConstants.VERTICAL);
 
 		JSeparator toolBarSep = new JSeparator();
