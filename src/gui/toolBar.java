@@ -27,15 +27,15 @@ public class toolBar extends JToolBar {
 		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results", userType + " View", "Log In", "Log Out"};
 		
 		switch (userType) {
-		case "admin":
+		case "Admin":
 			rolePanel =  new AdminPanel();
 			break;
 		
-		case "referee":
+		case "Referee":
 			rolePanel = new RefereePanel();
 			break;
 			
-		case "manager":
+		case "Manager":
 			rolePanel = new ManagerPanel();
 			break;
 		}
@@ -71,10 +71,11 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[4]);
 		add(toolBarSep);
 		
-		if (userType != "user") { add(toolBarButton[5]); }
-		
-		if(!frame.isLoggedIn()) { add(toolBarButton[6]); }
-		else { add(toolBarButton[7]); }
+		if (frame.isLoggedIn()) { 
+			add(toolBarButton[5]);
+			add(toolBarButton[7]); 
+			}
+		else { add(toolBarButton[6]); }
 		
 		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
 		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });

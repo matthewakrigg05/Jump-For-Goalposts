@@ -15,7 +15,6 @@ public class JfgpWindow extends JFrame {
 	private boolean isLoggedIn;
 	private String userType;
 	
-	//Create the application.
 	public JfgpWindow() {	
 		setLoggedIn(false);
 		setUserType("User");

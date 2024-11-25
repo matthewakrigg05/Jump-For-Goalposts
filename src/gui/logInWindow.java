@@ -87,13 +87,14 @@ public class logInWindow extends JFrame {
 		
 		backButton.addActionListener(e -> {
 			new JfgpWindow().setVisible(true);
-			this.dispose();
+			dispose();
 		});
 		
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			JFGPdb.logIn(this, email, password);
+			JFGPdb.logIn(email, password);
+			dispose();
 		});
 		
 		setVisible(true);

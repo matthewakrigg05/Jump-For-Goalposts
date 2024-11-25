@@ -29,7 +29,7 @@ public class JFGPdb implements dbInitMethods {
 		}
 	}
 	
-	public static void logIn(JFrame frame, String email, String password) {
+	public static void logIn(String email, String password) {
 		 try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
 	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
@@ -48,7 +48,6 @@ public class JFGPdb implements dbInitMethods {
 	                switch (userType) {
 	                	case "admin":
 	                		AdminAccount adminLogIn = new AdminAccount(userId, email, password);
-	                		frame.dispose();
 	                		new JfgpWindow(adminLogIn).setVisible(true);
 	                		break;
 	                		
@@ -69,7 +68,6 @@ public class JFGPdb implements dbInitMethods {
 	        	            
 	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password, ref);
 	                		
-	                		frame.dispose();
 	                		new JfgpWindow(refLogIn).setVisible(true);
 	                		break;
 	                		
@@ -87,14 +85,11 @@ public class JFGPdb implements dbInitMethods {
 	        	            		userId); 
 	        	            
 	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password, manager);
-	                		
-	                		frame.dispose();
 	                		new JfgpWindow(managerLogIn).setVisible(true);
 	                		break;
 	                	
 	                	default:
 	                		JfgpWindow window = new JfgpWindow();
-	                		frame.dispose();
 	                		window.setVisible(true);
 	                		JOptionPane.showMessageDialog(window, "Log In Failed");
 	                
@@ -102,7 +97,6 @@ public class JFGPdb implements dbInitMethods {
 	            }
 	            else { 
 		            JfgpWindow window = new JfgpWindow();
-	        		frame.dispose();
 	        		window.setVisible(true);
 	        		JOptionPane.showMessageDialog(window, "Log In Failed");
 	            }
