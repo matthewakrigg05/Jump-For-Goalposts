@@ -123,6 +123,7 @@ public class AdminPanel extends JfgpWindow {
 	protected void addActionListeners() {
 		panelButton[0].addActionListener(e -> { new leagueDialog().setVisible(true); });
 		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
+		panelButton[9].addActionListener(e -> { new refereesDialog().setVisible(true); });
 	}
 	
 	@Override

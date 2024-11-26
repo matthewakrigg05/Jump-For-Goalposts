@@ -59,13 +59,15 @@ public class JFGPdb implements dbInitMethods {
 	                		refStatement.setInt(1, userId);
 	        	            ResultSet refResult = refStatement.executeQuery();
 	        	            
-	        	            Referee ref = new Referee(
+	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);
+	                		
+	                		Referee ref = new Referee(
 	        	            		refResult.getInt("refereeId"),
 	        	            		refResult.getString("fname"),
 	        	            		refResult.getString("lName"), 
-	        	            		userId); 
-	        	            
-	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password, ref);
+	        	            		refResult.getString("preferredLocation"),
+	        	            		refLogIn
+	        	            		); 
 	                		
 	                		new JfgpWindow(refLogIn).setVisible(true);
 	                		break;
@@ -83,8 +85,8 @@ public class JFGPdb implements dbInitMethods {
 	        	            		managerResult.getString("lName"), 
 	        	            		userId); 
 	        	            
-	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password, manager);
-	                		new JfgpWindow(managerLogIn).setVisible(true);
+//	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password, manager);
+//	                		new JfgpWindow(managerLogIn).setVisible(true);
 	                		break;
 	                	
 	                	default:

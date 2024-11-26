@@ -1,39 +1,33 @@
 package gui.admin;
-import league.League;
 import league.Season;
-import leagueDB.leagueData;
 import leagueDB.seasonData;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class seasonDialog extends JDialog implements seasonData {
-		private List<String> seasonYears;
 		
+    List<Season> seasons = seasonData.getSeasons();
+    List<String> seasonSelection = new ArrayList<String>();
+    
 		public seasonDialog() { initialise(); }
 		
 		public void initialise() {
-//			League league = leagueData.getLeague();
 			setAlwaysOnTop(true);
 			setFocusable(true);
 	        setSize(450, 500);
 	        setModal(true);
 	        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//	        setTitle(league.getLeagueName());
-	        List<Season> seasons = seasonData.getSeasons();
-	        List<String> seasonSelection = new ArrayList<String>();
-	        
+	        setTitle("Seasons");
+
 	        for(Season i : seasons) {
 	        	seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd());
 	        }
@@ -132,7 +126,6 @@ public class seasonDialog extends JDialog implements seasonData {
 	        	dispose();
 	        });
 	        
-	        // need league name, season year, create new seasons - start date, teams in this season
 	        // dont allow duplicate teams, season is a set of team ids
 	        // edit button, save button
 		}
