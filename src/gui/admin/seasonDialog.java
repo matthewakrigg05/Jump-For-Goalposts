@@ -126,8 +126,9 @@ public class seasonDialog extends JDialog implements seasonData {
 	        	dispose();
 	        });
 	        
+	        
 	        deleteSeasonBut.addActionListener(e -> {
-//	        	seasonData.removeSeason(seasonSelect.getSelectedItem());
+	        	seasonData.removeSeason(seasons.get(seasonSelect.getSelectedIndex()));
 	        	dispose();
 	        });
 	        
