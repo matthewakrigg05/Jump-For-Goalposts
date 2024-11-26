@@ -1,4 +1,4 @@
-package leagueDB;
+package leagueDB.computeStats;
 
 public interface ComputeLeagueStatistics {
 
