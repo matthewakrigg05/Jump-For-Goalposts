@@ -35,11 +35,10 @@ public interface dbInitMethods {
             userAccPS.executeUpdate();
             
             String createSeasonsTable = "CREATE TABLE IF NOT EXISTS seasons(\r\n"
-            		+ "	seasonId INTEGER NOT NULL,\r\n"
-            		+ "	seasonStart DATE,\r\n"
-            		+ "	seasonEnd DATE,\r\n"
+            		+ "	seasonId INTEGER PRIMARY KEY AUTOINCREMENT,\r\n"
+            		+ "	seasonStart VARCHAR(4) NOT NULL,\r\n"
+            		+ "	seasonEnd VARCHAR(4) NOT NULL,\r\n"
             		+ "	leagueId INTEGER NOT NULL,\r\n"
-            		+ "	PRIMARY KEY (seasonId),\r\n"
             		+ "	FOREIGN KEY (leagueId) REFERENCES league(leagueId) \r\n"
             		+ "	);";
             		

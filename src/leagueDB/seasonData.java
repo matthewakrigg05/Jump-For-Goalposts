@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import league.League;
 import league.Season;
 
 public interface seasonData {
@@ -14,8 +12,7 @@ public interface seasonData {
 		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO seasons(seasonStart, seasonEnd, leagueId) "
-			        + "VALUES (?, ?, 1");
+			        "INSERT INTO seasons(seasonStart, seasonEnd, leagueId) VALUES (?, ?, 1);");
 			
 			seasonStatement.setString(1, start);
 			seasonStatement.setString(2, end);

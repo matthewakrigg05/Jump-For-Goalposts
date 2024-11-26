@@ -27,6 +27,10 @@ public class Season {
 	public void setSeasonStart(String seasonYear) {
 		this.seasonStart = seasonYear;
 	}
+	
+	public String getSeasonStartEnd() {
+		return this.seasonStart + "/" + this.seasonEnd;
+	}
 
 	public Team[] getTeams() {
 		return teams;

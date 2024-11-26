@@ -1,5 +1,6 @@
 package gui.admin;
 import league.League;
+import league.Season;
 import leagueDB.leagueData;
 import leagueDB.seasonData;
 import javax.swing.JDialog;
@@ -7,15 +8,18 @@ import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.Window.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class seasonDialog extends JDialog implements seasonData {
-	private JTextField startYearField;
-	private JTextField seasonEndField;
+		private List<String> seasonYears;
 		
 		public seasonDialog() { initialise(); }
 		
@@ -23,11 +27,17 @@ public class seasonDialog extends JDialog implements seasonData {
 //			League league = leagueData.getLeague();
 			setAlwaysOnTop(true);
 			setFocusable(true);
-	        setSize(450, 400);
+	        setSize(450, 500);
 	        setModal(true);
 	        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //	        setTitle(league.getLeagueName());
+	        List<Season> seasons = seasonData.getSeasons();
+	        List<String> seasonSelection = new ArrayList<String>();
 	        
+	        for(Season i : seasons) {
+	        	seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd());
+	        }
+	       
 	        GridBagLayout seasonDialogLayout = new GridBagLayout();
 	        seasonDialogLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 	        seasonDialogLayout.columnWidths = new int[] {50, 50, 100, 100, 50};
@@ -63,23 +73,24 @@ public class seasonDialog extends JDialog implements seasonData {
 	        gbc_seasonLabel.gridy = 1;
 	        getContentPane().add(seasonLabel, gbc_seasonLabel);
 	        
-	        startYearField = new JTextField();
+	        JTextField seasonStartField = new JTextField();
 	        GridBagConstraints gbc_startYearField = new GridBagConstraints();
 	        gbc_startYearField.insets = new Insets(0, 0, 5, 5);
 	        gbc_startYearField.fill = GridBagConstraints.HORIZONTAL;
 	        gbc_startYearField.gridx = 1;
 	        gbc_startYearField.gridy = 2;
-	        getContentPane().add(startYearField, gbc_startYearField);
-	        startYearField.setColumns(10);
+	        getContentPane().add(seasonStartField, gbc_startYearField);
+	        seasonStartField.setColumns(10);
 	        
-	        JComboBox seasonSelect = new JComboBox();
+	        JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+	       
 	        GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
 	        gbc_seasonSelect.insets = new Insets(0, 0, 5, 0);
 	        gbc_seasonSelect.fill = GridBagConstraints.HORIZONTAL;
 	        gbc_seasonSelect.gridx = 3;
 	        gbc_seasonSelect.gridy = 2;
 	        getContentPane().add(seasonSelect, gbc_seasonSelect);
-	        
+
 	        JLabel endYearLabel = new JLabel("Season End Year");
 	        GridBagConstraints gbc_endYearLabel = new GridBagConstraints();
 	        gbc_endYearLabel.insets = new Insets(0, 0, 5, 5);
@@ -94,7 +105,7 @@ public class seasonDialog extends JDialog implements seasonData {
 	        gbc_deleteSeasonBut.gridy = 3;
 	        getContentPane().add(deleteSeasonBut, gbc_deleteSeasonBut);
 	        
-	        seasonEndField = new JTextField();
+	        JTextField seasonEndField = new JTextField();
 	        GridBagConstraints gbc_seasonEndField = new GridBagConstraints();
 	        gbc_seasonEndField.insets = new Insets(0, 0, 5, 5);
 	        gbc_seasonEndField.fill = GridBagConstraints.HORIZONTAL;
@@ -111,10 +122,12 @@ public class seasonDialog extends JDialog implements seasonData {
 	        getContentPane().add(addBut, gbc_addBut);
 	        
 	        addBut.addActionListener(e -> {
+	        	seasonData.createSeason(seasonStartField.getText(), seasonEndField.getText());
 	        	dispose();
 	        });
 	        
 	        deleteSeasonBut.addActionListener(e -> {
+//	        	seasonData.removeSeason(seasonSelect.getSelectedItem());
 	        	dispose();
 	        });
 	        
