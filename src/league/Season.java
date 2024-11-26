@@ -1,29 +1,31 @@
 package league;
 
-public class Season extends League {
+public class Season {
 
 	private int seasonId;
-	private String seasonYear;
+	private String seasonStart;
+	private String seasonEnd;
 	private Team[] teams;
 	private Match[] fixtures;
 	private Result[] results;
 	
-	public Season(int id, String name, String seasonYear) {
-		super(id, name);
-		setSeasonYear(seasonYear);
+	public Season(int id, String seasonStart, String seasonEnd) {
+		setId(id);
+		setSeasonStart(seasonStart);
+		setSeasonEnd(seasonEnd);
 	}
 
 	// Standard getters and setters
-	public int getId() {
-		return this.seasonId;
+	public int getId() { return this.seasonId; }
+	
+	public void setId(int id) { this.seasonId = id; }
+
+	public String getSeasonStart() {
+		return seasonStart;
 	}
 
-	public String getSeasonYear() {
-		return seasonYear;
-	}
-
-	public void setSeasonYear(String seasonYear) {
-		this.seasonYear = seasonYear;
+	public void setSeasonStart(String seasonYear) {
+		this.seasonStart = seasonYear;
 	}
 
 	public Team[] getTeams() {
@@ -48,6 +50,14 @@ public class Season extends League {
 
 	public void setResults(Result[] results) {
 		this.results = results;
+	}
+
+	public String getSeasonEnd() {
+		return seasonEnd;
+	}
+
+	public void setSeasonEnd(String seasonEnd) {
+		this.seasonEnd = seasonEnd;
 	}
 
 }

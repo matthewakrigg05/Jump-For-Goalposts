@@ -6,7 +6,8 @@ import league.League;
 
 public interface leagueData {
 	
-	public static League getLeague(JFGPdb connection) {
+	public static League getLeague() {
+		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement leagueStatement = (connection.getConnection()).prepareStatement(
 			        "SELECT * FROM league WHERE leagueId = 1");
@@ -23,19 +24,17 @@ public interface leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
-		
 	}
 	
-	public static void changeLeagueName(JFGPdb connection, String newName) {
+	public static void changeLeagueName(String newName) {
+		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement leagueStatement = (connection.getConnection()).prepareStatement(
 			        "UPDATE league SET leagueName = ? WHERE leagueId = 1;");
 			
 			leagueStatement.setString(1, newName);
 			leagueStatement.executeUpdate();
-			
 			connection.closeConnection();
-
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		

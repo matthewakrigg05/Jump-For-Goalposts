@@ -16,14 +16,11 @@ import java.awt.Font;
 public class leagueDialog extends JDialog implements leagueData {
 
 	private League league;
-	private League league2;
 	
-	public leagueDialog() {
-		initialise();
-	}
+	public leagueDialog() { initialise(); }
 	
 	public void initialise() {
-		league = leagueData.getLeague(new JFGPdb());
+		league = leagueData.getLeague();
         
 		setFocusable(true);
         setSize(650, 375);
@@ -47,7 +44,7 @@ public class leagueDialog extends JDialog implements leagueData {
         getContentPane().add(saveButton);
         
         saveButton.addActionListener(e -> {
-        	leagueData.changeLeagueName(new JFGPdb(), newName.getText());
+        	leagueData.changeLeagueName(newName.getText());
         	newName.getText();
         	dispose();
         });

@@ -19,12 +19,9 @@ public class AdminPanel extends JfgpWindow {
 	String[] buttonNames = {"League", "Generate Fixtures", "Season", "Assign Match Referees", 
 			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"};
 	JButton[] panelButton;
-	
-
 
 	public AdminPanel() {
 		initialiseAdminPanel();
-		
 	}
 	
 	public void initialiseAdminPanel() {
@@ -32,8 +29,7 @@ public class AdminPanel extends JfgpWindow {
 		AdminPanel = new JPanel();
 		labelFieldInsets = new Insets(0, 0, 10, 25);
 		labelFont = (new Font("Tahoma", Font.PLAIN, 25));
-		gridBagLayout = new GridBagLayout();
-		AdminPanel.setLayout(gridBagLayout);
+		AdminPanel.setLayout(new GridBagLayout());
 		
 		addPanelComponents(AdminPanel);
 		addActionListeners();
@@ -41,7 +37,6 @@ public class AdminPanel extends JfgpWindow {
 	
 	@Override
 	protected void addPanelComponents(JPanel panel) {
-		
 		for(int i = 0; i < buttonNames.length; i++) {
 			panelButton[i] = new JButton(buttonNames[i]);
 			panelButton[i].setFont(labelFont);
@@ -126,13 +121,10 @@ public class AdminPanel extends JfgpWindow {
 	
 	@Override
 	protected void addActionListeners() {
-		panelButton[0].addActionListener(e -> {
-			new leagueDialog().setVisible(true);
-		});
+		panelButton[0].addActionListener(e -> { new leagueDialog().setVisible(true); });
+		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
 	}
 	
 	@Override
-	public JPanel getPanel() {
-		return this.AdminPanel;
-	}
+	public JPanel getPanel() { return this.AdminPanel; }
 }

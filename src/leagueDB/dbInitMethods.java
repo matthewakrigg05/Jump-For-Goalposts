@@ -87,6 +87,14 @@ public interface dbInitMethods {
             PreparedStatement teamsPS = conn.prepareStatement(createTeamsTable);
             teamsPS.executeUpdate();
             
+            String teamsSeason = "CREATE TABLE IF NOT EXISTS teamSeason (\r\n"
+            		+ "teamId INTEGER NOT NULL REFERENCES teams(teamId), \r\n"
+            		+ "seasonId INTEGER NOT NULL REFERENCES seasons(seasonId), \r\n"
+            		+ "PRIMARY KEY (teamId, seasonId)); \r\n";
+            
+            PreparedStatement teamSeasonPS = conn.prepareStatement(teamsSeason);
+            teamSeasonPS.executeUpdate();
+            
             String createStadiumsTable = "CREATE TABLE IF NOT EXISTS stadiums(\r\n"
             		+ "	stadiumId INTEGER NOT NULL,\r\n"
             		+ "	stadiumName VARCHAR(100),\r\n"
@@ -104,9 +112,13 @@ public interface dbInitMethods {
             		+ "	matchDate DATETIME,\r\n"
             		+ "	seasonId INTEGER NOT NULL,\r\n"
             		+ "	refereeId INTEGER,\r\n"
+            		+ " homeTeamId INTEGER NOT NULL,\r\n"
+            		+ " awayTeamId INTEGER NOT NULL,"
             		+ "	PRIMARY KEY (matchId),\r\n"
             		+ "	FOREIGN KEY (seasonId) REFERENCES seasons(seasonId), \r\n"
-            		+ "	FOREIGN KEY (refereeId) REFERENCES referees(refereeId) \r\n"
+            		+ "	FOREIGN KEY (refereeId) REFERENCES referees(refereeId), \r\n"
+            		+ " FOREIGN KEY (homeTeamId) REFERENCES teams(teamId), \r\n"
+            		+ " FOREIGN KEY (awayTeamId) REFERENCES teams(teamId)"
             		+ "	);";
             
             PreparedStatement matchesPS = conn.prepareStatement(createMatchesTable);
