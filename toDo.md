@@ -8,7 +8,6 @@
 
 - admin panel
 	- player dialog 27/11
-	- manager dialog 27/11
 	- gen fixtures dialog 28/11
 	- rec match dialog - this is for admin and referees 28/11
 
