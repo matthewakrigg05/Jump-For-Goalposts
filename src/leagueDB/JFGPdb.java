@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import accounts.*;
+import accounts.AdminAccount;
+import accounts.RefereeAccount;
+import accounts.ManagerAccount;
 import gui.JfgpWindow;
 
 
@@ -25,7 +27,10 @@ public class JFGPdb implements dbInitMethods {
 	}
 	
 	public static void logIn(String email, String password) {
-		 try {
+		JFGPdb db = new JFGPdb();
+		connection = db.getConnection();
+		
+		try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
 	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
 	            );
@@ -45,32 +50,34 @@ public class JFGPdb implements dbInitMethods {
 	                		new JfgpWindow(new AdminAccount(userId, email, password));
 	                		break;
 	                		
-	                	case "referee":	        	            
-	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);	                		
-	                		new JfgpWindow(refLogIn).setVisible(true);
+	                	case "referee":
+	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);
+	                		
+	                		new JfgpWindow(refLogIn);
 	                		break;
 	                		
 	                	case "manager":	        	       
 	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password);
-	                		new JfgpWindow(managerLogIn).setVisible(true);
+	                		new JfgpWindow(managerLogIn);
 	                		break;
 	                	
 	                	default:
-	                		break;
+	                		JfgpWindow window = new JfgpWindow();
+	                		JOptionPane.showMessageDialog(window, "Log In Failed");
 	                }
 	            }
 	            else { 
 		            JfgpWindow window = new JfgpWindow();
-	        		window.setVisible(true);
 	        		JOptionPane.showMessageDialog(window, "Log In Failed");
 	            }
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        } catch (SQLException e) { e.printStackTrace(); }
+		
 	}
 	
-	public Connection getConnection() { return connection; }
+	public Connection getConnection() {
+		return connection;
+	}
 	
 	public void closeConnection() {
 		try {

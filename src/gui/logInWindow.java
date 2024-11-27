@@ -10,9 +10,7 @@ public class logInWindow extends JFrame {
 	private JTextField emailField;
 	private JPasswordField passwordField;
 
-	public logInWindow() {
-		initialise();
-	}
+	public logInWindow() { initialise(); }
 
 	private void initialise() {
 		setBounds(100, 100, 450, 300);

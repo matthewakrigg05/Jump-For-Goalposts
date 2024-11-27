@@ -49,6 +49,7 @@ public class JfgpWindow extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(new toolBar(this), BorderLayout.WEST);
 		getContentPane().add(new HomePanel(), BorderLayout.CENTER);
+		setVisible(true);
 	}
 	
 	public boolean isLoggedIn() { return isLoggedIn; }
