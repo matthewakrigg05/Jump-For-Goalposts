@@ -70,7 +70,8 @@ public class JFGPdb implements dbInitMethods {
 		            JfgpWindow window = new JfgpWindow();
 	        		JOptionPane.showMessageDialog(window, "Log In Failed");
 	            }
-
+	            
+	            db.closeConnection();
 	        } catch (SQLException e) { e.printStackTrace(); }
 		
 	}

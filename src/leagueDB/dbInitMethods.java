@@ -58,7 +58,7 @@ public interface dbInitMethods {
             
             String createStatsTable = "CREATE TABLE IF NOT EXISTS statsForPlayerOrTeam(\r\n"
             		+ "	statsId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	assits INT(4),\r\n"
+            		+ "	assists INT(4),\r\n"
             		+ "	goals INT(4),\r\n"
             		+ "	fouls INT(4),\r\n"
             		+ "	yellowCards INT(4),\r\n"
@@ -71,11 +71,23 @@ public interface dbInitMethods {
             PreparedStatement statsPS = conn.prepareStatement(createStatsTable);
             statsPS.executeUpdate();
             
+            String createStadiumsTable = "CREATE TABLE IF NOT EXISTS stadiums(\r\n"
+            		+ "	stadiumId INTEGER NOT NULL PRIMARY KEY,\r\n"
+            		+ "	stadiumName VARCHAR(100),\r\n"
+            		+ "	capacity VARCHAR(6),\r\n"
+            		+ "	stadiumLocation VARCHAR(250)\r\n"
+            		+ "	);";
+            
+            PreparedStatement stadiumsPS = conn.prepareStatement(createStadiumsTable);
+            stadiumsPS.executeUpdate();
+            
             String createTeamsTable = "CREATE TABLE IF NOT EXISTS teams(\r\n"
             		+ "	teamId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	teamName VARCHAR(100),\r\n"
-            		+ "	statsId INTEGER NOT NULL,\r\n"
+            		+ "	statsId INTEGER NOT NULL, \r\n"
+            		+ " stadiumId INTEGER, \r\n"
             		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId)\r\n"
+            		+ "	FOREIGN KEY (stadiumId) REFERENCES stadiums(stadiumId)"
             		+ "	);";
             
             PreparedStatement teamsPS = conn.prepareStatement(createTeamsTable);
@@ -89,16 +101,6 @@ public interface dbInitMethods {
             
             PreparedStatement teamSeasonPS = conn.prepareStatement(teamsSeason);
             teamSeasonPS.executeUpdate();
-            
-            String createStadiumsTable = "CREATE TABLE IF NOT EXISTS stadiums(\r\n"
-            		+ "	stadiumId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	stadiumName VARCHAR(100),\r\n"
-            		+ "	capacity VARCHAR(6),\r\n"
-            		+ "	stadiumLocation VARCHAR(250)\r\n"
-            		+ "	);";
-            
-            PreparedStatement stadiumsPS = conn.prepareStatement(createStadiumsTable);
-            stadiumsPS.executeUpdate();
             
             String createMatchesTable = "CREATE TABLE IF NOT EXISTS matches(\r\n"
             		+ "	matchId INTEGER NOT NULL PRIMARY KEY,\r\n"
