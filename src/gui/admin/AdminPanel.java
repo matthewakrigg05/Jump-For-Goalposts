@@ -1,44 +1,38 @@
 package gui.admin;
 import javax.swing.JPanel;
-
 import gui.JfgpWindow;
-
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import java.awt.Font;
+import gui.panel;
 
-public class AdminPanel extends JfgpWindow {
-	
-	JPanel AdminPanel;
-	Insets labelFieldInsets;
-	Font labelFont;
-	GridBagLayout gridBagLayout;
-	String[] buttonNames = {"League", "Generate Fixtures", "Season", "Assign Match Referees", 
-			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"};
-	JButton[] panelButton;
+public class AdminPanel extends panel {
 
-	public AdminPanel() {
-		initialiseAdminPanel();
-	}
+	public AdminPanel() { initialise(); }
 	
-	public void initialiseAdminPanel() {
-		panelButton = new JButton[buttonNames.length];
-		AdminPanel = new JPanel();
+	@Override
+	public void initialise() {
+		buttonNames = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", "Assign Match Referees", 
+				"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"));
+		panelButton = new JButton[buttonNames.size()];
+		panel = new JPanel();
 		labelFieldInsets = new Insets(0, 0, 10, 25);
 		labelFont = (new Font("Tahoma", Font.PLAIN, 25));
-		AdminPanel.setLayout(new GridBagLayout());
+		panel.setLayout(new GridBagLayout());
 		
-		addPanelComponents(AdminPanel);
+		addPanelComponents(getPanel());
 		addActionListeners();
 	}
 	
 	@Override
 	protected void addPanelComponents(JPanel panel) {
-		for(int i = 0; i < buttonNames.length; i++) {
-			panelButton[i] = new JButton(buttonNames[i]);
+		for(int i = 0; i < buttonNames.size(); i++) {
+			panelButton[i] = new JButton(buttonNames.get(i));
 			panelButton[i].setFont(labelFont);
 		}
 		
@@ -126,6 +120,4 @@ public class AdminPanel extends JfgpWindow {
 		panelButton[9].addActionListener(e -> { new refereesDialog().setVisible(true); });
 	}
 	
-	@Override
-	public JPanel getPanel() { return this.AdminPanel; }
 }

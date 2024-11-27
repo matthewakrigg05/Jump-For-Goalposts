@@ -55,13 +55,6 @@ public class JfgpWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	protected void addPanelComponents(JPanel panel) {}
-	
-	protected void addActionListeners() {}
-	
-	protected JPanel getPanel() {
-		return null;}
-
 	public boolean isLoggedIn() { return isLoggedIn; }
 
 	public void setLoggedIn(boolean isLoggedIn) { this.isLoggedIn = isLoggedIn; }
