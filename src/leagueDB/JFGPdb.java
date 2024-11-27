@@ -5,13 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import accounts.AdminAccount;
-import accounts.RefereeAccount;
-import accounts.ManagerAccount;
+import accounts.*;
 import gui.JfgpWindow;
-import league.League;
-import leagueMembers.Referee;
-import leagueMembers.Manager;
 
 
 public class JFGPdb implements dbInitMethods {
@@ -29,7 +24,7 @@ public class JFGPdb implements dbInitMethods {
 		}
 	}
 	
-	public void logIn(String email, String password) {
+	public static void logIn(String email, String password) {
 		 try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
 	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
@@ -50,50 +45,18 @@ public class JFGPdb implements dbInitMethods {
 	                		new JfgpWindow(new AdminAccount(userId, email, password));
 	                		break;
 	                		
-	                	case "referee":
-	                		
-	                		PreparedStatement refStatement = connection.prepareStatement(
-	        	                    "SELECT * FROM referees WHERE userId = ?"
-	        	            );
-
-	                		refStatement.setInt(1, userId);
-	        	            ResultSet refResult = refStatement.executeQuery();
-	        	            
-	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);
-	                		
-	                		Referee ref = new Referee(
-	        	            		refResult.getInt("refereeId"),
-	        	            		refResult.getString("fname"),
-	        	            		refResult.getString("lName"), 
-	        	            		refResult.getString("preferredLocation"),
-	        	            		refLogIn
-	        	            		); 
-	                		
+	                	case "referee":	        	            
+	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);	                		
 	                		new JfgpWindow(refLogIn).setVisible(true);
 	                		break;
 	                		
-	                	case "manager":
-	                		PreparedStatement managerStatement = connection.prepareStatement(
-	        	                    "SELECT * FROM managers WHERE userId = ?");
-
-	                		managerStatement.setInt(1, userId);
-	        	            ResultSet managerResult = managerStatement.executeQuery();
-	        	            
-	        	            Manager manager = new Manager(
-	        	            		managerResult.getInt("managerId"),
-	        	            		managerResult.getString("fname"),
-	        	            		managerResult.getString("lName"), 
-	        	            		userId); 
-	        	            
-//	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password, manager);
-//	                		new JfgpWindow(managerLogIn).setVisible(true);
+	                	case "manager":	        	       
+	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password);
+	                		new JfgpWindow(managerLogIn).setVisible(true);
 	                		break;
 	                	
 	                	default:
-	                		JfgpWindow window = new JfgpWindow();
-	                		window.setVisible(true);
-	                		JOptionPane.showMessageDialog(window, "Log In Failed");
-	                
+	                		break;
 	                }
 	            }
 	            else { 
@@ -107,9 +70,7 @@ public class JFGPdb implements dbInitMethods {
 	        }
 	}
 	
-	public Connection getConnection() {
-		return connection;
-	}
+	public Connection getConnection() { return connection; }
 	
 	public void closeConnection() {
 		try {

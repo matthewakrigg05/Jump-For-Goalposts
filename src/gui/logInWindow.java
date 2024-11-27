@@ -1,20 +1,10 @@
 package gui;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
+import javax.swing.*;
 import leagueDB.JFGPdb;
+import java.awt.*;
 
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.sql.Connection;
 
-import javax.swing.JPasswordField;
-import java.awt.Dimension;
-
+@SuppressWarnings("serial")
 public class logInWindow extends JFrame {
 	
 	private JTextField emailField;
@@ -25,7 +15,6 @@ public class logInWindow extends JFrame {
 	}
 
 	private void initialise() {
-		JFGPdb dbCon = new JFGPdb(); 
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -97,9 +86,7 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			
-			dbCon.logIn(email, password);
-			dbCon.closeConnection();
+			JFGPdb.logIn(email, password);
 			dispose();
 		});
 		
