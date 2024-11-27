@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public abstract class panel extends JPanel {
 	
 	private JPanel panel;

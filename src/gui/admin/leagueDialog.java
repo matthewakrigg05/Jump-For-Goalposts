@@ -1,16 +1,8 @@
 package gui.admin;
 import league.League;
-import leagueDB.JFGPdb;
 import leagueDB.leagueData;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-
+import javax.swing.*;
 import java.awt.FlowLayout;
-import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class leagueDialog extends JDialog implements leagueData {

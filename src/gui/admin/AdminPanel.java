@@ -1,33 +1,27 @@
 package gui.admin;
-import javax.swing.JPanel;
-import gui.JfgpWindow;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.*;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import java.awt.Font;
 import gui.panel;
 
+@SuppressWarnings("serial")
 public class AdminPanel extends panel {
+	
+	List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", "Assign Match Referees", 
+			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"));
 
 	public AdminPanel() { initialise(); }
 	
 	@Override
 	public void initialise() {
-		
-		List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", "Assign Match Referees", 
-				"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees"));
 		setButtonNames(adminButtons);
-		
-		panelButton = new JButton[getButtonNames().size()];
 		setPanel(new JPanel());
+		getPanel().setLayout(new GridBagLayout());
 		setInsets(new Insets(0, 0, 10, 25));
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		getPanel().setLayout(new GridBagLayout());
 		
+		panelButton = new JButton[getButtonNames().size()];
 		addPanelComponents(getPanel());
 		addActionListeners();
 	}
@@ -42,7 +36,7 @@ public class AdminPanel extends panel {
 		JLabel leagueOptLabel = new JLabel("League Options:");
 		leagueOptLabel.setFont(getFont());
 		GridBagConstraints gbc_leagueOptLabel = new GridBagConstraints();
-		gbc_leagueOptLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_leagueOptLabel.insets = getInsets();
 		gbc_leagueOptLabel.gridx = 1;
 		gbc_leagueOptLabel.gridy = 1;
 		panel.add(leagueOptLabel, gbc_leagueOptLabel);
@@ -119,8 +113,14 @@ public class AdminPanel extends panel {
 	@Override
 	protected void addActionListeners() {
 		panelButton[0].addActionListener(e -> { new leagueDialog().setVisible(true); });
+		panelButton[1].addActionListener(e -> { new genFixturesDialog().setVisible(true); });
 		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
+		panelButton[3].addActionListener(e -> { new assignRefDialog().setVisible(true); });
+		panelButton[4].addActionListener(e -> { new teamDialog().setVisible(true); });
+		panelButton[5].addActionListener(e -> { new recMatchesDialog().setVisible(true); });
+		panelButton[6].addActionListener(e -> { new managersDialog().setVisible(true); });
+		panelButton[7].addActionListener(e -> { new updateDialog().setVisible(true); });
+		panelButton[8].addActionListener(e -> { new playersDialog().setVisible(true); });
 		panelButton[9].addActionListener(e -> { new refereesDialog().setVisible(true); });
-	}
-	
+	}	
 }

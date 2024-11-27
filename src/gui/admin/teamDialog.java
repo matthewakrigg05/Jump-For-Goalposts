@@ -1,5 +1,9 @@
 package gui.admin;
 
-public class teamDialog {
+import javax.swing.JDialog;
+
+public class teamDialog extends JDialog {
+	
+	public teamDialog() {}
 
 }

@@ -1,5 +1,7 @@
 package gui.admin;
 
-public class playersDialog {
+import javax.swing.JDialog;
 
+public class playersDialog extends JDialog {
+	public playersDialog() {}
 }

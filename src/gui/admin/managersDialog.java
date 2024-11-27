@@ -1,5 +1,7 @@
 package gui.admin;
 
-public class managersDialog {
+import javax.swing.JDialog;
 
+public class managersDialog extends JDialog {
+	public managersDialog() {}
 }
