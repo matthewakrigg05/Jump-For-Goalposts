@@ -35,6 +35,20 @@ public interface teamData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	public static void removeTeam(Team team) {
+		JFGPdb connection = new JFGPdb();
+		try {
+			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
+			        "DELETE FROM teams WHERE teamId = ?;");
+			
+			seasonStatement.setInt(1, team.getTeamId());
+			seasonStatement.executeUpdate();
+			
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+	}
+	
 	public static List<Team> getAllTeams() {
 		JFGPdb connection = new JFGPdb();
 		List<Team> teams = new ArrayList<Team>();
@@ -61,7 +75,24 @@ public interface teamData {
 		return null;
 	}
 	
-	public static Team getTeam() { return null; }
+	public static Team getTeam(int id) { 
+		JFGPdb connection = new JFGPdb();
+		Team team = null;
+		
+		try {
+			PreparedStatement teamStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM teams WHERE teamId = ?;");
+			
+			teamStatement.setInt(1, id);
+			ResultSet teamResult = teamStatement.executeQuery();
+			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
+			
+			connection.closeConnection();					
+			return team;
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
 	
 	public static int createStats(Connection connection) {
 		

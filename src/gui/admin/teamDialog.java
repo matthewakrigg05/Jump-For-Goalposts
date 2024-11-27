@@ -108,11 +108,11 @@ public class teamDialog extends JDialog implements teamData {
         	teamData.createTeam(teamNameField.getText());
         	dispose();
         });
-//        
-//        
-//        delRefBut.addActionListener(e -> {
-//        	refereeData.removeReferee(referees.get(refSelect.getSelectedIndex()));
-//        	dispose();
-//        });
+        
+        
+        delRefBut.addActionListener(e -> {
+        	teamData.removeTeam(teams.get(teamSelect.getSelectedIndex()));
+        	dispose();
+        });
 	}
 }
