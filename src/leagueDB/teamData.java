@@ -24,12 +24,13 @@ public interface teamData {
 			
 			int newStatsId = createStats(connection);
 			
-			PreparedStatement refAccStatement = (connection).prepareStatement(
+			PreparedStatement teamStatement = (connection).prepareStatement(
 			        "INSERT INTO teams(teamName, statsId) VALUES (?, ?);");
 			
-			refAccStatement.setString(1, teamName);
-			refAccStatement.setInt(2, newStatsId);
-			refAccStatement.executeUpdate();
+			teamStatement.setString(1, teamName);
+			teamStatement.setInt(2, newStatsId);
+			teamStatement.executeUpdate();
+		
 			db.closeConnection();
 			
 		} catch (SQLException e) { e.printStackTrace(); }

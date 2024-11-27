@@ -35,15 +35,9 @@ public class Referee extends Person implements refereeData {
 	public String[] getMatchesToAttend() { return matchesToAttend; }
 	public void setMatchesToAttend(String[] matchesToAttend) { this.matchesToAttend = matchesToAttend; }
 
-	public int getUserId() {
-		return refereesAccount.getId();
-	}
+	public int getUserId() { return refereesAccount.getId(); }
 	
-	public int getRefUserId() {
-		return this.refAccId;
-	}
+	public int getRefUserId() { return this.refAccId; }
 	
-	public void setRefAcc(RefereeAccount refAcc) {
-		this.refereesAccount = refAcc;
-	}
+	public void setRefAcc(RefereeAccount refAcc) { this.refereesAccount = refAcc; }
 }

@@ -7,7 +7,6 @@
 	- compare to designs, make comments on design in comparison to what I have so far
 
 - admin panel
-	- team dialog 27/11
 	- player dialog 27/11
 	- manager dialog 27/11
 	- gen fixtures dialog 28/11

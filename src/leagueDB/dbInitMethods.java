@@ -158,7 +158,9 @@ public interface dbInitMethods {
             		+ "	lName VARCHAR(100),\r\n"
             		+ "	dob DATE,\r\n"
             		+ "	teamEmployeeId INTEGER,\r\n"
-            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId)\r\n"
+            		+ " userId INTEGER NOT NULL, \r\n"
+            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId),\r\n"
+            		+ " FOREIGN KEY (userId) REFERENCES userAccounts(userId) \r\n"
             		+ "	);";
             
             PreparedStatement managersPS = conn.prepareStatement(createManagersTable);

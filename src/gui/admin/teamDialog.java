@@ -109,7 +109,6 @@ public class teamDialog extends JDialog implements teamData {
         	dispose();
         });
         
-        
         delRefBut.addActionListener(e -> {
         	teamData.removeTeam(teams.get(teamSelect.getSelectedIndex()));
         	dispose();

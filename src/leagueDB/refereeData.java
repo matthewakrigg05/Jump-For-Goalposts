@@ -125,10 +125,7 @@ public interface refereeData {
 			
 			connection.closeConnection();
 			
-			for(Referee ref : referees) {
-				RefereeAccount refAcc = refereeData.getRefereeAccount(ref.getRefUserId());
-				ref.setRefAcc(refAcc);
-			}
+			for(Referee ref : referees) { ref.setRefAcc(getRefereeAccount(ref.getUserId())); }
 					
 			return referees;
 			
