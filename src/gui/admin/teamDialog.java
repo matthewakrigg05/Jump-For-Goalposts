@@ -3,6 +3,8 @@ package gui.admin;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,9 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import league.Team;
+import leagueDB.refereeData;
 import leagueDB.teamData;
+import leagueMembers.Referee;
 
 public class teamDialog extends JDialog implements teamData {
+	
+	List<Team> teams;
+    List<String> teamSelection = new ArrayList<String>();
 	
 	public teamDialog() { initialise(); }
 
@@ -24,6 +32,9 @@ public class teamDialog extends JDialog implements teamData {
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Teams");
+        
+        teams = teamData.getAllTeams();
+        for(Team i : teams) { teamSelection.add(i.getName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
         seasonDialogLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
@@ -70,7 +81,7 @@ public class teamDialog extends JDialog implements teamData {
         getContentPane().add(teamNameField, gbc_teamNameField);
         teamNameField.setColumns(10);
         
-        JComboBox teamSelect = new JComboBox();
+        JComboBox teamSelect = new JComboBox(teamSelection.toArray());
        
         GridBagConstraints gbc_teamSelect = new GridBagConstraints();
         gbc_teamSelect.insets = new Insets(0, 0, 5, 5);

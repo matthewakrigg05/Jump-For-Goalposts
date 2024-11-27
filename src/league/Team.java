@@ -20,7 +20,10 @@ public class Team {
 		setPlayers(players);
 	}
 	
-	public Team(int id, String name) {}
+	public Team(int id, String name) {
+		setTeamId(id);
+		setName(name);
+	}
 	
 	public int getTeamId() { return teamId; }
 	public void setTeamId(int teamId) { this.teamId = teamId; }

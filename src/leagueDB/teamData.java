@@ -3,11 +3,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import accounts.RefereeAccount;
 import league.Stadium;
 import league.Team;
 import leagueMembers.Manager;
+import leagueMembers.Referee;
 
 public interface teamData {
 
@@ -28,10 +31,35 @@ public interface teamData {
 			refAccStatement.setInt(2, newStatsId);
 			refAccStatement.executeUpdate();
 			db.closeConnection();
+			
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static List<Team> getAllTeams() { return null; }
+	public static List<Team> getAllTeams() {
+		JFGPdb connection = new JFGPdb();
+		List<Team> teams = new ArrayList<Team>();
+		
+		try {
+			PreparedStatement teamsStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM teams");
+			ResultSet teamResult = teamsStatement.executeQuery();
+			
+			while(teamResult.next()) {
+				Team team = new Team(
+						teamResult.getInt("teamId"),
+						teamResult.getString("teamName")
+		        		);
+				
+				teams.add(team);
+			}
+			
+			connection.closeConnection();					
+			return teams;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
 	
 	public static Team getTeam() { return null; }
 	
