@@ -1,8 +1,8 @@
 - Get league table functionality working
 	- take teams and order them based on some calculation of their points
 	
-- general other
-	- tidy up code in completed dialogs where possible
+- general other things to keep checking up on
+	- tidy up code where possible
 	- try make UIs look a little more user-friendly
 	- compare to designs, make comments on design in comparison to what I have so far
 
