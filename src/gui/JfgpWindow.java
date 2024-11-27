@@ -43,12 +43,12 @@ public class JfgpWindow extends JFrame {
 	}
 	 
 	private void initialise() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setBackground(new Color(192, 192, 192));
-		setResizable(true);
 		setMinimumSize(new Dimension(600, 450));
 		setBounds(100, 100, 450, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(new toolBar(this), BorderLayout.WEST);
 		getContentPane().add(new HomePanel(), BorderLayout.CENTER);
