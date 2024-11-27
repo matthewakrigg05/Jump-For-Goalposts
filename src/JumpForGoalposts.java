@@ -8,6 +8,6 @@ public class JumpForGoalposts {
 		JFGPdb dbConnection = new JFGPdb();
 		dbConnection.closeConnection();
 		
-		try { new JfgpWindow(); } catch (Exception e) { e.printStackTrace(); }
+		try { new JfgpWindow().setVisible(true); } catch (Exception e) { e.printStackTrace(); }
 	}
 }
