@@ -25,9 +25,7 @@ public interface refereeData {
 	        		refAccResult.getString("emailAddress"),
 	        		refAccResult.getString("password")
 	        		);
-	        
 	        connection.closeConnection();
-	        		
 	        return refAcc;
 	        
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
@@ -125,7 +123,7 @@ public interface refereeData {
 			
 			connection.closeConnection();
 			
-			for(Referee ref : referees) { ref.setRefAcc(getRefereeAccount(ref.getUserId())); }
+			for(Referee ref : referees) { ref.setRefAcc(getRefereeAccount(ref.getRefUserId())); }
 					
 			return referees;
 			

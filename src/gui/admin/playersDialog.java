@@ -29,10 +29,16 @@ public class playersDialog extends JDialog implements playerData {
 	    setSize(450, 500);
 	    setModal(true);
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	    setTitle("Referees");
+	    setTitle("Players");
 
 	        attackers = playerData.getAllAttackers(); 
+	        midfielders = playerData.getAllMidfielders();
+	        defenders = playerData.getAllDefenders();
+	        goalkeepers = playerData.getAllGoalkeepers();
 	        for(Attacker i : attackers) { playerSelection.add(i.getFullName()); }
+	        for(Midfielder i : midfielders) { playerSelection.add(i.getFullName()); }
+	        for(Defender i : defenders) { playerSelection.add(i.getFullName()); }
+	        for(Goalkeeper i : goalkeepers) { playerSelection.add(i.getFullName()); }
 	       
 	        GridBagLayout seasonDialogLayout = new GridBagLayout();
 	        seasonDialogLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
@@ -40,14 +46,14 @@ public class playersDialog extends JDialog implements playerData {
 	        seasonDialogLayout.rowHeights = new int[] {50, 50, 50, 50, 50, 50, 0, 0, 50};
 	        getContentPane().setLayout(seasonDialogLayout);
 	        
-	        JLabel createRefereeLabel = new JLabel("Create Referees");
+	        JLabel createRefereeLabel = new JLabel("Create Player");
 	        GridBagConstraints gbc_createRefereeLabel = new GridBagConstraints();
 	        gbc_createRefereeLabel.insets = new Insets(0, 0, 5, 5);
 	        gbc_createRefereeLabel.gridx = 1;
 	        gbc_createRefereeLabel.gridy = 0;
 	        getContentPane().add(createRefereeLabel, gbc_createRefereeLabel);
 	        
-	        JLabel deleteRefereeLabel = new JLabel("Delete Referee");
+	        JLabel deleteRefereeLabel = new JLabel("Delete Player");
 	        GridBagConstraints gbc_deleteRefereeLabel = new GridBagConstraints();
 	        gbc_deleteRefereeLabel.insets = new Insets(0, 0, 5, 5);
 	        gbc_deleteRefereeLabel.fill = GridBagConstraints.BOTH;
@@ -78,7 +84,7 @@ public class playersDialog extends JDialog implements playerData {
 	        getContentPane().add(firstNameField, gbc_fNameFileld);
 	        firstNameField.setColumns(10);
 	        
-	        JComboBox teamSelect = new JComboBox(teamSelection.toArray());
+	        JComboBox teamSelect = new JComboBox(playerSelection.toArray());
 	       
 	        GridBagConstraints gbc_teamSelect = new GridBagConstraints();
 	        gbc_teamSelect.insets = new Insets(0, 0, 5, 0);
@@ -119,6 +125,24 @@ public class playersDialog extends JDialog implements playerData {
 	        getContentPane().add(lastNameField, gbc_lastNameField);
 	        lastNameField.setColumns(10);
 	        
+	        String[] positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper"};
+	        
+	        JLabel posSelectLabel = new JLabel("Position:");
+	        GridBagConstraints gbc_posSelectLabel = new GridBagConstraints();
+	        gbc_posSelectLabel.insets = new Insets(0, 0, 5, 5);
+	        gbc_posSelectLabel.gridx = 1;
+	        gbc_posSelectLabel.gridy = 5;
+	        getContentPane().add(posSelectLabel, gbc_posSelectLabel);
+	        
+	        JComboBox positionSelect = new JComboBox(positions);
+		       
+	        GridBagConstraints gbc_positionSelect = new GridBagConstraints();
+	        gbc_positionSelect.insets = new Insets(0, 0, 5, 0);
+	        gbc_positionSelect.fill = GridBagConstraints.HORIZONTAL;
+	        gbc_positionSelect.gridx = 1;
+	        gbc_positionSelect.gridy = 6;
+	        getContentPane().add(positionSelect, gbc_positionSelect);
+	        
 	        JButton addBut = new JButton("Create");
 	        GridBagConstraints gbc_addBut = new GridBagConstraints();
 	        gbc_addBut.insets = new Insets(0, 0, 0, 5);
@@ -126,15 +150,15 @@ public class playersDialog extends JDialog implements playerData {
 	        gbc_addBut.gridy = 8;
 	        getContentPane().add(addBut, gbc_addBut);
 	        
-//	        addBut.addActionListener(e -> {
-//	        	refereeData.createRefereeAccount(firstNameField.getText(), firstNameField.getText(), cityField.getText());
-//	        	dispose();
-//	        });
-//	        
-//	        
-//	        delRefBut.addActionListener(e -> {
-//	        	refereeData.removeReferee(referees.get(refSelect.getSelectedIndex()));
-//	        	dispose();
-//	        });
+	        addBut.addActionListener(e -> {
+	        	playerData.createPlayer(firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
+	        	dispose();
+	        });
+	        
+	        
+	        delRefBut.addActionListener(e -> {
+	        	
+	        	dispose();
+	        });
 		}
 }

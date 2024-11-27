@@ -23,11 +23,9 @@ abstract class Person {
 		this.lName = lName;
 	}
 	
-	public void updateStatistics() {
-		
-	}
+	public void updateStatistics() {}
 	
-	public String getFullName() { return String.format(this.getFName(), this.getLName()); }
+	public String getFullName() { return String.format("%1$s %2$s", getFName(), getLName()); }
 	
 	//Standard getters and setters
 	public String getFName() { return this.fName; }

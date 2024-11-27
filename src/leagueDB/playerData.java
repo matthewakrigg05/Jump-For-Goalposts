@@ -1,5 +1,4 @@
 package leagueDB;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,14 +103,15 @@ public interface playerData {
 	public static void createPlayer(String fname, String lname, String positionType) {
 		JFGPdb connection = new JFGPdb();
 		try {
-			PreparedStatement refStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO referees(fName, lName, positionType) VALUES (?, ?, ?);");
+			int statsId = teamData.createStats(connection.getConnection());
+			PreparedStatement playerStatement = (connection.getConnection()).prepareStatement(
+			        "INSERT INTO players(fName, lName, positionType, statsId) VALUES (?, ?, ?, ?);");
 			
-			refStatement.setString(1, fname);
-			refStatement.setString(2, lname);
-			refStatement.setString(3, positionType);
-			refStatement.executeUpdate();
-			
+			playerStatement.setString(1, fname);
+			playerStatement.setString(2, lname);
+			playerStatement.setString(3, positionType);
+			playerStatement.setInt(4, statsId);
+			playerStatement.executeUpdate();
 			connection.closeConnection();
 			
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
@@ -128,7 +128,7 @@ public interface playerData {
 			
 			while(attackerResult.next()) {
 				Attacker attacker = new Attacker(
-						attackerResult.getInt("refereeId"),
+						attackerResult.getInt("playerId"),
 						attackerResult.getString("fname"),
 		        		attackerResult.getString("lName")
 		        		);
@@ -149,12 +149,12 @@ public interface playerData {
 		
 		try {
 			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
-			        "SELECT * FROM players WHERE positionType = 'attacker';");
+			        "SELECT * FROM players WHERE positionType = 'midfielder';");
 			ResultSet midfielderResult = attackerStatement.executeQuery();
 			
 			while(midfielderResult.next()) {
 				Midfielder midfielder = new Midfielder(
-						midfielderResult.getInt("refereeId"),
+						midfielderResult.getInt("playerId"),
 						midfielderResult.getString("fname"),
 						midfielderResult.getString("lName")
 		        		);
@@ -168,32 +168,79 @@ public interface playerData {
 		
 		return null;
 	}
-	
-	public static List<Defender> getAllDefender() {
+
+	public static List<Defender> getAllDefenders() {
 		JFGPdb connection = new JFGPdb();
 		List<Defender> defenders = new ArrayList<Defender>();
 		
 		try {
 			PreparedStatement defenderStatement = (connection.getConnection()).prepareStatement(
-			        "SELECT * FROM players WHERE positionType = 'attacker';");
+			        "SELECT * FROM players WHERE positionType = 'defender';");
 			ResultSet defenderResult = defenderStatement.executeQuery();
 			
 			while(defenderResult.next()) {
 				Defender defender = new Defender(
-						defenderResult.getInt("refereeId"),
+						defenderResult.getInt("playerId"),
 						defenderResult.getString("fname"),
 						defenderResult.getString("lName")
 		        		);
-				
 				defenders.add(defender);
 			}
 			connection.closeConnection();
 			return defenders;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return null;
+	}
+	
+	public static List<Goalkeeper> getAllGoalkeepers() {
+		JFGPdb connection = new JFGPdb();
+		List<Goalkeeper> goalkeepers = new ArrayList<Goalkeeper>();
+		
+		try {
+			PreparedStatement goalkeeperStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM players WHERE positionType = 'goalkeeper';");
+			ResultSet goalkeeperResult = goalkeeperStatement.executeQuery();
+			
+			while(goalkeeperResult.next()) {
+				Goalkeeper goalkeeper = new Goalkeeper(
+						goalkeeperResult.getInt("playerId"),
+						goalkeeperResult.getString("fname"),
+						goalkeeperResult.getString("lName")
+		        		);
+				goalkeepers.add(goalkeeper);
+			}
+			connection.closeConnection();
+			return goalkeepers;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return null;
+	}
+	
+	public static List<Attacker> getTeamAttackers() {
+		JFGPdb connection = new JFGPdb();
+		List<Attacker> attackers = new ArrayList<Attacker>();
+		
+		try {
+			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM players WHERE positionType = 'attacker';");
+			ResultSet attackerResult = attackerStatement.executeQuery();
+			
+			while(attackerResult.next()) {
+				Attacker attacker = new Attacker(
+						attackerResult.getInt("playerId"),
+						attackerResult.getString("fname"),
+		        		attackerResult.getString("lName")
+		        		);
+				
+				attackers.add(attacker);
+			}
+			connection.closeConnection();
+			return attackers;
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
 	}
+	
 	
 	public static void removePlayer(int playerId) {
 		JFGPdb connection = new JFGPdb();

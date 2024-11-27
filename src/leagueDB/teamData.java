@@ -64,10 +64,8 @@ public interface teamData {
 						teamResult.getInt("teamId"),
 						teamResult.getString("teamName")
 		        		);
-				
 				teams.add(team);
 			}
-			
 			connection.closeConnection();					
 			return teams;
 			
@@ -96,9 +94,7 @@ public interface teamData {
 	}
 	
 	public static int createStats(Connection connection) {
-		
 		try {
-			
 			PreparedStatement statsStatement = (connection).prepareStatement(
 			        "INSERT INTO statsForPlayerOrTeam(assists, goals, fouls, yellowCards, redCards, wins, draws, losses) "
 			        + "VALUES (0, 0, 0, 0, 0, 0, 0, 0);");
@@ -111,7 +107,6 @@ public interface teamData {
 			int statsId = id.getInt("statsId");
 
 			return statsId;
-			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return 0;

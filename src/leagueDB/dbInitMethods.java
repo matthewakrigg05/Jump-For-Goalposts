@@ -142,10 +142,12 @@ public interface dbInitMethods {
             matchEventsPS.executeUpdate();
             
             String createTeamEmployeeTable = "CREATE TABLE IF NOT EXISTS teamEmployee(\r\n"
-            		+ "	teamEmployeeId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	contractType VARCHAR(25),\r\n"
             		+ "	teamId INTEGER NOT NULL,\r\n"
+            		+ "	playerId INTEGER NOT NULL,\r\n"
+            		+ "	contractType VARCHAR(25),\r\n"
+            		+ " PRIMARY KEY (teamId, playerId), \r\n"
             		+ "	FOREIGN KEY (teamId) REFERENCES teams(teamId)\r\n"
+            		+ " FOREIGN KEY (playerId) REFERENCES players(playerId)"
             		+ "	);";
             
             PreparedStatement teamEmployeePS = conn.prepareStatement(createTeamEmployeeTable);
@@ -175,9 +177,7 @@ public interface dbInitMethods {
             		+ "	shirtNumber TINYINT,\r\n"
             		+ "	isSuspended BOOLEAN,\r\n"
             		+ "	isInjured BOOLEAN,\r\n"
-            		+ "	teamEmployeeId INTEGER,\r\n"
             		+ "	statsId INTEGER NOT NULL,\r\n"
-            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId),\r\n"
             		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId)\r\n"
             		+ "	);";
             

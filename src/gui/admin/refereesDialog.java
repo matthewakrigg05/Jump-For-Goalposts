@@ -72,7 +72,7 @@ public class refereesDialog extends JDialog implements refereeData {
 	        getContentPane().add(firstNameField, gbc_fNameFileld);
 	        firstNameField.setColumns(10);
 	        
-	        JComboBox refSelect = new JComboBox(refSelection.toArray());
+			JComboBox refSelect = new JComboBox(refSelection.toArray());
 	       
 	        GridBagConstraints gbc_refSelect = new GridBagConstraints();
 	        gbc_refSelect.insets = new Insets(0, 0, 5, 0);
@@ -131,7 +131,6 @@ public class refereesDialog extends JDialog implements refereeData {
 	        	refereeData.createRefereeAccount(firstNameField.getText(), firstNameField.getText(), cityField.getText());
 	        	dispose();
 	        });
-	        
 	        
 	        delRefBut.addActionListener(e -> {
 	        	refereeData.removeReferee(referees.get(refSelect.getSelectedIndex()));

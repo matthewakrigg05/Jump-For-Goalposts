@@ -1,6 +1,4 @@
 package leagueMembers;
-import java.sql.Date;
-
 import league.Statistics;
 
 abstract class Player extends Person {
