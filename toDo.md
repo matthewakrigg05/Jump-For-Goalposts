@@ -9,13 +9,14 @@
 - admin panel
 	- player dialog 27/11
 	- gen fixtures dialog 28/11
+	- assign match ref dialog 28/11
 	- rec match dialog - this is for admin and referees 28/11
 
-- referee panel 28/11
+- start referee panel 28/11 try finish 29/11
 	- view their matches theyre assigned to
 	- record matches that they are assigned to
 
-- manager panel 29/11
+- start manager panel 29/11
 	- assign shirt numbers to players in their teams
 	- view lineup
 	- create lineup
