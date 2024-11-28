@@ -22,7 +22,6 @@ public class leagueDialog extends JDialog implements leagueData {
         setResizable(false);
         setLayout(new FlowLayout());
 
-        
         JLabel lblNewLabel = new JLabel(league.getLeagueName());
         lblNewLabel.setBounds(0, 0, 45, 13);
         getContentPane().add(lblNewLabel);

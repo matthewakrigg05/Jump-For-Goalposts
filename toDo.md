@@ -7,7 +7,6 @@
 	- compare to designs, make comments on design in comparison to what I have so far
 
 - admin panel
-	- player dialog 27/11
 	- gen fixtures dialog 28/11
 	- assign match ref dialog 28/11
 	- rec match dialog - this is for admin and referees 28/11
