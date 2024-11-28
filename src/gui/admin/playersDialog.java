@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.*;
 import league.Team;
 import leagueDB.playerData;
+import leagueDB.refereeData;
 import leagueMembers.*;
 
 public class playersDialog extends JDialog implements playerData {
@@ -19,6 +20,7 @@ public class playersDialog extends JDialog implements playerData {
     List<Defender> defenders;
     List<Goalkeeper> goalkeepers;
    
+    List<Integer> players = new ArrayList<Integer>();
     List<String> playerSelection = new ArrayList<String>();
     
     public playersDialog() { initialise(); }
@@ -35,10 +37,11 @@ public class playersDialog extends JDialog implements playerData {
 	        midfielders = playerData.getAllMidfielders();
 	        defenders = playerData.getAllDefenders();
 	        goalkeepers = playerData.getAllGoalkeepers();
-	        for(Attacker i : attackers) { playerSelection.add(i.getFullName()); }
-	        for(Midfielder i : midfielders) { playerSelection.add(i.getFullName()); }
-	        for(Defender i : defenders) { playerSelection.add(i.getFullName()); }
-	        for(Goalkeeper i : goalkeepers) { playerSelection.add(i.getFullName()); }
+	        
+	        for(Attacker i : attackers) { players.add(i.getId());  playerSelection.add(i.getFullName()); }
+	        for(Midfielder i : midfielders) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
+	        for(Defender i : defenders) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
+	        for(Goalkeeper i : goalkeepers) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
 	       
 	        GridBagLayout seasonDialogLayout = new GridBagLayout();
 	        seasonDialogLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
@@ -68,7 +71,7 @@ public class playersDialog extends JDialog implements playerData {
 	        gbc_fNameLabel.gridy = 1;
 	        getContentPane().add(fNameLabel, gbc_fNameLabel);
 	        
-	        JLabel refToRemoveLabel = new JLabel("Referee:");
+	        JLabel refToRemoveLabel = new JLabel("Player:");
 	        GridBagConstraints gbc_refToRemoveLabel = new GridBagConstraints();
 	        gbc_refToRemoveLabel.insets = new Insets(0, 0, 5, 5);
 	        gbc_refToRemoveLabel.gridx = 3;
@@ -84,16 +87,7 @@ public class playersDialog extends JDialog implements playerData {
 	        getContentPane().add(firstNameField, gbc_fNameFileld);
 	        firstNameField.setColumns(10);
 	        
-	        JComboBox teamSelect = new JComboBox(playerSelection.toArray());
-	       
-	        GridBagConstraints gbc_teamSelect = new GridBagConstraints();
-	        gbc_teamSelect.insets = new Insets(0, 0, 5, 0);
-	        gbc_teamSelect.fill = GridBagConstraints.HORIZONTAL;
-	        gbc_teamSelect.gridx = 3;
-	        gbc_teamSelect.gridy = 2;
-	        getContentPane().add(teamSelect, gbc_teamSelect);
-	        
-	        JComboBox playerSelect = new JComboBox();
+	        JComboBox playerSelect = new JComboBox(playerSelection.toArray());
 		       
 	        GridBagConstraints gbc_playerSelect = new GridBagConstraints();
 	        gbc_playerSelect.insets = new Insets(0, 0, 5, 0);
@@ -157,7 +151,7 @@ public class playersDialog extends JDialog implements playerData {
 	        
 	        
 	        delRefBut.addActionListener(e -> {
-	        	
+	        	playerData.removePlayer(players.get(playerSelect.getSelectedIndex()));
 	        	dispose();
 	        });
 		}

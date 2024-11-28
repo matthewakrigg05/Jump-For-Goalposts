@@ -241,14 +241,13 @@ public interface playerData {
 		return null;
 	}
 	
-	
-	public static void removePlayer(int playerId) {
+	public static void removePlayer(int id) {
 		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
 			        "DELETE FROM players WHERE playerId = ?;");
 			
-			attackerStatement.setInt(1, playerId);
+			attackerStatement.setInt(1, id);
 			attackerStatement.executeUpdate();
 			connection.closeConnection();
 			
