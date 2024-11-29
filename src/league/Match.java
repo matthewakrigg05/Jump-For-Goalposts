@@ -9,38 +9,19 @@ public class Match {
 	private Referee matchReferee;
 	private Date dateAndTime;
 	
-	public Match(int matchId, Team[] teams, Referee ref, Date date) {
+	public Match(int matchId, Team[] teams) {
 		this.matchId = matchId;
-		this.setTeams(teams);
-		this.setMatchReferee(ref);
-		this.setDateAndTime(date);
+		setTeams(teams);
 	}
 	
-	public int getMatchId() {
-		return this.matchId;
-	}
+	public int getMatchId() { return this.matchId; }
 
-	public Team[] getTeams() {
-		return teams;
-	}
+	public Team[] getTeams() { return teams; }
+	public void setTeams(Team[] teams) { this.teams = teams; }
 
-	public void setTeams(Team[] teams) {
-		this.teams = teams;
-	}
+	public Referee getMatchReferee() { return matchReferee; }
+	public void setMatchReferee(Referee matchReferee) { this.matchReferee = matchReferee; }
 
-	public Referee getMatchReferee() {
-		return matchReferee;
-	}
-
-	public void setMatchReferee(Referee matchReferee) {
-		this.matchReferee = matchReferee;
-	}
-
-	public Date getDateAndTime() {
-		return dateAndTime;
-	}
-
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
-	}
+	public Date getDateAndTime() { return dateAndTime; }
+	public void setDateAndTime(Date dateAndTime) { this.dateAndTime = dateAndTime; }
 }
