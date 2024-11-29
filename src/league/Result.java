@@ -11,7 +11,7 @@ public class Result extends Match {
 	private int attendance;
 	
 	public Result(int matchId, Team[] teams, Referee ref, Date date) {
-		super(matchId, teams, ref, date);
+		super(matchId, teams);
 	}
 
 	

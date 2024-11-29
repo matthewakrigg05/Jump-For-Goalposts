@@ -62,14 +62,14 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 		gbc_teamsToAdd.gridy = 1;
 		getContentPane().add(teamsToAdd, gbc_teamsToAdd);
 		
-		JComboBox comboBox = new JComboBox(seasonSelection.toArray());
+		JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.anchor = GridBagConstraints.NORTH;
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 2;
-		getContentPane().add(comboBox, gbc_comboBox);
+		getContentPane().add(seasonSelect, gbc_comboBox);
 		
 		JList list = new JList(teamSelection.toArray());
 		
@@ -90,23 +90,23 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 		getContentPane().add(list, gbc_list);
 		
 		JButton genFixturesButton = new JButton("Generate Fixtures");
-		
-		genFixturesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
+	
 		GridBagConstraints gbc_genFixturesButton = new GridBagConstraints();
 		gbc_genFixturesButton.insets = new Insets(0, 0, 5, 5);
 		gbc_genFixturesButton.gridx = 2;
 		gbc_genFixturesButton.gridy = 3;
 		getContentPane().add(genFixturesButton, gbc_genFixturesButton);
+		
+		genFixturesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				list.getSelectedIndices();
+				List<Team> selectedTeams = new ArrayList<Team>();
+				for(int i : list.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
+				matchData.createSeasonMatches(selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				dispose();
+			}
+		});
 
 	}
-	
-	
-	
-	
-	
 	
 }
