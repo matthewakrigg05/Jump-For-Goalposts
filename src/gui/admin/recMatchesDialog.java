@@ -7,8 +7,6 @@ public class recMatchesDialog extends JDialog implements matchData {
 	
 	public recMatchesDialog() {}
 	
-	public static void initialise() {
-		
-	}
+	public static void initialise() {}
 	
 }
