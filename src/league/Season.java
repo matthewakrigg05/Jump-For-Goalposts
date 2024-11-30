@@ -8,60 +8,37 @@ public class Season {
 	private Team[] teams;
 	private Match[] fixtures;
 	private Result[] results;
+	private boolean isCurrent;
 	
-	public Season(int id, String seasonStart, String seasonEnd) {
+	public Season(int id, String seasonStart, String seasonEnd, boolean isCurrent) {
 		setId(id);
 		setSeasonStart(seasonStart);
 		setSeasonEnd(seasonEnd);
+		setIsCurrent(isCurrent);
 	}
 
 	// Standard getters and setters
 	public int getId() { return this.seasonId; }
-	
 	public void setId(int id) { this.seasonId = id; }
 
-	public String getSeasonStart() {
-		return seasonStart;
-	}
-
-	public void setSeasonStart(String seasonYear) {
-		this.seasonStart = seasonYear;
-	}
+	public String getSeasonStart() { return seasonStart; }
+	public void setSeasonStart(String seasonYear) { this.seasonStart = seasonYear; }
 	
-	public String getSeasonStartEnd() {
-		return this.seasonStart + "/" + this.seasonEnd;
-	}
+	public String getSeasonEnd() { return seasonEnd; }
+	public void setSeasonEnd(String seasonEnd) { this.seasonEnd = seasonEnd; }
+	
+	public String getSeasonStartEnd() { return this.seasonStart + "/" + this.seasonEnd; }
+	
+	public Team[] getTeams() { return teams; }
+	public void setTeams(Team[] teams) { this.teams = teams; }
 
-	public Team[] getTeams() {
-		return teams;
-	}
+	public Match[] getFixtures() { return fixtures; }
+	public void setFixtures(Match[] fixtures) { this.fixtures = fixtures; }
 
-	public void setTeams(Team[] teams) {
-		this.teams = teams;
-	}
+	public Result[] getResults() { return results; }
+	public void setResults(Result[] results) { this.results = results; }
 
-	public Match[] getFixtures() {
-		return fixtures;
-	}
-
-	public void setFixtures(Match[] fixtures) {
-		this.fixtures = fixtures;
-	}
-
-	public Result[] getResults() {
-		return results;
-	}
-
-	public void setResults(Result[] results) {
-		this.results = results;
-	}
-
-	public String getSeasonEnd() {
-		return seasonEnd;
-	}
-
-	public void setSeasonEnd(String seasonEnd) {
-		this.seasonEnd = seasonEnd;
-	}
-
+	public boolean getIsCurrent() { return this.isCurrent; }
+	public void setIsCurrent(boolean current) { this.isCurrent = current; }
+	
 }

@@ -28,9 +28,7 @@ public class seasonDialog extends JDialog implements seasonData {
 	        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	        setTitle("Seasons");
 
-	        for(Season i : seasons) {
-	        	seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd());
-	        }
+	        for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
 	       
 	        GridBagLayout seasonDialogLayout = new GridBagLayout();
 	        seasonDialogLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
@@ -125,8 +123,5 @@ public class seasonDialog extends JDialog implements seasonData {
 	        	seasonData.removeSeason(seasons.get(seasonSelect.getSelectedIndex()));
 	        	dispose();
 	        });
-	        
-	        // dont allow duplicate teams, season is a set of team ids
-	        // edit button, save button
 		}
 	}
