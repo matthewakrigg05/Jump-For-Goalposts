@@ -57,7 +57,7 @@ public interface dbInitMethods {
             refereePS.executeUpdate();
             
             String createStatsTable = "CREATE TABLE IF NOT EXISTS statsForPlayerOrTeam(\r\n"
-            		+ "	statsId INTEGER NOT NULL PRIMARY KEY,\r\n"
+            		+ "	statsId INTEGER NOT NULL,\r\n"
             		+ "	assists INT(4),\r\n"
             		+ "	goals INT(4),\r\n"
             		+ "	fouls INT(4),\r\n"
@@ -65,7 +65,10 @@ public interface dbInitMethods {
             		+ "	redCards INT(4),\r\n"
             		+ "	wins INT(4),\r\n"
             		+ "	draws INT(4),\r\n"
-            		+ "	losses INT(4) \r\n"
+            		+ "	losses INT(4), \r\n"
+            		+ " seasonId INTEGER NOT NULL, \r\n"
+            		+ " FOREIGN KEY (seasonId) REFERENCES seasons(seasonId), \r\n"
+            		+ " PRIMARY KEY (statsId, seasonId) \r\n"
             		+ "	);";
             
             PreparedStatement statsPS = conn.prepareStatement(createStatsTable);
