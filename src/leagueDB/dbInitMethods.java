@@ -58,7 +58,7 @@ public interface dbInitMethods {
             refereePS.executeUpdate();
             
             String createStatsTable = "CREATE TABLE IF NOT EXISTS statsForPlayerOrTeam(\r\n"
-            		+ "	statsId INTEGER NOT NULL,\r\n"
+            		+ "	statsId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	assists INT(4),\r\n"
             		+ "	goals INT(4),\r\n"
             		+ "	fouls INT(4),\r\n"
@@ -66,10 +66,7 @@ public interface dbInitMethods {
             		+ "	redCards INT(4),\r\n"
             		+ "	wins INT(4),\r\n"
             		+ "	draws INT(4),\r\n"
-            		+ "	losses INT(4), \r\n"
-            		+ " seasonId INTEGER NOT NULL, \r\n"
-            		+ " FOREIGN KEY (seasonId) REFERENCES seasons(seasonId), \r\n"
-            		+ " PRIMARY KEY (statsId, seasonId) \r\n"
+            		+ "	losses INT(4) \r\n"
             		+ "	);";
             
             PreparedStatement statsPS = conn.prepareStatement(createStatsTable);
@@ -88,9 +85,9 @@ public interface dbInitMethods {
             String createTeamsTable = "CREATE TABLE IF NOT EXISTS teams(\r\n"
             		+ "	teamId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	teamName VARCHAR(100),\r\n"
-            		+ "	statsId INTEGER NOT NULL, \r\n"
+            		+ "	statsId INTEGER, \r\n"
             		+ " stadiumId INTEGER, \r\n"
-            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId)\r\n"
+            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId), \r\n"
             		+ "	FOREIGN KEY (stadiumId) REFERENCES stadiums(stadiumId)"
             		+ "	);";
             
@@ -109,7 +106,7 @@ public interface dbInitMethods {
             String createMatchesTable = "CREATE TABLE IF NOT EXISTS matches(\r\n"
             		+ "	matchId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	isComplete BOOLEAN NOT NULL,\r\n"
-            		+ "	matchDate DATETIME,\r\n"
+            		+ "	matchWeek INTEGER NOT NULL,\r\n"
             		+ "	seasonId INTEGER NOT NULL,\r\n"
             		+ "	refereeId INTEGER,\r\n"
             		+ " homeTeamId INTEGER NOT NULL,\r\n"
@@ -199,6 +196,11 @@ public interface dbInitMethods {
 
             PreparedStatement adminPS = conn.prepareStatement(createAdmin);
             adminPS.executeUpdate();
+            
+            String byeWeek = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (1, 'BYE');";
+
+            PreparedStatement byeWeekPS = conn.prepareStatement(byeWeek);
+            byeWeekPS.executeUpdate();
             
 		} catch (Exception e) {
 			e.printStackTrace();

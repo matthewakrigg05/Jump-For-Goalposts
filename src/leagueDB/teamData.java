@@ -55,16 +55,18 @@ public interface teamData {
 		List<Team> teams = new ArrayList<Team>();
 		
 		try {
-			PreparedStatement teamsStatement = (connection.getConnection()).prepareStatement(
-			        "SELECT * FROM teams");
+			PreparedStatement teamsStatement = (connection.getConnection()).prepareStatement( "SELECT * FROM teams");
 			ResultSet teamResult = teamsStatement.executeQuery();
 			
 			while(teamResult.next()) {
+				if (teamResult.getInt("teamId") == 1) { continue; } 
+				else {
 				Team team = new Team(
 						teamResult.getInt("teamId"),
 						teamResult.getString("teamName")
 		        		);
 				teams.add(team);
+				}
 			}
 			connection.closeConnection();					
 			return teams;

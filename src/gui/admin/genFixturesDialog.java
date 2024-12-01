@@ -39,10 +39,6 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 	    for(Team i : teams) { teamSelection.add(i.getName()); }
 	        
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{50, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{14, 100, 22, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel selectSeaeson = new JLabel("Select Season To Generate Fixtures For");
@@ -97,15 +93,14 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 		gbc_genFixturesButton.gridy = 3;
 		getContentPane().add(genFixturesButton, gbc_genFixturesButton);
 		
-		genFixturesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				list.getSelectedIndices();
+		genFixturesButton.addActionListener(e -> {
 				List<Team> selectedTeams = new ArrayList<Team>();
 				for(int i : list.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
 				matchData.createSeasonMatches(selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
 				dispose();
-			}
-		});
+				
+			});
+	
 
 	}
 	

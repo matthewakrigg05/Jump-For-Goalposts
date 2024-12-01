@@ -1,6 +1,7 @@
 package leagueDB;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import league.Match;
 import league.Season;
@@ -8,15 +9,16 @@ import league.Team;
 
 public interface matchData {
 
-	public static void createMatch(Team homeTeam, Team awayTeam, Season season) {
+	public static void createMatch(Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO matches(isComplete, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?);");
+			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
 			
-			seasonStatement.setInt(1, season.getId());
-			seasonStatement.setInt(2, homeTeam.getTeamId());
-			seasonStatement.setInt(3, awayTeam.getTeamId());
+			seasonStatement.setInt(1 , matchWeek);
+			seasonStatement.setInt(2, season.getId());
+			seasonStatement.setInt(3, homeTeam.getTeamId());
+			seasonStatement.setInt(4, awayTeam.getTeamId());
 			seasonStatement.executeUpdate();
 			connection.closeConnection();
 			
@@ -24,17 +26,23 @@ public interface matchData {
 	}
 	
 	public static void createSeasonMatches(List<Team> teams, Season season) {
+		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(1)); }
+		
+		
 		for(int i = 0; i < teams.size(); i++) {
+			
 			for(int j = 0; j < teams.size(); j++) {
+				
 				if(i == j) { continue; }
+				
 				else {
-					createMatch(teams.get(i), teams.get(j), season);
+					
+					createMatch(teams.get(i), teams.get(j), season, j);
+					
 				}
 			}
 		}
+	    }
 	}
 	
-	public static Match getMatch(int matchId) {
-		return null;
-	}
-}
+
