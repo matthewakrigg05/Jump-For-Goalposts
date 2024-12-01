@@ -1,9 +1,7 @@
 package leagueDB;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import league.Match;
 import league.Season;
 import league.Team;
 
@@ -26,23 +24,13 @@ public interface matchData {
 	}
 	
 	public static void createSeasonMatches(List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(1)); }
-		
+	if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(1)); }
 		
 		for(int i = 0; i < teams.size(); i++) {
-			
 			for(int j = 0; j < teams.size(); j++) {
-				
-				if(i == j) { continue; }
-				
-				else {
-					
-					createMatch(teams.get(i), teams.get(j), season, j);
-					
-				}
+				if(i != j) { createMatch(teams.get(i), teams.get(j), season, j);; }
 			}
 		}
-	    }
 	}
-	
+}
 
