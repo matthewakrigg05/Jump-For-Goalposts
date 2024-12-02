@@ -49,6 +49,14 @@ public class AdminPanel extends panel {
 		gbc_matchOptLabel.gridy = 1;
 		panel.add(matchOptLabel, gbc_matchOptLabel);
 		
+		JLabel teamManOpts = new JLabel("Team Management Options:");
+		teamManOpts.setFont(getFont());
+		GridBagConstraints gbc_teamManOpts = new GridBagConstraints();
+		gbc_teamManOpts.insets = getInsets();
+		gbc_teamManOpts.gridx = 3;
+		gbc_teamManOpts.gridy = 1;
+		panel.add(teamManOpts, gbc_leagueOptLabel);
+		
 		GridBagConstraints gbc_leagueButton = new GridBagConstraints();
 		gbc_leagueButton.insets = getInsets();
 		gbc_leagueButton.gridx = 1;
