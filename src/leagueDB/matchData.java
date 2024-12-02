@@ -22,6 +22,7 @@ public interface matchData {
 			seasonStatement.setInt(2, season.getId());
 			seasonStatement.setInt(3, homeTeam.getTeamId());
 			seasonStatement.setInt(4, awayTeam.getTeamId());
+			
 			seasonStatement.executeUpdate();
 			connection.closeConnection();
 			
