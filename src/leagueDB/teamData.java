@@ -95,6 +95,23 @@ public interface teamData {
 		return null;
 	}
 	
+	public static Team getTeam(int id, Connection connection) { 
+		Team team = null;
+		
+		try {
+			PreparedStatement teamStatement = (connection).prepareStatement(
+			        "SELECT * FROM teams WHERE teamId = ?;");
+			
+			teamStatement.setInt(1, id);
+			ResultSet teamResult = teamStatement.executeQuery();
+			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
+	
+			return team;
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
 	public static int createStats(Connection connection) {
 		try {
 			PreparedStatement statsStatement = (connection).prepareStatement(

@@ -16,14 +16,13 @@ public interface seasonData {
 					"SELECT isCurrent FROM seasons WHERE isCurrent = true;");
 			ResultSet isCurrent = isCurrentSeason.executeQuery();
 			
-			
 			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
 			        "INSERT INTO seasons(seasonStart, seasonEnd, isCurrent, leagueId) VALUES (?, ?, ?, 1);");
 			
 			seasonStatement.setString(1, start);
 			seasonStatement.setString(2, end);
 			
-			if (isCurrent == null) { seasonStatement.setBoolean(3, true); }
+			if (!isCurrent.next()) { seasonStatement.setBoolean(3, true); }
 			else { seasonStatement.setBoolean(3, false); }
 			
 			seasonStatement.executeUpdate();
@@ -68,7 +67,6 @@ public interface seasonData {
 			return seasons;
 			
 		} catch (SQLException e) { e.printStackTrace(); }
-		
 		return null;
 	}
 	
@@ -91,19 +89,24 @@ public interface seasonData {
 		} catch (SQLException e) { e.printStackTrace(); }	
 	}
 	
-	public static int getCurrentSeason() {
-		
+	public static Season getCurrentSeason() {
 		JFGPdb connection = new JFGPdb();
-		int seasonId;
 		try {
-			PreparedStatement currentSeason = (connection.getConnection()).prepareStatement(
-					"SELECT isCurrent FROM seasons WHERE isCurrent = true LIMIT 1;" );
-			ResultSet res = currentSeason.executeQuery();
-			seasonId = res.getInt(0);
+			PreparedStatement currentSeasonStatement = (connection.getConnection()).prepareStatement(
+					"SELECT * FROM seasons WHERE isCurrent = true LIMIT 1;" );
+			ResultSet seasonResult = currentSeasonStatement.executeQuery();
+			
+			Season currentSeason = new Season( 
+					seasonResult.getInt("seasonId"),
+					seasonResult.getString("seasonStart"),
+					seasonResult.getString("seasonEnd"),
+					seasonResult.getBoolean("isCurrent")
+					);
 			
 			connection.closeConnection();
-			return seasonId;
-		} catch (SQLException e) { e.printStackTrace(); return 0; }	
+			
+			return currentSeason;
+		} catch (SQLException e) { e.printStackTrace(); return null; }	
 	}
 	
 }
