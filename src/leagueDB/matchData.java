@@ -8,6 +8,7 @@ import java.util.List;
 import league.Match;
 import league.Season;
 import league.Team;
+import leagueMembers.Referee;
 
 public interface matchData {
 
@@ -81,6 +82,26 @@ public interface matchData {
 		JFGPdb connection = new JFGPdb();
 		List<Match> matches = new ArrayList<Match>();
 		
+		try {
+			PreparedStatement gameWeeksStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM matches WHERE seasonId = ? ORDER BY matchWeek ASC;");
+			
+			gameWeeksStatement.setInt(1, currentSeason.getId());
+			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
+			
+			while (gameWeeks.next()) {
+				Match match= new Match (
+						gameWeeks.getInt("matchId"),
+						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection.getConnection()),
+						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection.getConnection()),
+						gameWeeks.getInt("matchWeek")
+						);
+				matches.add(match);
+			}
+			
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 		
 		return matches;
 	}
@@ -91,7 +112,9 @@ public interface matchData {
 		return isRef;
 	}
 	
-	
+	public static void assignRef(Match match, Referee ref) {
+		
+	}
 	
 	
 	
