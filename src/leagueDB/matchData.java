@@ -117,12 +117,8 @@ public interface matchData {
 			matchStatement.setInt(1, match.getMatchId());
 			ResultSet res = matchStatement.executeQuery();
 			
-	 
-				
-
 			connection.closeConnection();
 			return res.next();
-			
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
