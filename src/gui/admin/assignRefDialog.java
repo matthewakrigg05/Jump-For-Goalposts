@@ -17,7 +17,8 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 	
 	List<Referee> referees;
     List<String> refSelection = new ArrayList<String>();
-    List<String> matchWeeks = new ArrayList<String>();
+    List<Match> nextFiveGameWeeks;
+    List<String> matches = new ArrayList<String>();
     Season currentSeason;
 	
 	public assignRefDialog() { initialise(); }
@@ -35,12 +36,8 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
         
         currentSeason = seasonData.getCurrentSeason();
         
-        List<Match> nextFiveGameWeeks = matchData.getNextFiveGameWeeks(currentSeason, 1);
-        for(Match i : nextFiveGameWeeks) { matchWeeks.add(i.getMatchSummary()); }
-        
-		// check whether ref is already assigned to that gameweek - then offer confirmation option to the user
-		// need a matchweek drop down, matches in matchweek drop down, refs can only be set for matches in current season
-		// only show the next 5 game weeks
+        nextFiveGameWeeks = matchData.getNextFiveGameWeeks(currentSeason, 1);
+        for(Match i : nextFiveGameWeeks) { matches.add(i.getMatchSummary()); }
         
         GridBagLayout gridBagLayout = new GridBagLayout();
 		getContentPane().setLayout(gridBagLayout);
@@ -67,7 +64,7 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 		gbc_matchSelectLabel.gridy = 2;
 		getContentPane().add(matchSelectLabel, gbc_matchSelectLabel);
 		
-		JComboBox matchSelect = new JComboBox(matchWeeks.toArray());
+		JComboBox matchSelect = new JComboBox(matches.toArray());
 		GridBagConstraints gbc_matchSelect = new GridBagConstraints();
 		gbc_matchSelect.insets = new Insets(0, 0, 5, 0);
 		gbc_matchSelect.fill = GridBagConstraints.HORIZONTAL;
@@ -83,6 +80,20 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 		
 		confirmationButton.addActionListener(e -> {
 			
+			if (matchData.checkRefAssigned(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
+				
+				int areYouSure = JOptionPane.showConfirmDialog(this, "This match already has a referee assigned. Are you sure you want to overwrite this?", "", JOptionPane.YES_NO_OPTION);
+				
+				if(areYouSure == JOptionPane.YES_OPTION) {
+					matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex()));
+				}
+				
+			} else {
+				matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex()));
+			}
+			
+			
+        	dispose();
 		});
 	}
 }

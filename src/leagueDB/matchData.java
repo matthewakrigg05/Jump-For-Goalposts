@@ -108,9 +108,25 @@ public interface matchData {
 	}
 	
 	public static boolean checkRefAssigned(Match match) {
-		boolean isRef = false;
+		JFGPdb connection = new JFGPdb();
 		
-		return isRef;
+		try {
+			PreparedStatement matchStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT refereeId FROM matches WHERE matchId = ? AND refereeId IS NOT NULL;");
+			
+			matchStatement.setInt(1, match.getMatchId());
+			ResultSet res = matchStatement.executeQuery();
+			
+	 
+				
+
+			connection.closeConnection();
+			return res.next();
+			
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
 	}
 	
 	public static void assignRef(Match match, Referee ref) {
