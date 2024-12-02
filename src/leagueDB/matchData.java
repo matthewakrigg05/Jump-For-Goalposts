@@ -113,10 +113,17 @@ public interface matchData {
 	}
 	
 	public static void assignRef(Match match, Referee ref) {
-		
+		JFGPdb connection = new JFGPdb();
+		try {
+			PreparedStatement assignRefStatement = (connection.getConnection()).prepareStatement(
+			        "UPDATE matches SET refereeId = ? WHERE matchId = ?;");
+			
+			assignRefStatement.setInt(1, ref.getId());
+			assignRefStatement.setInt(2, match.getMatchId());
+			assignRefStatement.executeUpdate();
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
-	
-	
-	
 }
 
