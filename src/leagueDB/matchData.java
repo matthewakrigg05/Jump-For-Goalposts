@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import league.Match;
 import league.Season;
 import league.Team;
 
@@ -51,5 +53,26 @@ public interface matchData {
 	    }
 	
 	}
+	
+	public static List<Match> getNextFiveGameWeeks(int currentSeason, int currentGameWeek) {
+		JFGPdb connection = new JFGPdb();
+		List<Match> matches = new ArrayList<Match>();
+		
+		
+		return matches;
+	}
+	
+	public static List<Match> getAllMatches(int currentSeason) {
+		JFGPdb connection = new JFGPdb();
+		List<Match> matches = new ArrayList<Match>();
+		
+		
+		return matches;
+	}
+	
+	
+	
+	
+	
 }
 
