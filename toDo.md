@@ -9,8 +9,8 @@
 	
 
 - admin panel
-	- assign match ref dialog 28/11
 	- rec match dialog - this is for admin and referees 28/11
+	- finish assign ref logic
 	
 
 - start referee panel 28/11 try finish 29/11
