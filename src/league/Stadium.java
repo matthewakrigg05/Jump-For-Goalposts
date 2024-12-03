@@ -14,28 +14,12 @@ public class Stadium {
 
 	
 	// Standard getters and setters
-	public String getStadiumName() {
-		return stadiumName;
-	}
+	public String getStadiumName() { return stadiumName; }
+	public void setStadiumName(String stadiumName) { this.stadiumName = stadiumName; }
 
-	public void setStadiumName(String stadiumName) {
-		this.stadiumName = stadiumName;
-	}
+	public int getCapacity() { return capacity; }
+	public void setCapacity(int capacity) { this.capacity = capacity; }
 
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
+	public String getLocation() { return location; }
+	public void setLocation(String location) { this.location = location; }
 }

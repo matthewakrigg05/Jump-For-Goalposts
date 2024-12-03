@@ -13,15 +13,15 @@ public class Statistics {
 	
 	public Statistics(int assists, int goalsScored, int shotsTaken, int foulsCommitted,
 			int yellowCards, int redCards, int wins, int draws, int losses) {
-		this.setAssists(assists);
-		this.setGoalsScored(goalsScored);
-		this.setShotsTaken(shotsTaken);
-		this.setFoulsCommitted(foulsCommitted);
-		this.setYellowCards(yellowCards);
-		this.setRedCards(redCards);
-		this.setWins(wins);
-		this.setDraws(draws);
-		this.setLosses(losses);
+	    setAssists(assists);
+		setGoalsScored(goalsScored);
+		setShotsTaken(shotsTaken);
+		setFoulsCommitted(foulsCommitted);
+		setYellowCards(yellowCards);
+		setRedCards(redCards);
+		setWins(wins);
+		setDraws(draws);
+		setLosses(losses);
 	}
 	
 	public Statistics() {}

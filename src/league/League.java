@@ -10,20 +10,9 @@ public class League {
 		setLeagueName(name);
 	}
 	
-	public void setLeagueId(int Id) {
-		this.leagueId = Id;
-	}
-	
-	public int getLeagueId() {
-		return leagueId;
-	}
+	public void setLeagueId(int Id) { this.leagueId = Id; }
+	public int getLeagueId() { return leagueId; }
 
-	public String getLeagueName() {
-		return leagueName;
-	}
-
-	public void setLeagueName(String leagueName) {
-		this.leagueName = leagueName;
-	}
-	
+	public String getLeagueName() { return leagueName; }
+	public void setLeagueName(String leagueName) { this.leagueName = leagueName; }
 }
