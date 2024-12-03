@@ -17,8 +17,8 @@ public class refereesDialog extends JDialog implements refereeData {
     private JTextField cityField;
     
 	public refereesDialog() { 
+		this.insets = new Insets(0, 0, 5, 5);
 		initialise();
-		insets = new Insets(0, 0, 5, 5);
 		}
 	
 	public void initialise() {
@@ -69,6 +69,7 @@ public class refereesDialog extends JDialog implements refereeData {
         gbc_fNameFileld.gridx = 1;
         gbc_fNameFileld.gridy = 2;
         getContentPane().add(firstNameField, gbc_fNameFileld);
+        firstNameField.setColumns(15);
         
 		JComboBox refSelect = new JComboBox(refSelection.toArray());
        
@@ -98,6 +99,7 @@ public class refereesDialog extends JDialog implements refereeData {
         gbc_lastNameField.gridx = 1;
         gbc_lastNameField.gridy = 4;
         getContentPane().add(lastNameField, gbc_lastNameField);
+        lastNameField.setColumns(15);
 
         JLabel cityLabel = new JLabel("City: ");
         GridBagConstraints gbc_cityLabel = new GridBagConstraints();
@@ -112,6 +114,7 @@ public class refereesDialog extends JDialog implements refereeData {
         gbc_cityField.gridx = 1;
         gbc_cityField.gridy = 6;
         getContentPane().add(cityField, gbc_cityField);
+        cityField.setColumns(15);
         
         JButton addBut = new JButton("Create");
         GridBagConstraints gbc_addBut = new GridBagConstraints();
@@ -121,7 +124,7 @@ public class refereesDialog extends JDialog implements refereeData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	refereeData.createRefereeAccount(firstNameField.getText(), firstNameField.getText(), cityField.getText());
+        	refereeData.createRefereeAccount(firstNameField.getText(), lastNameField.getText(), cityField.getText());
         	dispose();
         });
         
