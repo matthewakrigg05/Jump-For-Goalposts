@@ -79,20 +79,11 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 		getContentPane().add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			
 			if (matchData.checkRefAssigned(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
-				
 				int areYouSure = JOptionPane.showConfirmDialog(this, "This match already has a referee assigned. Are you sure you want to overwrite this?", "", JOptionPane.YES_NO_OPTION);
 				
-				if(areYouSure == JOptionPane.YES_OPTION) {
-					matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex()));
-				}
-				
-			} else {
-				matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex()));
-			}
-			
-			
+				if(areYouSure == JOptionPane.YES_OPTION) { matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex())); }
+			} else { matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex())); }
         	dispose();
 		});
 	}

@@ -10,12 +10,6 @@ public class RefereeAccount extends Account implements IRefereeRole {
 	}
 	
 	// Standard getter and setter methods
-	public Referee getReferee() {
-		return this.referee;
-	}
-	
-	public void setReferee(Referee referee) {
-		this.referee = referee;
-	}
-
+	public Referee getReferee() { return this.referee; }
+	public void setReferee(Referee referee) { this.referee = referee; }
 }

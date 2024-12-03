@@ -108,5 +108,4 @@ public interface seasonData {
 			return currentSeason;
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
 	}
-	
 }

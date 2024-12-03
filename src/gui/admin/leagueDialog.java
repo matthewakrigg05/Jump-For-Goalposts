@@ -16,16 +16,18 @@ import java.awt.Dimension;
 @SuppressWarnings("serial")
 public class leagueDialog extends JDialog implements leagueData, seasonData {
 
-	private League league;
+	private League league = leagueData.getLeague();
 	
-	List<Season> seasons = seasonData.getSeasons();
+	List<Season> seasons;
     List<String> seasonSelection = new ArrayList<String>();
 	
-	public leagueDialog() { initialise(); }
+	public leagueDialog() { 
+		initialise();
+		league = leagueData.getLeague();
+		seasons = seasonData.getSeasons();
+		}
 	
 	public void initialise() {
-		league = leagueData.getLeague();
-        
 		setFocusable(true);
         setSize(500, 250);
         setModal(true);

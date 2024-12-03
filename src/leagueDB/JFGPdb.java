@@ -73,12 +73,9 @@ public class JFGPdb implements dbInitMethods {
 	            
 	            db.closeConnection();
 	        } catch (SQLException e) { e.printStackTrace(); }
-		
 	}
 	
-	public Connection getConnection() {
-		return connection;
-	}
+	public Connection getConnection() { return connection; }
 	
 	public void closeConnection() {
 		try {

@@ -19,10 +19,9 @@ public abstract class panel extends JPanel {
 	
 	public panel() {}
 	
+	// Three methods that all the child classes of this class should have, they are used to set up the panels
 	protected void initialise() {}
-	
 	protected void addPanelComponents(JPanel panel) {}
-	
 	protected void addActionListeners() {}
 	
 	public JPanel getPanel() { return this.panel; }

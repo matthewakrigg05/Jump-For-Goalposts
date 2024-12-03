@@ -31,7 +31,6 @@ public interface managersData {
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 		
 		return null;
-		
 	}
 	
 	public static void createManagerAccount(String fname, String lname) {
@@ -148,5 +147,4 @@ public interface managersData {
 			
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
-	
 }
