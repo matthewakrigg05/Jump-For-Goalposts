@@ -32,6 +32,7 @@ public class JfgpWindow extends JFrame {
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(true);
 		setUserType("Manager");
+		setManagerUser(manager);
 		initialise();
 	}
 	
@@ -39,6 +40,7 @@ public class JfgpWindow extends JFrame {
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(true);
 		setUserType("Referee");
+		setRefereeUser(referee);
 		initialise();
 	}
 	 

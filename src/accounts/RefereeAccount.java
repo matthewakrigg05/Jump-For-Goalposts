@@ -5,8 +5,9 @@ public class RefereeAccount extends Account implements IRefereeRole {
 	
 	Referee referee;
 
-	public RefereeAccount(int id, String emailAddress, String password) {
+	public RefereeAccount(int id, String emailAddress, String password, Referee referee) {
 		super(id, emailAddress, password, false);
+		setReferee(referee);
 	}
 	
 	// Standard getter and setter methods
