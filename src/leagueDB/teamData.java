@@ -13,9 +13,6 @@ import leagueMembers.Manager;
 import leagueMembers.Referee;
 
 public interface teamData {
-
-	// need team name, stadium, manager, players, rival teams, create stats for the team, create team employees for team
-	// constructor for team: int id, String name, Stadium stadium, Manager manager, Object[] players
 	
 	public static void createTeam(String teamName) {
 		JFGPdb db = new JFGPdb();

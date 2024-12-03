@@ -31,7 +31,6 @@ public interface refereeData {
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 		
 		return null;
-		
 	}
 	
 	public static void createRefereeAccount(String fname, String lname, String city) {
@@ -151,5 +150,4 @@ public interface refereeData {
 			
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
-	
 }
