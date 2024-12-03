@@ -1,23 +1,10 @@
 package gui;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Rectangle;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import gui.admin.AdminPanel;
-import gui.manager.ManagerPanel;
-import gui.referee.RefereePanel;
 
+@SuppressWarnings("serial")
 public class toolBar extends JToolBar {
 	
 	private JButton[] toolBarButton;
@@ -85,7 +72,7 @@ public class toolBar extends JToolBar {
 				break;
 				
 			case "Manager":
-				RefereePanel manPanel = new RefereePanel();
+				ManagerPanel manPanel = new ManagerPanel();
 				rolePanel = manPanel.getPanel();
 				break;
 			}
