@@ -14,34 +14,16 @@ abstract class Account {
 		this.isAdmin = isAdmin;
 	}
 	
-	public void changeUserPassword(String password) {
-		this.setPassword(password);
-	}
+	public void changeUserPassword(String password) { this.setPassword(password); }
 	
 	// Standard getter and setter methods
-	public boolean isUserAdmin() {
-		return this.isAdmin;
-	}
+	public boolean isUserAdmin() { return this.isAdmin; }
 	
-	public int getId() {
-		return this.id;
-	}
+	public int getId() { return this.id; }
 	
-	public String getEmail() {
-		return this.emailAddress;
-	}
+	public String getEmail() { return this.emailAddress; }
+	public void setEmail(String emailAddress) { this.emailAddress = emailAddress; }
 
-	public void setEmail(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
+	public String getPassword() { return password; }
+	public void setPassword(String password) { this.password = password; }
 }
