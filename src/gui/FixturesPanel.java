@@ -1,14 +1,9 @@
 package gui;
+import javax.swing.*;
 
-import javax.swing.JPanel;
-
+@SuppressWarnings("serial")
 public class FixturesPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Create the panel.
-	 */
 	public FixturesPanel() {
 
 	}

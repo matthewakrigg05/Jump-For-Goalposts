@@ -12,9 +12,7 @@ public class HomePanel extends JPanel {
 		
 		// league table
 		
-		// top scorers
-		
-		// top assists
+		// top scorers and top assists
 		
 		// upcoming matches - game weeks
 

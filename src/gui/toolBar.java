@@ -96,9 +96,7 @@ public class toolBar extends JToolBar {
 		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
 		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
 		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });
-		
 		toolBarButton[7].addActionListener(e -> {
-			
 			int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", 
 					"Log Out?",  JOptionPane.YES_NO_OPTION);
 			if(response == 0) {

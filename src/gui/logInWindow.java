@@ -41,7 +41,7 @@ public class logInWindow extends JFrame {
 		getContentPane().add(emailLabel, gbc_emailLabel);
 		
 		emailField = new JTextField();
-		emailField.setPreferredSize(new Dimension(6, 25));
+		emailField.setPreferredSize(new Dimension(7, 25));
 		GridBagConstraints gbc_emailField = new GridBagConstraints();
 			gbc_emailField.anchor = GridBagConstraints.WEST;
 			gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
@@ -49,7 +49,6 @@ public class logInWindow extends JFrame {
 			gbc_emailField.gridx = 1;
 			gbc_emailField.gridy = 2;
 		getContentPane().add(emailField, gbc_emailField);
-		emailField.setColumns(10);
 		
 		JLabel passwordLabel = new JLabel("Password:");
 		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
@@ -90,5 +89,4 @@ public class logInWindow extends JFrame {
 		
 		setVisible(true);
 	}
-
 }
