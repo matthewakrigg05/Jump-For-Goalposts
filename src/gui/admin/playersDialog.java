@@ -7,14 +7,17 @@ import java.util.List;
 import javax.swing.*;
 import league.Team;
 import leagueDB.playerData;
-import leagueDB.refereeData;
 import leagueMembers.*;
 
+@SuppressWarnings("serial")
 public class playersDialog extends JDialog implements playerData {
+	
+	Insets insets;
 	
 	List<Team> teams;
     List<String> teamSelection = new ArrayList<String>();
     
+    String[] positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper"};
     List<Attacker> attackers;
     List<Midfielder> midfielders;
     List<Defender> defenders;
@@ -23,7 +26,10 @@ public class playersDialog extends JDialog implements playerData {
     List<Integer> players = new ArrayList<Integer>();
     List<String> playerSelection = new ArrayList<String>();
     
-    public playersDialog() { initialise(); }
+    public playersDialog() { 
+    	initialise();
+    	insets = new Insets(0, 0, 5, 5);
+    	}
 		
 	public void initialise() {
 		setAlwaysOnTop(true);
@@ -48,87 +54,78 @@ public class playersDialog extends JDialog implements playerData {
         
         JLabel createPlayerLabel = new JLabel("Create Player");
         GridBagConstraints gbc_createPlayerLabel = new GridBagConstraints();
-        gbc_createPlayerLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_createPlayerLabel.insets = insets;
         gbc_createPlayerLabel.gridx = 1;
         gbc_createPlayerLabel.gridy = 0;
         getContentPane().add(createPlayerLabel, gbc_createPlayerLabel);
         
-        JLabel deleteRefereeLabel = new JLabel("Delete Player");
-        GridBagConstraints gbc_deleteRefereeLabel = new GridBagConstraints();
-        gbc_deleteRefereeLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_deleteRefereeLabel.fill = GridBagConstraints.BOTH;
-        gbc_deleteRefereeLabel.gridx = 3;
-        gbc_deleteRefereeLabel.gridy = 0;
-        getContentPane().add(deleteRefereeLabel, gbc_deleteRefereeLabel);
+        JLabel deletePlayerLabel = new JLabel("Delete Player");
+        GridBagConstraints gbc_deletePlayerLabel = new GridBagConstraints();
+        gbc_deletePlayerLabel.insets = insets;
+        gbc_deletePlayerLabel.gridx = 3;
+        gbc_deletePlayerLabel.gridy = 0;
+        getContentPane().add(deletePlayerLabel, gbc_deletePlayerLabel);
         
         JLabel fNameLabel = new JLabel("First Name: ");
         GridBagConstraints gbc_fNameLabel = new GridBagConstraints();
-        gbc_fNameLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_fNameLabel.insets = insets;
         gbc_fNameLabel.gridx = 1;
         gbc_fNameLabel.gridy = 1;
         getContentPane().add(fNameLabel, gbc_fNameLabel);
         
-        JLabel refToRemoveLabel = new JLabel("Player:");
-        GridBagConstraints gbc_refToRemoveLabel = new GridBagConstraints();
-        gbc_refToRemoveLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_refToRemoveLabel.gridx = 3;
-        gbc_refToRemoveLabel.gridy = 1;
-        getContentPane().add(refToRemoveLabel, gbc_refToRemoveLabel);
+        JLabel playerToRemoveLabel = new JLabel("Player:");
+        GridBagConstraints gbc_playerToRemoveLabel = new GridBagConstraints();
+        gbc_playerToRemoveLabel.insets = insets;
+        gbc_playerToRemoveLabel.gridx = 3;
+        gbc_playerToRemoveLabel.gridy = 1;
+        getContentPane().add(playerToRemoveLabel, gbc_playerToRemoveLabel);
         
         JTextField firstNameField = new JTextField();
         GridBagConstraints gbc_fNameFileld = new GridBagConstraints();
-        gbc_fNameFileld.insets = new Insets(0, 0, 5, 5);
-        gbc_fNameFileld.fill = GridBagConstraints.HORIZONTAL;
+        gbc_fNameFileld.insets = insets;
         gbc_fNameFileld.gridx = 1;
         gbc_fNameFileld.gridy = 2;
         getContentPane().add(firstNameField, gbc_fNameFileld);
-        firstNameField.setColumns(10);
         
         JComboBox playerSelect = new JComboBox(playerSelection.toArray());
 	       
         GridBagConstraints gbc_playerSelect = new GridBagConstraints();
-        gbc_playerSelect.insets = new Insets(0, 0, 5, 0);
-        gbc_playerSelect.fill = GridBagConstraints.HORIZONTAL;
+        gbc_playerSelect.insets = insets;
         gbc_playerSelect.gridx = 3;
         gbc_playerSelect.gridy = 2;
         getContentPane().add(playerSelect, gbc_playerSelect);
 
         JLabel lastNameLabel = new JLabel("Last Name: ");
         GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
-        gbc_lastNameLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_lastNameLabel.insets = insets;
         gbc_lastNameLabel.gridx = 1;
         gbc_lastNameLabel.gridy = 3;
         getContentPane().add(lastNameLabel, gbc_lastNameLabel);
         
-        JButton delRefBut = new JButton("Delete");
-        GridBagConstraints gbc_delRefBut = new GridBagConstraints();
-        gbc_delRefBut.insets = new Insets(0, 0, 5, 5);
-        gbc_delRefBut.gridx = 3;
-        gbc_delRefBut.gridy = 3;
-        getContentPane().add(delRefBut, gbc_delRefBut);
+        JButton delPlayerBut = new JButton("Delete");
+        GridBagConstraints gbc_delPlayerBut = new GridBagConstraints();
+        gbc_delPlayerBut.insets = insets;
+        gbc_delPlayerBut.gridx = 3;
+        gbc_delPlayerBut.gridy = 3;
+        getContentPane().add(delPlayerBut, gbc_delPlayerBut);
         
         JTextField lastNameField = new JTextField();
         GridBagConstraints gbc_lastNameField = new GridBagConstraints();
-        gbc_lastNameField.insets = new Insets(0, 0, 5, 5);
-        gbc_lastNameField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_lastNameField.insets = insets;
         gbc_lastNameField.gridx = 1;
         gbc_lastNameField.gridy = 4;
         getContentPane().add(lastNameField, gbc_lastNameField);
-        lastNameField.setColumns(10);
-        
-        String[] positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper"};
         
         JLabel posSelectLabel = new JLabel("Position:");
         GridBagConstraints gbc_posSelectLabel = new GridBagConstraints();
-        gbc_posSelectLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_posSelectLabel.insets = insets;
         gbc_posSelectLabel.gridx = 1;
         gbc_posSelectLabel.gridy = 5;
         getContentPane().add(posSelectLabel, gbc_posSelectLabel);
         
         JComboBox positionSelect = new JComboBox(positions);
-	       
         GridBagConstraints gbc_positionSelect = new GridBagConstraints();
-        gbc_positionSelect.insets = new Insets(0, 0, 5, 0);
+        gbc_positionSelect.insets = insets;
         gbc_positionSelect.fill = GridBagConstraints.HORIZONTAL;
         gbc_positionSelect.gridx = 1;
         gbc_positionSelect.gridy = 6;
@@ -136,7 +133,7 @@ public class playersDialog extends JDialog implements playerData {
         
         JButton addBut = new JButton("Create");
         GridBagConstraints gbc_addBut = new GridBagConstraints();
-        gbc_addBut.insets = new Insets(0, 0, 0, 5);
+        gbc_addBut.insets = insets;
         gbc_addBut.gridx = 1;
         gbc_addBut.gridy = 8;
         getContentPane().add(addBut, gbc_addBut);
@@ -146,8 +143,7 @@ public class playersDialog extends JDialog implements playerData {
         	dispose();
         });
         
-        
-        delRefBut.addActionListener(e -> {
+        delPlayerBut.addActionListener(e -> {
         	playerData.removePlayer(players.get(playerSelect.getSelectedIndex()));
         	dispose();
         });
