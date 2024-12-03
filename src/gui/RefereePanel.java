@@ -35,6 +35,10 @@ public class RefereePanel extends panel {
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		
+		// need record matches, view upcoming matches - get games where ref id included for next 5 games
+		
+		// record matches that obviously not complete yet, and that the referee has been assigned to
+		
 	}
 	
 	@Override

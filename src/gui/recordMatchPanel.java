@@ -1,21 +1,21 @@
 package gui;
+
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import accounts.ManagerAccount;
 
-@SuppressWarnings("serial")
-public class ManagerPanel extends panel {
-
+public class recordMatchPanel extends panel {
+	
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 
-	public ManagerPanel() { initialise(); }
-	
-	public ManagerPanel(ManagerAccount manager) { initialise(); }
+	public recordMatchPanel(JPanel parentPanel) { initialise(); }
 	
 	@Override
 	public void initialise() {
@@ -40,4 +40,5 @@ public class ManagerPanel extends panel {
 	public void addActionListeners() {
 		
 	}
+
 }
