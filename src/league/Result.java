@@ -6,13 +6,16 @@ import leagueMembers.Referee;
 
 public class Result extends Match {
 
+	public Result(int matchId, Team homeTeam, Team awayTeam) {
+		super(matchId, homeTeam, awayTeam, matchId);
+		// TODO Auto-generated constructor stub
+	}
+
 	private MatchEvent[] events;
 	private boolean isComplete;
 	private int attendance;
 	
-	public Result(int matchId, Team[] teams, Referee ref, Date date) {
-		super(matchId, teams, ref, date);
-	}
+
 
 	
 	// Standard getters and setters

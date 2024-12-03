@@ -1,6 +1,4 @@
 package leagueMembers;
-import java.sql.Date;
-
 import league.Statistics;
 
 abstract class Player extends Person {
@@ -13,8 +11,8 @@ abstract class Player extends Person {
 	private String positionType;
 	
 
-	public Player(int id, String fName, String lName, Date DoB, String contractType) {
-		super(id, fName, lName, DoB, contractType);
+	public Player(int id, String fName, String lName) {
+		super(id, fName, lName);
 	}
 
 

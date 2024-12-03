@@ -1,16 +1,15 @@
-package gui;
+package gui.manager;
 
 import javax.swing.JPanel;
 
-public class ManagerPanel extends JPanel {
+import gui.JfgpWindow;
+import gui.panel;
+
+public class ManagerPanel extends panel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Create the panel.
-	 */
 	public ManagerPanel() {
 
 	}
-
 }

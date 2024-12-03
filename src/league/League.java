@@ -6,10 +6,14 @@ public class League {
 	private String leagueName;
 	
 	public League(int id, String name) {
-		this.leagueId = id;
-		this.setLeagueName(name);
+		setLeagueId(id);
+		setLeagueName(name);
 	}
-
+	
+	public void setLeagueId(int Id) {
+		this.leagueId = Id;
+	}
+	
 	public int getLeagueId() {
 		return leagueId;
 	}
