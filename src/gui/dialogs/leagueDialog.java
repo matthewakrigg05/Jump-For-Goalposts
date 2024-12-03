@@ -1,4 +1,4 @@
-package gui.admin;
+package gui.dialogs;
 import league.League;
 import league.Season;
 import leagueDB.leagueData;

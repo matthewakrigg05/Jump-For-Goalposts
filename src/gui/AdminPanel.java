@@ -1,9 +1,9 @@
-package gui.admin;
+package gui;
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import gui.panel;
+import gui.dialogs.*;
 
 @SuppressWarnings("serial")
 public class AdminPanel extends panel {

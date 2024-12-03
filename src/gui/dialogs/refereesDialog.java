@@ -1,4 +1,4 @@
-package gui.admin;
+package gui.dialogs;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

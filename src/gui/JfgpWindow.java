@@ -11,6 +11,8 @@ public class JfgpWindow extends JFrame {
 
 	private boolean isLoggedIn;
 	private String userType;
+	private ManagerAccount managerAccount;
+	private RefereeAccount refereeAccount;
 	
 	public JfgpWindow() {
 		setTitle("Jump For Goalposts - League Manager");
@@ -56,4 +58,10 @@ public class JfgpWindow extends JFrame {
 
 	public String getUserType() { return userType; }
 	public void setUserType(String userType) { this.userType = userType; }
+	
+	public void setManagerUser(ManagerAccount manager) { this.managerAccount = manager; }
+	public ManagerAccount getManagerAccount() { return this.managerAccount; }
+	
+	public void setRefereeUser(RefereeAccount referee) { this.refereeAccount = referee; }
+	public RefereeAccount getRefereeAccount() { return this.refereeAccount; }
 }

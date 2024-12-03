@@ -1,4 +1,4 @@
-package gui.admin;
+package gui.dialogs;
 import league.Season;
 import leagueDB.seasonData;
 import java.awt.GridBagLayout;

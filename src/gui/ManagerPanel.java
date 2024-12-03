@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import accounts.ManagerAccount;
+
 @SuppressWarnings("serial")
 public class ManagerPanel extends panel {
 
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 
 	public ManagerPanel() { initialise(); }
+	
+	public ManagerPanel(ManagerAccount manager) { initialise(); }
 	
 	@Override
 	public void initialise() {

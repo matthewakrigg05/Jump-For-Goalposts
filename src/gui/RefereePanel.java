@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import accounts.RefereeAccount;
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
@@ -15,6 +16,8 @@ public class RefereePanel extends panel {
 	Referee referee;
 
 	public RefereePanel() { initialise(); }
+	
+	public RefereePanel(RefereeAccount referee) { initialise(); }
 	
 	@Override
 	public void initialise() {
@@ -28,5 +31,16 @@ public class RefereePanel extends panel {
 		addPanelComponents(getPanel());
 		addActionListeners();
 	}
+	
+	@Override
+	public void addPanelComponents(JPanel panel) {
+		
+	}
+	
+	@Override
+	public void addActionListeners() {
+		
+	}
+	
 
 }

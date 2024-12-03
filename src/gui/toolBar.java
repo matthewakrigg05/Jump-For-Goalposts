@@ -2,7 +2,6 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import gui.admin.AdminPanel;
 
 @SuppressWarnings("serial")
 public class toolBar extends JToolBar {
@@ -67,12 +66,12 @@ public class toolBar extends JToolBar {
 				break;
 			
 			case "Referee":
-				RefereePanel refPanel = new RefereePanel();
+				RefereePanel refPanel = new RefereePanel(frame.getRefereeAccount());
 				rolePanel = refPanel.getPanel();
 				break;
 				
 			case "Manager":
-				ManagerPanel manPanel = new ManagerPanel();
+				ManagerPanel manPanel = new ManagerPanel(frame.getManagerAccount());
 				rolePanel = manPanel.getPanel();
 				break;
 			}

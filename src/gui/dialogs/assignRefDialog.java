@@ -1,4 +1,4 @@
-package gui.admin;
+package gui.dialogs;
 import javax.swing.*;
 import league.Match;
 import league.Season;
