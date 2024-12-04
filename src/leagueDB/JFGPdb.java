@@ -41,24 +41,20 @@ public class JFGPdb implements dbInitMethods {
 
 	            if (resultSet.next()) {
 	                int userId = resultSet.getInt("userId");
-	                
 	                String userType = resultSet.getString("userType");
+	                db.closeConnection();
 	                
-	                // log in as the correct kind of user - different views in the application depending on the type of user
 	                switch (userType) {
 	                	case "admin":
 	                		new JfgpWindow(new AdminAccount(userId, email, password));
 	                		break;
 	                		
 	                	case "referee":
-	                		RefereeAccount refLogIn = new RefereeAccount(userId, email, password);
-	                		
-	                		new JfgpWindow(refLogIn);
+	                		new JfgpWindow(new RefereeAccount(userId, email, password, refereeData.getRefereeFromId(userId)));
 	                		break;
 	                		
-	                	case "manager":	        	       
-	                		ManagerAccount managerLogIn = new ManagerAccount(userId, email, password);
-	                		new JfgpWindow(managerLogIn);
+	                	case "manager":
+	                		new JfgpWindow(new ManagerAccount(userId, email, password));
 	                		break;
 	                	
 	                	default:
@@ -69,9 +65,8 @@ public class JFGPdb implements dbInitMethods {
 	            else { 
 		            JfgpWindow window = new JfgpWindow();
 	        		JOptionPane.showMessageDialog(window, "Log In Failed");
+	        		db.closeConnection();
 	            }
-	            
-	            db.closeConnection();
 	        } catch (SQLException e) { e.printStackTrace(); }
 	}
 	

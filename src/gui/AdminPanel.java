@@ -1,9 +1,9 @@
-package gui.admin;
+package gui;
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import gui.panel;
+import gui.dialogs.*;
 
 @SuppressWarnings("serial")
 public class AdminPanel extends panel {
@@ -125,7 +125,11 @@ public class AdminPanel extends panel {
 		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
 		panelButton[3].addActionListener(e -> { new assignRefDialog().setVisible(true); });
 		panelButton[4].addActionListener(e -> { new teamDialog().setVisible(true); });
-		panelButton[5].addActionListener(e -> { new recMatchesDialog().setVisible(true); });
+		
+		panelButton[5].addActionListener(e -> { 
+			new recordMatchPanel(this).setVisible(true);
+			this.setVisible(false); });
+		
 		panelButton[6].addActionListener(e -> { new managersDialog().setVisible(true); });
 		panelButton[7].addActionListener(e -> { new updateDialog().setVisible(true); });
 		panelButton[8].addActionListener(e -> { new playersDialog().setVisible(true); });

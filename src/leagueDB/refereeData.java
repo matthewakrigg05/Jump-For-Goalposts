@@ -4,27 +4,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import accounts.RefereeAccount;
-import league.Season;
 import leagueMembers.Referee;
 
 public interface refereeData {
 	
-	public static RefereeAccount getRefereeAccount(int id) {
+	public static RefereeAccount getRefereeAccount(Referee ref) {
 		JFGPdb connection = new JFGPdb();
 		try {
 	        PreparedStatement refAccStatement = connection.getConnection().prepareStatement(
 	                "SELECT * FROM userAccounts WHERE userId = ? AND userType = 'referee';" );
 	
-	        refAccStatement.setInt(1, id);
+	        refAccStatement.setInt(1, ref.getId());
 	        ResultSet refAccResult = refAccStatement.executeQuery(); 
 	        
 	        RefereeAccount refAcc = new RefereeAccount(
 	        		refAccResult.getInt("userId"),
 	        		refAccResult.getString("emailAddress"),
-	        		refAccResult.getString("password")
+	        		refAccResult.getString("password"), 
+	        		ref
 	        		);
+	        
 	        connection.closeConnection();
 	        return refAcc;
 	        
@@ -57,13 +57,13 @@ public interface refereeData {
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 	
-	public static Referee getReferee(RefereeAccount refAcc) {
+	public static Referee getReferee(RefereeAccount refereeAccount) {
 		JFGPdb connection = new JFGPdb();
 		try {
 	        PreparedStatement refStatement = connection.getConnection().prepareStatement(
 	                "SELECT * FROM referees WHERE userId = ?;" );
 	
-	        refStatement.setInt(1, refAcc.getId());
+	        refStatement.setInt(1, refereeAccount.getId());
 	        ResultSet refResult = refStatement.executeQuery(); 
 	        
 	        Referee ref = new Referee(
@@ -71,7 +71,32 @@ public interface refereeData {
 	        		refResult.getString("fname"),
 	        		refResult.getString("lName"), 
 	        		refResult.getString("preferredLocation"),
-	        		refAcc
+	        		refereeAccount
+	        		);
+	        
+	        connection.closeConnection();
+			return ref;
+		
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		
+		return null;
+	}
+	
+	public static Referee getRefereeFromId(int id) {
+		JFGPdb connection = new JFGPdb();
+		try {
+	        PreparedStatement refStatement = connection.getConnection().prepareStatement(
+	                "SELECT * FROM referees WHERE userId = ?;" );
+	
+	        refStatement.setInt(1, id);
+	        ResultSet refResult = refStatement.executeQuery(); 
+	        
+	        Referee ref = new Referee(
+	        		refResult.getInt("refereeId"),
+	        		refResult.getString("fname"),
+	        		refResult.getString("lName"), 
+	        		refResult.getString("preferredLocation"),
+	        		id
 	        		);
 	        
 	        connection.closeConnection();
@@ -122,7 +147,7 @@ public interface refereeData {
 			
 			connection.closeConnection();
 			
-			for(Referee ref : referees) { ref.setRefAcc(getRefereeAccount(ref.getRefUserId())); }
+			for(Referee ref : referees) { ref.setRefAcc(getRefereeAccount(ref)); }
 					
 			return referees;
 			

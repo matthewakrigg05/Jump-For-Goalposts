@@ -86,7 +86,7 @@ public interface dbInitMethods {
             		+ "	isComplete BOOLEAN NOT NULL,\r\n"
             		+ "	matchWeek INTEGER NOT NULL,\r\n"
             		+ "	seasonId INTEGER NOT NULL,\r\n"
-            		+ "	refereeId INTEGER,\r\n"
+            		+ "	refereeId INTEGER REFERENCES referees(refereeId) ON DELETE CASCADE,\r\n"
             		+ " homeTeamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE,\r\n"
             		+ " awayTeamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE, \r\n"
             		+ "	FOREIGN KEY (seasonId) REFERENCES seasons(seasonId) ON DELETE CASCADE, \r\n"

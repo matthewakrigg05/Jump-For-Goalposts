@@ -22,7 +22,6 @@ public interface matchData {
 			seasonStatement.setInt(2, season.getId());
 			seasonStatement.setInt(3, homeTeam.getTeamId());
 			seasonStatement.setInt(4, awayTeam.getTeamId());
-			
 			seasonStatement.executeUpdate();
 			connection.closeConnection();
 			
@@ -75,7 +74,6 @@ public interface matchData {
 			connection.closeConnection();
 			
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
-		
 		return matches;
 	}
 	
@@ -137,5 +135,31 @@ public interface matchData {
 			
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
+	
+	public static List<Match> getNextFiveRefMatches(Referee referee) {
+		JFGPdb connection = new JFGPdb();
+		List<Match> matchesToAttend = new ArrayList<Match>();
+		
+		try {
+			PreparedStatement matchStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM matches WHERE refereeId = ? AND isComplete = false ORDER BY matchWeek ASC LIMIT 5;");
+			
+			matchStatement.setInt(1, referee.getId());
+			ResultSet res = matchStatement.executeQuery();
+			
+			while(res.next()) {
+				Match match = new Match (
+						res.getInt("matchId"),
+						teamData.getTeam(res.getInt("homeTeamId"), connection.getConnection()),
+						teamData.getTeam(res.getInt("awayTeamId"), connection.getConnection()),
+						res.getInt("matchWeek")
+						);
+				matchesToAttend.add(match);
+			}
+			
+			connection.closeConnection();			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return matchesToAttend;
+	}
 }
-

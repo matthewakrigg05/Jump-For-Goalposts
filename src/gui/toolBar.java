@@ -1,23 +1,9 @@
 package gui;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Rectangle;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import gui.admin.AdminPanel;
-import gui.manager.ManagerPanel;
-import gui.referee.RefereePanel;
-
+@SuppressWarnings("serial")
 public class toolBar extends JToolBar {
 	
 	private JButton[] toolBarButton;
@@ -60,6 +46,23 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[4]);
 		add(toolBarSep);
 		
+		switch (frame.getUserType()) {
+		case "Admin":
+			AdminPanel admin = new AdminPanel();
+			rolePanel = admin.getPanel();
+			break;
+		
+		case "Referee":
+			RefereePanel refPanel = new RefereePanel(frame.getRefereeAccount());
+			rolePanel = refPanel.getPanel();
+			break;
+			
+		case "Manager":
+			ManagerPanel manPanel = new ManagerPanel(frame.getManagerAccount());
+			rolePanel = manPanel.getPanel();
+			break;
+		}
+		
 		if (frame.isLoggedIn()) { 
 			add(toolBarButton[5]);
 			add(toolBarButton[7]); 
@@ -73,29 +76,13 @@ public class toolBar extends JToolBar {
 			});
 		}
 		
-		switch (frame.getUserType()) {
-			case "Admin":
-				AdminPanel admin = new AdminPanel();
-				rolePanel = admin.getPanel();
-				break;
-			
-			case "Referee":
-				RefereePanel refPanel = new RefereePanel();
-				rolePanel = refPanel.getPanel();
-				break;
-				
-			case "Manager":
-				RefereePanel manPanel = new RefereePanel();
-				rolePanel = manPanel.getPanel();
-				break;
-			}
-		
 		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
 		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
 		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel()); });
 		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
 		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
 		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });
+		
 		toolBarButton[7].addActionListener(e -> {
 			int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", 
 					"Log Out?",  JOptionPane.YES_NO_OPTION);
