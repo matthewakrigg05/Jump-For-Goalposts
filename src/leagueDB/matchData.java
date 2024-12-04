@@ -162,4 +162,32 @@ public interface matchData {
 		
 		return matchesToAttend;
 	}
+	
+	public static List<Match> getMatchWeekMatches(int matchWeek) {
+		JFGPdb connection = new JFGPdb();
+		List<Match> matches = new ArrayList<Match>();
+		
+		try {
+			PreparedStatement gameWeeksStatement = (connection.getConnection()).prepareStatement(
+			        "SELECT * FROM matches WHERE matchweek = ? AND (homeTeamId <> 1 AND awayTeamId <> 1);");
+			
+			gameWeeksStatement.setInt(1, matchWeek);
+			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
+			
+			while (gameWeeks.next()) {
+				Match match= new Match (
+						gameWeeks.getInt("matchId"),
+						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection.getConnection()),
+						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection.getConnection()),
+						gameWeeks.getInt("matchWeek")
+						);
+				matches.add(match);
+			}
+			
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		
+		return matches;
+	}
 }

@@ -11,20 +11,17 @@ public interface seasonData {
 	public static void createSeason(String start, String end) {
 		JFGPdb connection = new JFGPdb();
 		try {
-			
 			PreparedStatement isCurrentSeason = (connection.getConnection()).prepareStatement(
 					"SELECT isCurrent FROM seasons WHERE isCurrent = true;");
 			ResultSet isCurrent = isCurrentSeason.executeQuery();
 			
 			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
 			        "INSERT INTO seasons(seasonStart, seasonEnd, isCurrent, leagueId) VALUES (?, ?, ?, 1);");
-			
 			seasonStatement.setString(1, start);
 			seasonStatement.setString(2, end);
 			
 			if (!isCurrent.next()) { seasonStatement.setBoolean(3, true); }
 			else { seasonStatement.setBoolean(3, false); }
-			
 			seasonStatement.executeUpdate();
 			connection.closeConnection();
 			
@@ -78,13 +75,11 @@ public interface seasonData {
 					"UPDATE seasons SET isCurrent = false WHERE isCurrent = true;" );
 			deselectCurrSeasonStatement.executeUpdate();
 			
-			
 			PreparedStatement setCurrSeasonStatement = (connection.getConnection()).prepareStatement(
 					"UPDATE seasons SET isCurrent = true WHERE seasonId = ?;" );
 			
 			setCurrSeasonStatement.setInt(1, seasonId);
 			setCurrSeasonStatement.executeUpdate();
-			
 			connection.closeConnection();
 		} catch (SQLException e) { e.printStackTrace(); }	
 	}
@@ -107,5 +102,20 @@ public interface seasonData {
 			
 			return currentSeason;
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
+	}
+	
+	public static int getCurrentGameWeek(int SeasonId) {
+		JFGPdb connection = new JFGPdb();
+		try {
+			PreparedStatement currentMatchWeekStatement = (connection.getConnection()).prepareStatement(
+					"SELECT MIN(matchWeek) AS currentWeek FROM matches WHERE isComplete = 0 AND seasonId = ?;" );
+			currentMatchWeekStatement.setInt(1, SeasonId);
+			ResultSet matchweekResult = currentMatchWeekStatement.executeQuery();
+			
+			int matchWeek = matchweekResult.getInt("currentWeek");
+			connection.closeConnection();
+			
+			return matchWeek;
+		} catch (SQLException e) { e.printStackTrace(); return 0; }	
 	}
 }

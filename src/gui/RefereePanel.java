@@ -18,16 +18,12 @@ import java.awt.GridBagConstraints;
 @SuppressWarnings("serial")
 public class RefereePanel extends panel {
 
-	List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
-	
-	Referee referee;
-	
-	public List<Match> matchesToAttend = new ArrayList<Match>(); 
-	public List<String> matchSummaries = new ArrayList<String>();
-	String noData = "You have no matches to Attend";
-	
-	public JList toAttendList;
-	public JList toRecordList;
+	private JList toAttendList;
+	private JList toRecordList;
+	private Referee referee;
+	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
+	private List<Match> matchesToAttend = new ArrayList<Match>(); 
+	private List<String> matchSummaries = new ArrayList<String>();
 
 	public RefereePanel() { initialise(); }
 	
@@ -46,12 +42,9 @@ public class RefereePanel extends panel {
 		setLayout(new GridBagLayout());
 		
 		panelButton = new JButton[getButtonNames().size()];
-		
 		matchesToAttend = matchData.getNextFiveRefMatches(referee);
 		
-		if (matchesToAttend.size() == 0) {
-			this.matchSummaries.add("You have no matches to attend...");
-		}
+		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
 		
 		addPanelComponents(getPanel());
@@ -107,8 +100,7 @@ public class RefereePanel extends panel {
 		toRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				toAttendList.getSelectedIndex();
-				
+				new recordMatchPanel(matchesToAttend.get(toAttendList.getSelectedIndex())).setVisible(true);
 			}
 		});
 	}
