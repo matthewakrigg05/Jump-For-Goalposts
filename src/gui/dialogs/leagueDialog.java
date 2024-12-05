@@ -3,7 +3,6 @@ import league.League;
 import league.Season;
 import leagueDB.seasonData;
 import javax.swing.*;
-import gui.panel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

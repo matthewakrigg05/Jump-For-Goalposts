@@ -55,7 +55,7 @@ public class toolBar extends JToolBar {
 			break;
 		
 		case "Referee":
-			RefereePanel refPanel = new RefereePanel(frame.getRefereeAccount());
+			RefereePanel refPanel = new RefereePanel(frame);
 			rolePanel = refPanel.getPanel();
 			break;
 			

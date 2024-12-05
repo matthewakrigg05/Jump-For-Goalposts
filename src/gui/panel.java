@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public abstract class panel extends JPanel {
+abstract class panel extends JPanel {
 	
 	private JPanel panel;
 	private Insets labelFieldInsets;

@@ -2,6 +2,7 @@ package gui;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -21,14 +22,14 @@ public class RefereePanel extends panel {
 	private JList toAttendList;
 	private JList toRecordList;
 	private Referee referee;
+	Connection connection;
 	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
 	private List<Match> matchesToAttend = new ArrayList<Match>(); 
 	private List<String> matchSummaries = new ArrayList<String>();
-
-	public RefereePanel() { initialise(); }
 	
-	public RefereePanel(RefereeAccount refereeAccount) { 
-		this.referee = refereeData.getReferee(refereeAccount);
+	public RefereePanel(JfgpWindow frame) { 
+		this.connection = frame.getDbConnection();
+		this.referee = refereeData.getReferee(frame.getRefereeAccount());
 		initialise();
 		}
 	
@@ -42,7 +43,7 @@ public class RefereePanel extends panel {
 		setLayout(new GridBagLayout());
 		
 		panelButton = new JButton[getButtonNames().size()];
-		matchesToAttend = matchData.getNextFiveRefMatches(referee);
+		matchesToAttend = matchData.getNextFiveRefMatches(connection, referee);
 		
 		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
@@ -87,8 +88,7 @@ public class RefereePanel extends panel {
 	}
 	
 	@Override
-	public void addActionListeners() {
-		
+	public void addActionListeners() {	
 		toAttendList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
