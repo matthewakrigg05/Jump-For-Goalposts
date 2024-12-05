@@ -14,9 +14,7 @@ import leagueMembers.Referee;
 
 public interface teamData {
 	
-	public static void createTeam(String teamName) {
-		JFGPdb db = new JFGPdb();
-		Connection connection = db.getConnection();
+	public static void createTeam(Connection connection, String teamName) {
 		try {
 			
 			int newStatsId = createStats(connection);
@@ -27,32 +25,26 @@ public interface teamData {
 			teamStatement.setString(1, teamName);
 			teamStatement.setInt(2, newStatsId);
 			teamStatement.executeUpdate();
-		
-			db.closeConnection();
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void removeTeam(Team team) {
-		JFGPdb connection = new JFGPdb();
+	public static void removeTeam(Connection connection, Team team) {
 		try {
-			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement seasonStatement = (connection).prepareStatement(
 			        "DELETE FROM teams WHERE teamId = ?;");
 			
 			seasonStatement.setInt(1, team.getTeamId());
 			seasonStatement.executeUpdate();
 			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static List<Team> getAllTeams() {
-		JFGPdb connection = new JFGPdb();
+	public static List<Team> getAllTeams(Connection connection) {
 		List<Team> teams = new ArrayList<Team>();
 		
 		try {
-			PreparedStatement teamsStatement = (connection.getConnection()).prepareStatement( "SELECT * FROM teams");
+			PreparedStatement teamsStatement = (connection).prepareStatement( "SELECT * FROM teams");
 			ResultSet teamResult = teamsStatement.executeQuery();
 			
 			while(teamResult.next()) {
@@ -64,8 +56,7 @@ public interface teamData {
 		        		);
 				teams.add(team);
 				}
-			}
-			connection.closeConnection();					
+			}				
 			return teams;
 			
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -73,26 +64,7 @@ public interface teamData {
 		return null;
 	}
 	
-	public static Team getTeam(int id) { 
-		JFGPdb connection = new JFGPdb();
-		Team team = null;
-		
-		try {
-			PreparedStatement teamStatement = (connection.getConnection()).prepareStatement(
-			        "SELECT * FROM teams WHERE teamId = ?;");
-			
-			teamStatement.setInt(1, id);
-			ResultSet teamResult = teamStatement.executeQuery();
-			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
-			
-			connection.closeConnection();					
-			return team;
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return null;
-	}
-	
-	public static Team getTeam(int id, Connection connection) { 
+	public static Team getTeam(Connection connection, int id) { 
 		Team team = null;
 		
 		try {
@@ -102,7 +74,7 @@ public interface teamData {
 			teamStatement.setInt(1, id);
 			ResultSet teamResult = teamStatement.executeQuery();
 			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
-	
+					
 			return team;
 		} catch (SQLException e) { e.printStackTrace(); }
 		

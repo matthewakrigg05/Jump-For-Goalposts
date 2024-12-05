@@ -22,8 +22,6 @@ public class leagueDialog extends JDialog implements seasonData {
     Connection connection;
     
 	public leagueDialog(Connection connection) { 
-		league = seasonData.getLeague(connection);
-		seasons = seasonData.getSeasons(connection);
 		this.connection = connection;
 		initialise();
 		}
@@ -36,6 +34,9 @@ public class leagueDialog extends JDialog implements seasonData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         
+		league = seasonData.getLeague(connection);
+		seasons = seasonData.getSeasons(connection);
+		
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
         
         GridBagLayout gridBagLayout = new GridBagLayout();

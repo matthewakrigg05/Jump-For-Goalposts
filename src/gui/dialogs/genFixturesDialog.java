@@ -8,19 +8,24 @@ import leagueDB.teamData;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
 public class genFixturesDialog extends JDialog implements matchData, teamData, seasonData {
 	
-    List<Season> seasons = seasonData.getSeasons();
+    List<Season> seasons;
     List<String> seasonSelection = new ArrayList<String>();
     
-    List<Team> teams = teamData.getAllTeams();
+    List<Team> teams;
     List<String> teamSelection = new ArrayList<String>();
+    
+    Connection connection;
 
-	public genFixturesDialog() { initialise(); }
+	public genFixturesDialog(Connection connection) { 
+		this.connection = connection;
+		initialise(); }
 
 	public void initialise() {
 		setResizable(false);
@@ -30,6 +35,9 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Generate Fixtures");
+        
+        seasons = seasonData.getSeasons(connection);
+        teams = teamData.getAllTeams(connection);
 		
 		for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
 	    for(Team i : teams) { teamSelection.add(i.getName()); }
@@ -93,7 +101,7 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 		genFixturesButton.addActionListener(e -> {
 				List<Team> selectedTeams = new ArrayList<Team>();
 				for(int i : teamSelectionList.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
-				matchData.createSeasonMatches(selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				matchData.createSeasonMatches(connection, selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
 				dispose();
 				
 			});
