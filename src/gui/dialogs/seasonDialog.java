@@ -7,6 +7,9 @@ import java.awt.Insets;
 import java.sql.Connection;
 
 import javax.swing.*;
+
+import gui.JfgpWindow;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +21,10 @@ public class seasonDialog extends JDialog implements seasonData {
     List<String> seasonSelection = new ArrayList<String>();
     
     Insets insets = new Insets(0, 0, 5, 5);
-    Connection connection;
+    JfgpWindow frame;
     
-	public seasonDialog(Connection connection) {
-		this.connection = connection;
+	public seasonDialog(JfgpWindow frame) {
+		this.frame = frame;
 		initialise();
 		}
 	
@@ -33,7 +36,7 @@ public class seasonDialog extends JDialog implements seasonData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Seasons");
 
-        seasons = seasonData.getSeasons(connection);
+        seasons = seasonData.getSeasons(frame.getDbConnection());
         
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
        
@@ -112,12 +115,12 @@ public class seasonDialog extends JDialog implements seasonData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	seasonData.createSeason(connection, seasonStartField.getText(), seasonEndField.getText());
+        	seasonData.createSeason(frame.getDbConnection(), seasonStartField.getText(), seasonEndField.getText());
         	dispose();
         });
         
         deleteSeasonBut.addActionListener(e -> {
-        	seasonData.removeSeason(connection, seasons.get(seasonSelect.getSelectedIndex()));
+        	seasonData.removeSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()));
         	dispose();
         });
 	}

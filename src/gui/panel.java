@@ -14,7 +14,7 @@ abstract class panel extends JPanel {
 	private Insets labelFieldInsets;
 	private Font labelFont;
 	private List<String> buttonNames;
-	public Connection connection;
+
 	
 	protected JButton[] panelButton;
 	protected GridBagLayout gridBagLayout;
@@ -37,6 +37,4 @@ abstract class panel extends JPanel {
 	
 	public List<String> getButtonNames() { return this.buttonNames; }
 	public void setButtonNames(List<String> buttons) { this.buttonNames = buttons; }
-
-	public Connection getConnection() { return this.connection; }
 }

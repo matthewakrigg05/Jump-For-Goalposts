@@ -3,6 +3,9 @@ import league.League;
 import league.Season;
 import leagueDB.seasonData;
 import javax.swing.*;
+
+import gui.JfgpWindow;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -18,10 +21,10 @@ public class leagueDialog extends JDialog implements seasonData {
 	
 	List<Season> seasons;
     List<String> seasonSelection = new ArrayList<String>();
-    Connection connection;
+    JfgpWindow frame;
     
-	public leagueDialog(Connection connection) { 
-		this.connection = connection;
+	public leagueDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise();
 		}
 	
@@ -33,8 +36,8 @@ public class leagueDialog extends JDialog implements seasonData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         
-		league = seasonData.getLeague(connection);
-		seasons = seasonData.getSeasons(connection);
+		league = seasonData.getLeague(frame.getDbConnection());
+		seasons = seasonData.getSeasons(frame.getDbConnection());
 		
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
         
@@ -93,12 +96,12 @@ public class leagueDialog extends JDialog implements seasonData {
         getContentPane().add(updateButton, gbc_updateButton);
         
         saveButton.addActionListener(e -> {
-        	seasonData.changeLeagueName(connection, newName.getText());
+        	seasonData.changeLeagueName(frame.getDbConnection(), newName.getText());
         	dispose();
         });
         
         updateButton.addActionListener(e -> {
-        	seasonData.setCurrentSeason(connection, seasons.get(seasonSelect.getSelectedIndex()).getId());
+        	seasonData.setCurrentSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()).getId());
         	dispose();
         });
 	}

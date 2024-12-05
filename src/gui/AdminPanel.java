@@ -38,9 +38,9 @@ public class AdminPanel extends panel implements seasonData, matchData {
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelButton = new JButton[getButtonNames().size()];
 		
-		currentSeason = seasonData.getCurrentSeason(getConnection());
-		currentMatchWeek = seasonData.getCurrentGameWeek(getConnection(), currentSeason.getId());
-		matchesToRecord = matchData.getMatchWeekMatches(getConnection(), currentMatchWeek);
+		currentSeason = seasonData.getCurrentSeason(frame.getDbConnection());
+		currentMatchWeek = seasonData.getCurrentGameWeek(frame.getDbConnection(), currentSeason.getId());
+		matchesToRecord = matchData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek);
 		
 		addPanelComponents(getPanel());
 		addActionListeners();
@@ -169,9 +169,9 @@ public class AdminPanel extends panel implements seasonData, matchData {
 	
 	@Override
 	protected void addActionListeners() {
-		panelButton[0].addActionListener(e -> { new leagueDialog(connection).setVisible(true); });
-		panelButton[1].addActionListener(e -> { new genFixturesDialog(connection).setVisible(true); });
-		panelButton[2].addActionListener(e -> { new seasonDialog(connection).setVisible(true); });
+		panelButton[0].addActionListener(e -> { new leagueDialog(frame).setVisible(true); });
+		panelButton[1].addActionListener(e -> { new genFixturesDialog(frame).setVisible(true); });
+		panelButton[2].addActionListener(e -> { new seasonDialog(frame).setVisible(true); });
 		panelButton[3].addActionListener(e -> { new assignRefDialog(frame).setVisible(true); });
 		panelButton[4].addActionListener(e -> { new teamDialog(frame).setVisible(true); });
 		

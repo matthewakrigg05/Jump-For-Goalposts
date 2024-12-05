@@ -193,7 +193,7 @@ public interface leagueMemberData {
 				managers.add(man);
 			}
 			
-			for(Manager man : managers) { man.setManAcc(getManagerAccount(connection, man.getUserId())); }
+			for(Manager man : managers) { man.setManagerAcc(getManagerAccount(connection, man.getUserId())); }
 					
 			return managers;
 			

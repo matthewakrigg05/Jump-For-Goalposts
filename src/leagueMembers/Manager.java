@@ -20,6 +20,7 @@ public class Manager extends Person {
 	public ManagerAccount getManagerAcc() { return managerAcc; }
 	public void setManagerAcc(ManagerAccount managerAcc) { this.managerAcc = managerAcc; }
 	
-	public void setManAcc(ManagerAccount manAcc) { this.managerAcc = manAcc; }
+	public void setManagerAccId(int id) { this.managerAccId = id; }
+	public int getManagerAccId() { return this.managerAccId; }
 }
 

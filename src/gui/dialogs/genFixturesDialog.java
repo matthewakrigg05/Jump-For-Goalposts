@@ -1,5 +1,7 @@
 package gui.dialogs;
 import javax.swing.*;
+
+import gui.JfgpWindow;
 import league.Season;
 import league.Team;
 import leagueDB.matchData;
@@ -19,10 +21,10 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
     private List<String> seasonSelection = new ArrayList<String>();
     private List<Team> teams;
     private List<String> teamSelection = new ArrayList<String>();
-    private Connection connection;
+    private JfgpWindow frame;
 
-	public genFixturesDialog(Connection connection) { 
-		this.connection = connection;
+	public genFixturesDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise(); }
 
 	private void initialise() {
@@ -34,8 +36,8 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Generate Fixtures");
         
-        seasons = seasonData.getSeasons(connection);
-        teams = teamData.getAllTeams(connection);
+        seasons = seasonData.getSeasons(frame.getDbConnection());
+        teams = teamData.getAllTeams(frame.getDbConnection());
 		
 		for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
 	    for(Team i : teams) { teamSelection.add(i.getName()); }
@@ -99,7 +101,7 @@ public class genFixturesDialog extends JDialog implements matchData, teamData, s
 		genFixturesButton.addActionListener(e -> {
 				List<Team> selectedTeams = new ArrayList<Team>();
 				for(int i : teamSelectionList.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
-				matchData.createSeasonMatches(connection, selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				matchData.createSeasonMatches(frame.getDbConnection(), selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
 				dispose();
 				
 			});
