@@ -5,6 +5,8 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import gui.JfgpWindow;
 import league.Team;
 import leagueDB.playerData;
 import leagueMembers.*;
@@ -12,20 +14,19 @@ import leagueMembers.*;
 @SuppressWarnings("serial")
 public class playersDialog extends JDialog implements playerData {
 	
-	Insets insets;
-	
+	Insets insets = new Insets(0, 0, 5, 5);
 	List<Team> teams;
     List<String> teamSelection = new ArrayList<String>();
-    
     String[] positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper"};
     List<Player> players;
    
     List<Integer> playerIds = new ArrayList<Integer>();
     List<String> playerSelection = new ArrayList<String>();
+    JfgpWindow frame;
     
-    public playersDialog() { 
+    public playersDialog(JfgpWindow frame) { 
+    	this.frame = frame;
     	initialise();
-    	insets = new Insets(0, 0, 5, 5);
     	}
 		
 	public void initialise() {
@@ -130,12 +131,12 @@ public class playersDialog extends JDialog implements playerData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	playerData.createPlayer(firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
+        	frame.getAdminAccount().createPlayer(firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
         	dispose();
         });
         
         delPlayerBut.addActionListener(e -> {
-        	playerData.removePlayer(players.get(playerSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removePlayer(players.get(playerSelect.getSelectedIndex()));
         	dispose();
         });
 	}

@@ -110,7 +110,7 @@ public class AdminAccount extends Account implements IManagerRole, IRefereeRole 
 		return 0;
 	}
 	
-	public static void createPlayer(String fname, String lname, String positionType) {
+	public void createPlayer(String fname, String lname, String positionType) {
 		JFGPdb connection = new JFGPdb();
 		try {
 			int statsId = createStats(connection.getConnection());
@@ -127,7 +127,7 @@ public class AdminAccount extends Account implements IManagerRole, IRefereeRole 
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 	
-	public static void removePlayer(Player player) {
+	public void removePlayer(Player player) {
 		JFGPdb connection = new JFGPdb();
 		try {
 			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
