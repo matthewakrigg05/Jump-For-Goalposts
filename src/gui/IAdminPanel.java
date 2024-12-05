@@ -509,4 +509,138 @@ public interface IAdminPanel {
         playerDialog.setVisible(true);
         return playerDialog;
 	}
+	
+	public static JDialog getRefereeDialog(JfgpWindow frame) {
+		JDialog refereeDialog = new JDialog();
+	    Insets insets = new Insets(0, 0, 5, 5);;
+	    
+	    refereeDialog.setAlwaysOnTop(true);
+	    refereeDialog.setFocusable(true);
+	    refereeDialog.setSize(450, 500);
+	    refereeDialog.setModal(true);
+	    refereeDialog.setTitle("Referees");
+
+	    List<String> refSelection = new ArrayList<String>();
+        List<Referee> referees = leagueMemberData.getAllReferees(frame.getDbConnection());
+        for(Referee i : referees) { refSelection.add(i.getFullName()); }
+       
+        GridBagLayout seasonDialogLayout = new GridBagLayout();
+        refereeDialog.setLayout(seasonDialogLayout);
+        
+        JLabel createRefereeLabel = new JLabel("Create Referees");
+        GridBagConstraints gbc_createRefereeLabel = new GridBagConstraints();
+        gbc_createRefereeLabel.insets = insets;
+        gbc_createRefereeLabel.gridx = 1;
+        gbc_createRefereeLabel.gridy = 0;
+        refereeDialog.add(createRefereeLabel, gbc_createRefereeLabel);
+        
+        JLabel deleteRefereeLabel = new JLabel("Delete Referee");
+        GridBagConstraints gbc_deleteRefereeLabel = new GridBagConstraints();
+        gbc_deleteRefereeLabel.insets = insets;
+        gbc_deleteRefereeLabel.gridx = 3;
+        gbc_deleteRefereeLabel.gridy = 0;
+        refereeDialog.add(deleteRefereeLabel, gbc_deleteRefereeLabel);
+        
+        JLabel fNameLabel = new JLabel("First Name: ");
+        GridBagConstraints gbc_fNameLabel = new GridBagConstraints();
+        gbc_fNameLabel.insets = insets;
+        gbc_fNameLabel.gridx = 1;
+        gbc_fNameLabel.gridy = 1;
+        refereeDialog.add(fNameLabel, gbc_fNameLabel);
+        
+        JLabel refToRemoveLabel = new JLabel("Referee:");
+        GridBagConstraints gbc_refToRemoveLabel = new GridBagConstraints();
+        gbc_refToRemoveLabel.insets = insets;
+        gbc_refToRemoveLabel.gridx = 3;
+        gbc_refToRemoveLabel.gridy = 1;
+        refereeDialog.add(refToRemoveLabel, gbc_refToRemoveLabel);
+        
+        JTextField firstNameField = new JTextField();
+        GridBagConstraints gbc_fNameFileld = new GridBagConstraints();
+        gbc_fNameFileld.insets = insets;
+        gbc_fNameFileld.gridx = 1;
+        gbc_fNameFileld.gridy = 2;
+        refereeDialog.add(firstNameField, gbc_fNameFileld);
+        firstNameField.setColumns(15);
+        
+		JComboBox refSelect = new JComboBox(refSelection.toArray());
+       
+        GridBagConstraints gbc_refSelect = new GridBagConstraints();
+        gbc_refSelect.insets = insets;
+        gbc_refSelect.gridx = 3;
+        gbc_refSelect.gridy = 2;
+        refereeDialog.add(refSelect, gbc_refSelect);
+
+        JLabel lastNameLabel = new JLabel("Last Name: ");
+        GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
+        gbc_lastNameLabel.insets = insets;
+        gbc_lastNameLabel.gridx = 1;
+        gbc_lastNameLabel.gridy = 3;
+        refereeDialog.add(lastNameLabel, gbc_lastNameLabel);
+        
+        JButton delRefBut = new JButton("Delete");
+        GridBagConstraints gbc_delRefBut = new GridBagConstraints();
+        gbc_delRefBut.insets = insets;
+        gbc_delRefBut.gridx = 3;
+        gbc_delRefBut.gridy = 3;
+        refereeDialog.add(delRefBut, gbc_delRefBut);
+        
+        JTextField lastNameField = new JTextField();
+        GridBagConstraints gbc_lastNameField = new GridBagConstraints();
+        gbc_lastNameField.insets = insets;
+        gbc_lastNameField.gridx = 1;
+        gbc_lastNameField.gridy = 4;
+        refereeDialog.add(lastNameField, gbc_lastNameField);
+        lastNameField.setColumns(15);
+
+        JLabel cityLabel = new JLabel("City: ");
+        GridBagConstraints gbc_cityLabel = new GridBagConstraints();
+        gbc_cityLabel.insets = insets;
+        gbc_cityLabel.gridx = 1;
+        gbc_cityLabel.gridy = 5;
+        refereeDialog.add(cityLabel, gbc_cityLabel);
+        
+        JTextField cityField = new JTextField();
+        GridBagConstraints gbc_cityField = new GridBagConstraints();
+        gbc_cityField.insets = insets;
+        gbc_cityField.gridx = 1;
+        gbc_cityField.gridy = 6;
+        refereeDialog.add(cityField, gbc_cityField);
+        cityField.setColumns(15);
+        
+        JButton addBut = new JButton("Create");
+        GridBagConstraints gbc_addBut = new GridBagConstraints();
+        gbc_addBut.insets = insets;
+        gbc_addBut.gridx = 1;
+        gbc_addBut.gridy = 8;
+        refereeDialog.add(addBut, gbc_addBut);
+        
+        addBut.addActionListener(e -> {
+        	frame.getAdminAccount().createRefereeAccount(frame.getDbConnection(), 
+        			firstNameField.getText(), lastNameField.getText(), cityField.getText());
+        	refereeDialog.dispose();
+        });
+        
+        delRefBut.addActionListener(e -> {
+        	frame.getAdminAccount().removeReferee(frame.getDbConnection(), referees.get(refSelect.getSelectedIndex()));
+        	refereeDialog.dispose();
+        });
+        
+        refereeDialog.setVisible(true);
+        return refereeDialog;
+	}
+	
+	public static JDialog getSeasonDialog(JfgpWindow frame) {
+		JDialog seasonDialog = new JDialog();
+		
+		
+		seasonDialog.setVisible(true);
+		return seasonDialog;
+	}
+	
+	public static JDialog getUpdateDialog(JfgpWindow frame) {
+		JDialog updateDialog = new JDialog();
+		
+		return updateDialog;
+	}
 }

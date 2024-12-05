@@ -177,8 +177,8 @@ public class AdminPanel extends panel implements IAdminPanel, seasonData, matchD
 //			this.setVisible(false); });
 		
 		panelButton[6].addActionListener(e -> { IAdminPanel.getManagersDialog(frame); });
-		panelButton[7].addActionListener(e -> { new updateDialog().setVisible(true); });
+		panelButton[7].addActionListener(e -> { IAdminPanel.getUpdateDialog(frame); });
 		panelButton[8].addActionListener(e -> { IAdminPanel.getPlayerDialog(frame); });
-		panelButton[9].addActionListener(e -> { new refereesDialog(frame).setVisible(true); });
+		panelButton[9].addActionListener(e -> { IAdminPanel.getRefereeDialog(frame); });
 	}	
 }
