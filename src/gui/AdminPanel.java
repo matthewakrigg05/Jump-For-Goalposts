@@ -1,6 +1,9 @@
 package gui;
 import java.awt.*;
 import javax.swing.*;
+
+import accounts.AdminAccount;
+
 import java.util.ArrayList;
 import java.util.List;
 import gui.dialogs.*;
@@ -20,9 +23,10 @@ public class AdminPanel extends panel implements seasonData, matchData {
 	int currentMatchWeek;
 	List<Match> matchesToRecord; 
 	List<String> matches = new ArrayList<String>();
+	JfgpWindow frame;
 
 	public AdminPanel(JfgpWindow frame) { 
-		 this.connection = frame.getDbConnection();
+		 this.frame = frame;
 		 initialise(); }
 	
 	@Override
@@ -175,7 +179,7 @@ public class AdminPanel extends panel implements seasonData, matchData {
 //			new recordMatchPanel(this).setVisible(true);
 //			this.setVisible(false); });
 		
-		panelButton[6].addActionListener(e -> { new managersDialog().setVisible(true); });
+		panelButton[6].addActionListener(e -> { new managersDialog(frame).setVisible(true); });
 		panelButton[7].addActionListener(e -> { new updateDialog().setVisible(true); });
 		panelButton[8].addActionListener(e -> { new playersDialog().setVisible(true); });
 		panelButton[9].addActionListener(e -> { new refereesDialog().setVisible(true); });

@@ -5,6 +5,9 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import accounts.AdminAccount;
+import gui.JfgpWindow;
 import leagueDB.managersData;
 import leagueMembers.Manager;
 
@@ -13,21 +16,23 @@ public class managersDialog extends JDialog implements managersData {
 
 	List<Manager> managers;
     List<String> managerSelection = new ArrayList<String>();
-    Insets insets;
+    Insets insets = new Insets(0, 0, 5, 5);
+    JfgpWindow frame;
     
-	public managersDialog() { 
+	public managersDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise();
-        managers = managersData.getAllManagers();
-        insets = new Insets(0, 0, 5, 5);
         }
 	
-	public void initialise() {
+	private void initialise() {
 		setAlwaysOnTop(true);
 		setFocusable(true);
         setSize(450, 500);
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Managers");
+        
+        managers = managersData.getAllManagers();
 
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
        
@@ -106,12 +111,14 @@ public class managersDialog extends JDialog implements managersData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	managersData.createManagerAccount(firstNameField.getText(), firstNameField.getText());
+        	frame.getAdminAccount().createManagerAccount(frame.getDbConnection(), 
+        			firstNameField.getText(), firstNameField.getText());
         	dispose();
         });
         
         delManBut.addActionListener(e -> {
-        	managersData.removeManager(managers.get(refSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removeManager(frame.getDbConnection(), 
+        			managers.get(refSelect.getSelectedIndex()));
         	dispose();
         });
 	}	        

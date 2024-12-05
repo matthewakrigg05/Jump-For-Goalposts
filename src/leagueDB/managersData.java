@@ -33,30 +33,6 @@ public interface managersData {
 		return null;
 	}
 	
-	public static void createManagerAccount(String fname, String lname) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			PreparedStatement refAccStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO userAccounts(userType, emailAddress, password, leagueId) VALUES ('manager', ?, ?, 1);");
-			
-			refAccStatement.setString(1, lname + "@jfgp.org");
-			refAccStatement.setString(2, lname + fname);
-			refAccStatement.executeUpdate();
-			
-			PreparedStatement lastId = (connection.getConnection().prepareStatement(
-					"SELECT userId FROM userAccounts ORDER BY ROWID DESC limit 1;"));
-			
-			ResultSet id = lastId.executeQuery();
-			
-			int manId = id.getInt("userId");
-			
-			connection.closeConnection();
-			
-			createManager(fname, lname, manId);
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
-	}
-	
 	public static Manager getManager(ManagerAccount manAcc) {
 		JFGPdb connection = new JFGPdb();
 		try {
@@ -79,22 +55,6 @@ public interface managersData {
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 		
 		return null;
-	}
-	
-	public static void createManager(String fname, String lname, int id) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			PreparedStatement manStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO managers(fName, lName, userId) VALUES (?, ?, ?);");
-			
-			manStatement.setString(1, fname);
-			manStatement.setString(2, lname);
-			manStatement.setInt(3, id);
-			manStatement.executeUpdate();
-			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 	
 	public static List<Manager> getAllManagers() {
@@ -126,25 +86,5 @@ public interface managersData {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
-	}
-	
-	public static void removeManager(Manager man) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
-			        "DELETE FROM referees WHERE refereeId = ?;");
-			
-			seasonStatement.setInt(1, man.getId());
-			seasonStatement.executeUpdate();
-			
-			PreparedStatement refAccDel = (connection.getConnection()).prepareStatement(
-			        "DELETE FROM userAccounts WHERE userId = ?;");
-			
-			refAccDel.setInt(1, man.getUserId());
-			refAccDel.executeUpdate();
-			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 }

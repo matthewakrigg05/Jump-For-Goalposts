@@ -16,6 +16,7 @@ public class JfgpWindow extends JFrame {
 	private String userType;
 	private ManagerAccount managerAccount;
 	private RefereeAccount refereeAccount;
+	private AdminAccount admin;
 	private Connection connection;
 	
 	public JfgpWindow() {
@@ -33,6 +34,7 @@ public class JfgpWindow extends JFrame {
 		setLoggedIn(true);
 		setUserType("Admin");
 		setDbConnection(db.getConnection());
+		setAdminUser(admin);
 		initialise();
 	}
 	
@@ -81,4 +83,7 @@ public class JfgpWindow extends JFrame {
 	
 	public void setRefereeUser(RefereeAccount referee) { this.refereeAccount = referee; }
 	public RefereeAccount getRefereeAccount() { return this.refereeAccount; }
+	
+	public void setAdminUser(AdminAccount admin) { this.admin = admin; }
+	public AdminAccount getAdminAccount() { return this.admin; }
 }
