@@ -1,12 +1,12 @@
 package accounts;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import league.Team;
 import leagueDB.JFGPdb;
 import leagueMembers.Manager;
+import leagueMembers.Player;
 
 public class AdminAccount extends Account implements IManagerRole, IRefereeRole {
 	
@@ -63,5 +63,80 @@ public class AdminAccount extends Account implements IManagerRole, IRefereeRole 
 			createManager(connection, fname, lname, manId);
 			
 		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void createTeam(Connection connection, String teamName) {
+		try {
+			
+			int newStatsId = createStats(connection);
+			
+			PreparedStatement teamStatement = (connection).prepareStatement(
+			        "INSERT INTO teams(teamName, statsId) VALUES (?, ?);");
+			
+			teamStatement.setString(1, teamName);
+			teamStatement.setInt(2, newStatsId);
+			teamStatement.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void removeTeam(Connection connection, Team team) {
+		try {
+			PreparedStatement seasonStatement = (connection).prepareStatement(
+			        "DELETE FROM teams WHERE teamId = ?;");
+			
+			seasonStatement.setInt(1, team.getTeamId());
+			seasonStatement.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public static int createStats(Connection connection) {
+		try {
+			PreparedStatement statsStatement = (connection).prepareStatement(
+			        "INSERT INTO statsForPlayerOrTeam(assists, goals, fouls, yellowCards, redCards, wins, draws, losses) "
+			        + "VALUES (0, 0, 0, 0, 0, 0, 0, 0);");
+			statsStatement.executeUpdate();
+			
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT statsId FROM statsForPlayerOrTeam ORDER BY ROWID DESC limit 1;"));
+			
+			ResultSet id = lastId.executeQuery();
+			int statsId = id.getInt("statsId");
+
+			return statsId;
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return 0;
+	}
+	
+	public static void createPlayer(String fname, String lname, String positionType) {
+		JFGPdb connection = new JFGPdb();
+		try {
+			int statsId = createStats(connection.getConnection());
+			PreparedStatement playerStatement = (connection.getConnection()).prepareStatement(
+			        "INSERT INTO players(fName, lName, positionType, statsId) VALUES (?, ?, ?, ?);");
+			
+			playerStatement.setString(1, fname);
+			playerStatement.setString(2, lname);
+			playerStatement.setString(3, positionType);
+			playerStatement.setInt(4, statsId);
+			playerStatement.executeUpdate();
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+	}
+	
+	public static void removePlayer(Player player) {
+		JFGPdb connection = new JFGPdb();
+		try {
+			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
+			        "DELETE FROM players WHERE playerId = ?;");
+			
+			attackerStatement.setInt(1, player.getId());
+			attackerStatement.executeUpdate();
+			connection.closeConnection();
+			
+		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 }

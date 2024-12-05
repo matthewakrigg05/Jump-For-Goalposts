@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import gui.JfgpWindow;
 import league.Team;
 import leagueDB.teamData;
 
@@ -15,10 +17,10 @@ public class teamDialog extends JDialog implements teamData {
 	List<Team> teams;
     List<String> teamSelection = new ArrayList<String>();
     Insets insets = new Insets(0, 0, 5, 5);
-    Connection connection;
+    JfgpWindow frame;
 	
-	public teamDialog(Connection connection) { 
-		this.connection = connection;
+	public teamDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise(); 
 	}
 
@@ -30,7 +32,7 @@ public class teamDialog extends JDialog implements teamData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Teams");
         
-        teams = teamData.getAllTeams(connection);
+        teams = teamData.getAllTeams(frame.getDbConnection());
         for(Team i : teams) { teamSelection.add(i.getName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
@@ -96,12 +98,12 @@ public class teamDialog extends JDialog implements teamData {
         getContentPane().add(delTeamBut, gbc_delTeamBut);
         
         addBut.addActionListener(e -> {
-        	teamData.createTeam(connection, teamNameField.getText());
+        	frame.getAdminAccount().createTeam(frame.getDbConnection(), teamNameField.getText());
         	dispose();
         });
         
         delTeamBut.addActionListener(e -> {
-        	teamData.removeTeam(connection, teams.get(teamSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removeTeam(frame.getDbConnection(), teams.get(teamSelect.getSelectedIndex()));
         	dispose();
         });
 	}

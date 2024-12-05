@@ -33,7 +33,6 @@ public class managersDialog extends JDialog implements managersData {
         setTitle("Managers");
         
         managers = managersData.getAllManagers();
-
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
        
         GridBagLayout managerDialogLayout = new GridBagLayout();

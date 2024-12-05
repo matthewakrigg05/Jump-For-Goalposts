@@ -5,40 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import accounts.RefereeAccount;
-import league.Stadium;
 import league.Team;
-import leagueMembers.Manager;
-import leagueMembers.Referee;
 
 public interface teamData {
 	
-	public static void createTeam(Connection connection, String teamName) {
-		try {
-			
-			int newStatsId = createStats(connection);
-			
-			PreparedStatement teamStatement = (connection).prepareStatement(
-			        "INSERT INTO teams(teamName, statsId) VALUES (?, ?);");
-			
-			teamStatement.setString(1, teamName);
-			teamStatement.setInt(2, newStatsId);
-			teamStatement.executeUpdate();
-			
-		} catch (SQLException e) { e.printStackTrace(); }
-	}
 	
-	public static void removeTeam(Connection connection, Team team) {
-		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
-			        "DELETE FROM teams WHERE teamId = ?;");
-			
-			seasonStatement.setInt(1, team.getTeamId());
-			seasonStatement.executeUpdate();
-			
-		} catch (SQLException e) { e.printStackTrace(); }
-	}
 	
 	public static List<Team> getAllTeams(Connection connection) {
 		List<Team> teams = new ArrayList<Team>();
@@ -79,24 +50,5 @@ public interface teamData {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
-	}
-	
-	public static int createStats(Connection connection) {
-		try {
-			PreparedStatement statsStatement = (connection).prepareStatement(
-			        "INSERT INTO statsForPlayerOrTeam(assists, goals, fouls, yellowCards, redCards, wins, draws, losses) "
-			        + "VALUES (0, 0, 0, 0, 0, 0, 0, 0);");
-			statsStatement.executeUpdate();
-			
-			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT statsId FROM statsForPlayerOrTeam ORDER BY ROWID DESC limit 1;"));
-			
-			ResultSet id = lastId.executeQuery();
-			int statsId = id.getInt("statsId");
-
-			return statsId;
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return 0;
 	}
 }

@@ -31,23 +31,6 @@ public interface playerData {
 		return null;
 	}
 	
-	public static void createPlayer(String fname, String lname, String positionType) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			int statsId = teamData.createStats(connection.getConnection());
-			PreparedStatement playerStatement = (connection.getConnection()).prepareStatement(
-			        "INSERT INTO players(fName, lName, positionType, statsId) VALUES (?, ?, ?, ?);");
-			
-			playerStatement.setString(1, fname);
-			playerStatement.setString(2, lname);
-			playerStatement.setString(3, positionType);
-			playerStatement.setInt(4, statsId);
-			playerStatement.executeUpdate();
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
-	}
-	
 	public static List<Player> getAllPlayers() {
 		JFGPdb connection = new JFGPdb();
 		List<Player> goalkeepers = new ArrayList<Player>();
@@ -69,18 +52,5 @@ public interface playerData {
 			return goalkeepers;
 		} catch (SQLException e) { e.printStackTrace(); }
 		return null;
-	}
-	
-	public static void removePlayer(Player player) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
-			        "DELETE FROM players WHERE playerId = ?;");
-			
-			attackerStatement.setInt(1, player.getId());
-			attackerStatement.executeUpdate();
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 }
