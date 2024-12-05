@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import gui.JfgpWindow;
 import leagueDB.refereeData;
 import leagueMembers.Referee;
 
@@ -12,12 +13,12 @@ public class refereesDialog extends JDialog implements refereeData {
 
 	List<Referee> referees;
     List<String> refSelection = new ArrayList<String>();
-    Insets insets;
-    
+    Insets insets = new Insets(0, 0, 5, 5);;
+    JfgpWindow frame;
     private JTextField cityField;
     
-	public refereesDialog() { 
-		this.insets = new Insets(0, 0, 5, 5);
+	public refereesDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise();
 		}
 	
@@ -29,7 +30,7 @@ public class refereesDialog extends JDialog implements refereeData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Referees");
 
-        referees = refereeData.getAllReferees();
+        referees = refereeData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
@@ -124,12 +125,12 @@ public class refereesDialog extends JDialog implements refereeData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	refereeData.createRefereeAccount(firstNameField.getText(), lastNameField.getText(), cityField.getText());
+        	frame.getAdminAccount().createRefereeAccount(frame.getDbConnection(), firstNameField.getText(), lastNameField.getText(), cityField.getText());
         	dispose();
         });
         
         delRefBut.addActionListener(e -> {
-        	refereeData.removeReferee(referees.get(refSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removeReferee(frame.getDbConnection(), referees.get(refSelect.getSelectedIndex()));
         	dispose();
         });
 	}	        

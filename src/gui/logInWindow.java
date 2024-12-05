@@ -126,7 +126,7 @@ public class logInWindow extends JFrame {
 	                		
 	                	case "referee":
 	                		new JfgpWindow(new RefereeAccount(userId, email, password, 
-	                				refereeData.getRefereeFromId(userId)), connection);
+	                				refereeData.getRefereeFromId(connection, userId)), connection);
 	                		break;
 	                		
 	                	case "manager":

@@ -32,7 +32,7 @@ public class managersDialog extends JDialog implements managersData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Managers");
         
-        managers = managersData.getAllManagers();
+        managers = managersData.getAllManagers(frame.getDbConnection());
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
        
         GridBagLayout managerDialogLayout = new GridBagLayout();

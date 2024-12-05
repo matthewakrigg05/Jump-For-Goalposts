@@ -1,5 +1,6 @@
 package gui.dialogs;
 import javax.swing.*;
+import gui.JfgpWindow;
 import league.Match;
 import league.Season;
 import leagueDB.matchData;
@@ -9,7 +10,6 @@ import leagueMembers.Referee;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,10 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
     List<Match> nextFiveGameWeeks;
     List<String> matches = new ArrayList<String>();
     Season currentSeason;
-    Connection connection;
+    JfgpWindow frame;
 	
-	public assignRefDialog(Connection connection) { 
-		this.connection = connection;
+	public assignRefDialog(JfgpWindow frame) { 
+		this.frame = frame;
 		initialise(); }
 		
 	public  void initialise() {
@@ -35,12 +35,12 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Assign Referees");
 		
-		referees = refereeData.getAllReferees();
+		referees = refereeData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
         
-        currentSeason = seasonData.getCurrentSeason(connection);
+        currentSeason = seasonData.getCurrentSeason(frame.getDbConnection());
         
-        nextFiveGameWeeks = matchData.getNextFiveGameWeeks(connection, currentSeason, 1);
+        nextFiveGameWeeks = matchData.getNextFiveGameWeeks(frame.getDbConnection(), currentSeason, 1);
         for(Match i : nextFiveGameWeeks) { matches.add(i.getMatchSummary()); }
         
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -83,11 +83,17 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 		getContentPane().add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (matchData.checkRefAssigned(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
+			if (matchData.checkRefAssigned(frame.getDbConnection(), nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(this, "This match already has a referee assigned. Are you sure you want to overwrite this?", "", JOptionPane.YES_NO_OPTION);
 				
-				if(areYouSure == JOptionPane.YES_OPTION) { matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex())); }
-			} else { matchData.assignRef(nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), referees.get(refSelect.getSelectedIndex())); }
+				if(areYouSure == JOptionPane.YES_OPTION) { 
+					frame.getAdminAccount().assignRef(frame.getDbConnection(), 
+							nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
+							referees.get(refSelect.getSelectedIndex())); }
+			} else { 
+				frame.getAdminAccount().assignRef(frame.getDbConnection(), 
+						nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
+						referees.get(refSelect.getSelectedIndex())); }
         	dispose();
 		});
 	}

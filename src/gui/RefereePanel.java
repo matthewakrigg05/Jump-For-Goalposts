@@ -29,7 +29,7 @@ public class RefereePanel extends panel {
 	
 	public RefereePanel(JfgpWindow frame) { 
 		this.connection = frame.getDbConnection();
-		this.referee = refereeData.getReferee(frame.getRefereeAccount());
+		this.referee = refereeData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
 	

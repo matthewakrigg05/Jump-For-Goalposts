@@ -98,35 +98,18 @@ public interface matchData {
 		return matches;
 	}
 	
-	public static boolean checkRefAssigned(Match match) {
-		JFGPdb connection = new JFGPdb();
-		
+	public static boolean checkRefAssigned(Connection connection, Match match) {
 		try {
-			PreparedStatement matchStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement matchStatement = (connection).prepareStatement(
 			        "SELECT refereeId FROM matches WHERE matchId = ? AND refereeId IS NOT NULL;");
 			
 			matchStatement.setInt(1, match.getMatchId());
 			ResultSet res = matchStatement.executeQuery();
-			connection.closeConnection();
 			return res.next();
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return false;
-	}
-	
-	public static void assignRef(Match match, Referee ref) {
-		JFGPdb connection = new JFGPdb();
-		try {
-			PreparedStatement assignRefStatement = (connection.getConnection()).prepareStatement(
-			        "UPDATE matches SET refereeId = ? WHERE matchId = ?;");
-			
-			assignRefStatement.setInt(1, ref.getId());
-			assignRefStatement.setInt(2, match.getMatchId());
-			assignRefStatement.executeUpdate();
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 	
 	public static List<Match> getNextFiveRefMatches(Connection connection, Referee referee) {

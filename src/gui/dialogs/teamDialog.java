@@ -2,11 +2,9 @@ package gui.dialogs;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import gui.JfgpWindow;
 import league.Team;
 import leagueDB.teamData;

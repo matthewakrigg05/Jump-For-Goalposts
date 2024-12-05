@@ -5,7 +5,6 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import gui.JfgpWindow;
 import league.Team;
 import leagueDB.playerData;
@@ -37,7 +36,7 @@ public class playersDialog extends JDialog implements playerData {
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    setTitle("Players");
 
-        players = playerData.getAllPlayers(); 
+        players = playerData.getAllPlayers(frame.getDbConnection()); 
         
         for(Player i : players) { playerIds.add(i.getId());  playerSelection.add(i.getFullName()); }
        
@@ -131,12 +130,12 @@ public class playersDialog extends JDialog implements playerData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	frame.getAdminAccount().createPlayer(firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
+        	frame.getAdminAccount().createPlayer(frame.getDbConnection(), firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
         	dispose();
         });
         
         delPlayerBut.addActionListener(e -> {
-        	frame.getAdminAccount().removePlayer(players.get(playerSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removePlayer(frame.getDbConnection(), players.get(playerSelect.getSelectedIndex()));
         	dispose();
         });
 	}

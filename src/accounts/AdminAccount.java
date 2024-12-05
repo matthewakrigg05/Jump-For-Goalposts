@@ -3,10 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import league.Match;
 import league.Team;
-import leagueDB.JFGPdb;
-import leagueMembers.Manager;
-import leagueMembers.Player;
+import leagueMembers.*;
 
 public class AdminAccount extends Account implements IManagerRole, IRefereeRole {
 	
@@ -110,11 +109,10 @@ public class AdminAccount extends Account implements IManagerRole, IRefereeRole 
 		return 0;
 	}
 	
-	public void createPlayer(String fname, String lname, String positionType) {
-		JFGPdb connection = new JFGPdb();
+	public void createPlayer(Connection connection, String fname, String lname, String positionType) {
 		try {
-			int statsId = createStats(connection.getConnection());
-			PreparedStatement playerStatement = (connection.getConnection()).prepareStatement(
+			int statsId = createStats(connection);
+			PreparedStatement playerStatement = connection.prepareStatement(
 			        "INSERT INTO players(fName, lName, positionType, statsId) VALUES (?, ?, ?, ?);");
 			
 			playerStatement.setString(1, fname);
@@ -122,21 +120,83 @@ public class AdminAccount extends Account implements IManagerRole, IRefereeRole 
 			playerStatement.setString(3, positionType);
 			playerStatement.setInt(4, statsId);
 			playerStatement.executeUpdate();
-			connection.closeConnection();
 			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public void removePlayer(Player player) {
-		JFGPdb connection = new JFGPdb();
+	public void removePlayer(Connection connection, Player player) {
 		try {
-			PreparedStatement attackerStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement attackerStatement = connection.prepareStatement(
 			        "DELETE FROM players WHERE playerId = ?;");
 			
 			attackerStatement.setInt(1, player.getId());
 			attackerStatement.executeUpdate();
-			connection.closeConnection();
+
 			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void assignRef(Connection connection, Match match, Referee ref) {
+		try {
+			PreparedStatement assignRefStatement = (connection).prepareStatement(
+			        "UPDATE matches SET refereeId = ? WHERE matchId = ?;");
+			
+			assignRefStatement.setInt(1, ref.getId());
+			assignRefStatement.setInt(2, match.getMatchId());
+			assignRefStatement.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void removeReferee(Connection connection, Referee ref) {
+		try {
+			PreparedStatement seasonStatement = (connection).prepareStatement(
+			        "DELETE FROM referees WHERE refereeId = ?;");
+			
+			seasonStatement.setInt(1, ref.getId());
+			seasonStatement.executeUpdate();
+			
+			PreparedStatement refAccDel = (connection).prepareStatement(
+			        "DELETE FROM userAccounts WHERE userId = ?;");
+			
+			refAccDel.setInt(1, ref.getUserId());
+			refAccDel.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void createReferee(Connection connection, String fname, String lname, String city, int id) {
+		try {
+			PreparedStatement refStatement = (connection).prepareStatement(
+			        "INSERT INTO referees(fName, lName, preferredLocation, leagueId, userId) VALUES (?, ?, ?, 1, ?);");
+			
+			refStatement.setString(1, fname);
+			refStatement.setString(2, lname);
+			refStatement.setString(3, city);
+			refStatement.setInt(4, id);
+			refStatement.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void createRefereeAccount(Connection connection, String fname, String lname, String city) {
+		try {
+			PreparedStatement refAccStatement = (connection).prepareStatement(
+			        "INSERT INTO userAccounts(userType, emailAddress, password, leagueId) VALUES ('referee', ?, ?, 1);");
+			
+			refAccStatement.setString(1, lname + "@jfgp.org");
+			refAccStatement.setString(2, lname + city);
+			refAccStatement.executeUpdate();
+			
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT userId FROM userAccounts ORDER BY ROWID DESC limit 1;"));
+			
+			ResultSet id = lastId.executeQuery();
+			
+			int refId = id.getInt("userId");
+			
+			createReferee(connection, fname, lname, city, refId);
+			
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 }

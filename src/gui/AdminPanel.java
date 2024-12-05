@@ -172,8 +172,8 @@ public class AdminPanel extends panel implements seasonData, matchData {
 		panelButton[0].addActionListener(e -> { new leagueDialog(connection).setVisible(true); });
 		panelButton[1].addActionListener(e -> { new genFixturesDialog(connection).setVisible(true); });
 		panelButton[2].addActionListener(e -> { new seasonDialog(connection).setVisible(true); });
-		panelButton[3].addActionListener(e -> { new assignRefDialog(connection).setVisible(true); });
-		panelButton[4].addActionListener(e -> { new teamDialog(connection).setVisible(true); });
+		panelButton[3].addActionListener(e -> { new assignRefDialog(frame).setVisible(true); });
+		panelButton[4].addActionListener(e -> { new teamDialog(frame).setVisible(true); });
 		
 //		panelButton[5].addActionListener(e -> { 
 //			new recordMatchPanel(this).setVisible(true);
@@ -181,7 +181,7 @@ public class AdminPanel extends panel implements seasonData, matchData {
 		
 		panelButton[6].addActionListener(e -> { new managersDialog(frame).setVisible(true); });
 		panelButton[7].addActionListener(e -> { new updateDialog().setVisible(true); });
-		panelButton[8].addActionListener(e -> { new playersDialog().setVisible(true); });
-		panelButton[9].addActionListener(e -> { new refereesDialog().setVisible(true); });
+		panelButton[8].addActionListener(e -> { new playersDialog(frame).setVisible(true); });
+		panelButton[9].addActionListener(e -> { new refereesDialog(frame).setVisible(true); });
 	}	
 }

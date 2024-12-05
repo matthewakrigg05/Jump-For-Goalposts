@@ -1,4 +1,5 @@
 package leagueDB;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,10 +9,9 @@ import leagueMembers.*;
 
 public interface playerData {
 	
-	public static Player getPlayer(Player player) {
-		JFGPdb connection = new JFGPdb();
+	public static Player getPlayer(Connection connection, Player player) {
 		try {
-	        PreparedStatement playerStatement = connection.getConnection().prepareStatement(
+	        PreparedStatement playerStatement = connection.prepareStatement(
 	                "SELECT * FROM player WHERE playerId = ?;" );
 
 	        playerStatement.setInt(1, player.getId());
@@ -22,21 +22,19 @@ public interface playerData {
 	        		playerResult.getString("fname"),
 	        		playerResult.getString("lName")
 	        		);
-	        
-	        connection.closeConnection();
+	       
 			return playerFound;
 		
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
 	}
 	
-	public static List<Player> getAllPlayers() {
-		JFGPdb connection = new JFGPdb();
+	public static List<Player> getAllPlayers(Connection connection) {
 		List<Player> goalkeepers = new ArrayList<Player>();
 		
 		try {
-			PreparedStatement goalkeeperStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement goalkeeperStatement = connection.prepareStatement(
 			        "SELECT * FROM players WHERE positionType = 'goalkeeper';");
 			ResultSet goalkeeperResult = goalkeeperStatement.executeQuery();
 			
@@ -48,7 +46,6 @@ public interface playerData {
 		        		);
 				goalkeepers.add(goalkeeper);
 			}
-			connection.closeConnection();
 			return goalkeepers;
 		} catch (SQLException e) { e.printStackTrace(); }
 		return null;
