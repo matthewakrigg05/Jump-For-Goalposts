@@ -1,0 +1,377 @@
+package gui;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
+import league.League;
+import league.Match;
+import league.Season;
+import league.Team;
+import leagueDB.leagueMemberData;
+import leagueDB.matchData;
+import leagueDB.seasonData;
+import leagueDB.teamData;
+import leagueMembers.Manager;
+import leagueMembers.Referee;
+
+public interface IAdminPanel {
+	
+	public static JDialog getAssignRefDialog(JfgpWindow frame) {
+		JDialog assignRefDialog = new JDialog();
+		
+	    List<String> refSelection = new ArrayList<String>();
+	    List<String> matches = new ArrayList<String>();
+		
+		assignRefDialog.setModal(true);
+		assignRefDialog.setAlwaysOnTop(true);
+		assignRefDialog.setFocusable(true);
+		assignRefDialog.setSize(760, 500);
+		assignRefDialog.setTitle("Assign Referees");
+		
+		List<Referee> referees = leagueMemberData.getAllReferees(frame.getDbConnection());
+        for(Referee i : referees) { refSelection.add(i.getFullName()); }
+        
+        List<Match> nextFiveGameWeeks = matchData.getNextFiveGameWeeks(frame.getDbConnection(), 
+        		seasonData.getCurrentSeason(frame.getDbConnection()), 1);
+        
+        for(Match i : nextFiveGameWeeks) { matches.add(i.getMatchSummary()); }
+        
+        GridBagLayout gridBagLayout = new GridBagLayout();
+		assignRefDialog.setLayout(gridBagLayout);
+		
+		JLabel refSelectLabel = new JLabel("Select a Referee");
+		GridBagConstraints gbc_refSelectLabel = new GridBagConstraints();
+		gbc_refSelectLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_refSelectLabel.gridx = 0;
+		gbc_refSelectLabel.gridy = 0;
+		assignRefDialog.add(refSelectLabel, gbc_refSelectLabel);
+		
+		JComboBox refSelect = new JComboBox(refSelection.toArray());
+		GridBagConstraints gbc_refSelect = new GridBagConstraints();
+		gbc_refSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_refSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_refSelect.gridx = 0;
+		gbc_refSelect.gridy = 1;
+		assignRefDialog.add(refSelect, gbc_refSelect);
+		
+		JLabel matchSelectLabel = new JLabel("Select match to assign to");
+		GridBagConstraints gbc_matchSelectLabel = new GridBagConstraints();
+		gbc_matchSelectLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_matchSelectLabel.gridx = 0;
+		gbc_matchSelectLabel.gridy = 2;
+		assignRefDialog.add(matchSelectLabel, gbc_matchSelectLabel);
+		
+		JComboBox matchSelect = new JComboBox(matches.toArray());
+		GridBagConstraints gbc_matchSelect = new GridBagConstraints();
+		gbc_matchSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_matchSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_matchSelect.gridx = 0;
+		gbc_matchSelect.gridy = 3;
+		assignRefDialog.add(matchSelect, gbc_matchSelect);
+		
+		JButton confirmationButton = new JButton("Confirm");
+		GridBagConstraints gbc_confirmationButton = new GridBagConstraints();
+		gbc_confirmationButton.gridx = 0;
+		gbc_confirmationButton.gridy = 4;
+		assignRefDialog.add(confirmationButton, gbc_confirmationButton);
+		
+		confirmationButton.addActionListener(e -> {
+			if (matchData.checkRefAssigned(frame.getDbConnection(), nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
+				int areYouSure = JOptionPane.showConfirmDialog(frame, "This match already has a referee assigned. Are you sure you want to overwrite this?", "", JOptionPane.YES_NO_OPTION);
+				
+				if(areYouSure == JOptionPane.YES_OPTION) { 
+					frame.getAdminAccount().assignRef(frame.getDbConnection(), 
+							nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
+							referees.get(refSelect.getSelectedIndex())); }
+			} else { 
+				frame.getAdminAccount().assignRef(frame.getDbConnection(), 
+						nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
+						referees.get(refSelect.getSelectedIndex())); }
+        	assignRefDialog.dispose();
+		});
+		
+		assignRefDialog.setVisible(true);
+		return assignRefDialog;
+	}
+	
+	public static JDialog getGenFixturesDialog(JfgpWindow frame) {
+		JDialog genFixturesDialog = new JDialog();
+		
+	     List<String> seasonSelection = new ArrayList<String>();
+
+	     List<String> teamSelection = new ArrayList<String>();
+		
+		genFixturesDialog.setResizable(false);
+		genFixturesDialog.setAlwaysOnTop(true);
+		genFixturesDialog.setFocusable(true);
+		genFixturesDialog.setSize(760, 500);
+		genFixturesDialog.setModal(true);
+		genFixturesDialog.setTitle("Generate Fixtures");
+        
+		List<Season> seasons = seasonData.getSeasons(frame.getDbConnection());
+        List<Team> teams = teamData.getAllTeams(frame.getDbConnection());
+		
+		for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
+	    for(Team i : teams) { teamSelection.add(i.getName()); }
+	        
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		genFixturesDialog.setLayout(gridBagLayout);
+		
+		JLabel selectSeaeson = new JLabel("Select Season To Generate Fixtures For");
+		selectSeaeson.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		GridBagConstraints gbc_selectSeaeson = new GridBagConstraints();
+		gbc_selectSeaeson.fill = GridBagConstraints.HORIZONTAL;
+		gbc_selectSeaeson.insets = new Insets(0, 0, 5, 5);
+		gbc_selectSeaeson.gridx = 1;
+		gbc_selectSeaeson.gridy = 1;
+		genFixturesDialog.add(selectSeaeson, gbc_selectSeaeson);
+		
+		JLabel teamsToAdd = new JLabel("Select Teams to Include in the Season");
+		teamsToAdd.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_teamsToAdd = new GridBagConstraints();
+		gbc_teamsToAdd.insets = new Insets(0, 0, 5, 5);
+		gbc_teamsToAdd.gridx = 3;
+		gbc_teamsToAdd.gridy = 1;
+		genFixturesDialog.add(teamsToAdd, gbc_teamsToAdd);
+		
+		JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+		GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
+		gbc_seasonSelect.insets = new Insets(0, 0, 5, 5);
+		gbc_seasonSelect.anchor = GridBagConstraints.NORTH;
+		gbc_seasonSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_seasonSelect.gridx = 1;
+		gbc_seasonSelect.gridy = 2;
+		genFixturesDialog.add(seasonSelect, gbc_seasonSelect);
+		
+		JList teamSelectionList = new JList(teamSelection.toArray());
+		
+		// https://stackoverflow.com/questions/2404546/select-multiple-items-in-jlist-without-using-the-ctrl-command-key
+		teamSelectionList.setSelectionModel(new DefaultListSelectionModel() {
+		    @Override
+		    public void setSelectionInterval(int index0, int index1) {
+		        if(super.isSelectedIndex(index0)) { super.removeSelectionInterval(index0, index1); }
+		        else { super.addSelectionInterval(index0, index1); }
+		    }
+		});
+		
+		GridBagConstraints gbc_list = new GridBagConstraints();
+		gbc_list.insets = new Insets(0, 0, 5, 5);
+		gbc_list.fill = GridBagConstraints.BOTH;
+		gbc_list.gridx = 3;
+		gbc_list.gridy = 2;
+		genFixturesDialog.add(teamSelectionList, gbc_list);
+		
+		JButton genFixturesButton = new JButton("Generate Fixtures");
+	
+		GridBagConstraints gbc_genFixturesButton = new GridBagConstraints();
+		gbc_genFixturesButton.insets = new Insets(0, 0, 5, 5);
+		gbc_genFixturesButton.gridx = 2;
+		gbc_genFixturesButton.gridy = 3;
+		genFixturesDialog.add(genFixturesButton, gbc_genFixturesButton);
+		
+		genFixturesButton.addActionListener(e -> {
+				List<Team> selectedTeams = new ArrayList<Team>();
+				for(int i : teamSelectionList.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
+				matchData.createSeasonMatches(frame.getDbConnection(), selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				genFixturesDialog.dispose();
+			});
+		
+		genFixturesDialog.setVisible(true);
+		return genFixturesDialog;
+	}
+
+	public static JDialog getLeagueDialog(JfgpWindow frame) {
+		JDialog leagueDialog = new JDialog();
+		
+		List<String> seasonSelection = new ArrayList<String>();
+		League league = seasonData.getLeague(frame.getDbConnection());
+		
+		leagueDialog.setFocusable(true);
+		leagueDialog.setModal(true);
+		leagueDialog.setResizable(false);
+		leagueDialog.setSize(500, 250);
+		leagueDialog.setTitle(league.getLeagueName());
+		
+		List<Season> seasons = seasonData.getSeasons(frame.getDbConnection());
+		
+        for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
+        
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        leagueDialog.setLayout(gridBagLayout);
+        
+        JLabel changeLeagueName = new JLabel("Change League Name: ");
+        changeLeagueName.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        GridBagConstraints gbc_changeLeagueName = new GridBagConstraints();
+        gbc_changeLeagueName.insets = new Insets(0, 0, 5, 5);
+        gbc_changeLeagueName.gridx = 1;
+        gbc_changeLeagueName.gridy = 2;
+        leagueDialog.add(changeLeagueName, gbc_changeLeagueName);
+        
+        JLabel currSeasonLabel = new JLabel("Set Current Season");
+        GridBagConstraints gbc_currSeasonLabel = new GridBagConstraints();
+        gbc_currSeasonLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_currSeasonLabel.gridx = 3;
+        gbc_currSeasonLabel.gridy = 2;
+        leagueDialog.add(currSeasonLabel, gbc_currSeasonLabel);
+        
+        JTextArea newName = new JTextArea();
+        newName.setMinimumSize(new Dimension(50, 22));
+        newName.getText();
+        
+        GridBagConstraints gbc_newName = new GridBagConstraints();
+        gbc_newName.fill = GridBagConstraints.HORIZONTAL;
+        gbc_newName.anchor = GridBagConstraints.NORTH;
+        gbc_newName.insets = new Insets(0, 0, 5, 5);
+        gbc_newName.gridx = 1;
+        gbc_newName.gridy = 3;
+        leagueDialog.add(newName, gbc_newName);
+        
+        JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+        GridBagConstraints gbc_comboBox = new GridBagConstraints();
+        gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+        gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+        gbc_comboBox.gridx = 3;
+        gbc_comboBox.gridy = 3;
+        leagueDialog.add(seasonSelect, gbc_comboBox);
+        
+        JButton saveButton = new JButton("Save");
+        GridBagConstraints gbc_saveButton = new GridBagConstraints();
+        gbc_saveButton.insets = new Insets(0, 0, 0, 5);
+        gbc_saveButton.anchor = GridBagConstraints.NORTH;
+        gbc_saveButton.gridx = 1;
+        gbc_saveButton.gridy = 4;
+        leagueDialog.add(saveButton, gbc_saveButton);
+        
+        JButton updateButton = new JButton("Update");
+        GridBagConstraints gbc_updateButton = new GridBagConstraints();
+        gbc_updateButton.insets = new Insets(0, 0, 0, 5);
+        gbc_updateButton.gridx = 3;
+        gbc_updateButton.gridy = 4;
+        leagueDialog.add(updateButton, gbc_updateButton);
+        
+        saveButton.addActionListener(e -> {
+        	seasonData.changeLeagueName(frame.getDbConnection(), newName.getText());
+        	leagueDialog.dispose();
+        });
+        
+        updateButton.addActionListener(e -> {
+        	seasonData.setCurrentSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()).getId());
+        	leagueDialog.dispose();
+        });
+        
+        leagueDialog.setVisible(true);
+        return leagueDialog;
+	}
+
+	public static JDialog getManagersDialog(JfgpWindow frame) {
+		
+		JDialog managerDialog = new JDialog();
+		List<Manager> managers;
+	    List<String> managerSelection = new ArrayList<String>();
+	    Insets insets = new Insets(0, 0, 5, 5);
+	    
+	    managerDialog.setAlwaysOnTop(true);
+	    managerDialog.setFocusable(true);
+	    managerDialog.setSize(450, 500);
+	    managerDialog.setModal(true);
+	    managerDialog.setTitle("Managers");
+        
+        managers = leagueMemberData.getAllManagers(frame.getDbConnection());
+        for(Manager i : managers) { managerSelection.add(i.getFullName()); }
+       
+        GridBagLayout managerDialogLayout = new GridBagLayout();
+        managerDialog.setLayout(managerDialogLayout);
+        
+        JLabel createManagerLabel = new JLabel("Create Manager");
+        GridBagConstraints gbc_createManagerLabel = new GridBagConstraints();
+        gbc_createManagerLabel.insets = insets;
+        gbc_createManagerLabel.gridx = 1;
+        gbc_createManagerLabel.gridy = 0;
+        managerDialog.add(createManagerLabel, gbc_createManagerLabel);
+        
+        JLabel deleteManagerLabel = new JLabel("Delete Manager");
+        GridBagConstraints gbc_deleteManagerLabel = new GridBagConstraints();
+        gbc_deleteManagerLabel.insets = insets;
+        gbc_deleteManagerLabel.gridx = 3;
+        gbc_deleteManagerLabel.gridy = 0;
+        managerDialog.add(deleteManagerLabel, gbc_deleteManagerLabel);
+        
+        JLabel fNameLabel = new JLabel("First Name: ");
+        GridBagConstraints gbc_fNameLabel = new GridBagConstraints();
+        gbc_fNameLabel.insets = insets;
+        gbc_fNameLabel.gridx = 1;
+        gbc_fNameLabel.gridy = 1;
+        managerDialog.add(fNameLabel, gbc_fNameLabel);
+        
+        JLabel managerToRemoveLabel = new JLabel("Manager:");
+        GridBagConstraints gbc_managerToRemoveLabel = new GridBagConstraints();
+        gbc_managerToRemoveLabel.insets = insets;
+        gbc_managerToRemoveLabel.gridx = 3;
+        gbc_managerToRemoveLabel.gridy = 1;
+        managerDialog.add(managerToRemoveLabel, gbc_managerToRemoveLabel);
+        
+        JTextField firstNameField = new JTextField();
+        GridBagConstraints gbc_fNameFileld = new GridBagConstraints();
+        gbc_fNameFileld.insets = insets;
+        gbc_fNameFileld.gridx = 1;
+        gbc_fNameFileld.gridy = 2;
+        managerDialog.add(firstNameField, gbc_fNameFileld);
+        
+        JComboBox refSelect = new JComboBox(managerSelection.toArray());
+       
+        GridBagConstraints gbc_refSelect = new GridBagConstraints();
+        gbc_refSelect.insets = insets;
+        gbc_refSelect.gridx = 3;
+        gbc_refSelect.gridy = 2;
+        managerDialog.add(refSelect, gbc_refSelect);
+
+        JLabel lastNameLabel = new JLabel("Last Name: ");
+        GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
+        gbc_lastNameLabel.insets = insets;
+        gbc_lastNameLabel.gridx = 1;
+        gbc_lastNameLabel.gridy = 3;
+        managerDialog.add(lastNameLabel, gbc_lastNameLabel);
+        
+        JButton delManBut = new JButton("Delete");
+        GridBagConstraints gbc_delManBut = new GridBagConstraints();
+        gbc_delManBut.insets = insets;
+        gbc_delManBut.gridx = 3;
+        gbc_delManBut.gridy = 3;
+        managerDialog.add(delManBut, gbc_delManBut);
+        
+        JTextField lastNameField = new JTextField();
+        GridBagConstraints gbc_lastNameField = new GridBagConstraints();
+        gbc_lastNameField.insets = insets;
+        gbc_lastNameField.gridx = 1;
+        gbc_lastNameField.gridy = 4;
+        managerDialog.add(lastNameField, gbc_lastNameField);
+        
+        JButton addBut = new JButton("Create");
+        GridBagConstraints gbc_addBut = new GridBagConstraints();
+        gbc_addBut.insets = new Insets(0, 0, 0, 5);
+        gbc_addBut.gridx = 1;
+        gbc_addBut.gridy = 8;
+        managerDialog.add(addBut, gbc_addBut);
+        
+        addBut.addActionListener(e -> {
+        	frame.getAdminAccount().createManagerAccount(frame.getDbConnection(), 
+        			firstNameField.getText(), firstNameField.getText());
+        	managerDialog.dispose();
+        });
+        
+        delManBut.addActionListener(e -> {
+        	frame.getAdminAccount().removeManager(frame.getDbConnection(), 
+        			managers.get(refSelect.getSelectedIndex()));
+        	managerDialog.dispose();
+        });
+        
+        managerDialog.setVisible(true);
+        return managerDialog;
+	}
+}
