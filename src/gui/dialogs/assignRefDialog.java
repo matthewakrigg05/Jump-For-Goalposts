@@ -3,8 +3,8 @@ import javax.swing.*;
 import gui.JfgpWindow;
 import league.Match;
 import league.Season;
+import leagueDB.leagueMemberData;
 import leagueDB.matchData;
-import leagueDB.refereeData;
 import leagueDB.seasonData;
 import leagueMembers.Referee;
 import java.awt.GridBagLayout;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class assignRefDialog extends JDialog implements matchData, refereeData, seasonData {
+public class assignRefDialog extends JDialog implements matchData, leagueMemberData, seasonData {
 	
 	List<Referee> referees;
     List<String> refSelection = new ArrayList<String>();
@@ -35,7 +35,7 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Assign Referees");
 		
-		referees = refereeData.getAllReferees(frame.getDbConnection());
+		referees = leagueMemberData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
         
         currentSeason = seasonData.getCurrentSeason(frame.getDbConnection());

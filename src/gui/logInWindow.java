@@ -1,12 +1,7 @@
 package gui;
 import javax.swing.*;
-
-import accounts.AdminAccount;
-import accounts.ManagerAccount;
-import accounts.RefereeAccount;
-import leagueDB.JFGPdb;
-import leagueDB.refereeData;
-
+import accounts.*;
+import leagueDB.leagueMemberData;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -126,7 +121,7 @@ public class logInWindow extends JFrame {
 	                		
 	                	case "referee":
 	                		new JfgpWindow(new RefereeAccount(userId, email, password, 
-	                				refereeData.getRefereeFromId(connection, userId)), connection);
+	                				leagueMemberData.getRefereeFromId(connection, userId)), connection);
 	                		break;
 	                		
 	                	case "manager":

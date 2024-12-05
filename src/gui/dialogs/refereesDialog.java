@@ -3,13 +3,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
 import gui.JfgpWindow;
-import leagueDB.refereeData;
+import leagueDB.leagueMemberData;
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
-public class refereesDialog extends JDialog implements refereeData {
+public class refereesDialog extends JDialog implements leagueMemberData {
 
 	List<Referee> referees;
     List<String> refSelection = new ArrayList<String>();
@@ -30,7 +29,7 @@ public class refereesDialog extends JDialog implements refereeData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Referees");
 
-        referees = refereeData.getAllReferees(frame.getDbConnection());
+        referees = leagueMemberData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();

@@ -7,11 +7,11 @@ import java.util.List;
 import javax.swing.*;
 import gui.JfgpWindow;
 import league.Team;
-import leagueDB.playerData;
+import leagueDB.leagueMemberData;
 import leagueMembers.*;
 
 @SuppressWarnings("serial")
-public class playersDialog extends JDialog implements playerData {
+public class playersDialog extends JDialog implements leagueMemberData {
 	
 	Insets insets = new Insets(0, 0, 5, 5);
 	List<Team> teams;
@@ -36,7 +36,7 @@ public class playersDialog extends JDialog implements playerData {
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    setTitle("Players");
 
-        players = playerData.getAllPlayers(frame.getDbConnection()); 
+        players = leagueMemberData.getAllPlayers(frame.getDbConnection()); 
         
         for(Player i : players) { playerIds.add(i.getId());  playerSelection.add(i.getFullName()); }
        

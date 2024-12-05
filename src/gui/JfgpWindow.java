@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import accounts.*;
 import leagueDB.JFGPdb;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;

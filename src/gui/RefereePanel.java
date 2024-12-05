@@ -8,11 +8,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import accounts.RefereeAccount;
 import league.Match;
+import leagueDB.leagueMemberData;
 import leagueDB.matchData;
-import leagueDB.refereeData;
 import leagueMembers.Referee;
 import java.awt.GridBagConstraints;
 
@@ -29,7 +27,7 @@ public class RefereePanel extends panel {
 	
 	public RefereePanel(JfgpWindow frame) { 
 		this.connection = frame.getDbConnection();
-		this.referee = refereeData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
+		this.referee = leagueMemberData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
 	

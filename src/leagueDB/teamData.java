@@ -9,8 +9,6 @@ import league.Team;
 
 public interface teamData {
 	
-	
-	
 	public static List<Team> getAllTeams(Connection connection) {
 		List<Team> teams = new ArrayList<Team>();
 		

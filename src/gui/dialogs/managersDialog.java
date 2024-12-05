@@ -5,14 +5,12 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
-import accounts.AdminAccount;
 import gui.JfgpWindow;
-import leagueDB.managersData;
+import leagueDB.leagueMemberData;
 import leagueMembers.Manager;
 
 @SuppressWarnings("serial")
-public class managersDialog extends JDialog implements managersData {
+public class managersDialog extends JDialog implements leagueMemberData {
 
 	List<Manager> managers;
     List<String> managerSelection = new ArrayList<String>();
@@ -32,7 +30,7 @@ public class managersDialog extends JDialog implements managersData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Managers");
         
-        managers = managersData.getAllManagers(frame.getDbConnection());
+        managers = leagueMemberData.getAllManagers(frame.getDbConnection());
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
        
         GridBagLayout managerDialogLayout = new GridBagLayout();
