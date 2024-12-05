@@ -2,6 +2,7 @@ package gui.dialogs;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -13,15 +14,15 @@ public class teamDialog extends JDialog implements teamData {
 	
 	List<Team> teams;
     List<String> teamSelection = new ArrayList<String>();
-    Insets insets;
+    Insets insets = new Insets(0, 0, 5, 5);
+    Connection connection;
 	
-	public teamDialog() { 
+	public teamDialog(Connection connection) { 
+		this.connection = connection;
 		initialise(); 
-		insets = new Insets(0, 0, 5, 5);
-		teams = teamData.getAllTeams();
-		}
+	}
 
-	public void initialise() {
+	private void initialise() {
 		setAlwaysOnTop(true);
 		setFocusable(true);
         setSize(450, 500);
@@ -29,6 +30,7 @@ public class teamDialog extends JDialog implements teamData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Teams");
         
+        teams = teamData.getAllTeams(connection);
         for(Team i : teams) { teamSelection.add(i.getName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
@@ -94,12 +96,12 @@ public class teamDialog extends JDialog implements teamData {
         getContentPane().add(delTeamBut, gbc_delTeamBut);
         
         addBut.addActionListener(e -> {
-        	teamData.createTeam(teamNameField.getText());
+        	teamData.createTeam(connection, teamNameField.getText());
         	dispose();
         });
         
         delTeamBut.addActionListener(e -> {
-        	teamData.removeTeam(teams.get(teamSelect.getSelectedIndex()));
+        	teamData.removeTeam(connection, teams.get(teamSelect.getSelectedIndex()));
         	dispose();
         });
 	}

@@ -9,6 +9,7 @@ import leagueMembers.Referee;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,11 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
     List<Match> nextFiveGameWeeks;
     List<String> matches = new ArrayList<String>();
     Season currentSeason;
+    Connection connection;
 	
-	public assignRefDialog() { initialise(); }
+	public assignRefDialog(Connection connection) { 
+		this.connection = connection;
+		initialise(); }
 		
 	public  void initialise() {
 		setAlwaysOnTop(true);
@@ -34,9 +38,9 @@ public class assignRefDialog extends JDialog implements matchData, refereeData, 
 		referees = refereeData.getAllReferees();
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
         
-        currentSeason = seasonData.getCurrentSeason();
+        currentSeason = seasonData.getCurrentSeason(connection);
         
-        nextFiveGameWeeks = matchData.getNextFiveGameWeeks(currentSeason, 1);
+        nextFiveGameWeeks = matchData.getNextFiveGameWeeks(connection, currentSeason, 1);
         for(Match i : nextFiveGameWeeks) { matches.add(i.getMatchSummary()); }
         
         GridBagLayout gridBagLayout = new GridBagLayout();

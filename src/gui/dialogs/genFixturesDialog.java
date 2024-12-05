@@ -15,19 +15,17 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class genFixturesDialog extends JDialog implements matchData, teamData, seasonData {
 	
-    List<Season> seasons;
-    List<String> seasonSelection = new ArrayList<String>();
-    
-    List<Team> teams;
-    List<String> teamSelection = new ArrayList<String>();
-    
-    Connection connection;
+	private List<Season> seasons;
+    private List<String> seasonSelection = new ArrayList<String>();
+    private List<Team> teams;
+    private List<String> teamSelection = new ArrayList<String>();
+    private Connection connection;
 
 	public genFixturesDialog(Connection connection) { 
 		this.connection = connection;
 		initialise(); }
 
-	public void initialise() {
+	private void initialise() {
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setFocusable(true);

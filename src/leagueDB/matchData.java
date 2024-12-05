@@ -28,7 +28,7 @@ public interface matchData {
 	}
 	
 	public static void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(1)); }
+		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(connection, 1)); }
 	
 	    int numRounds = teams.size() - 1; // Number of rounds
 	    int numMatchesPerRound = teams.size() / 2;
@@ -48,12 +48,11 @@ public interface matchData {
 	    }
 	}
 	
-	public static List<Match> getNextFiveGameWeeks(Season currentSeason, int currentGameWeek) {
-		JFGPdb connection = new JFGPdb();
+	public static List<Match> getNextFiveGameWeeks(Connection connection, Season currentSeason, int currentGameWeek) {
 		List<Match> matches = new ArrayList<Match>();
 		
 		try {
-			PreparedStatement gameWeeksStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
 			        "SELECT * FROM matches WHERE seasonId = ? AND matchWeek < ? + 5 ORDER BY matchWeek ASC;");
 			
 			gameWeeksStatement.setInt(1, currentSeason.getId());
@@ -63,25 +62,22 @@ public interface matchData {
 			while (gameWeeks.next()) {
 				Match match= new Match (
 						gameWeeks.getInt("matchId"),
-						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection.getConnection()),
-						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection.getConnection()),
+						teamData.getTeam(connection, gameWeeks.getInt("homeTeamId")),
+						teamData.getTeam(connection, gameWeeks.getInt("awayTeamId") ),
 						gameWeeks.getInt("matchWeek")
 						);
 				matches.add(match);
 			}
 			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 		return matches;
 	}
 	
-	public static List<Match> getSeasonMatches(Season currentSeason) {
-		JFGPdb connection = new JFGPdb();
+	public static List<Match> getSeasonMatches(Connection connection, Season currentSeason) {
 		List<Match> matches = new ArrayList<Match>();
 		
 		try {
-			PreparedStatement gameWeeksStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
 			        "SELECT * FROM matches WHERE seasonId = ? ORDER BY matchWeek ASC;");
 			
 			gameWeeksStatement.setInt(1, currentSeason.getId());
@@ -90,16 +86,14 @@ public interface matchData {
 			while (gameWeeks.next()) {
 				Match match= new Match (
 						gameWeeks.getInt("matchId"),
-						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection.getConnection()),
-						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection.getConnection()),
+						teamData.getTeam(connection, gameWeeks.getInt("homeTeamId")),
+						teamData.getTeam(connection, gameWeeks.getInt("awayTeamId") ),
 						gameWeeks.getInt("matchWeek")
 						);
 				matches.add(match);
 			}
 			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return matches;
 	}
@@ -135,28 +129,26 @@ public interface matchData {
 		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
 	}
 	
-	public static List<Match> getNextFiveRefMatches(Referee referee) {
-		JFGPdb connection = new JFGPdb();
+	public static List<Match> getNextFiveRefMatches(Connection connection, Referee referee) {
 		List<Match> matchesToAttend = new ArrayList<Match>();
 		
 		try {
-			PreparedStatement matchStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement matchStatement = (connection).prepareStatement(
 			        "SELECT * FROM matches WHERE refereeId = ? AND isComplete = false ORDER BY matchWeek ASC LIMIT 5;");
 			
 			matchStatement.setInt(1, referee.getId());
 			ResultSet res = matchStatement.executeQuery();
 			
 			while(res.next()) {
-				Match match = new Match (
+				Match match= new Match (
 						res.getInt("matchId"),
-						teamData.getTeam(res.getInt("homeTeamId"), connection.getConnection()),
-						teamData.getTeam(res.getInt("awayTeamId"), connection.getConnection()),
+						teamData.getTeam(connection, res.getInt("homeTeamId")),
+						teamData.getTeam(connection, res.getInt("awayTeamId") ),
 						res.getInt("matchWeek")
 						);
 				matchesToAttend.add(match);
 			}
-			
-			connection.closeConnection();			
+					
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return matchesToAttend;
@@ -175,8 +167,8 @@ public interface matchData {
 			while (gameWeeks.next()) {
 				Match match= new Match (
 						gameWeeks.getInt("matchId"),
-						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection),
-						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection),
+						teamData.getTeam(connection, gameWeeks.getInt("homeTeamId")),
+						teamData.getTeam(connection, gameWeeks.getInt("awayTeamId") ),
 						gameWeeks.getInt("matchWeek")
 						);
 				matches.add(match);

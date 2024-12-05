@@ -4,6 +4,8 @@ import leagueDB.seasonData;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.sql.Connection;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +14,18 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class seasonDialog extends JDialog implements seasonData {
 		
-    List<Season> seasons = seasonData.getSeasons();
+    List<Season> seasons;
     List<String> seasonSelection = new ArrayList<String>();
     
-    Insets insets;
+    Insets insets = new Insets(0, 0, 5, 5);
+    Connection connection;
     
-	public seasonDialog() { 
+	public seasonDialog(Connection connection) {
+		this.connection = connection;
 		initialise();
-		insets = new Insets(0, 0, 5, 5);
 		}
 	
-	public void initialise() {
+	private void initialise() {
 		setAlwaysOnTop(true);
 		setFocusable(true);
         setSize(450, 500);
@@ -30,6 +33,8 @@ public class seasonDialog extends JDialog implements seasonData {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Seasons");
 
+        seasons = seasonData.getSeasons(connection);
+        
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
@@ -107,12 +112,12 @@ public class seasonDialog extends JDialog implements seasonData {
         getContentPane().add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	seasonData.createSeason(seasonStartField.getText(), seasonEndField.getText());
+        	seasonData.createSeason(connection, seasonStartField.getText(), seasonEndField.getText());
         	dispose();
         });
         
         deleteSeasonBut.addActionListener(e -> {
-        	seasonData.removeSeason(seasons.get(seasonSelect.getSelectedIndex()));
+        	seasonData.removeSeason(connection, seasons.get(seasonSelect.getSelectedIndex()));
         	dispose();
         });
 	}

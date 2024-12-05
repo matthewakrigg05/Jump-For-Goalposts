@@ -167,9 +167,9 @@ public class AdminPanel extends panel implements seasonData, matchData {
 	protected void addActionListeners() {
 		panelButton[0].addActionListener(e -> { new leagueDialog(connection).setVisible(true); });
 		panelButton[1].addActionListener(e -> { new genFixturesDialog(connection).setVisible(true); });
-		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
-		panelButton[3].addActionListener(e -> { new assignRefDialog().setVisible(true); });
-		panelButton[4].addActionListener(e -> { new teamDialog().setVisible(true); });
+		panelButton[2].addActionListener(e -> { new seasonDialog(connection).setVisible(true); });
+		panelButton[3].addActionListener(e -> { new assignRefDialog(connection).setVisible(true); });
+		panelButton[4].addActionListener(e -> { new teamDialog(connection).setVisible(true); });
 		
 //		panelButton[5].addActionListener(e -> { 
 //			new recordMatchPanel(this).setVisible(true);
