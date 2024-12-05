@@ -18,12 +18,9 @@ public class playersDialog extends JDialog implements playerData {
     List<String> teamSelection = new ArrayList<String>();
     
     String[] positions = {"Attacker", "Midfielder", "Defender", "Goalkeeper"};
-    List<Attacker> attackers;
-    List<Midfielder> midfielders;
-    List<Defender> defenders;
-    List<Goalkeeper> goalkeepers;
+    List<Player> players;
    
-    List<Integer> players = new ArrayList<Integer>();
+    List<Integer> playerIds = new ArrayList<Integer>();
     List<String> playerSelection = new ArrayList<String>();
     
     public playersDialog() { 
@@ -39,15 +36,9 @@ public class playersDialog extends JDialog implements playerData {
 	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    setTitle("Players");
 
-        attackers = playerData.getAllAttackers(); 
-        midfielders = playerData.getAllMidfielders();
-        defenders = playerData.getAllDefenders();
-        goalkeepers = playerData.getAllGoalkeepers();
+        players = playerData.getAllPlayers(); 
         
-        for(Attacker i : attackers) { players.add(i.getId());  playerSelection.add(i.getFullName()); }
-        for(Midfielder i : midfielders) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
-        for(Defender i : defenders) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
-        for(Goalkeeper i : goalkeepers) { players.add(i.getId()); playerSelection.add(i.getFullName()); }
+        for(Player i : players) { playerIds.add(i.getId());  playerSelection.add(i.getFullName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
         getContentPane().setLayout(seasonDialogLayout);
