@@ -1,4 +1,5 @@
 package leagueDB;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,10 +13,9 @@ import leagueMembers.Referee;
 
 public interface matchData {
 
-	public static void createMatch(Team homeTeam, Team awayTeam, Season season, int matchWeek) {
-		JFGPdb connection = new JFGPdb();
+	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		try {
-			PreparedStatement seasonStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement seasonStatement = (connection).prepareStatement(
 			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
 			
 			seasonStatement.setInt(1 , matchWeek);
@@ -23,12 +23,11 @@ public interface matchData {
 			seasonStatement.setInt(3, homeTeam.getTeamId());
 			seasonStatement.setInt(4, awayTeam.getTeamId());
 			seasonStatement.executeUpdate();
-			connection.closeConnection();
 			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void createSeasonMatches(List<Team> teams, Season season) {
+	public static void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
 		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(1)); }
 	
 	    int numRounds = teams.size() - 1; // Number of rounds
@@ -42,8 +41,8 @@ public interface matchData {
 	            Team homeTeam = (i == 0) ? teams.get(0) : rotatingTeams.get(i - 1);
 	            Team awayTeam = rotatingTeams.get(rotatingTeams.size() - i - 1);
 	            
-	            createMatch(homeTeam, awayTeam, season, round + 1);
-	            createMatch(awayTeam, homeTeam, season,  numRounds + round + 1);
+	            createMatch(connection, homeTeam, awayTeam, season, round + 1);
+	            createMatch(connection, awayTeam, homeTeam, season,  numRounds + round + 1);
 	        }
 	        Collections.rotate(rotatingTeams, 1);
 	    }
@@ -163,12 +162,11 @@ public interface matchData {
 		return matchesToAttend;
 	}
 	
-	public static List<Match> getMatchWeekMatches(int matchWeek) {
-		JFGPdb connection = new JFGPdb();
+	public static List<Match> getMatchWeekMatches( Connection connection, int matchWeek) {
 		List<Match> matches = new ArrayList<Match>();
 		
 		try {
-			PreparedStatement gameWeeksStatement = (connection.getConnection()).prepareStatement(
+			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
 			        "SELECT * FROM matches WHERE matchweek = ? AND (homeTeamId <> 1 AND awayTeamId <> 1);");
 			
 			gameWeeksStatement.setInt(1, matchWeek);
@@ -177,16 +175,14 @@ public interface matchData {
 			while (gameWeeks.next()) {
 				Match match= new Match (
 						gameWeeks.getInt("matchId"),
-						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection.getConnection()),
-						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection.getConnection()),
+						teamData.getTeam(gameWeeks.getInt("homeTeamId"), connection),
+						teamData.getTeam(gameWeeks.getInt("awayTeamId"), connection),
 						gameWeeks.getInt("matchWeek")
 						);
 				matches.add(match);
 			}
 			
-			connection.closeConnection();
-			
-		} catch (SQLException e) { e.printStackTrace(); connection.closeConnection(); }
+		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return matches;
 	}

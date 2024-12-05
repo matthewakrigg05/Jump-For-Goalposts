@@ -1,5 +1,7 @@
 package gui;
 import java.awt.*;
+import java.sql.Connection;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -9,7 +11,7 @@ public class toolBar extends JToolBar {
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
 	
-	public toolBar(JfgpWindow frame) {
+	public toolBar(JfgpWindow frame, Connection connection) {
 		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
@@ -48,7 +50,7 @@ public class toolBar extends JToolBar {
 		
 		switch (frame.getUserType()) {
 		case "Admin":
-			AdminPanel admin = new AdminPanel();
+			AdminPanel admin = new AdminPanel(frame);
 			rolePanel = admin.getPanel();
 			break;
 		
@@ -71,7 +73,7 @@ public class toolBar extends JToolBar {
 			add(toolBarButton[6]);
 		
 			toolBarButton[6].addActionListener(e -> {
-				new logInWindow().setVisible(true);
+				new logInWindow(connection).setVisible(true);
 				frame.dispose();
 			});
 		}

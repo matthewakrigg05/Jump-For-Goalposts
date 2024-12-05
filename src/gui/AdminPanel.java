@@ -16,13 +16,14 @@ public class AdminPanel extends panel implements seasonData, matchData {
 			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees", "Assign Player to Team", 
 			"Assign Manager to Team"));
 	
-	Season currentSeason = seasonData.getCurrentSeason();
-	int currentMatchWeek = seasonData.getCurrentGameWeek(currentSeason.getId());
-	
-	List<Match> matchesToRecord = matchData.getMatchWeekMatches(currentMatchWeek);
+	Season currentSeason;	
+	int currentMatchWeek;
+	List<Match> matchesToRecord; 
 	List<String> matches = new ArrayList<String>();
 
-	public AdminPanel() { initialise(); }
+	public AdminPanel(JfgpWindow frame) { 
+		 this.connection = frame.getDbConnection();
+		 initialise(); }
 	
 	@Override
 	public void initialise() {
@@ -32,6 +33,11 @@ public class AdminPanel extends panel implements seasonData, matchData {
 		setInsets(new Insets(0, 0, 10, 25));
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelButton = new JButton[getButtonNames().size()];
+		
+		currentSeason = seasonData.getCurrentSeason(getConnection());
+		currentMatchWeek = seasonData.getCurrentGameWeek(getConnection(), currentSeason.getId());
+		matchesToRecord = matchData.getMatchWeekMatches(getConnection(), currentMatchWeek);
+		
 		addPanelComponents(getPanel());
 		addActionListeners();
 	}
@@ -159,7 +165,7 @@ public class AdminPanel extends panel implements seasonData, matchData {
 	
 	@Override
 	protected void addActionListeners() {
-		panelButton[0].addActionListener(e -> { new leagueDialog().setVisible(true); });
+		panelButton[0].addActionListener(e -> { new leagueDialog(connection).setVisible(true); });
 		panelButton[1].addActionListener(e -> { new genFixturesDialog().setVisible(true); });
 		panelButton[2].addActionListener(e -> { new seasonDialog().setVisible(true); });
 		panelButton[3].addActionListener(e -> { new assignRefDialog().setVisible(true); });
