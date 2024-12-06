@@ -633,14 +633,204 @@ public interface IAdminPanel {
 	public static JDialog getSeasonDialog(JfgpWindow frame) {
 		JDialog seasonDialog = new JDialog();
 		
+		List<Season> seasons;
+	    List<String> seasonSelection = new ArrayList<String>();
+	    
+	    Insets insets = new Insets(0, 0, 5, 5);
+	    seasonDialog.setAlwaysOnTop(true);
+	    seasonDialog.setFocusable(true);
+	    seasonDialog.setSize(450, 500);
+	    seasonDialog.setModal(true);
+	    seasonDialog.setTitle("Seasons");
+
+        seasons = seasonData.getSeasons(frame.getDbConnection());
+        
+        for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
+       
+        GridBagLayout seasonDialogLayout = new GridBagLayout();
+        seasonDialog.setLayout(seasonDialogLayout);
+        
+        JLabel addSeasonsLabel = new JLabel("Add Seasons");
+        GridBagConstraints gbc_addSeasonsLabel = new GridBagConstraints();
+        gbc_addSeasonsLabel.insets = insets;
+        gbc_addSeasonsLabel.gridx = 1;
+        gbc_addSeasonsLabel.gridy = 0;
+        seasonDialog.add(addSeasonsLabel, gbc_addSeasonsLabel);
+        
+        JLabel removeSeasonsLabel = new JLabel("Remove Seasons");
+        GridBagConstraints gbc_removeSeasonsLabel = new GridBagConstraints();
+        gbc_removeSeasonsLabel.insets = insets;
+        gbc_removeSeasonsLabel.gridx = 3;
+        gbc_removeSeasonsLabel.gridy = 0;
+        seasonDialog.add(removeSeasonsLabel, gbc_removeSeasonsLabel);
+        
+        JLabel StartYearLabel = new JLabel("Season Start Year");
+        GridBagConstraints gbc_StartYearLabel = new GridBagConstraints();
+        gbc_StartYearLabel.insets = insets;
+        gbc_StartYearLabel.gridx = 1;
+        gbc_StartYearLabel.gridy = 1;
+        seasonDialog.add(StartYearLabel, gbc_StartYearLabel);
+        
+        JLabel seasonLabel = new JLabel("Season: ");
+        GridBagConstraints gbc_seasonLabel = new GridBagConstraints();
+        gbc_seasonLabel.insets = insets;
+        gbc_seasonLabel.gridx = 3;
+        gbc_seasonLabel.gridy = 1;
+        seasonDialog.add(seasonLabel, gbc_seasonLabel);
+        
+        JTextField seasonStartField = new JTextField();
+        GridBagConstraints gbc_startYearField = new GridBagConstraints();
+        gbc_startYearField.insets = insets;
+        gbc_startYearField.gridx = 1;
+        gbc_startYearField.gridy = 2;
+        seasonDialog.add(seasonStartField, gbc_startYearField);
+        
+        JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+       
+        GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
+        gbc_seasonSelect.insets = insets;
+        gbc_seasonSelect.gridx = 3;
+        gbc_seasonSelect.gridy = 2;
+        seasonDialog.add(seasonSelect, gbc_seasonSelect);
+
+        JLabel endYearLabel = new JLabel("Season End Year");
+        GridBagConstraints gbc_endYearLabel = new GridBagConstraints();
+        gbc_endYearLabel.insets = insets;
+        gbc_endYearLabel.gridx = 1;
+        gbc_endYearLabel.gridy = 3;
+        seasonDialog.add(endYearLabel, gbc_endYearLabel);
+        
+        JButton deleteSeasonBut = new JButton("Delete");
+        GridBagConstraints gbc_deleteSeasonBut = new GridBagConstraints();
+        gbc_deleteSeasonBut.insets = insets;
+        gbc_deleteSeasonBut.gridx = 3;
+        gbc_deleteSeasonBut.gridy = 3;
+        seasonDialog.add(deleteSeasonBut, gbc_deleteSeasonBut);
+        
+        JTextField seasonEndField = new JTextField();
+        GridBagConstraints gbc_seasonEndField = new GridBagConstraints();
+        gbc_seasonEndField.insets = insets;
+        gbc_seasonEndField.gridx = 1;
+        gbc_seasonEndField.gridy = 4;
+        seasonDialog.add(seasonEndField, gbc_seasonEndField);
+        
+        JButton addBut = new JButton("Add");
+        GridBagConstraints gbc_addBut = new GridBagConstraints();
+        gbc_addBut.insets = insets;
+        gbc_addBut.gridx = 1;
+        gbc_addBut.gridy = 5;
+        seasonDialog.add(addBut, gbc_addBut);
+        
+        addBut.addActionListener(e -> {
+        	seasonData.createSeason(frame.getDbConnection(), seasonStartField.getText(), seasonEndField.getText());
+        	seasonDialog.dispose();
+        });
+        
+        deleteSeasonBut.addActionListener(e -> {
+        	seasonData.removeSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()));
+        	seasonDialog.dispose();
+        });
+		
 		
 		seasonDialog.setVisible(true);
 		return seasonDialog;
 	}
 	
+	public static JDialog getTeamDialog(JfgpWindow frame) {
+		JDialog teamDialog = new JDialog();
+		
+		List<Team> teams;
+	    List<String> teamSelection = new ArrayList<String>();
+	    Insets insets = new Insets(0, 0, 5, 5);
+		
+	    teamDialog.setAlwaysOnTop(true);
+	    teamDialog.setFocusable(true);
+	    teamDialog.setSize(450, 500);
+	    teamDialog.setModal(true);
+	    teamDialog.setTitle("Teams");
+        
+        teams = teamData.getAllTeams(frame.getDbConnection());
+        for(Team i : teams) { teamSelection.add(i.getName()); }
+       
+        GridBagLayout seasonDialogLayout = new GridBagLayout();
+        teamDialog.setLayout(seasonDialogLayout);
+        
+        JLabel createTeamLabel = new JLabel("Create Team");
+        GridBagConstraints gbc_createTeamLabel = new GridBagConstraints();
+        gbc_createTeamLabel.insets = insets;
+        gbc_createTeamLabel.gridx = 1;
+        gbc_createTeamLabel.gridy = 0;
+        teamDialog.add(createTeamLabel, gbc_createTeamLabel);
+        
+        JLabel deleteTeamLabel = new JLabel("Delete Team");
+        deleteTeamLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        GridBagConstraints gbc_deleteTeamLabel = new GridBagConstraints();
+        gbc_deleteTeamLabel.insets = insets;
+        gbc_deleteTeamLabel.gridx = 3;
+        gbc_deleteTeamLabel.gridy = 0;
+        teamDialog.add(deleteTeamLabel, gbc_deleteTeamLabel);
+        
+        JLabel teamNameLabel = new JLabel("Team Name:");
+        GridBagConstraints gbc_teamNameLabel = new GridBagConstraints();
+        gbc_teamNameLabel.insets = insets;
+        gbc_teamNameLabel.gridx = 1;
+        gbc_teamNameLabel.gridy = 1;
+        teamDialog.add(teamNameLabel, gbc_teamNameLabel);
+        
+        JLabel teamToRemoveLabel = new JLabel("Team:");
+        GridBagConstraints gbc_teamToRemoveLabel = new GridBagConstraints();
+        gbc_teamToRemoveLabel.insets = insets;
+        gbc_teamToRemoveLabel.gridx = 3;
+        gbc_teamToRemoveLabel.gridy = 1;
+        teamDialog.add(teamToRemoveLabel, gbc_teamToRemoveLabel);
+        
+        JTextField teamNameField = new JTextField();
+        GridBagConstraints gbc_teamNameField = new GridBagConstraints();
+        gbc_teamNameField.insets = insets;
+        gbc_teamNameField.gridx = 1;
+        gbc_teamNameField.gridy = 2;
+        teamDialog.add(teamNameField, gbc_teamNameField);
+        
+        JComboBox teamSelect = new JComboBox(teamSelection.toArray());
+       
+        GridBagConstraints gbc_teamSelect = new GridBagConstraints();
+        gbc_teamSelect.insets = insets;
+        gbc_teamSelect.gridx = 3;
+        gbc_teamSelect.gridy = 2;
+        teamDialog.add(teamSelect, gbc_teamSelect);
+        
+        JButton addBut = new JButton("Create");
+        GridBagConstraints gbc_addBut = new GridBagConstraints();
+        gbc_addBut.insets = insets;
+        gbc_addBut.gridx = 1;
+        gbc_addBut.gridy = 3;
+        teamDialog.add(addBut, gbc_addBut);
+        
+        JButton delTeamBut = new JButton("Delete");
+        GridBagConstraints gbc_delTeamBut = new GridBagConstraints();
+        gbc_delTeamBut.insets = insets;
+        gbc_delTeamBut.gridx = 3;
+        gbc_delTeamBut.gridy = 3;
+        teamDialog.add(delTeamBut, gbc_delTeamBut);
+        
+        addBut.addActionListener(e -> {
+        	frame.getAdminAccount().createTeam(frame.getDbConnection(), teamNameField.getText());
+        	teamDialog.dispose();
+        });
+        
+        delTeamBut.addActionListener(e -> {
+        	frame.getAdminAccount().removeTeam(frame.getDbConnection(), teams.get(teamSelect.getSelectedIndex()));
+        	teamDialog.dispose();
+        });
+		
+		return teamDialog;
+	}
+	
 	public static JDialog getUpdateDialog(JfgpWindow frame) {
 		JDialog updateDialog = new JDialog();
 		
+		updateDialog.setVisible(true);
 		return updateDialog;
 	}
 }

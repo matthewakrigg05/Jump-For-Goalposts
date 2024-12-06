@@ -1,14 +1,9 @@
 package gui;
 import java.awt.*;
 import javax.swing.*;
-
-import accounts.AdminAccount;
-
 import java.util.ArrayList;
 import java.util.List;
-import gui.dialogs.*;
 import league.Match;
-import league.Season;
 import leagueDB.matchData;
 import leagueDB.seasonData;
 
@@ -168,9 +163,9 @@ public class AdminPanel extends panel implements IAdminPanel, seasonData, matchD
 	protected void addActionListeners() {
 		panelButton[0].addActionListener(e -> { IAdminPanel.getLeagueDialog(frame); });
 		panelButton[1].addActionListener(e -> { IAdminPanel.getGenFixturesDialog(frame); });
-		panelButton[2].addActionListener(e -> { new seasonDialog(frame).setVisible(true); });
+		panelButton[2].addActionListener(e -> { IAdminPanel.getSeasonDialog(frame); });
 		panelButton[3].addActionListener(e -> { IAdminPanel.getAssignRefDialog(frame); });
-		panelButton[4].addActionListener(e -> { new teamDialog(frame).setVisible(true); });
+		panelButton[4].addActionListener(e -> { IAdminPanel.getTeamDialog(frame); });
 		
 //		panelButton[5].addActionListener(e -> { 
 //			new recordMatchPanel(this).setVisible(true);
