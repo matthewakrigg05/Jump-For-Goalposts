@@ -7,7 +7,7 @@ import league.Match;
 import league.Team;
 import leagueMembers.*;
 
-public class AdminAccount extends Account implements IRefereeRole {
+public class AdminAccount extends Account {
 	
 	public AdminAccount(int id, String emailAddress, String password) {
 		super(id, emailAddress, password, true);

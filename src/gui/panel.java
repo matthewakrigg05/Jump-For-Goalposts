@@ -2,7 +2,6 @@ package gui;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.sql.Connection;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;

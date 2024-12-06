@@ -2,16 +2,9 @@ package leagueDB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import accounts.AdminAccount;
-import accounts.RefereeAccount;
-import accounts.ManagerAccount;
-import gui.JfgpWindow;
 
-
-public class JFGPdb implements dbInitMethods {
+public class JFGPdb {
 	
 	private static Connection connection;
 	

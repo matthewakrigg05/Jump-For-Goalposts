@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class HomePanel extends JPanel {
 
 	// all static - information based dashboard, no jdialogues required as there should not be 

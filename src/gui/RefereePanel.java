@@ -2,7 +2,6 @@ package gui;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -20,13 +19,13 @@ public class RefereePanel extends panel {
 	private JList toAttendList;
 	private JList toRecordList;
 	private Referee referee;
-	Connection connection;
+	private JfgpWindow frame;
 	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
 	private List<Match> matchesToAttend = new ArrayList<Match>(); 
 	private List<String> matchSummaries = new ArrayList<String>();
 	
 	public RefereePanel(JfgpWindow frame) { 
-		this.connection = frame.getDbConnection();
+		this.frame = frame;
 		this.referee = leagueMemberData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
@@ -41,7 +40,7 @@ public class RefereePanel extends panel {
 		setLayout(new GridBagLayout());
 		
 		panelButton = new JButton[getButtonNames().size()];
-		matchesToAttend = matchData.getNextFiveRefMatches(connection, referee);
+		matchesToAttend = matchData.getNextFiveRefMatches(frame.getDbConnection(), referee);
 		
 		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
