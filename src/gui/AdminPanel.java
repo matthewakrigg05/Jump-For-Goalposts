@@ -149,7 +149,7 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		gbc_recMatchesLabel.gridy = 5;
 		panel.add(recMatchesLabel, gbc_recMatchesLabel);
 		
-		JList matchesToRecordList = new JList(matches.toArray());
+		JList<String> matchesToRecordList = new JList<String>((String[]) matches.toArray());
 		
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = getInsets();
