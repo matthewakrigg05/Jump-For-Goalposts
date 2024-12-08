@@ -12,41 +12,6 @@ import league.Team;
 import leagueMembers.Referee;
 
 public interface matchData {
-
-	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
-		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
-			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
-			
-			seasonStatement.setInt(1 , matchWeek);
-			seasonStatement.setInt(2, season.getId());
-			seasonStatement.setInt(3, homeTeam.getTeamId());
-			seasonStatement.setInt(4, awayTeam.getTeamId());
-			seasonStatement.executeUpdate();
-			
-		} catch (SQLException e) { e.printStackTrace(); }
-	}
-	
-	public static void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(connection, 1)); }
-	
-	    int numRounds = teams.size() - 1; // Number of rounds
-	    int numMatchesPerRound = teams.size() / 2;
-	
-	    // Create a list to rotate teams (excluding the first team)
-	    List<Team> rotatingTeams = new ArrayList<Team>(teams.subList(1, teams.size()));
-	
-	    for (int round = 0; round < numRounds; round++) {
-	        for (int i = 0; i < numMatchesPerRound; i++) {
-	            Team homeTeam = (i == 0) ? teams.get(0) : rotatingTeams.get(i - 1);
-	            Team awayTeam = rotatingTeams.get(rotatingTeams.size() - i - 1);
-	            
-	            createMatch(connection, homeTeam, awayTeam, season, round + 1);
-	            createMatch(connection, awayTeam, homeTeam, season,  numRounds + round + 1);
-	        }
-	        Collections.rotate(rotatingTeams, 1);
-	    }
-	}
 	
 	public static List<Match> getNextFiveGameWeeks(Connection connection, Season currentSeason, int currentGameWeek) {
 		List<Match> matches = new ArrayList<Match>();
