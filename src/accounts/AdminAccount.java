@@ -11,10 +11,10 @@ import league.League;
 import league.Match;
 import league.Season;
 import league.Team;
-import leagueDB.teamData;
+import leagueDB.leagueData;
 import leagueMembers.*;
 
-public class AdminAccount extends Account {
+public class AdminAccount extends Account implements leagueData {
 	
 	public AdminAccount(int id, String emailAddress, String password) {
 		super(id, emailAddress, password, true);
@@ -254,7 +254,7 @@ public class AdminAccount extends Account {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void removeSeason(Connection connection, Season season) {
+	public void removeSeason(Connection connection, Season season) {
 		try {
 			PreparedStatement seasonStatement = (connection).prepareStatement(
 			        "DELETE FROM seasons WHERE seasonId = ?;");
@@ -312,7 +312,7 @@ public static void setCurrentSeason(Connection connection, int seasonId) {
 	}
 	
 	public static void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(teamData.getTeam(connection, 1)); }
+		if (teams.size() % 2 != 0) {teams.add(leagueData.getTeam(connection, 1)); }
 	
 	    int numRounds = teams.size() - 1; // Number of rounds
 	    int numMatchesPerRound = teams.size() / 2;

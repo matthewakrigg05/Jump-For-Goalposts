@@ -4,11 +4,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import league.Match;
-import leagueDB.matchData;
-import leagueDB.seasonData;
+import leagueDB.leagueData;
 
 @SuppressWarnings("serial")
-public class AdminPanel extends panel implements IAdminPanel, seasonData, matchData {
+public class AdminPanel extends panel implements IAdminPanel, leagueData {
 	
 	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", "Assign Match Referees", 
 			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees", "Assign Player to Team", 
@@ -40,10 +39,10 @@ public class AdminPanel extends panel implements IAdminPanel, seasonData, matchD
 			panelButton[i].setFont(getFont());
 		}
 		
-		int currentMatchWeek = seasonData.getCurrentGameWeek(frame.getDbConnection(), 
-				seasonData.getCurrentSeason(frame.getDbConnection()).getId());
+		int currentMatchWeek = leagueData.getCurrentGameWeek(frame.getDbConnection(), 
+				leagueData.getCurrentSeason(frame.getDbConnection()).getId());
 		
-		for(Match match : matchData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
+		for(Match match : leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
 			matches.add(match.getMatchSummary()); }
 		
 		JLabel leagueOptLabel = new JLabel("League Options:");

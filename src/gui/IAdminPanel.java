@@ -10,10 +10,7 @@ import league.League;
 import league.Match;
 import league.Season;
 import league.Team;
-import leagueDB.leagueMemberData;
-import leagueDB.matchData;
-import leagueDB.seasonData;
-import leagueDB.teamData;
+import leagueDB.leagueData;
 import leagueMembers.Manager;
 import leagueMembers.Player;
 import leagueMembers.Referee;
@@ -32,11 +29,11 @@ public interface IAdminPanel {
 		assignRefDialog.setSize(760, 500);
 		assignRefDialog.setTitle("Assign Referees");
 		
-		List<Referee> referees = leagueMemberData.getAllReferees(frame.getDbConnection());
+		List<Referee> referees = leagueData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
         
-        List<Match> nextFiveGameWeeks = matchData.getNextFiveGameWeeks(frame.getDbConnection(), 
-        		seasonData.getCurrentSeason(frame.getDbConnection()), 1);
+        List<Match> nextFiveGameWeeks = leagueData.getNextFiveGameWeeks(frame.getDbConnection(), 
+        		leagueData.getCurrentSeason(frame.getDbConnection()), 1);
         
         for(Match i : nextFiveGameWeeks) { matches.add(i.getMatchSummary()); }
         
@@ -80,7 +77,7 @@ public interface IAdminPanel {
 		assignRefDialog.add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (matchData.checkRefAssigned(frame.getDbConnection(), nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
+			if (leagueData.checkRefAssigned(frame.getDbConnection(), nextFiveGameWeeks.get(matchSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(frame, "This match already has a referee assigned. Are you sure you want to overwrite this?", "", JOptionPane.YES_NO_OPTION);
 				
 				if(areYouSure == JOptionPane.YES_OPTION) { 
@@ -112,8 +109,8 @@ public interface IAdminPanel {
 		genFixturesDialog.setModal(true);
 		genFixturesDialog.setTitle("Generate Fixtures");
         
-		List<Season> seasons = seasonData.getSeasons(frame.getDbConnection());
-        List<Team> teams = teamData.getAllTeams(frame.getDbConnection());
+		List<Season> seasons = leagueData.getSeasons(frame.getDbConnection());
+        List<Team> teams = leagueData.getAllTeams(frame.getDbConnection());
 		
 		for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
 	    for(Team i : teams) { teamSelection.add(i.getName()); }
@@ -177,7 +174,7 @@ public interface IAdminPanel {
 		genFixturesButton.addActionListener(e -> {
 				List<Team> selectedTeams = new ArrayList<Team>();
 				for(int i : teamSelectionList.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
-				matchData.createSeasonMatches(frame.getDbConnection(), selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				frame.getAdminAccount().createSeasonMatches(frame.getDbConnection(), selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
 				genFixturesDialog.dispose();
 			});
 		
@@ -189,7 +186,7 @@ public interface IAdminPanel {
 		JDialog leagueDialog = new JDialog();
 		
 		List<String> seasonSelection = new ArrayList<String>();
-		League league = seasonData.getLeague(frame.getDbConnection());
+		League league = leagueData.getLeague(frame.getDbConnection());
 		
 		leagueDialog.setFocusable(true);
 		leagueDialog.setModal(true);
@@ -197,7 +194,7 @@ public interface IAdminPanel {
 		leagueDialog.setSize(500, 250);
 		leagueDialog.setTitle(league.getLeagueName());
 		
-		List<Season> seasons = seasonData.getSeasons(frame.getDbConnection());
+		List<Season> seasons = leagueData.getSeasons(frame.getDbConnection());
 		
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
         
@@ -256,12 +253,12 @@ public interface IAdminPanel {
         leagueDialog.add(updateButton, gbc_updateButton);
         
         saveButton.addActionListener(e -> {
-        	seasonData.changeLeagueName(frame.getDbConnection(), newName.getText());
+        	frame.getAdminAccount().changeLeagueName(frame.getDbConnection(), newName.getText());
         	leagueDialog.dispose();
         });
         
         updateButton.addActionListener(e -> {
-        	seasonData.setCurrentSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()).getId());
+        	frame.getAdminAccount().setCurrentSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()).getId());
         	leagueDialog.dispose();
         });
         
@@ -282,7 +279,7 @@ public interface IAdminPanel {
 	    managerDialog.setModal(true);
 	    managerDialog.setTitle("Managers");
         
-        managers = leagueMemberData.getAllManagers(frame.getDbConnection());
+        managers = leagueData.getAllManagers(frame.getDbConnection());
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
        
         GridBagLayout managerDialogLayout = new GridBagLayout();
@@ -402,7 +399,7 @@ public interface IAdminPanel {
 		playerDialog.setModal(true);
 	    playerDialog.setTitle("Players");
 
-	    List<Player> players = leagueMemberData.getAllPlayers(frame.getDbConnection()); 
+	    List<Player> players = leagueData.getAllPlayers(frame.getDbConnection()); 
         
         for(Player i : players) { playerIds.add(i.getId());  playerSelection.add(i.getFullName()); }
        
@@ -520,7 +517,7 @@ public interface IAdminPanel {
 	    refereeDialog.setTitle("Referees");
 
 	    List<String> refSelection = new ArrayList<String>();
-        List<Referee> referees = leagueMemberData.getAllReferees(frame.getDbConnection());
+        List<Referee> referees = leagueData.getAllReferees(frame.getDbConnection());
         for(Referee i : referees) { refSelection.add(i.getFullName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
@@ -642,7 +639,7 @@ public interface IAdminPanel {
 	    seasonDialog.setModal(true);
 	    seasonDialog.setTitle("Seasons");
 
-        seasons = seasonData.getSeasons(frame.getDbConnection());
+        seasons = leagueData.getSeasons(frame.getDbConnection());
         
         for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
        
@@ -721,12 +718,12 @@ public interface IAdminPanel {
         seasonDialog.add(addBut, gbc_addBut);
         
         addBut.addActionListener(e -> {
-        	seasonData.createSeason(frame.getDbConnection(), seasonStartField.getText(), seasonEndField.getText());
+        	frame.getAdminAccount().createSeason(frame.getDbConnection(), seasonStartField.getText(), seasonEndField.getText());
         	seasonDialog.dispose();
         });
         
         deleteSeasonBut.addActionListener(e -> {
-        	seasonData.removeSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()));
+        	frame.getAdminAccount().removeSeason(frame.getDbConnection(), seasons.get(seasonSelect.getSelectedIndex()));
         	seasonDialog.dispose();
         });
 		
@@ -748,7 +745,7 @@ public interface IAdminPanel {
 	    teamDialog.setModal(true);
 	    teamDialog.setTitle("Teams");
         
-        teams = teamData.getAllTeams(frame.getDbConnection());
+        teams = leagueData.getAllTeams(frame.getDbConnection());
         for(Team i : teams) { teamSelection.add(i.getName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
