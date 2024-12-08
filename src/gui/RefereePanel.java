@@ -7,32 +7,26 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import accounts.RefereeAccount;
 import league.Match;
-import leagueDB.matchData;
-import leagueDB.refereeData;
+import leagueDB.leagueData;
 import leagueMembers.Referee;
 import java.awt.GridBagConstraints;
 
 @SuppressWarnings("serial")
 public class RefereePanel extends panel {
 
-	List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
+	private JList<String> toAttendList;
+	private JList<String> toRecordList;
+	private Referee referee;
+	private JfgpWindow frame;
 	
-	Referee referee;
+	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
+	private List<Match> matchesToAttend = new ArrayList<Match>(); 
+	private List<String> matchSummaries = new ArrayList<String>();
 	
-	public List<Match> matchesToAttend = new ArrayList<Match>(); 
-	public List<String> matchSummaries = new ArrayList<String>();
-	String noData = "You have no matches to Attend";
-	
-	public JList toAttendList;
-	public JList toRecordList;
-
-	public RefereePanel() { initialise(); }
-	
-	public RefereePanel(RefereeAccount refereeAccount) { 
-		this.referee = refereeData.getReferee(refereeAccount);
+	public RefereePanel(JfgpWindow frame) { 
+		this.frame = frame;
+		this.referee = leagueData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
 	
@@ -46,12 +40,9 @@ public class RefereePanel extends panel {
 		setLayout(new GridBagLayout());
 		
 		panelButton = new JButton[getButtonNames().size()];
+		matchesToAttend = leagueData.getNextFiveRefMatches(frame.getDbConnection(), referee);
 		
-		matchesToAttend = matchData.getNextFiveRefMatches(referee);
-		
-		if (matchesToAttend.size() == 0) {
-			this.matchSummaries.add("You have no matches to attend...");
-		}
+		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
 		
 		addPanelComponents(getPanel());
@@ -68,7 +59,7 @@ public class RefereePanel extends panel {
 		gbc_nextFiveGamesLabel.gridy = 0;
 		panel.add(nextFiveGamesLabel, gbc_nextFiveGamesLabel);
 		
-		toAttendList = new JList(matchSummaries.toArray());
+		toAttendList = new JList<String>((String[]) matchSummaries.toArray());
 		GridBagConstraints gbc_toAttendList = new GridBagConstraints();
 		gbc_toAttendList.insets = getInsets();
 		gbc_toAttendList.fill = GridBagConstraints.BOTH;
@@ -83,7 +74,7 @@ public class RefereePanel extends panel {
 		gbc_matchesToRecordLabel.gridy = 2;
 		panel.add(matchesToRecordLabel, gbc_matchesToRecordLabel);
 		
-		toRecordList = new JList(matchSummaries.toArray());
+		toRecordList = new JList<String>((String[]) matchSummaries.toArray());
 		GridBagConstraints gbc_toRecordList = new GridBagConstraints();
 		gbc_toRecordList.fill = GridBagConstraints.BOTH;
 		gbc_toRecordList.insets = getInsets();
@@ -94,8 +85,7 @@ public class RefereePanel extends panel {
 	}
 	
 	@Override
-	public void addActionListeners() {
-		
+	public void addActionListeners() {	
 		toAttendList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -107,8 +97,7 @@ public class RefereePanel extends panel {
 		toRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				toAttendList.getSelectedIndex();
-				
+				new recordMatchPanel(matchesToAttend.get(toAttendList.getSelectedIndex())).setVisible(true);
 			}
 		});
 	}

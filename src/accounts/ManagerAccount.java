@@ -1,8 +1,14 @@
 package accounts;
 
-public class ManagerAccount extends Account implements IManagerRole {
+import leagueMembers.Player;
+
+public class ManagerAccount extends Account {
 
 	public ManagerAccount(int id, String emailAddress,  String password) {
 		super(id, emailAddress, password, false);
+	}
+	
+	public static void assignShirtNumDialog(Player player, int shirtNum) {
+		 player.setShirtNum(shirtNum); 
 	}
 }

@@ -1,7 +1,7 @@
 package leagueMembers;
 import league.Statistics;
 
-abstract class Player extends Person {
+public class Player extends Person {
 	
 	private String preferredFoot;
 	private Statistics stats;
