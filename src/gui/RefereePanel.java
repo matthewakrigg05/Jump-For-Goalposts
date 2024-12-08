@@ -15,10 +15,11 @@ import java.awt.GridBagConstraints;
 @SuppressWarnings("serial")
 public class RefereePanel extends panel {
 
-	private JList toAttendList;
-	private JList toRecordList;
+	private JList<String> toAttendList;
+	private JList<String> toRecordList;
 	private Referee referee;
 	private JfgpWindow frame;
+	
 	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
 	private List<Match> matchesToAttend = new ArrayList<Match>(); 
 	private List<String> matchSummaries = new ArrayList<String>();
@@ -58,7 +59,7 @@ public class RefereePanel extends panel {
 		gbc_nextFiveGamesLabel.gridy = 0;
 		panel.add(nextFiveGamesLabel, gbc_nextFiveGamesLabel);
 		
-		toAttendList = new JList(matchSummaries.toArray());
+		toAttendList = new JList<String>((String[]) matchSummaries.toArray());
 		GridBagConstraints gbc_toAttendList = new GridBagConstraints();
 		gbc_toAttendList.insets = getInsets();
 		gbc_toAttendList.fill = GridBagConstraints.BOTH;
@@ -73,7 +74,7 @@ public class RefereePanel extends panel {
 		gbc_matchesToRecordLabel.gridy = 2;
 		panel.add(matchesToRecordLabel, gbc_matchesToRecordLabel);
 		
-		toRecordList = new JList(matchSummaries.toArray());
+		toRecordList = new JList<String>((String[]) matchSummaries.toArray());
 		GridBagConstraints gbc_toRecordList = new GridBagConstraints();
 		gbc_toRecordList.fill = GridBagConstraints.BOTH;
 		gbc_toRecordList.insets = getInsets();

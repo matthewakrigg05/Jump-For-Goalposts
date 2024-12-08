@@ -1,5 +1,4 @@
 import gui.JfgpWindow;
-import leagueDB.JFGPdb;
 
 public class JumpForGoalposts {
 

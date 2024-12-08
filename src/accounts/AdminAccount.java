@@ -224,7 +224,7 @@ public class AdminAccount extends Account implements leagueData {
 		return null;
 	}
 	
-	public static void changeLeagueName(Connection connection, String newName) {
+	public void changeLeagueName(Connection connection, String newName) {
 		try {
 			PreparedStatement leagueStatement = (connection).prepareStatement(
 			        "UPDATE league SET leagueName = ? WHERE leagueId = 1;");
@@ -236,7 +236,7 @@ public class AdminAccount extends Account implements leagueData {
 		
 	}
 	
-	public static void createSeason(Connection connection, String start, String end) {
+	public void createSeason(Connection connection, String start, String end) {
 		try {
 			PreparedStatement isCurrentSeason = (connection).prepareStatement(
 					"SELECT isCurrent FROM seasons WHERE isCurrent = true;");
@@ -265,7 +265,7 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-public static void setCurrentSeason(Connection connection, int seasonId) {
+public void setCurrentSeason(Connection connection, int seasonId) {
 		
 		try {
 			PreparedStatement deselectCurrSeasonStatement = (connection).prepareStatement(
@@ -311,7 +311,7 @@ public static void setCurrentSeason(Connection connection, int seasonId) {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
+	public void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
 		if (teams.size() % 2 != 0) {teams.add(leagueData.getTeam(connection, 1)); }
 	
 	    int numRounds = teams.size() - 1; // Number of rounds

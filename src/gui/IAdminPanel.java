@@ -47,7 +47,7 @@ public interface IAdminPanel {
 		gbc_refSelectLabel.gridy = 0;
 		assignRefDialog.add(refSelectLabel, gbc_refSelectLabel);
 		
-		JComboBox refSelect = new JComboBox(refSelection.toArray());
+		JComboBox<String> refSelect = new JComboBox<String>((String[]) refSelection.toArray());
 		GridBagConstraints gbc_refSelect = new GridBagConstraints();
 		gbc_refSelect.insets = new Insets(0, 0, 5, 0);
 		gbc_refSelect.fill = GridBagConstraints.HORIZONTAL;
@@ -62,7 +62,7 @@ public interface IAdminPanel {
 		gbc_matchSelectLabel.gridy = 2;
 		assignRefDialog.add(matchSelectLabel, gbc_matchSelectLabel);
 		
-		JComboBox matchSelect = new JComboBox(matches.toArray());
+		JComboBox<String> matchSelect = new JComboBox<String>((String[]) matches.toArray());
 		GridBagConstraints gbc_matchSelect = new GridBagConstraints();
 		gbc_matchSelect.insets = new Insets(0, 0, 5, 0);
 		gbc_matchSelect.fill = GridBagConstraints.HORIZONTAL;
@@ -95,6 +95,7 @@ public interface IAdminPanel {
 		return assignRefDialog;
 	}
 	
+	@SuppressWarnings("serial")
 	public static JDialog getGenFixturesDialog(JfgpWindow frame) {
 		JDialog genFixturesDialog = new JDialog();
 		
@@ -136,7 +137,7 @@ public interface IAdminPanel {
 		gbc_teamsToAdd.gridy = 1;
 		genFixturesDialog.add(teamsToAdd, gbc_teamsToAdd);
 		
-		JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+		JComboBox<String> seasonSelect = new JComboBox<String>((String[]) seasonSelection.toArray());
 		GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
 		gbc_seasonSelect.insets = new Insets(0, 0, 5, 5);
 		gbc_seasonSelect.anchor = GridBagConstraints.NORTH;
@@ -145,7 +146,7 @@ public interface IAdminPanel {
 		gbc_seasonSelect.gridy = 2;
 		genFixturesDialog.add(seasonSelect, gbc_seasonSelect);
 		
-		JList teamSelectionList = new JList(teamSelection.toArray());
+		JList<String> teamSelectionList = new JList<String>((String[]) teamSelection.toArray());
 		
 		// https://stackoverflow.com/questions/2404546/select-multiple-items-in-jlist-without-using-the-ctrl-command-key
 		teamSelectionList.setSelectionModel(new DefaultListSelectionModel() {
@@ -229,7 +230,7 @@ public interface IAdminPanel {
         gbc_newName.gridy = 3;
         leagueDialog.add(newName, gbc_newName);
         
-        JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+        JComboBox<String> seasonSelect = new JComboBox<String>((String[]) seasonSelection.toArray());
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 5);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -320,7 +321,7 @@ public interface IAdminPanel {
         gbc_fNameFileld.gridy = 2;
         managerDialog.add(firstNameField, gbc_fNameFileld);
         
-        JComboBox refSelect = new JComboBox(managerSelection.toArray());
+        JComboBox<String> refSelect = new JComboBox<String>((String[]) managerSelection.toArray());
        
         GridBagConstraints gbc_refSelect = new GridBagConstraints();
         gbc_refSelect.insets = insets;
@@ -441,7 +442,7 @@ public interface IAdminPanel {
         gbc_fNameFileld.gridy = 2;
         playerDialog.add(firstNameField, gbc_fNameFileld);
         
-        JComboBox playerSelect = new JComboBox(playerSelection.toArray());
+        JComboBox<String> playerSelect = new JComboBox<String>((String[]) playerSelection.toArray());
 	       
         GridBagConstraints gbc_playerSelect = new GridBagConstraints();
         gbc_playerSelect.insets = insets;
@@ -477,7 +478,7 @@ public interface IAdminPanel {
         gbc_posSelectLabel.gridy = 5;
         playerDialog.add(posSelectLabel, gbc_posSelectLabel);
         
-        JComboBox positionSelect = new JComboBox(positions);
+        JComboBox<String> positionSelect = new JComboBox<String>(positions);
         GridBagConstraints gbc_positionSelect = new GridBagConstraints();
         gbc_positionSelect.insets = insets;
         gbc_positionSelect.fill = GridBagConstraints.HORIZONTAL;
@@ -559,7 +560,7 @@ public interface IAdminPanel {
         refereeDialog.add(firstNameField, gbc_fNameFileld);
         firstNameField.setColumns(15);
         
-		JComboBox refSelect = new JComboBox(refSelection.toArray());
+		JComboBox<String> refSelect = new JComboBox<String>((String[]) refSelection.toArray());
        
         GridBagConstraints gbc_refSelect = new GridBagConstraints();
         gbc_refSelect.insets = insets;
@@ -681,7 +682,7 @@ public interface IAdminPanel {
         gbc_startYearField.gridy = 2;
         seasonDialog.add(seasonStartField, gbc_startYearField);
         
-        JComboBox seasonSelect = new JComboBox(seasonSelection.toArray());
+        JComboBox<String> seasonSelect = new JComboBox<String>((String[]) seasonSelection.toArray());
        
         GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
         gbc_seasonSelect.insets = insets;
@@ -788,7 +789,7 @@ public interface IAdminPanel {
         gbc_teamNameField.gridy = 2;
         teamDialog.add(teamNameField, gbc_teamNameField);
         
-        JComboBox teamSelect = new JComboBox(teamSelection.toArray());
+        JComboBox<String> teamSelect = new JComboBox<String>((String[]) teamSelection.toArray());
        
         GridBagConstraints gbc_teamSelect = new GridBagConstraints();
         gbc_teamSelect.insets = insets;
