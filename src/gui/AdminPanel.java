@@ -11,7 +11,7 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 	
 	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
 			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Change Players' Team", 
-			"Change Teams' Manager", "Stadiums"));
+			"Change Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
 		
 	List<String> matches = new ArrayList<String>();
 	JfgpWindow frame;
@@ -44,6 +44,10 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		
 		for(Match match : leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
 			matches.add(match.getMatchSummary()); }
+		
+		if (matches.isEmpty()) {
+			matches.add("There are no matches to record");
+		}
 		
 		JLabel leagueOptLabel = new JLabel("League Options:");
 		leagueOptLabel.setFont(getFont());
@@ -127,6 +131,12 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		gbc_stadiumsButton.gridy = 7;
 		panel.add(panelButton[10], gbc_stadiumsButton);
 		
+		GridBagConstraints gbc_assignStadiumsButton = new GridBagConstraints();
+		gbc_assignStadiumsButton.insets = getInsets();
+		gbc_assignStadiumsButton.gridx = 3;
+		gbc_assignStadiumsButton.gridy = 8;
+		panel.add(panelButton[11], gbc_assignStadiumsButton);
+		
 		JLabel recMatchesLabel = new JLabel("Record A Match This Week: ");
 		recMatchesLabel.setFont(getFont());
 		GridBagConstraints gbc_recMatchesLabel = new GridBagConstraints();
@@ -156,5 +166,6 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		panelButton[8].addActionListener(e -> { IAdminPanel.getAssignPlayerDialog(frame); });
 		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(frame); });
 		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(frame); });
+		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(frame); });
 	}	
 }

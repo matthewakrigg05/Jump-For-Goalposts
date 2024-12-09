@@ -336,7 +336,8 @@ public interface leagueData {
 			
 			teamStatement.setInt(1, id);
 			ResultSet teamResult = teamStatement.executeQuery();
-			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
+			team = new Team(teamResult.getInt("teamId"), 
+					teamResult.getString("teamName")); 
 					
 			return team;
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -496,5 +497,19 @@ public interface leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return null;
+	}
+	
+	public static boolean checkStadiumAssigned(Connection connection, Team team) {
+		try {
+			PreparedStatement matchStatement = (connection).prepareStatement(
+			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
+			
+			matchStatement.setInt(1, team.getTeamId());
+			ResultSet res = matchStatement.executeQuery();
+			return res.next();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
 	}
 }

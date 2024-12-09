@@ -350,12 +350,12 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public void assignStadium(Connection connection, int stId, int teamId) {
+	public void assignStadium(Connection connection, Team team, Stadium stadium) {
 		try {
 			PreparedStatement assignStadiumStatement = (connection).prepareStatement(
-			        "UPDATE team SET stadiumId = ? WHERE teamId = ?;");
-			assignStadiumStatement.setInt(1, stId);
-			assignStadiumStatement.setInt(2, teamId);
+			        "UPDATE teams SET stadiumId = ? WHERE teamId = ?;");
+			assignStadiumStatement.setInt(1, team.getTeamId());
+			assignStadiumStatement.setInt(2, stadium.getStadiumId());
 			assignStadiumStatement.executeUpdate();
 		
 		} catch (SQLException e) { e.printStackTrace(); }
