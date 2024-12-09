@@ -373,18 +373,6 @@ public interface IAdminPanel {
         return managerDialog;
 	}
 	
-	public static JDialog getDispMatchDialog(JfgpWindow frame) {
-		JDialog dispMatchDialog = new JDialog();
-		
-		return dispMatchDialog;
-	}
-	
-	public static JDialog getMatchEventDialog(JfgpWindow frame) {
-		JDialog matchEventDialog = new JDialog();
-		
-		return matchEventDialog;
-	}
-	
 	public static JDialog getPlayerDialog(JfgpWindow frame) {
 		JDialog playerDialog = new JDialog();
 		
@@ -442,7 +430,7 @@ public interface IAdminPanel {
         gbc_fNameFileld.gridy = 2;
         playerDialog.add(firstNameField, gbc_fNameFileld);
         
-        JComboBox<String> playerSelect = new JComboBox<String>((String[]) playerSelection.toArray());
+        JComboBox<String> playerSelect = new JComboBox(playerSelection.toArray());
 	       
         GridBagConstraints gbc_playerSelect = new GridBagConstraints();
         gbc_playerSelect.insets = insets;
@@ -560,7 +548,7 @@ public interface IAdminPanel {
         refereeDialog.add(firstNameField, gbc_fNameFileld);
         firstNameField.setColumns(15);
         
-		JComboBox<String> refSelect = new JComboBox<String>((String[]) refSelection.toArray());
+		JComboBox<String> refSelect = new JComboBox(refSelection.toArray());
        
         GridBagConstraints gbc_refSelect = new GridBagConstraints();
         gbc_refSelect.insets = insets;
@@ -642,7 +630,8 @@ public interface IAdminPanel {
 
         seasons = leagueData.getSeasons(frame.getDbConnection());
         
-        for(Season i : seasons) { seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
+        for(Season i : seasons) { 
+        	seasonSelection.add("Season ID: " + i.getId() + " Season Years: " + i.getSeasonStartEnd()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
         seasonDialog.setLayout(seasonDialogLayout);
@@ -682,7 +671,7 @@ public interface IAdminPanel {
         gbc_startYearField.gridy = 2;
         seasonDialog.add(seasonStartField, gbc_startYearField);
         
-        JComboBox<String> seasonSelect = new JComboBox<String>((String[]) seasonSelection.toArray());
+        JComboBox<String> seasonSelect = new JComboBox(seasonSelection.toArray());
        
         GridBagConstraints gbc_seasonSelect = new GridBagConstraints();
         gbc_seasonSelect.insets = insets;
@@ -728,7 +717,7 @@ public interface IAdminPanel {
         	seasonDialog.dispose();
         });
 		
-		seasonDialog.setVisible(true);
+        seasonDialog.setVisible(true);
 		return seasonDialog;
 	}
 	
@@ -789,7 +778,7 @@ public interface IAdminPanel {
         gbc_teamNameField.gridy = 2;
         teamDialog.add(teamNameField, gbc_teamNameField);
         
-        JComboBox<String> teamSelect = new JComboBox<String>((String[]) teamSelection.toArray());
+        JComboBox<String> teamSelect = new JComboBox(teamSelection.toArray());
        
         GridBagConstraints gbc_teamSelect = new GridBagConstraints();
         gbc_teamSelect.insets = insets;
@@ -821,6 +810,32 @@ public interface IAdminPanel {
         	teamDialog.dispose();
         });
 		
+        teamDialog.setVisible(true);
 		return teamDialog;
+	}
+	
+	public static JDialog getAssignPlayerDialog(JfgpWindow frame) {
+		JDialog playerDialog = new JDialog();
+		
+		playerDialog.setVisible(true);
+		return playerDialog;
+	}
+	
+	public static JDialog getAssignManagerDialog(JfgpWindow frame) {
+		JDialog managerDialog = new JDialog();
+		
+		managerDialog.setVisible(true);
+		return managerDialog;
+		
+	}
+	
+	public static JDialog getStadiumDialog(JfgpWindow frame) {
+		JDialog stadiumDialog = new JDialog();
+		
+		stadiumDialog.setVisible(true);
+		return stadiumDialog;
+		
+		
+		
 	}
 }
