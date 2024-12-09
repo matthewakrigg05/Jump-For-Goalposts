@@ -886,9 +886,9 @@ public interface IAdminPanel {
 		playerDialog.add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (leagueData.checkStadiumAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
+			if (leagueData.checkPlayerAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(playerDialog, 
-						"This team already has a stadium assigned. Are you sure you want to overwrite this?",
+						"This player already has a team assigned. Are you sure you want to overwrite this?",
 						"", JOptionPane.YES_NO_OPTION);
 				
 				if(areYouSure == JOptionPane.YES_OPTION) { 
@@ -977,9 +977,9 @@ public interface IAdminPanel {
 		managerDialog.add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (leagueData.checkStadiumAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
+			if (leagueData.checkManagerAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(managerDialog, 
-						"This team already has a stadium assigned. Are you sure you want to overwrite this?",
+						"This manager already has a team assigned. Are you sure you want to overwrite this?",
 						"", JOptionPane.YES_NO_OPTION);
 				
 				if(areYouSure == JOptionPane.YES_OPTION) { 

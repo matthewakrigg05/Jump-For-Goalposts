@@ -135,10 +135,9 @@ public class JFGPdb {
             		+ "	);";
             
             String createTeamEmployeeTable = "CREATE TABLE IF NOT EXISTS teamEmployee(\r\n"
-            		+ "	employeeId INTEGER NOT NULL, \r\n"
+            		+ "	employeeId INTEGER NOT NULL PRIMARY KEY, \r\n"
             		+ " teamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE,\r\n"
-            		+ "	contractType VARCHAR(25),\r\n"
-            		+ " PRIMARY KEY (employeeId, teamId) \r\n"
+            		+ "	contractType VARCHAR(25)\r\n"
             		+ "	);";
             
             String createManagersTable = "CREATE TABLE IF NOT EXISTS managers(\r\n"
