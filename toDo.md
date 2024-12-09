@@ -1,8 +1,10 @@
 - record matches screen
-- show players 
-- show teams 
-- show league table
-- calculate league table
-- show fixtures
-- show results
+- Tomorrow:
+	- show players 
+	- show teams
+	- show fixtures
+	- show results 
+	- show league table
+	- calculate league table
+	- removal of people from teams
 - compute stats
