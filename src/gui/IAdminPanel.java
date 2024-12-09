@@ -823,11 +823,4 @@ public interface IAdminPanel {
 		
 		return teamDialog;
 	}
-	
-	public static JDialog getUpdateDialog(JfgpWindow frame) {
-		JDialog updateDialog = new JDialog();
-		
-		updateDialog.setVisible(true);
-		return updateDialog;
-	}
 }
