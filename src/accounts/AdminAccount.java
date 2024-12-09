@@ -6,11 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import league.League;
-import league.Match;
-import league.Season;
-import league.Team;
+import league.*;
 import leagueDB.leagueData;
 import leagueMembers.*;
 
@@ -265,7 +261,7 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-public void setCurrentSeason(Connection connection, int seasonId) {
+	public void setCurrentSeason(Connection connection, int seasonId) {
 		
 		try {
 			PreparedStatement deselectCurrSeasonStatement = (connection).prepareStatement(
@@ -330,5 +326,38 @@ public void setCurrentSeason(Connection connection, int seasonId) {
 	        }
 	        Collections.rotate(rotatingTeams, 1);
 	    }
+	}
+	
+	public static void createStadium(Connection connection, String name, String cap, String loc) {
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			        "INSERT INTO stadium(stadiumName, capacity, stadiumLocation) VALUES (?, ?, ?);");
+			stadiumStatement.setString(1, name);
+			stadiumStatement.setString(2, cap);
+			stadiumStatement.setString(3, loc);
+			stadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public static void deleteStadium(Connection connection, int stId) {
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			        "DELETE FROM stadium WHERE stadiumId = ?;");
+			stadiumStatement.setInt(1, stId);
+			stadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public static void assignStadium(Connection connection, int stId, int teamId) {
+		try {
+			PreparedStatement assignStadiumStatement = (connection).prepareStatement(
+			        "UPDATE team SET stadiumId = ? WHERE teamId = ?;");
+			assignStadiumStatement.setInt(1, stId);
+			assignStadiumStatement.setInt(2, teamId);
+			assignStadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 }
