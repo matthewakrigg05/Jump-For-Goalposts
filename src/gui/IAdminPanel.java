@@ -728,7 +728,6 @@ public interface IAdminPanel {
         	seasonDialog.dispose();
         });
 		
-		
 		seasonDialog.setVisible(true);
 		return seasonDialog;
 	}
@@ -738,7 +737,7 @@ public interface IAdminPanel {
 		
 		List<Team> teams;
 	    List<String> teamSelection = new ArrayList<String>();
-	    Insets insets = new Insets(0, 0, 5, 5);
+	    Insets insets = frame.getInsets();
 		
 	    teamDialog.setAlwaysOnTop(true);
 	    teamDialog.setFocusable(true);
@@ -747,7 +746,8 @@ public interface IAdminPanel {
 	    teamDialog.setTitle("Teams");
         
         teams = leagueData.getAllTeams(frame.getDbConnection());
-        for(Team i : teams) { teamSelection.add(i.getName()); }
+        for(Team i : leagueData.getAllTeams(frame.getDbConnection())) { 
+        	teamSelection.add(i.getName()); }
        
         GridBagLayout seasonDialogLayout = new GridBagLayout();
         teamDialog.setLayout(seasonDialogLayout);
