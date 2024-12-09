@@ -7,12 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public abstract class panel extends JPanel {
+abstract class panel extends JPanel {
 	
 	private JPanel panel;
 	private Insets labelFieldInsets;
 	private Font labelFont;
 	private List<String> buttonNames;
+
 	
 	protected JButton[] panelButton;
 	protected GridBagLayout gridBagLayout;
@@ -35,5 +36,4 @@ public abstract class panel extends JPanel {
 	
 	public List<String> getButtonNames() { return this.buttonNames; }
 	public void setButtonNames(List<String> buttons) { this.buttonNames = buttons; }
-
 }

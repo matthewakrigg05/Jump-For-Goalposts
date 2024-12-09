@@ -1,8 +1,7 @@
 package leagueMembers;
 import accounts.RefereeAccount;
-import leagueDB.refereeData;
 
-public class Referee extends Person implements refereeData {
+public class Referee extends Person {
 	
 	private String preferredLocation;
 	private RefereeAccount refereesAccount;

@@ -4,11 +4,12 @@ import accounts.ManagerAccount;
 public class Manager extends Person {
 	
 	private String preferredFormation;
+	private int managerAccId;
 	private ManagerAccount managerAcc;
 	
-	public Manager(int id, String fName, String lName, String location, ManagerAccount manAcc) {
+	public Manager(int id, String fName, String lName, String location, int manAcc) {
 		super(id, fName, lName);
-		this.managerAcc = manAcc;
+		this.managerAccId = manAcc;
 	}
 
 	public Manager(int id, String fName, String lName, int userId) { super(id, fName, lName, userId); }
@@ -19,6 +20,7 @@ public class Manager extends Person {
 	public ManagerAccount getManagerAcc() { return managerAcc; }
 	public void setManagerAcc(ManagerAccount managerAcc) { this.managerAcc = managerAcc; }
 	
-	public void setManAcc(ManagerAccount manAcc) { this.managerAcc = manAcc; }
+	public void setManagerAccId(int id) { this.managerAccId = id; }
+	public int getManagerAccId() { return this.managerAccId; }
 }
 

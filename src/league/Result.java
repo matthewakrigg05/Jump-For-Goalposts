@@ -1,9 +1,5 @@
 package league;
 
-import java.sql.Date;
-
-import leagueMembers.Referee;
-
 public class Result extends Match {
 	private MatchEvent[] events;
 	private boolean isComplete;

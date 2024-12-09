@@ -1,7 +1,12 @@
 package gui;
 import javax.swing.*;
-import leagueDB.JFGPdb;
+import accounts.*;
+import leagueDB.leagueData;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 @SuppressWarnings("serial")
@@ -9,8 +14,12 @@ public class logInWindow extends JFrame {
 	
 	private JTextField emailField;
 	private JPasswordField passwordField;
+	private Connection connection;
 
-	public logInWindow() { initialise(); }
+	public logInWindow(Connection connection) { 
+		initialise();
+		this.connection = connection; 
+		}
 
 	private void initialise() {
 		setBounds(100, 100, 450, 300);
@@ -83,10 +92,51 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			JFGPdb.logIn(email, password);
+			logIn(email, password, connection);
 			dispose();
 		});
 		
 		setVisible(true);
+	}
+	
+	public static void logIn(String email, String password, Connection connection) {
+		try {
+	            PreparedStatement preparedStatement = connection.prepareStatement(
+	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
+	            );
+
+	            preparedStatement.setString(1, email);
+	            preparedStatement.setString(2, password);
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            if (resultSet.next()) {
+	                int userId = resultSet.getInt("userId");
+	                String userType = resultSet.getString("userType");
+	                connection.close();
+	                
+	                switch (userType) {
+	                	case "admin":
+	                		new JfgpWindow(new AdminAccount(userId, email, password));
+	                		break;
+	                		
+	                	case "referee":
+	                		new JfgpWindow(new RefereeAccount(userId, email, password, 
+	                				leagueData.getRefereeFromId(connection, userId)), connection);
+	                		break;
+	                		
+	                	case "manager":
+	                		new JfgpWindow(new ManagerAccount(userId, email, password));
+	                		break;
+	                	
+	                	default:
+	                		JfgpWindow window = new JfgpWindow();
+	                		JOptionPane.showMessageDialog(window, "Log In Failed");
+	                }
+	            }
+	            else { 
+		            JfgpWindow window = new JfgpWindow();
+	        		JOptionPane.showMessageDialog(window, "Log In Failed");
+	            }
+	        } catch (SQLException e) { e.printStackTrace(); }
 	}
 }
