@@ -513,12 +513,12 @@ public interface leagueData {
 		return false;
 	}
 	
-	public static boolean checkPlayerAssigned(Connection connection, Team team) {
+	public static boolean checkPlayerAssigned(Connection connection, Player player) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(
-			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
+			        "SELECT teamEmployeeId FROM players WHERE playerId = ? AND teamEmployeeId IS NOT NULL;");
 			
-			matchStatement.setInt(1, team.getTeamId());
+			matchStatement.setInt(1, player.getId());
 			ResultSet res = matchStatement.executeQuery();
 			return res.next();
 			
@@ -527,12 +527,12 @@ public interface leagueData {
 		return false;
 	}
 	
-	public static boolean checkManagerAssigned(Connection connection, Team team) {
+	public static boolean checkManagerAssigned(Connection connection, Manager manager) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(
 			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
 			
-			matchStatement.setInt(1, team.getTeamId());
+			matchStatement.setInt(1, manager.getId());
 			ResultSet res = matchStatement.executeQuery();
 			return res.next();
 			

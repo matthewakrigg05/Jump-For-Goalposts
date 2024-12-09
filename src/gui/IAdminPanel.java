@@ -6,8 +6,6 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
-import accounts.AdminAccount;
 import league.League;
 import league.Match;
 import league.Season;
@@ -846,13 +844,13 @@ public interface IAdminPanel {
 		gbc_refSelectLabel.gridy = 0;
 		playerDialog.add(refSelectLabel, gbc_refSelectLabel);
 		
-		JComboBox<String> stadiumSelect = new JComboBox(playerSelection.toArray());
-		GridBagConstraints gbc_refSelect = new GridBagConstraints();
-		gbc_refSelect.insets = new Insets(0, 0, 5, 0);
-		gbc_refSelect.fill = GridBagConstraints.HORIZONTAL;
-		gbc_refSelect.gridx = 0;
-		gbc_refSelect.gridy = 1;
-		playerDialog.add(stadiumSelect, gbc_refSelect);
+		JComboBox<String> playerSelect = new JComboBox(playerSelection.toArray());
+		GridBagConstraints gbc_playerSelect = new GridBagConstraints();
+		gbc_playerSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_playerSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_playerSelect.gridx = 0;
+		gbc_playerSelect.gridy = 1;
+		playerDialog.add(playerSelect, gbc_playerSelect);
 		
 		JLabel matchSelectLabel = new JLabel("Select team to assign to");
 		GridBagConstraints gbc_matchSelectLabel = new GridBagConstraints();
@@ -861,13 +859,13 @@ public interface IAdminPanel {
 		gbc_matchSelectLabel.gridy = 2;
 		playerDialog.add(matchSelectLabel, gbc_matchSelectLabel);
 		
-		JComboBox<String> matchSelect = new JComboBox(teamsSelect.toArray());
-		GridBagConstraints gbc_matchSelect = new GridBagConstraints();
-		gbc_matchSelect.insets = new Insets(0, 0, 5, 0);
-		gbc_matchSelect.fill = GridBagConstraints.HORIZONTAL;
-		gbc_matchSelect.gridx = 0;
-		gbc_matchSelect.gridy = 3;
-		playerDialog.add(matchSelect, gbc_matchSelect);
+		JComboBox<String> teamSelect = new JComboBox(teamsSelect.toArray());
+		GridBagConstraints gbc_teamSelect = new GridBagConstraints();
+		gbc_teamSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_teamSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_teamSelect.gridx = 0;
+		gbc_teamSelect.gridy = 3;
+		playerDialog.add(teamSelect, gbc_teamSelect);
 		
 		JLabel conTypeLabel = new JLabel("Contract Type: ");
 		
@@ -886,20 +884,20 @@ public interface IAdminPanel {
 		playerDialog.add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (leagueData.checkPlayerAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
+			if (leagueData.checkPlayerAssigned(frame.getDbConnection(), players.get(playerSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(playerDialog, 
-						"This player already has a team assigned. Are you sure you want to overwrite this?",
+						"This player is already assigned to a team. Are you sure you want to overwrite this?",
 						"", JOptionPane.YES_NO_OPTION);
 				
 				if(areYouSure == JOptionPane.YES_OPTION) { 
 					frame.getAdminAccount().assignPlayerToTeam(frame.getDbConnection(), 
-							teams.get(matchSelect.getSelectedIndex()), 
-							players.get(stadiumSelect.getSelectedIndex()),
+							teams.get(teamSelect.getSelectedIndex()), 
+							players.get(playerSelect.getSelectedIndex()),
 							contractTypes[contractSelect.getSelectedIndex()]); }
 			} else { 
 				frame.getAdminAccount().assignPlayerToTeam(frame.getDbConnection(), 
-						teams.get(matchSelect.getSelectedIndex()), 
-						players.get(stadiumSelect.getSelectedIndex()),
+						teams.get(teamSelect.getSelectedIndex()), 
+						players.get(playerSelect.getSelectedIndex()),
 						contractTypes[contractSelect.getSelectedIndex()]); }
 			playerDialog.dispose();
 		});
@@ -910,7 +908,6 @@ public interface IAdminPanel {
 	
 	public static JDialog getAssignManagerDialog(JfgpWindow frame) {
 		JDialog managerDialog = new JDialog();
-
 		List<String> managerSelection = new ArrayList<String>();
 	    List<String> teamsSelect = new ArrayList<String>();
 	    String[] contractTypes = {"Full-Time", "Part-Time"};
@@ -920,15 +917,13 @@ public interface IAdminPanel {
 	    managerDialog.setFocusable(true);
 	    managerDialog.setSize(760, 500);
 	    managerDialog.setTitle("Assign Stadium");
+        managerDialog.setLayout(new GridBagLayout());
 		
 		List<Manager> managers = leagueData.getAllManagers(frame.getDbConnection());
         for(Manager i : managers) { managerSelection.add(i.getFullName()); }
         
         List<Team> teams = leagueData.getAllTeams(frame.getDbConnection());
         for(Team i : teams) { teamsSelect.add(i.getName()); }
-        
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        managerDialog.setLayout(gridBagLayout);
 		
 		JLabel refSelectLabel = new JLabel("Select a Player");
 		GridBagConstraints gbc_refSelectLabel = new GridBagConstraints();
@@ -937,13 +932,13 @@ public interface IAdminPanel {
 		gbc_refSelectLabel.gridy = 0;
 		managerDialog.add(refSelectLabel, gbc_refSelectLabel);
 		
-		JComboBox<String> stadiumSelect = new JComboBox(managerSelection.toArray());
-		GridBagConstraints gbc_refSelect = new GridBagConstraints();
-		gbc_refSelect.insets = new Insets(0, 0, 5, 0);
-		gbc_refSelect.fill = GridBagConstraints.HORIZONTAL;
-		gbc_refSelect.gridx = 0;
-		gbc_refSelect.gridy = 1;
-		managerDialog.add(stadiumSelect, gbc_refSelect);
+		JComboBox<String> managerSelect = new JComboBox(managerSelection.toArray());
+		GridBagConstraints gbc_managerSelect = new GridBagConstraints();
+		gbc_managerSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_managerSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_managerSelect.gridx = 0;
+		gbc_managerSelect.gridy = 1;
+		managerDialog.add(managerSelect, gbc_managerSelect);
 		
 		JLabel matchSelectLabel = new JLabel("Select team to assign to");
 		GridBagConstraints gbc_matchSelectLabel = new GridBagConstraints();
@@ -977,20 +972,20 @@ public interface IAdminPanel {
 		managerDialog.add(confirmationButton, gbc_confirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-			if (leagueData.checkManagerAssigned(frame.getDbConnection(), teams.get(matchSelect.getSelectedIndex()))) {
+			if (leagueData.checkManagerAssigned(frame.getDbConnection(), managers.get(matchSelect.getSelectedIndex()))) {
 				int areYouSure = JOptionPane.showConfirmDialog(managerDialog, 
-						"This manager already has a team assigned. Are you sure you want to overwrite this?",
+						"This manager is already assigned to a team. Are you sure you want to overwrite this?",
 						"", JOptionPane.YES_NO_OPTION);
 				
 				if(areYouSure == JOptionPane.YES_OPTION) { 
 					frame.getAdminAccount().assignManagerToTeam(frame.getDbConnection(), 
 							teams.get(matchSelect.getSelectedIndex()), 
-							managers.get(stadiumSelect.getSelectedIndex()),
+							managers.get(managerSelect.getSelectedIndex()),
 							contractTypes[contractSelect.getSelectedIndex()]); }
 			} else { 
 				frame.getAdminAccount().assignManagerToTeam(frame.getDbConnection(), 
 						teams.get(matchSelect.getSelectedIndex()), 
-						managers.get(stadiumSelect.getSelectedIndex()),
+						managers.get(managgerSelection.getSelectedIndex()),
 						contractTypes[contractSelect.getSelectedIndex()]); }
 			managerDialog.dispose();
 		});
@@ -1001,7 +996,6 @@ public interface IAdminPanel {
 	
 	public static JDialog getAssignStadiumDialog(JfgpWindow frame) {
 		JDialog assignStadiumDialog = new JDialog();
-		
 		List<String> stadiumSelection = new ArrayList<String>();
 	    List<String> teamsSelect = new ArrayList<String>();
 		
@@ -1010,15 +1004,13 @@ public interface IAdminPanel {
 		assignStadiumDialog.setFocusable(true);
 		assignStadiumDialog.setSize(760, 500);
 		assignStadiumDialog.setTitle("Assign Stadium");
+        assignStadiumDialog.setLayout(new GridBagLayout());
 		
 		List<Stadium> stadiums = leagueData.getAllStadiums(frame.getDbConnection());
         for(Stadium i : stadiums) { stadiumSelection.add(i.getStadiumName()); }
         
         List<Team> teams = leagueData.getAllTeams(frame.getDbConnection());
         for(Team i : teams) { teamsSelect.add(i.getName()); }
-        
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        assignStadiumDialog.setLayout(gridBagLayout);
 		
 		JLabel refSelectLabel = new JLabel("Select a Referee");
 		GridBagConstraints gbc_refSelectLabel = new GridBagConstraints();
