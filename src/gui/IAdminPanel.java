@@ -6,9 +6,12 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import accounts.AdminAccount;
 import league.League;
 import league.Match;
 import league.Season;
+import league.Stadium;
 import league.Team;
 import leagueDB.leagueData;
 import leagueMembers.Manager;
@@ -832,10 +835,122 @@ public interface IAdminPanel {
 	public static JDialog getStadiumDialog(JfgpWindow frame) {
 		JDialog stadiumDialog = new JDialog();
 		
+		List<Stadium> stadiums;
+	    List<String> stadiumSelection = new ArrayList<String>();
+	    Insets insets = frame.getInsets();
+	    
+	    stadiumDialog.setAlwaysOnTop(true);
+	    stadiumDialog.setFocusable(true);
+	    stadiumDialog.setSize(450, 500);
+	    stadiumDialog.setModal(true);
+	    stadiumDialog.setTitle("Stadiums");
+        
+	    stadiums = leagueData.getAllStadiums(frame.getDbConnection());
+        for(Stadium i : stadiums) { stadiumSelection.add(i.getStadiumName()); }
+       
+        GridBagLayout StadiumDialogLayout = new GridBagLayout();
+        stadiumDialog.setLayout(StadiumDialogLayout);
+        
+        JLabel createStadiumLabel = new JLabel("Create Stadium");
+        GridBagConstraints gbc_createStadiumLabel = new GridBagConstraints();
+        gbc_createStadiumLabel.insets = insets;
+        gbc_createStadiumLabel.gridx = 1;
+        gbc_createStadiumLabel.gridy = 0;
+        stadiumDialog.add(createStadiumLabel, gbc_createStadiumLabel);
+        
+        JLabel stadiumNameLabel = new JLabel("Stadium Name: ");
+        GridBagConstraints gbc_stadiumNameLabel = new GridBagConstraints();
+        gbc_stadiumNameLabel.insets = insets;
+        gbc_stadiumNameLabel.gridx = 1;
+        gbc_stadiumNameLabel.gridy = 1;
+        stadiumDialog.add(stadiumNameLabel, gbc_stadiumNameLabel);;
+        
+        JTextField stadiumNameField = new JTextField();
+        GridBagConstraints gbc_stadiumNameField = new GridBagConstraints();
+        gbc_stadiumNameField.insets = insets;
+        gbc_stadiumNameField.gridx = 1;
+        gbc_stadiumNameField.gridy = 2;
+        stadiumDialog.add(stadiumNameField, gbc_stadiumNameField);
+        stadiumNameField.setColumns(15);
+        
+        JComboBox<String> stadiumSelect = new JComboBox(stadiumSelection.toArray());
+        GridBagConstraints gbc_stadiumSelect = new GridBagConstraints();
+        gbc_stadiumSelect.insets = insets;
+        gbc_stadiumSelect.gridx = 3;
+        gbc_stadiumSelect.gridy = 2;
+        stadiumDialog.add(stadiumSelect, gbc_stadiumSelect);
+
+        JLabel capacityLabel = new JLabel("Capacity: ");
+        GridBagConstraints gbc_capacityLabel = new GridBagConstraints();
+        gbc_capacityLabel.insets = insets;
+        gbc_capacityLabel.gridx = 1;
+        gbc_capacityLabel.gridy = 3;
+        stadiumDialog.add(capacityLabel, gbc_capacityLabel);
+        
+        JTextField capacityField = new JTextField();
+        GridBagConstraints gbc_capacityField = new GridBagConstraints();
+        gbc_capacityField.insets = insets;
+        gbc_capacityField.gridx = 1;
+        gbc_capacityField.gridy = 4;
+        stadiumDialog.add(capacityField, gbc_capacityField);
+        capacityField.setColumns(15);
+        
+        JLabel locationLabel = new JLabel("Location: ");
+        GridBagConstraints gbc_locationLabel = new GridBagConstraints();
+        gbc_locationLabel.insets = insets;
+        gbc_locationLabel.gridx = 1;
+        gbc_locationLabel.gridy = 5;
+        stadiumDialog.add(locationLabel, gbc_locationLabel);
+        
+        JTextField locationField = new JTextField();
+        GridBagConstraints gbc_locationField= new GridBagConstraints();
+        gbc_locationField.insets = insets;
+        gbc_locationField.gridx = 1;
+        gbc_locationField.gridy = 6;
+        stadiumDialog.add(locationField, gbc_locationField);
+        locationField.setColumns(15);
+        
+        JButton addBut = new JButton("Create");
+        GridBagConstraints gbc_addBut = new GridBagConstraints();
+        gbc_addBut.insets = new Insets(0, 0, 0, 5);
+        gbc_addBut.gridx = 1;
+        gbc_addBut.gridy = 8;
+        stadiumDialog.add(addBut, gbc_addBut);
+        
+        JLabel deleteManagerLabel = new JLabel("Delete Stadium");
+        GridBagConstraints gbc_deleteManagerLabel = new GridBagConstraints();
+        gbc_deleteManagerLabel.insets = insets;
+        gbc_deleteManagerLabel.gridx = 3;
+        gbc_deleteManagerLabel.gridy = 0;
+        stadiumDialog.add(deleteManagerLabel, gbc_deleteManagerLabel);
+        
+        JLabel stadiumToRemoveLabel = new JLabel("Stadium:");
+        GridBagConstraints gbc_stadiumToRemoveLabel = new GridBagConstraints();
+        gbc_stadiumToRemoveLabel.insets = insets;
+        gbc_stadiumToRemoveLabel.gridx = 3;
+        gbc_stadiumToRemoveLabel.gridy = 1;
+        stadiumDialog.add(stadiumToRemoveLabel, gbc_stadiumToRemoveLabel);
+        
+        JButton delStadiumButton = new JButton("Delete");
+        GridBagConstraints gbc_delStadiumButton = new GridBagConstraints();
+        gbc_delStadiumButton.insets = insets;
+        gbc_delStadiumButton.gridx = 3;
+        gbc_delStadiumButton.gridy = 3;
+        stadiumDialog.add(delStadiumButton, gbc_delStadiumButton);
+        
+        addBut.addActionListener(e -> {
+        	frame.getAdminAccount().createStadium(frame.getDbConnection(), 
+        			stadiumNameField.getText(), capacityField.getText(), locationField.getText());
+        	stadiumDialog.dispose();
+        });
+        
+        delStadiumButton.addActionListener(e -> {
+        	frame.getAdminAccount().removeStadium(frame.getDbConnection(), 
+        			stadiums.get(stadiumSelect.getSelectedIndex()));
+        	stadiumDialog.dispose();
+        });
+		
 		stadiumDialog.setVisible(true);
 		return stadiumDialog;
-		
-		
-		
 	}
 }

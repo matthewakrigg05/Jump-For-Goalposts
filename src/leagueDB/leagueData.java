@@ -11,6 +11,7 @@ import accounts.RefereeAccount;
 import league.League;
 import league.Match;
 import league.Season;
+import league.Stadium;
 import league.Team;
 import leagueMembers.*;
 
@@ -472,5 +473,28 @@ public interface leagueData {
 			
 			return currentSeason;
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
+	}
+	
+	public static List<Stadium> getAllStadiums(Connection connection) {
+		List<Stadium> stadiums = new ArrayList<Stadium>();
+		
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement( "SELECT * FROM stadiums");
+			ResultSet stadiumResult = stadiumStatement.executeQuery();
+			
+			while(stadiumResult.next()) {
+				Stadium stadium = new Stadium(
+						stadiumResult.getInt("stadiumId"),
+						stadiumResult.getString("stadiumName"),
+						stadiumResult.getString("capacity"),
+						stadiumResult.getString("stadiumLocation")
+		        		);
+				stadiums.add(stadium);
+			}				
+			return stadiums;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
 	}
 }

@@ -328,10 +328,10 @@ public class AdminAccount extends Account implements leagueData {
 	    }
 	}
 	
-	public static void createStadium(Connection connection, String name, String cap, String loc) {
+	public void createStadium(Connection connection, String name, String cap, String loc) {
 		try {
 			PreparedStatement stadiumStatement = (connection).prepareStatement(
-			        "INSERT INTO stadium(stadiumName, capacity, stadiumLocation) VALUES (?, ?, ?);");
+			        "INSERT INTO stadiums(stadiumName, capacity, stadiumLocation) VALUES (?, ?, ?);");
 			stadiumStatement.setString(1, name);
 			stadiumStatement.setString(2, cap);
 			stadiumStatement.setString(3, loc);
@@ -340,17 +340,17 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void deleteStadium(Connection connection, int stId) {
+	public void removeStadium(Connection connection, Stadium stadium) {
 		try {
 			PreparedStatement stadiumStatement = (connection).prepareStatement(
-			        "DELETE FROM stadium WHERE stadiumId = ?;");
-			stadiumStatement.setInt(1, stId);
+			        "DELETE FROM stadiums WHERE stadiumId = ?;");
+			stadiumStatement.setInt(1, stadium.getStadiumId());
 			stadiumStatement.executeUpdate();
 		
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static void assignStadium(Connection connection, int stId, int teamId) {
+	public void assignStadium(Connection connection, int stId, int teamId) {
 		try {
 			PreparedStatement assignStadiumStatement = (connection).prepareStatement(
 			        "UPDATE team SET stadiumId = ? WHERE teamId = ?;");
