@@ -360,4 +360,47 @@ public class AdminAccount extends Account implements leagueData {
 		
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
+	
+	public void assignPlayerToTeam(Connection connection, Team team, Player player, String contract) {
+		try {
+			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
+			newEmpStatement.setInt(1, team.getTeamId());
+			newEmpStatement.setString(2, contract);
+			newEmpStatement.executeUpdate();
+		
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT teamEmployeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+			ResultSet res = lastId.executeQuery();	
+			int playerEmpId = res.getInt("teamEmployeeId");
+			
+			PreparedStatement playerEmp = (connection).prepareStatement(
+			        "UPDATE player SET teamEmployeeId = ? WHERE playerId = ?;");
+			playerEmp.setInt(1, playerEmpId);
+			playerEmp.setInt(2, player.getId());
+			playerEmp.executeUpdate();
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void assignManagerToTeam(Connection connection, Team team, Manager manager, String contract) {
+		try {
+			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
+			newEmpStatement.setInt(1, team.getTeamId());
+			newEmpStatement.setString(2, contract);
+			newEmpStatement.executeUpdate();
+		
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT teamEmployeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+			ResultSet res = lastId.executeQuery();	
+			int playerEmpId = res.getInt("teamEmployeeId");
+			
+			PreparedStatement playerEmp = (connection).prepareStatement(
+			        "UPDATE manager SET teamEmployeeId = ? WHERE managerId = ?;");
+			playerEmp.setInt(1, playerEmpId);
+			playerEmp.setInt(2, manager.getId());
+			playerEmp.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
 }

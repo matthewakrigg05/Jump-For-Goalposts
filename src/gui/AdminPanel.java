@@ -10,8 +10,8 @@ import leagueDB.leagueData;
 public class AdminPanel extends panel implements IAdminPanel, leagueData {
 	
 	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
-			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Change Players' Team", 
-			"Change Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
+			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Assign Players' Team", 
+			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
 		
 	List<String> matches = new ArrayList<String>();
 	JfgpWindow frame;

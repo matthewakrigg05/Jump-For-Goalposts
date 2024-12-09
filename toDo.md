@@ -8,4 +8,3 @@
 - show fixtures
 - show results
 - compute stats
-- assign team to stadium
