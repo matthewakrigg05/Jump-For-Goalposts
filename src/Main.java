@@ -1,6 +1,6 @@
 import gui.JfgpWindow;
 
-public class JumpForGoalposts {
+public class Main {
 
 	public static void main(String[] args) {
 		

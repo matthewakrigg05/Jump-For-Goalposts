@@ -11,6 +11,7 @@ import accounts.RefereeAccount;
 import league.League;
 import league.Match;
 import league.Season;
+import league.Stadium;
 import league.Team;
 import leagueMembers.*;
 
@@ -228,22 +229,22 @@ public interface leagueData {
 	}
 	
 	public static List<Player> getAllPlayers(Connection connection) {
-		List<Player> goalkeepers = new ArrayList<Player>();
+		List<Player> players = new ArrayList<Player>();
 		
 		try {
-			PreparedStatement goalkeeperStatement = connection.prepareStatement(
-			        "SELECT * FROM players WHERE positionType = 'goalkeeper';");
-			ResultSet goalkeeperResult = goalkeeperStatement.executeQuery();
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM players;");
+			ResultSet playerResult = playerStatement.executeQuery();
 			
-			while(goalkeeperResult.next()) {
-				Player goalkeeper = new Player(
-						goalkeeperResult.getInt("playerId"),
-						goalkeeperResult.getString("fname"),
-						goalkeeperResult.getString("lName")
+			while(playerResult.next()) {
+				Player player = new Player(
+						playerResult.getInt("playerId"),
+						playerResult.getString("fname"),
+						playerResult.getString("lName")
 		        		);
-				goalkeepers.add(goalkeeper);
+				players.add(player);
 			}
-			return goalkeepers;
+			return players;
 		} catch (SQLException e) { e.printStackTrace(); }
 		return null;
 	}
@@ -335,7 +336,8 @@ public interface leagueData {
 			
 			teamStatement.setInt(1, id);
 			ResultSet teamResult = teamStatement.executeQuery();
-			team = new Team(teamResult.getInt("teamId"), teamResult.getString("teamName")); 
+			team = new Team(teamResult.getInt("teamId"), 
+					teamResult.getString("teamName")); 
 					
 			return team;
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -472,5 +474,70 @@ public interface leagueData {
 			
 			return currentSeason;
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
+	}
+	
+	public static List<Stadium> getAllStadiums(Connection connection) {
+		List<Stadium> stadiums = new ArrayList<Stadium>();
+		
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement( "SELECT * FROM stadiums");
+			ResultSet stadiumResult = stadiumStatement.executeQuery();
+			
+			while(stadiumResult.next()) {
+				Stadium stadium = new Stadium(
+						stadiumResult.getInt("stadiumId"),
+						stadiumResult.getString("stadiumName"),
+						stadiumResult.getString("capacity"),
+						stadiumResult.getString("stadiumLocation")
+		        		);
+				stadiums.add(stadium);
+			}				
+			return stadiums;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public static boolean checkStadiumAssigned(Connection connection, Team team) {
+		try {
+			PreparedStatement matchStatement = (connection).prepareStatement(
+			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
+			
+			matchStatement.setInt(1, team.getTeamId());
+			ResultSet res = matchStatement.executeQuery();
+			return res.next();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
+	}
+	
+	public static boolean checkPlayerAssigned(Connection connection, Player player) {
+		try {
+			PreparedStatement matchStatement = (connection).prepareStatement(
+			        "SELECT teamEmployeeId FROM players WHERE playerId = ? AND teamEmployeeId IS NOT NULL;");
+			
+			matchStatement.setInt(1, player.getId());
+			ResultSet res = matchStatement.executeQuery();
+			return res.next();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
+	}
+	
+	public static boolean checkManagerAssigned(Connection connection, Manager manager) {
+		try {
+			PreparedStatement matchStatement = (connection).prepareStatement(
+			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
+			
+			matchStatement.setInt(1, manager.getId());
+			ResultSet res = matchStatement.executeQuery();
+			return res.next();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
 	}
 }

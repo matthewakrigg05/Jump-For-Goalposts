@@ -135,10 +135,9 @@ public class JFGPdb {
             		+ "	);";
             
             String createTeamEmployeeTable = "CREATE TABLE IF NOT EXISTS teamEmployee(\r\n"
-            		+ "	employeeId INTEGER NOT NULL, \r\n"
+            		+ "	employeeId INTEGER NOT NULL PRIMARY KEY, \r\n"
             		+ " teamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE,\r\n"
-            		+ "	contractType VARCHAR(25),\r\n"
-            		+ " PRIMARY KEY (employeeId, teamId) \r\n"
+            		+ "	contractType VARCHAR(25)\r\n"
             		+ "	);";
             
             String createManagersTable = "CREATE TABLE IF NOT EXISTS managers(\r\n"
@@ -146,7 +145,6 @@ public class JFGPdb {
             		+ "	preferredFormation VARCHAR(10),\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
-            		+ "	dob DATE,\r\n"
             		+ "	teamEmployeeId INTEGER,\r\n"
             		+ " userId INTEGER NOT NULL, \r\n"
             		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
@@ -158,7 +156,6 @@ public class JFGPdb {
             		+ "	teamEmployeeId INTEGER,\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
-            		+ "	dob DATE,\r\n"
             		+ "	positionType VARCHAR(15),\r\n"
             		+ "	shirtNumber TINYINT,\r\n"
             		+ "	isSuspended BOOLEAN,\r\n"

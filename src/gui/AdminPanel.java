@@ -9,9 +9,9 @@ import leagueDB.leagueData;
 @SuppressWarnings("serial")
 public class AdminPanel extends panel implements IAdminPanel, leagueData {
 	
-	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", "Assign Match Referees", 
-			"Team", "Record Matches", "Managers", "Update League Data", "Players", "Referees", "Assign Player to Team", 
-			"Assign Manager to Team"));
+	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
+			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Assign Players' Team", 
+			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
 		
 	List<String> matches = new ArrayList<String>();
 	JfgpWindow frame;
@@ -45,6 +45,10 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		for(Match match : leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
 			matches.add(match.getMatchSummary()); }
 		
+		if (matches.isEmpty()) {
+			matches.add("There are no matches to record");
+		}
+		
 		JLabel leagueOptLabel = new JLabel("League Options:");
 		leagueOptLabel.setFont(getFont());
 		GridBagConstraints gbc_leagueOptLabel = new GridBagConstraints();
@@ -53,21 +57,13 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		gbc_leagueOptLabel.gridy = 1;
 		panel.add(leagueOptLabel, gbc_leagueOptLabel);
 		
-		JLabel matchOptLabel = new JLabel("Match Options:");
+		JLabel matchOptLabel = new JLabel("Other Options:");
 		matchOptLabel.setFont(getFont());
 		GridBagConstraints gbc_matchOptLabel = new GridBagConstraints();
 		gbc_matchOptLabel.insets = getInsets();
 		gbc_matchOptLabel.gridx = 3;
 		gbc_matchOptLabel.gridy = 1;
 		panel.add(matchOptLabel, gbc_matchOptLabel);
-		
-		JLabel teamManOpts = new JLabel("Team Management Options:");
-		teamManOpts.setFont(getFont());
-		GridBagConstraints gbc_teamManOpts = new GridBagConstraints();
-		gbc_teamManOpts.insets = getInsets();
-		gbc_teamManOpts.gridx = 5;
-		gbc_teamManOpts.gridy = 1;
-		panel.add(teamManOpts, gbc_teamManOpts);
 		
 		GridBagConstraints gbc_leagueButton = new GridBagConstraints();
 		gbc_leagueButton.insets = getInsets();
@@ -98,63 +94,62 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		gbc_teamButton.gridx = 1;
 		gbc_teamButton.gridy = 5;
 		panel.add(panelButton[4], gbc_teamButton);
-
-		GridBagConstraints gbc_recMatchButton = new GridBagConstraints();
-		gbc_recMatchButton.insets = getInsets();
-		gbc_recMatchButton.gridx = 3;
-		gbc_recMatchButton.gridy = 5;
-		panel.add(panelButton[5], gbc_recMatchButton);
 		
 		GridBagConstraints gbc_managersButton = new GridBagConstraints();
 		gbc_managersButton.insets = getInsets();
 		gbc_managersButton.gridx = 1;
 		gbc_managersButton.gridy = 6;
-		panel.add(panelButton[6], gbc_managersButton);
-		
-		GridBagConstraints gbc_updateLeagueDataButton = new GridBagConstraints();
-		gbc_updateLeagueDataButton.insets = getInsets();
-		gbc_updateLeagueDataButton.gridx = 3;
-		gbc_updateLeagueDataButton.gridy = 6;
-		panel.add(panelButton[7], gbc_updateLeagueDataButton);
+		panel.add(panelButton[5], gbc_managersButton);
 		
 		GridBagConstraints gbc_refereesButton = new GridBagConstraints();
 		gbc_refereesButton.insets = getInsets();
 		gbc_refereesButton.gridx = 1;
 		gbc_refereesButton.gridy = 7;
-		panel.add(panelButton[8], gbc_refereesButton);
+		panel.add(panelButton[6], gbc_refereesButton);
 
 		GridBagConstraints gbc_playersButton = new GridBagConstraints();
 		gbc_playersButton.insets = getInsets();
 		gbc_playersButton.gridx = 1;
 		gbc_playersButton.gridy = 8;
-		panel.add(panelButton[9], gbc_playersButton);
+		panel.add(panelButton[7], gbc_playersButton);
 		
 		GridBagConstraints gbc_assignPlayerButton = new GridBagConstraints();
 		gbc_assignPlayerButton.insets = getInsets();
-		gbc_assignPlayerButton.gridx = 5;
-		gbc_assignPlayerButton.gridy = 3;
-		panel.add(panelButton[10], gbc_assignPlayerButton);
+		gbc_assignPlayerButton.gridx = 3;
+		gbc_assignPlayerButton.gridy = 5;
+		panel.add(panelButton[8], gbc_assignPlayerButton);
 		
 		GridBagConstraints gbc_assignManagerButton = new GridBagConstraints();
 		gbc_assignManagerButton.insets = getInsets();
-		gbc_assignManagerButton.gridx = 5;
-		gbc_assignManagerButton.gridy = 4;
-		panel.add(panelButton[11], gbc_assignManagerButton);
+		gbc_assignManagerButton.gridx = 3;
+		gbc_assignManagerButton.gridy = 6;
+		panel.add(panelButton[9], gbc_assignManagerButton);
+		
+		GridBagConstraints gbc_stadiumsButton = new GridBagConstraints();
+		gbc_stadiumsButton.insets = getInsets();
+		gbc_stadiumsButton.gridx = 3;
+		gbc_stadiumsButton.gridy = 7;
+		panel.add(panelButton[10], gbc_stadiumsButton);
+		
+		GridBagConstraints gbc_assignStadiumsButton = new GridBagConstraints();
+		gbc_assignStadiumsButton.insets = getInsets();
+		gbc_assignStadiumsButton.gridx = 3;
+		gbc_assignStadiumsButton.gridy = 8;
+		panel.add(panelButton[11], gbc_assignStadiumsButton);
 		
 		JLabel recMatchesLabel = new JLabel("Record A Match This Week: ");
 		recMatchesLabel.setFont(getFont());
 		GridBagConstraints gbc_recMatchesLabel = new GridBagConstraints();
 		gbc_recMatchesLabel.insets = getInsets();
 		gbc_recMatchesLabel.gridx = 5;
-		gbc_recMatchesLabel.gridy = 5;
+		gbc_recMatchesLabel.gridy = 1;
 		panel.add(recMatchesLabel, gbc_recMatchesLabel);
 		
-		JList<String> matchesToRecordList = new JList<String>((String[]) matches.toArray());
-		
+		JList<String> matchesToRecordList = new JList(matches.toArray());
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = getInsets();
 		gbc_matchesToRecordList.gridx = 5;
-		gbc_matchesToRecordList.gridy = 6;
+		gbc_matchesToRecordList.gridy = 3;
 		panel.add(matchesToRecordList, gbc_matchesToRecordList);
 	}
 	
@@ -165,14 +160,12 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		panelButton[2].addActionListener(e -> { IAdminPanel.getSeasonDialog(frame); });
 		panelButton[3].addActionListener(e -> { IAdminPanel.getAssignRefDialog(frame); });
 		panelButton[4].addActionListener(e -> { IAdminPanel.getTeamDialog(frame); });
-		
-//		panelButton[5].addActionListener(e -> { 
-//			new recordMatchPanel(this).setVisible(true);
-//			this.setVisible(false); });
-		
-		panelButton[6].addActionListener(e -> { IAdminPanel.getManagersDialog(frame); });
-		panelButton[7].addActionListener(e -> { IAdminPanel.getUpdateDialog(frame); });
-		panelButton[8].addActionListener(e -> { IAdminPanel.getPlayerDialog(frame); });
-		panelButton[9].addActionListener(e -> { IAdminPanel.getRefereeDialog(frame); });
+		panelButton[5].addActionListener(e -> { IAdminPanel.getManagersDialog(frame); });
+		panelButton[6].addActionListener(e -> { IAdminPanel.getPlayerDialog(frame); });
+		panelButton[7].addActionListener(e -> { IAdminPanel.getRefereeDialog(frame); });
+		panelButton[8].addActionListener(e -> { IAdminPanel.getAssignPlayerDialog(frame); });
+		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(frame); });
+		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(frame); });
+		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(frame); });
 	}	
 }

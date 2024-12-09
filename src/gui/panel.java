@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -36,4 +37,10 @@ abstract class panel extends JPanel {
 	
 	public List<String> getButtonNames() { return this.buttonNames; }
 	public void setButtonNames(List<String> buttons) { this.buttonNames = buttons; }
+	
+	public static JDialog getDispMatchDialog(JfgpWindow frame) {
+		JDialog dispMatchDialog = new JDialog();
+		
+		return dispMatchDialog;
+	}
 }

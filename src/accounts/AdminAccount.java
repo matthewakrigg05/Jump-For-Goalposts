@@ -6,11 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import league.League;
-import league.Match;
-import league.Season;
-import league.Team;
+import league.*;
 import leagueDB.leagueData;
 import leagueMembers.*;
 
@@ -207,23 +203,6 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static League getLeague(Connection connection) {
-		try {
-			PreparedStatement leagueStatement = (connection).prepareStatement(
-			        "SELECT * FROM league WHERE leagueId = 1");
-			ResultSet leagueResult = leagueStatement.executeQuery();
-			
-			League jfgpLeague = new League(
-					leagueResult.getInt("leagueId"),
-					leagueResult.getString("leagueName"));
-					
-			return jfgpLeague;
-			
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return null;
-	}
-	
 	public void changeLeagueName(Connection connection, String newName) {
 		try {
 			PreparedStatement leagueStatement = (connection).prepareStatement(
@@ -265,7 +244,7 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-public void setCurrentSeason(Connection connection, int seasonId) {
+	public void setCurrentSeason(Connection connection, int seasonId) {
 		
 		try {
 			PreparedStatement deselectCurrSeasonStatement = (connection).prepareStatement(
@@ -330,5 +309,81 @@ public void setCurrentSeason(Connection connection, int seasonId) {
 	        }
 	        Collections.rotate(rotatingTeams, 1);
 	    }
+	}
+	
+	public void createStadium(Connection connection, String name, String cap, String loc) {
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			        "INSERT INTO stadiums(stadiumName, capacity, stadiumLocation) VALUES (?, ?, ?);");
+			stadiumStatement.setString(1, name);
+			stadiumStatement.setString(2, cap);
+			stadiumStatement.setString(3, loc);
+			stadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void removeStadium(Connection connection, Stadium stadium) {
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			        "DELETE FROM stadiums WHERE stadiumId = ?;");
+			stadiumStatement.setInt(1, stadium.getStadiumId());
+			stadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void assignStadium(Connection connection, Team team, Stadium stadium) {
+		try {
+			PreparedStatement assignStadiumStatement = (connection).prepareStatement(
+			        "UPDATE teams SET stadiumId = ? WHERE teamId = ?;");
+			assignStadiumStatement.setInt(1, team.getTeamId());
+			assignStadiumStatement.setInt(2, stadium.getStadiumId());
+			assignStadiumStatement.executeUpdate();
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void assignPlayerToTeam(Connection connection, Team team, Player player, String contract) {
+		try {
+			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
+			newEmpStatement.setInt(1, team.getTeamId());
+			newEmpStatement.setString(2, contract);
+			newEmpStatement.executeUpdate();
+		
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+			ResultSet res = lastId.executeQuery();	
+			int playerEmpId = res.getInt("employeeId");
+			
+			PreparedStatement playerEmp = (connection).prepareStatement(
+			        "UPDATE players SET teamEmployeeId = ? WHERE playerId = ?;");
+			playerEmp.setInt(1, playerEmpId);
+			playerEmp.setInt(2, player.getId());
+			playerEmp.executeUpdate();
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void assignManagerToTeam(Connection connection, Team team, Manager manager, String contract) {
+		try {
+			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
+			newEmpStatement.setInt(1, team.getTeamId());
+			newEmpStatement.setString(2, contract);
+			newEmpStatement.executeUpdate();
+		
+			PreparedStatement lastId = (connection.prepareStatement(
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+			ResultSet res = lastId.executeQuery();	
+			int playerEmpId = res.getInt("employeeId");
+			
+			PreparedStatement playerEmp = (connection).prepareStatement(
+			        "UPDATE managers SET teamEmployeeId = ? WHERE managerId = ?;");
+			playerEmp.setInt(1, playerEmpId);
+			playerEmp.setInt(2, manager.getId());
+			playerEmp.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 }

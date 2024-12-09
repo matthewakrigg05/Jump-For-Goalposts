@@ -1,4 +1,7 @@
 package accounts;
+import javax.swing.JDialog;
+
+import gui.JfgpWindow;
 import league.Match;
 import league.MatchEvent;
 
@@ -15,5 +18,10 @@ public interface IRefereeRole {
 	public static void recordMatchEvents() {
 		
 	}
-
+	
+	public static JDialog getMatchEventDialog(JfgpWindow frame) {
+		JDialog matchEventDialog = new JDialog();
+		
+		return matchEventDialog;
+	}
 }
