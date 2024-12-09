@@ -203,23 +203,6 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static League getLeague(Connection connection) {
-		try {
-			PreparedStatement leagueStatement = (connection).prepareStatement(
-			        "SELECT * FROM league WHERE leagueId = 1");
-			ResultSet leagueResult = leagueStatement.executeQuery();
-			
-			League jfgpLeague = new League(
-					leagueResult.getInt("leagueId"),
-					leagueResult.getString("leagueName"));
-					
-			return jfgpLeague;
-			
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return null;
-	}
-	
 	public void changeLeagueName(Connection connection, String newName) {
 		try {
 			PreparedStatement leagueStatement = (connection).prepareStatement(
@@ -370,12 +353,12 @@ public class AdminAccount extends Account implements leagueData {
 			newEmpStatement.executeUpdate();
 		
 			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT teamEmployeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
 			ResultSet res = lastId.executeQuery();	
-			int playerEmpId = res.getInt("teamEmployeeId");
+			int playerEmpId = res.getInt("employeeId");
 			
 			PreparedStatement playerEmp = (connection).prepareStatement(
-			        "UPDATE player SET teamEmployeeId = ? WHERE playerId = ?;");
+			        "UPDATE players SET teamEmployeeId = ? WHERE playerId = ?;");
 			playerEmp.setInt(1, playerEmpId);
 			playerEmp.setInt(2, player.getId());
 			playerEmp.executeUpdate();
@@ -391,12 +374,12 @@ public class AdminAccount extends Account implements leagueData {
 			newEmpStatement.executeUpdate();
 		
 			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT teamEmployeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
 			ResultSet res = lastId.executeQuery();	
-			int playerEmpId = res.getInt("teamEmployeeId");
+			int playerEmpId = res.getInt("employeeId");
 			
 			PreparedStatement playerEmp = (connection).prepareStatement(
-			        "UPDATE manager SET teamEmployeeId = ? WHERE managerId = ?;");
+			        "UPDATE managers SET teamEmployeeId = ? WHERE managerId = ?;");
 			playerEmp.setInt(1, playerEmpId);
 			playerEmp.setInt(2, manager.getId());
 			playerEmp.executeUpdate();

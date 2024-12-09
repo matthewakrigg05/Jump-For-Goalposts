@@ -1,5 +1,3 @@
-- assign players to teams
-- assign managers to teams
 - record matches screen
 - show players 
 - show teams 
