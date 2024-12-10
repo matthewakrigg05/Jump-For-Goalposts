@@ -676,4 +676,35 @@ public interface leagueData {
 		
 		return false;
 	}
+	
+	public static List<Player> getTeamPlayers(Connection connection, Team team) {
+		List<Player> teamPlayers = new ArrayList<Player>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM players "
+			        + "JOIN teamEmployee ON players.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId = ?;");
+			
+			playerStatement.setInt(1, team.getTeamId());
+			ResultSet players = playerStatement.executeQuery();
+			
+			while(players.next()) {
+				Player player = new Player(
+						players.getInt("playerId"),
+						players.getString("fname"),
+						players.getString("lName"),
+						players.getInt("statsId")
+		        		);
+				teamPlayers.add(player);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		
+		
+		
+		return teamPlayers;
+	}
+	
 }
