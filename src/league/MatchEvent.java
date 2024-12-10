@@ -8,6 +8,16 @@ public class MatchEvent {
 	private int eventMinute;
 	private Player playerInvolved;
 	
+	public MatchEvent(String eventType, int eventMinute, Player playerInvolved) {
+		setEventType(eventType);
+		setEventMinute(eventMinute);
+		setPlayerInvolved(playerInvolved);
+	}
+	
+	public MatchEvent() {}
+	
+	public String getEventSummary() { return "Event: " + this.eventType + "    Minute: " + this.eventMinute + "    Player: " + this.playerInvolved.getLName(); }
+	
 	public Player getPlayerInvolved() { return playerInvolved; }
 	public void setPlayerInvolved(Player playerInvolved) { this.playerInvolved = playerInvolved; }
 	

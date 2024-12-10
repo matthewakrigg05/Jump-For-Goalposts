@@ -11,10 +11,6 @@ import leagueMembers.Player;
 
 public interface IRefereeRole {
 	
-	public static void recordMatchScore(Match match, String score) {
-		
-	}
-	
 	public static void matchToResult(Match match, MatchEvent[] events) {
 		
 	}
@@ -23,16 +19,24 @@ public interface IRefereeRole {
 		
 	}
 	
-	public static JDialog getMatchEventDialog(JfgpWindow frame, Match match) {
+	public static MatchEvent getMatchEventDialog(JfgpWindow frame, Match match) {
 		JDialog matchEventDialog = new JDialog();
+		MatchEvent newEvent = new MatchEvent();
+		
 		String[] eventTypes = {"Goal", "Assist", "Foul", "Yellow Card", "Red Card"};
 		List<String> playersList = new ArrayList<String>();
+		List<Player> players = new ArrayList<Player>();
 		
 		List<Player> homeTeamPlayers = leagueData.getTeamPlayers(frame.getDbConnection(), match.getHomeTeam()); 
-        for(Player i : homeTeamPlayers) { playersList.add(match.getHomeTeam().getName() + " " + i.getFullName()); }
+        for(Player i : homeTeamPlayers) { 
+        	playersList.add(match.getHomeTeam().getName() + " " + i.getFullName());
+        	players.add(i); }
         
         List<Player> awayTeamPlayers = leagueData.getTeamPlayers(frame.getDbConnection(), match.getAwayTeam()); 
-        for(Player i : awayTeamPlayers) { playersList.add(match.getAwayTeam().getName() + " " + i.getFullName()); }
+        for(Player i : awayTeamPlayers) { 
+        	playersList.add(match.getAwayTeam().getName() + " " + i.getFullName());
+        	players.add(i);
+        }
 		
 		matchEventDialog.setModal(true);
 		matchEventDialog.setAlwaysOnTop(true);
@@ -64,9 +68,15 @@ public interface IRefereeRole {
 		matchEventDialog.add(playerLabel);
 		matchEventDialog.add(playerSelect);
 		matchEventDialog.add(addButton);
-		
+
+		addButton.addActionListener(e -> {
+			newEvent.setEventType(eventTypes[eventSelect.getSelectedIndex()]);
+			newEvent.setEventMinute(Integer.parseInt(minuteArea.getText()));
+			newEvent.setPlayerInvolved(players.get(playerSelect.getSelectedIndex()));
+			matchEventDialog.dispose();
+		});
 		
 		matchEventDialog.setVisible(true);
-		return matchEventDialog;
+		return newEvent;
 	}
 }
