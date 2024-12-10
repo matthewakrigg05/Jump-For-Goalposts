@@ -4,6 +4,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		try { new JfgpWindow().setVisible(true); } catch (Exception e) { e.printStackTrace(); }
+		try { new JfgpWindow(); } catch (Exception e) { e.printStackTrace(); }
 	}
 }

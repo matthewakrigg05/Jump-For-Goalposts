@@ -64,6 +64,7 @@ public class JfgpWindow extends JFrame {
 		setPreferredSize(new Dimension(600, 450));
 		getContentPane().add(new toolBar(this, getDbConnection()), BorderLayout.WEST);
 		getContentPane().add(new HomePanel(this), BorderLayout.CENTER);
+		setVisible(true);
 	}
 	
 	public Connection getDbConnection() { return this.connection;	}

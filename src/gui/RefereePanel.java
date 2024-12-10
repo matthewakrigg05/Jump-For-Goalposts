@@ -13,7 +13,7 @@ import leagueMembers.Referee;
 import java.awt.GridBagConstraints;
 
 @SuppressWarnings("serial")
-public class RefereePanel extends panel {
+public class RefereePanel extends JPanel {
 
 	private JList<String> toAttendList;
 	private JList<String> toRecordList;
@@ -25,31 +25,26 @@ public class RefereePanel extends panel {
 	private List<String> matchSummaries = new ArrayList<String>();
 	
 	public RefereePanel(JfgpWindow frame) { 
-		super(frame);
+		this.frame = frame;
 		this.referee = leagueData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
 	
-	@Override
 	public void initialise() {
-		setButtonNames(refereeButtons);
-		setPanel(new JPanel());
-		getPanel().setLayout(new GridBagLayout());
-		setInsets(new Insets(0, 0, 10, 25));
+		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		setLayout(new GridBagLayout());
 		
-		panelButton = new JButton[getButtonNames().size()];
+		JButton[] panelButton = new JButton[refereeButtons.size()];
 		matchesToAttend = leagueData.getNextFiveRefMatches(frame.getDbConnection(), referee);
 		
 		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
 		
-		addPanelComponents(getPanel());
+		addPanelComponents(this);
 		addActionListeners();
 	}
-	
-	@Override
+
 	public void addPanelComponents(JPanel panel) {
 		
 		JLabel nextFiveGamesLabel = new JLabel("Your next five matches to attend:");
@@ -84,7 +79,6 @@ public class RefereePanel extends panel {
 		
 	}
 	
-	@Override
 	public void addActionListeners() {	
 		toAttendList.addListSelectionListener(new ListSelectionListener() {
 			@Override

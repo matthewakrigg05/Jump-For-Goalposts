@@ -51,17 +51,17 @@ public class toolBar extends JToolBar {
 		switch (frame.getUserType()) {
 		case "Admin":
 			AdminPanel admin = new AdminPanel(frame);
-			rolePanel = admin.getPanel();
+			rolePanel = admin;
 			break;
 		
 		case "Referee":
 			RefereePanel refPanel = new RefereePanel(frame);
-			rolePanel = refPanel.getPanel();
+			rolePanel = refPanel;
 			break;
 			
 		case "Manager":
 			ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
-			rolePanel = manPanel.getPanel();
+			rolePanel = manPanel;
 			break;
 		}
 		
