@@ -1,4 +1,6 @@
 package accounts;
+import java.awt.GridBagLayout;
+
 import javax.swing.JDialog;
 
 import gui.JfgpWindow;
@@ -19,9 +21,16 @@ public interface IRefereeRole {
 		
 	}
 	
-	public static JDialog getMatchEventDialog(JfgpWindow frame) {
+	public static JDialog getMatchEventDialog(JfgpWindow frame, Match match) {
 		JDialog matchEventDialog = new JDialog();
+		matchEventDialog.setModal(true);
+		matchEventDialog.setAlwaysOnTop(true);
+		matchEventDialog.setFocusable(true);
+		matchEventDialog.setSize(760, 500);
+		matchEventDialog.setTitle("Match Event");
+		matchEventDialog.setLayout(new GridBagLayout());
 		
+		matchEventDialog.setVisible(true);
 		return matchEventDialog;
 	}
 }

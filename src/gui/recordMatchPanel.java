@@ -6,18 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import accounts.IRefereeRole;
 import league.Match;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 @SuppressWarnings("serial")
-public class recordMatchPanel extends JPanel {
+public class recordMatchPanel extends JPanel implements IRefereeRole {
 	
 	private List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 	private JfgpWindow frame;
 	private JButton recordButton;
 	private JButton backButton;
 	private Match match;
+	private JButton eventButton;
 
 	public recordMatchPanel(JfgpWindow frame, Match match) { 
 		this.frame = frame; 
@@ -25,12 +27,15 @@ public class recordMatchPanel extends JPanel {
 		initialise(frame); }
 	
 	public void initialise(JfgpWindow frame) {
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		setLayout(gridBagLayout);
+		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
-		JButton[] panelButton = new JButton[managerButtons.size()];
 		addPanelComponents(this);
+		addActionListeners();
+	}
+	
+	public void addPanelComponents(JPanel panel) {
+		JButton[] panelButton = new JButton[managerButtons.size()];
 		
 		JLabel lblNewLabel = new JLabel("Match: " + match.getMatchSummary());
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -39,12 +44,12 @@ public class recordMatchPanel extends JPanel {
 		gbc_lblNewLabel.gridy = 0;
 		add(lblNewLabel, gbc_lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Add Event");
+		eventButton = new JButton("Add Event");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 1;
-		add(btnNewButton, gbc_btnNewButton);
+		add(eventButton, gbc_btnNewButton);
 		
 		JList events = new JList();
 		GridBagConstraints gbc_events = new GridBagConstraints();
@@ -66,15 +71,13 @@ public class recordMatchPanel extends JPanel {
 		gbc_btnNewButton_1_1.gridx = 2;
 		gbc_btnNewButton_1_1.gridy = 4;
 		add(recordButton, gbc_btnNewButton_1_1);
-		addActionListeners();
-	}
-	
-	public void addPanelComponents(JPanel panel) {
-		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
-		
 	}
 	
 	public void addActionListeners() {
+		
+		eventButton.addActionListener(e -> { IRefereeRole.getMatchEventDialog(frame, match); });
+		
+		
 		recordButton.addActionListener(e -> {
 			
 		});
