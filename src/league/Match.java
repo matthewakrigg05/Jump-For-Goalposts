@@ -20,7 +20,7 @@ public class Match {
 	public int getMatchId() { return this.matchId; }
 	
 	public String getMatchSummary() {
-		return String.format("Gameweek %d - Home: %s, Away: %s", getMatchWeek(), 
+		return String.format("%s VS %s", 
 				getHomeTeam().getName(), getAwayTeam().getName());
 	}
 
@@ -33,7 +33,4 @@ public class Match {
 	
 	public Referee getMatchReferee() { return matchReferee; }
 	public void setMatchReferee(Referee matchReferee) { this.matchReferee = matchReferee; }
-
-	public Date getDateAndTime() { return dateAndTime; }
-	public void setDateAndTime(Date dateAndTime) { this.dateAndTime = dateAndTime; }
 }

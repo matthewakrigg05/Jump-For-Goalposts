@@ -90,7 +90,6 @@ public class TeamsPanel extends JPanel {
 		playerProfile.add(lossesLabel);
 		
 		panel.add(playerProfile, gbc_recMatchesLabel);
-		
 	}
 	
 	public void addActionListeners() {

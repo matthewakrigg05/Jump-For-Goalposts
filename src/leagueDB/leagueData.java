@@ -385,7 +385,6 @@ public interface leagueData {
 			        
 			        team.setStats(playerStats);
 				}
-				
 			}				
 			return teams;
 			
@@ -480,6 +479,56 @@ public interface leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return matches;
+	}
+	
+	public static List<Match> getSeasonFixtures(Connection connection, Season currentSeason) {
+		List<Match> fixtures = new ArrayList<Match>();
+		
+		try {
+			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
+			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 0 ORDER BY matchWeek ASC;");
+			
+			gameWeeksStatement.setInt(1, currentSeason.getId());
+			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
+			
+			while (gameWeeks.next()) {
+				Match match= new Match (
+						gameWeeks.getInt("matchId"),
+						getTeam(connection, gameWeeks.getInt("homeTeamId")),
+						getTeam(connection, gameWeeks.getInt("awayTeamId") ),
+						gameWeeks.getInt("matchWeek")
+						);
+				fixtures.add(match);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return fixtures;
+	}
+	
+	public static List<Match> getSeasonResults(Connection connection, Season currentSeason) {
+		List<Match> results = new ArrayList<Match>();
+		
+		try {
+			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
+			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 1 ORDER BY matchWeek ASC;");
+			
+			gameWeeksStatement.setInt(1, currentSeason.getId());
+			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
+			
+			while (gameWeeks.next()) {
+				Match match= new Match (
+						gameWeeks.getInt("matchId"),
+						getTeam(connection, gameWeeks.getInt("homeTeamId")),
+						getTeam(connection, gameWeeks.getInt("awayTeamId") ),
+						gameWeeks.getInt("matchWeek")
+						);
+				results.add(match);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return results;
 	}
 	
 	public static boolean checkRefAssigned(Connection connection, Match match) {
