@@ -13,7 +13,7 @@ public class recordMatchPanel extends panel {
 	
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 
-	public recordMatchPanel(Match match) { initialise(); }
+	public recordMatchPanel(JfgpWindow frame, Match match) { super(frame); initialise(); }
 	
 	@Override
 	public void initialise() {

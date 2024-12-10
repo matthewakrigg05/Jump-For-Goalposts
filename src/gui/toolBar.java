@@ -60,7 +60,7 @@ public class toolBar extends JToolBar {
 			break;
 			
 		case "Manager":
-			ManagerPanel manPanel = new ManagerPanel(frame.getManagerAccount());
+			ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
 			rolePanel = manPanel.getPanel();
 			break;
 		}
@@ -80,7 +80,7 @@ public class toolBar extends JToolBar {
 		
 		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
 		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
-		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel()); });
+		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel(frame)); });
 		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
 		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
 		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });

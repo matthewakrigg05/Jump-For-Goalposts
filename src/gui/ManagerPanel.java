@@ -12,10 +12,8 @@ import accounts.ManagerAccount;
 public class ManagerPanel extends panel {
 
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
-
-	public ManagerPanel() { initialise(); }
 	
-	public ManagerPanel(ManagerAccount manager) { initialise(); }
+	public ManagerPanel(JfgpWindow frame, ManagerAccount manager) { super(frame); initialise(); }
 	
 	@Override
 	public void initialise() {

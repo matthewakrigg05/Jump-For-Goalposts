@@ -14,11 +14,11 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
 		
 	List<String> matches = new ArrayList<String>();
-	JfgpWindow frame;
 
 	public AdminPanel(JfgpWindow frame) { 
-		 this.frame = frame;
-		 initialise(); }
+		 super(frame); 
+		 initialise();
+		 }
 	
 	@Override
 	public void initialise() {
@@ -28,6 +28,7 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 		setInsets(new Insets(0, 0, 10, 25));
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelButton = new JButton[getButtonNames().size()];
+		
 		addPanelComponents(getPanel());
 		addActionListeners();
 	}
@@ -39,10 +40,10 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 			panelButton[i].setFont(getFont());
 		}
 		
-		int currentMatchWeek = leagueData.getCurrentGameWeek(frame.getDbConnection(), 
-				leagueData.getCurrentSeason(frame.getDbConnection()).getId());
+		int currentMatchWeek = leagueData.getCurrentGameWeek(getFrame().getDbConnection(), 
+				leagueData.getCurrentSeason(getFrame().getDbConnection()).getId());
 		
-		for(Match match : leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
+		for(Match match : leagueData.getMatchWeekMatches(getFrame().getDbConnection(), currentMatchWeek)) { 
 			matches.add(match.getMatchSummary()); }
 		
 		if (matches.isEmpty()) {
@@ -155,17 +156,17 @@ public class AdminPanel extends panel implements IAdminPanel, leagueData {
 	
 	@Override
 	protected void addActionListeners() {
-		panelButton[0].addActionListener(e -> { IAdminPanel.getLeagueDialog(frame); });
-		panelButton[1].addActionListener(e -> { IAdminPanel.getGenFixturesDialog(frame); });
-		panelButton[2].addActionListener(e -> { IAdminPanel.getSeasonDialog(frame); });
-		panelButton[3].addActionListener(e -> { IAdminPanel.getAssignRefDialog(frame); });
-		panelButton[4].addActionListener(e -> { IAdminPanel.getTeamDialog(frame); });
-		panelButton[5].addActionListener(e -> { IAdminPanel.getManagersDialog(frame); });
-		panelButton[6].addActionListener(e -> { IAdminPanel.getPlayerDialog(frame); });
-		panelButton[7].addActionListener(e -> { IAdminPanel.getRefereeDialog(frame); });
-		panelButton[8].addActionListener(e -> { IAdminPanel.getAssignPlayerDialog(frame); });
-		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(frame); });
-		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(frame); });
-		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(frame); });
+		panelButton[0].addActionListener(e -> { IAdminPanel.getLeagueDialog(getFrame()); });
+		panelButton[1].addActionListener(e -> { IAdminPanel.getGenFixturesDialog(getFrame()); });
+		panelButton[2].addActionListener(e -> { IAdminPanel.getSeasonDialog(getFrame()); });
+		panelButton[3].addActionListener(e -> { IAdminPanel.getAssignRefDialog(getFrame()); });
+		panelButton[4].addActionListener(e -> { IAdminPanel.getTeamDialog(getFrame()); });
+		panelButton[5].addActionListener(e -> { IAdminPanel.getManagersDialog(getFrame()); });
+		panelButton[6].addActionListener(e -> { IAdminPanel.getPlayerDialog(getFrame()); });
+		panelButton[7].addActionListener(e -> { IAdminPanel.getRefereeDialog(getFrame()); });
+		panelButton[8].addActionListener(e -> { IAdminPanel.getAssignPlayerDialog(getFrame()); });
+		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(getFrame()); });
+		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(getFrame()); });
+		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(getFrame()); });
 	}	
 }

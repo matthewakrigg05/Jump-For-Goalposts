@@ -25,7 +25,7 @@ public class RefereePanel extends panel {
 	private List<String> matchSummaries = new ArrayList<String>();
 	
 	public RefereePanel(JfgpWindow frame) { 
-		this.frame = frame;
+		super(frame);
 		this.referee = leagueData.getReferee(frame.getDbConnection(), frame.getRefereeAccount());
 		initialise();
 		}
@@ -97,7 +97,7 @@ public class RefereePanel extends panel {
 		toRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				new recordMatchPanel(matchesToAttend.get(toAttendList.getSelectedIndex())).setVisible(true);
+				new recordMatchPanel(frame,matchesToAttend.get(toAttendList.getSelectedIndex())).setVisible(true);
 			}
 		});
 	}

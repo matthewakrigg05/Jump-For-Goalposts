@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 abstract class panel extends JPanel {
 	
 	private JPanel panel;
+	private JfgpWindow frame;
 	private Insets labelFieldInsets;
 	private Font labelFont;
 	private List<String> buttonNames;
@@ -19,7 +20,7 @@ abstract class panel extends JPanel {
 	protected JButton[] panelButton;
 	protected GridBagLayout gridBagLayout;
 	
-	public panel() {}
+	public panel(JfgpWindow frame) { setFrame(frame); }
 	
 	// Three methods that all the child classes of this class should have, they are used to set up the panels
 	protected void initialise() {}
@@ -37,6 +38,9 @@ abstract class panel extends JPanel {
 	
 	public List<String> getButtonNames() { return this.buttonNames; }
 	public void setButtonNames(List<String> buttons) { this.buttonNames = buttons; }
+	
+	public JfgpWindow getFrame() { return this.frame; }
+	public void setFrame(JfgpWindow frame) { this.frame = frame; }
 	
 	public static JDialog getDispMatchDialog(JfgpWindow frame) {
 		JDialog dispMatchDialog = new JDialog();

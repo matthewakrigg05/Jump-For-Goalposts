@@ -1,16 +1,10 @@
 package gui;
 
-import javax.swing.JPanel;
+@SuppressWarnings("serial")
+public class PlayersPanel extends panel {
 
-public class PlayersPanel extends JPanel {
-
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Create the panel.
-	 */
-	public PlayersPanel() {
-
+	public PlayersPanel(JfgpWindow frame) {
+		super(frame);
 	}
 
 }
