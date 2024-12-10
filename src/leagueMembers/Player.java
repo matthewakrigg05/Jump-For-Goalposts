@@ -15,7 +15,6 @@ public class Player extends Person {
 		super(id, fName, lName);
 	}
 
-
 	// Standard getters and setters
 	public String getPreferredFoot() { return preferredFoot; }
 	public void setPreferredFoot(String preferredFoot) { this.preferredFoot = preferredFoot; }

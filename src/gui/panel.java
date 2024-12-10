@@ -15,7 +15,6 @@ abstract class panel extends JPanel {
 	private Insets labelFieldInsets;
 	private Font labelFont;
 	private List<String> buttonNames;
-
 	
 	protected JButton[] panelButton;
 	protected GridBagLayout gridBagLayout;

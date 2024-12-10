@@ -61,11 +61,9 @@ public class JfgpWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setBackground(new Color(192, 192, 192));
-		setMinimumSize(new Dimension(600, 450));
-		setBounds(100, 100, 450, 300);
+		setPreferredSize(new Dimension(600, 450));
 		getContentPane().add(new toolBar(this, getDbConnection()), BorderLayout.WEST);
-		getContentPane().add(new HomePanel(), BorderLayout.CENTER);
-		setVisible(true);
+		getContentPane().add(new HomePanel(this), BorderLayout.CENTER);
 	}
 	
 	public Connection getDbConnection() { return this.connection;	}
