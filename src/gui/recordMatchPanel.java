@@ -79,7 +79,11 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 		
 		
 		recordButton.addActionListener(e -> {
-			
+			/*
+			 * on record, go through list and add events, record match result, update stats where appropriate too
+			 *
+			 * */
+			 
 		});
 		
 		backButton.addActionListener(e -> {
