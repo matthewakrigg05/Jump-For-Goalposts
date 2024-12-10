@@ -1,10 +1,15 @@
 package gui;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import league.Match;
+import league.Stadium;
 import leagueDB.leagueData;
+import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
 public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
@@ -16,6 +21,8 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 	JfgpWindow frame;
 	Insets insets;
 	List<String> matches = new ArrayList<String>();
+	JList<String> matchesToRecordList;
+	List<Match> matchesToRecord;
 
 	public AdminPanel(JfgpWindow frame) { 
 		 this.frame = frame;
@@ -39,6 +46,7 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 		int currentMatchWeek = leagueData.getCurrentGameWeek(frame.getDbConnection(), 
 				leagueData.getCurrentSeason(frame.getDbConnection()).getId());
 		
+		matchesToRecord = leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek);
 		for(Match match : leagueData.getMatchWeekMatches(frame.getDbConnection(), currentMatchWeek)) { 
 			matches.add(match.getMatchSummary()); }
 
@@ -142,7 +150,7 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 		gbc_recMatchesLabel.gridy = 1;
 		panel.add(recMatchesLabel, gbc_recMatchesLabel);
 		
-		JList<String> matchesToRecordList = new JList(matches.toArray());
+		matchesToRecordList = new JList(matches.toArray());
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = insets;
 		gbc_matchesToRecordList.gridx = 5;
@@ -163,5 +171,19 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(frame); });
 		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(frame); });
 		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(frame); });
+		
+		matchesToRecordList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				Match selectedMatch = matchesToRecord.get(matchesToRecordList.getSelectedIndex());
+				
+				frame.getContentPane().removeAll();
+				frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
+				frame.getContentPane().add(new recordMatchPanel(frame, selectedMatch), BorderLayout.CENTER);
+				frame.revalidate();
+				frame.repaint();
+			}
+		});
+		
 	}	
 }

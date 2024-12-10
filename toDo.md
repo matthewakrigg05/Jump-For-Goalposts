@@ -1,7 +1,7 @@
 - show league table
 - Tomorrow:
 	- show results 
-	- record matches screen
+	- event dialog
 	- calculate league table
 	- removal of people from teams
 - compute stats

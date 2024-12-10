@@ -1,12 +1,10 @@
 package league;
-import java.sql.Date;
 import leagueMembers.Referee;
 
 public class Match {
 
 	private int matchId;
 	private Referee matchReferee;
-	private Date dateAndTime;
 	private Team homeTeam;
 	private Team awayTeam;
 	private int matchWeek;

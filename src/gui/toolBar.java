@@ -11,7 +11,7 @@ public class toolBar extends JToolBar {
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
 	
-	public toolBar(JfgpWindow frame, Connection connection) {
+	public toolBar(JfgpWindow frame) {
 		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
@@ -73,7 +73,7 @@ public class toolBar extends JToolBar {
 			add(toolBarButton[6]);
 		
 			toolBarButton[6].addActionListener(e -> {
-				new logInWindow(connection).setVisible(true);
+				new logInWindow(frame.getDbConnection()).setVisible(true);
 				frame.dispose();
 			});
 		}
