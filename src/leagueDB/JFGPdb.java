@@ -153,16 +153,14 @@ public class JFGPdb {
             
             String createPlayersTable = "CREATE TABLE IF NOT EXISTS players(\r\n"
             		+ "	playerId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	teamEmployeeId INTEGER,\r\n"
+            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
             		+ "	positionType VARCHAR(15),\r\n"
             		+ "	shirtNumber TINYINT,\r\n"
             		+ "	isSuspended BOOLEAN,\r\n"
             		+ "	isInjured BOOLEAN,\r\n"
-            		+ "	statsId INTEGER NOT NULL,\r\n"
-            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
-            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId) ON DELETE CASCADE\r\n"
+            		+ "	statsId INTEGER NOT NULL REFERENCES statsForPlayerOrTeam(statsId) ON DELETE CASCADE\r\n"
             		+ "	);";
 
             // The only two default instances of information in the application - the league and the admin account.

@@ -79,7 +79,7 @@ public class toolBar extends JToolBar {
 		}
 		
 		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel(frame)); });
-		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
+		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel(frame)); });
 		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel(frame)); });
 		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
 		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });

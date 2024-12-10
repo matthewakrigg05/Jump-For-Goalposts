@@ -1,7 +1,5 @@
 - record matches screen
 - Tomorrow:
-	- show players 
-	- show teams
 	- show fixtures
 	- show results 
 	- show league table
