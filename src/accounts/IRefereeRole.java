@@ -47,10 +47,7 @@ public interface IRefereeRole {
 				eventStatement.setInt(5, match.getMatchId());
 				eventStatement.executeUpdate();
 				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+			} catch (SQLException e) { e.printStackTrace(); }	
 		}
 	}
 	

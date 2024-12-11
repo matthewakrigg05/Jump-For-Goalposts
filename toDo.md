@@ -1,5 +1,3 @@
-- show league table
-- Tomorrow:
-	- calculate league table
-	- removal of people from teams
-- compute stats
+- league table
+- removal of people from teams
+- get players team
