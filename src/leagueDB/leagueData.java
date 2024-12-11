@@ -614,6 +614,60 @@ public interface leagueData {
 		return teamPlayers;
 	}
 	
+	public static Manager getTeamManager(Connection connection, Team team) {
+		Manager teamManager = null;
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM managers "
+			        + "JOIN teamEmployee ON managers.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId = ?;");
+			
+			playerStatement.setInt(1, team.getTeamId());
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Manager manager = new Manager(
+						managers.getInt("playerId"),
+						managers.getString("fname"),
+						managers.getString("lName"),
+						managers.getInt("userId")
+		        		);
+				teamManager = manager;
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teamManager;
+	}
+	
+	public static Team getManagerTeam(Connection connection, Manager manager) {
+		Team managerTeam = null;
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM teams "
+			        + "JOIN teamEmployee ON teams.teamId = teamEmployee.teamId "
+			        + "JOIN managers ON managers.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE managerId = ?;");
+			
+			playerStatement.setInt(1, manager.getId());
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Team team = new Team(
+						managers.getInt("playerId"),
+						managers.getString("teamName")
+		        		);
+				managerTeam = team;
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return managerTeam;
+	}
+	
+	
 	public static String[][] getLeagueTableData(Connection connection, List<Team> teams) {
 		String[][] leagueTableData = new String[teams.size()][6];
 		
@@ -648,8 +702,5 @@ public interface leagueData {
 			} catch (SQLException e) { e.printStackTrace(); }
 		
 		return teams;
-		
-	}
-	
-	
+	}		
 }

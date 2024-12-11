@@ -21,7 +21,6 @@ public class HomePanel extends JPanel {
 	public HomePanel(JfgpWindow frame) {
 		this.frame = frame;
 		List<Team> seasonTeams = leagueData.getSeasonTeams(frame.getDbConnection(), leagueData.getCurrentSeason(frame.getDbConnection()).getId());
-		System.out.println(seasonTeams);
 		String[] leagueTableCols = {"Team", "GP", "W", "D", "L", "Points"};
 		String[][] leagueTableData = leagueData.getLeagueTableData(frame.getDbConnection(), seasonTeams);
 		
