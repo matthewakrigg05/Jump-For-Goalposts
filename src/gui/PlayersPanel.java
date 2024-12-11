@@ -95,7 +95,7 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 				selectedPlayer = players.get(playerList.getSelectedIndex());
 				
 				playerNameLabel.setText("Player: " + selectedPlayer.getFullName());
-				teamLabel.setText("Plays for: ");
+				teamLabel.setText("Plays for: " + leagueData.getPlayerTeam(frame.getDbConnection(), selectedPlayer));
 				gamesPlayedLabel.setText("Games Played: ");
 				goalsLabel.setText("Goals: " + ComputePlayerStatistics.getPlayerGoals(frame.getDbConnection(), selectedPlayer));
 				assitsLabel.setText("Assits: " + ComputePlayerStatistics.getPlayerAssists(frame.getDbConnection(), selectedPlayer));

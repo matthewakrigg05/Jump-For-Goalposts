@@ -641,6 +641,32 @@ public interface leagueData {
 		return teamManager;
 	}
 	
+	public static Team getPlayerTeam(Connection connection, Player player) {
+		Team playerTeam = null;
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM teams "
+			        + "JOIN teamEmployee ON teams.teamId = teamEmployee.teamId "
+			        + "JOIN players ON players.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE playerId = ?;");
+			
+			playerStatement.setInt(1, player.getId());
+			ResultSet players = playerStatement.executeQuery();
+			
+			while(players.next()) {
+				Team team = new Team(
+						players.getInt("playerId"),
+						players.getString("teamName")
+		        		);
+				playerTeam = team;
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return playerTeam;
+	}
+	
 	public static Team getManagerTeam(Connection connection, Manager manager) {
 		Team managerTeam = null;
 		

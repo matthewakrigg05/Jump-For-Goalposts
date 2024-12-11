@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import league.Season;
 import league.Team;
 import leagueMembers.Player;
 
@@ -87,5 +89,20 @@ public interface ComputePlayerStatistics {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return fouls;
+	}
+	
+	public static Player getTopScorer(Connection connection, Season season) {
+		List<Player> players = leagueData.getAllPlayers(connection);
+		Player topScorer = new Player(0, "No", "Player");
+		int highestGoals = 0;
+		
+		for(Player player : players) {
+			if (highestGoals < getPlayerGoals(connection, player)) {
+				topScorer = player;
+				highestGoals = getPlayerGoals(connection, player);
+			}
+		}
+		
+		return topScorer;
 	}
 }
