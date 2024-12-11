@@ -50,9 +50,6 @@ public class ManagerPanel extends JPanel {
 			for(Player player : players) { playerSelection.add(player.getFullName()); }
 		}
 		
-		
-		
-		
 		playerList = new JList(playerSelection.toArray());
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = insets;
@@ -61,7 +58,6 @@ public class ManagerPanel extends JPanel {
 		panel.add(playerList, gbc_matchesToRecordList);
 	}
 	
-
 	public void addActionListeners() {
 		
 	}

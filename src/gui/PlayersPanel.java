@@ -93,7 +93,6 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectedPlayer = players.get(playerList.getSelectedIndex());
-				
 				playerNameLabel.setText("Player: " + selectedPlayer.getFullName());
 				teamLabel.setText("Plays for: " + leagueData.getPlayerTeam(frame.getDbConnection(), selectedPlayer));
 				gamesPlayedLabel.setText("Games Played: ");
