@@ -1,3 +1,4 @@
 - league table
 - removal of people from teams
 - get players team
+- manager panel - select players for lineup (first 11, then max 9 subs)
