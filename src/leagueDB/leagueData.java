@@ -493,7 +493,7 @@ public interface leagueData {
 		
 		try {
 			PreparedStatement gameWeeksStatement = (connection).prepareStatement(
-			        "SELECT * FROM matches WHERE matchweek = ? AND (homeTeamId <> 1 AND awayTeamId <> 1);");
+			        "SELECT * FROM matches WHERE matchweek = ? AND isComplete = 0 AND (homeTeamId <> 1 AND awayTeamId <> 1);");
 			
 			gameWeeksStatement.setInt(1, matchWeek);
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();

@@ -60,6 +60,7 @@ public interface IRefereeRole {
 				eventStatement.setInt(2, event.getEventMinute());
 				eventStatement.setInt(3, event.getPlayerInvolved().getId());
 				eventStatement.setInt(4, result.getResultId());
+				eventStatement.executeUpdate();
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
