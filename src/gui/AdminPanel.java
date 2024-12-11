@@ -16,7 +16,7 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 	
 	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
 			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Assign Players' Team", 
-			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium"));
+			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium", "Unassign Team Members"));
 	JButton[] panelButton = new JButton[adminButtons.size()];
 	JfgpWindow frame;
 	Insets insets;
@@ -142,6 +142,12 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 		gbc_assignStadiumsButton.gridy = 8;
 		panel.add(panelButton[11], gbc_assignStadiumsButton);
 		
+		GridBagConstraints gbc_unassignPeopleButton = new GridBagConstraints();
+		gbc_assignStadiumsButton.insets = insets;
+		gbc_assignStadiumsButton.gridx = 3;
+		gbc_assignStadiumsButton.gridy = 9;
+		panel.add(panelButton[12], gbc_assignStadiumsButton);
+		
 		JLabel recMatchesLabel = new JLabel("Record A Match This Week: ");
 		recMatchesLabel.setFont(getFont());
 		GridBagConstraints gbc_recMatchesLabel = new GridBagConstraints();
@@ -171,6 +177,7 @@ public class AdminPanel extends JPanel implements IAdminPanel, leagueData {
 		panelButton[9].addActionListener(e -> { IAdminPanel.getAssignManagerDialog(frame); });
 		panelButton[10].addActionListener(e -> { IAdminPanel.getStadiumDialog(frame); });
 		panelButton[11].addActionListener(e -> { IAdminPanel.getAssignStadiumDialog(frame); });
+		panelButton[12].addActionListener(e -> { IAdminPanel.getRemoveFromTeamDialog(frame); });
 		
 		matchesToRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override

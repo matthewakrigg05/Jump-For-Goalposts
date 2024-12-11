@@ -702,5 +702,56 @@ public interface leagueData {
 			} catch (SQLException e) { e.printStackTrace(); }
 		
 		return teams;
-	}		
+	}
+	
+	public static List<Manager> allTeamManagers(Connection connection) {
+		List<Manager> teamManagers = new ArrayList<Manager>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM managers "
+			        + "JOIN teamEmployee ON managers.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId IS NOT NULL;");
+			
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Manager manager = new Manager(
+						managers.getInt("playerId"),
+						managers.getString("fname"),
+						managers.getString("lName"),
+						managers.getInt("userId")
+		        		);
+				teamManagers.add(manager);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teamManagers;
+	}
+	
+	public static List<Player> allTeamPlayers(Connection connection) {
+		List<Player> teamManagers = new ArrayList<Player>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM players "
+			        + "JOIN teamEmployee ON players.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId IS NOT NULL;");
+			
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Player manager = new Player(
+						managers.getInt("playerId"),
+						managers.getString("fname"),
+						managers.getString("lName")
+		        		);
+				teamManagers.add(manager);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teamManagers;
+	}
 }

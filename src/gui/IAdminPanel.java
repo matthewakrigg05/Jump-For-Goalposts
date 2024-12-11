@@ -1155,4 +1155,90 @@ public interface IAdminPanel {
 		stadiumDialog.setVisible(true);
 		return stadiumDialog;
 	}
+	
+	public static JDialog getRemoveFromTeamDialog(JfgpWindow frame) {
+		JDialog dialog = new JDialog();
+		List<String> managerSelect = new ArrayList<String>();
+		List<String> playerSelect = new ArrayList<String>();
+		
+		dialog.setModal(true);
+		dialog.setAlwaysOnTop(true);
+		dialog.setFocusable(true);
+		dialog.setSize(760, 500);
+		dialog.setTitle("Unassign");
+		dialog.setLayout(new GridBagLayout());
+			
+		List<Manager> managers = leagueData.allTeamManagers(frame.getDbConnection());
+        for(Manager i : managers) { managerSelect.add(i.getFullName()); }
+        
+        List<Player> players = leagueData.allTeamPlayers(frame.getDbConnection());
+        for(Player i : players) { playerSelect.add(i.getFullName()); }
+		
+		JLabel managerSelectLabel = new JLabel("Select a Manager");
+		GridBagConstraints gbc_managerSelectLabel = new GridBagConstraints();
+		gbc_managerSelectLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_managerSelectLabel.gridx = 0;
+		gbc_managerSelectLabel.gridy = 0;
+		dialog.add(managerSelectLabel, gbc_managerSelectLabel);
+		
+		JComboBox<String> managerSelected = new JComboBox(managerSelect.toArray());
+		GridBagConstraints gbc_managerSelect = new GridBagConstraints();
+		gbc_managerSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_managerSelect.fill = GridBagConstraints.HORIZONTAL;
+		gbc_managerSelect.gridx = 0;
+		gbc_managerSelect.gridy = 1;
+		dialog.add(managerSelected, gbc_managerSelect);
+		
+		JButton confirmationButton = new JButton("Remove Manager");
+		GridBagConstraints gbc_confirmationButton = new GridBagConstraints();
+		gbc_confirmationButton.gridx = 0;
+		gbc_confirmationButton.gridy = 4;
+		dialog.add(confirmationButton, gbc_confirmationButton);
+		
+		JLabel playerSelectLabel = new JLabel("Select a Player");
+		GridBagConstraints gbc_playerSelectLabel = new GridBagConstraints();
+		gbc_playerSelectLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_playerSelectLabel.gridx = 1;
+		gbc_playerSelectLabel.gridy = 0;
+		dialog.add(playerSelectLabel, gbc_playerSelectLabel);
+		
+		JComboBox<String> playerSelected = new JComboBox(playerSelect.toArray());
+		GridBagConstraints gbc_playerSelected = new GridBagConstraints();
+		gbc_playerSelected.insets = new Insets(0, 0, 5, 0);
+		gbc_playerSelected.fill = GridBagConstraints.HORIZONTAL;
+		gbc_playerSelected.gridx = 1;
+		gbc_playerSelected.gridy = 1;
+		dialog.add(playerSelected, gbc_playerSelected);
+		
+		JButton playerConfirmationButton = new JButton("Remove Manager");
+		GridBagConstraints gbc_playerConfirmationButton = new GridBagConstraints();
+		gbc_playerConfirmationButton.gridx = 1;
+		gbc_playerConfirmationButton.gridy = 4;
+		dialog.add(playerConfirmationButton, gbc_playerConfirmationButton);
+		
+		confirmationButton.addActionListener(e -> {
+				int areYouSure = JOptionPane.showConfirmDialog(dialog, 
+						"Are you sure you want to overwrite this?",
+						"", JOptionPane.YES_NO_OPTION);
+				
+			if(areYouSure == JOptionPane.YES_OPTION) { 
+				frame.getAdminAccount().unassignManagerFromTeam(frame.getDbConnection(), 
+						managers.get(managerSelected.getSelectedIndex()));
+				dialog.dispose();}
+		});
+		
+		playerConfirmationButton.addActionListener(e -> {
+			int areYouSure = JOptionPane.showConfirmDialog(dialog, 
+					"Are you sure you want to overwrite this?",
+					"", JOptionPane.YES_NO_OPTION);
+			
+			if(areYouSure == JOptionPane.YES_OPTION) { 
+				frame.getAdminAccount().unassignPlayerFromTeam(frame.getDbConnection(), 
+						players.get(playerSelected.getSelectedIndex())); 
+				dialog.dispose();}
+			});
+		
+		dialog.setVisible(true);
+		return dialog;
+	}
 }

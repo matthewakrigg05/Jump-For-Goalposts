@@ -371,4 +371,24 @@ public class AdminAccount extends Account implements leagueData {
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
+	
+	public void unassignManagerFromTeam(Connection connection, Manager manager) {
+		try {
+			PreparedStatement playerEmp = (connection).prepareStatement(
+			        "DELETE FROM teamEmployee WHERE employeeId IN (SELECT teamEmployeeId FROM managers WHERE managerId = ?);");
+			playerEmp.setInt(2, manager.getId());
+			playerEmp.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
+	
+	public void unassignPlayerFromTeam(Connection connection, Player player) {
+		try {
+			PreparedStatement playerEmp = connection.prepareStatement(
+			        "DELETE FROM teamEmployee WHERE employeeId IN (SELECT teamEmployeeId FROM players WHERE playerId = ?);");
+			playerEmp.setInt(1, player.getId());
+			playerEmp.executeUpdate();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+	}
 }
