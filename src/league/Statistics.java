@@ -3,7 +3,6 @@ package league;
 public class Statistics {
 	private int assits;
 	private int goalsScored;
-	private int shotsTaken;
 	private int foulsCommitted;
 	private int yellowCards;
 	private int redCards;
@@ -11,11 +10,10 @@ public class Statistics {
 	private int draws;
 	private int losses;
 	
-	public Statistics(int assists, int goalsScored, int shotsTaken, int foulsCommitted,
+	public Statistics(int assists, int goalsScored, int foulsCommitted,
 			int yellowCards, int redCards, int wins, int draws, int losses) {
 	    setAssists(assists);
 		setGoalsScored(goalsScored);
-		setShotsTaken(shotsTaken);
 		setFoulsCommitted(foulsCommitted);
 		setYellowCards(yellowCards);
 		setRedCards(redCards);
@@ -31,9 +29,6 @@ public class Statistics {
 	
 	public int getGoalsScored() { return goalsScored; }
 	public void setGoalsScored(int goalsScored) { this.goalsScored = goalsScored; }
-	
-	public int getShotsTaken() { return shotsTaken; }
-	public void setShotsTaken(int shotsTaken) { this.shotsTaken = shotsTaken; }
 	
 	public int getFoulsCommitted() { return foulsCommitted; }
 	public void setFoulsCommitted(int foulsCommitted) { this.foulsCommitted = foulsCommitted; }
@@ -52,5 +47,7 @@ public class Statistics {
 	
 	public int getLosses() { return losses; }
 	public void setLosses(int losses) { this.losses = losses; }
+	
+	public int getGamesPlayed() { return wins + losses + draws; }
 
 }

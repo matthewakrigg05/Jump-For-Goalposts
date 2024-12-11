@@ -1,14 +1,14 @@
 package league;
-import java.sql.Date;
 import leagueMembers.Referee;
 
 public class Match {
 
 	private int matchId;
 	private Referee matchReferee;
-	private Date dateAndTime;
 	private Team homeTeam;
 	private Team awayTeam;
+	private int homeScore = 0;
+	private int awayScore = 0;
 	private int matchWeek;
 	
 	public Match(int matchId, Team homeTeam, Team awayTeam, int matchWeek) {
@@ -20,7 +20,7 @@ public class Match {
 	public int getMatchId() { return this.matchId; }
 	
 	public String getMatchSummary() {
-		return String.format("Gameweek %d - Home: %s, Away: %s", getMatchWeek(), 
+		return String.format("%s VS %s", 
 				getHomeTeam().getName(), getAwayTeam().getName());
 	}
 
@@ -34,6 +34,9 @@ public class Match {
 	public Referee getMatchReferee() { return matchReferee; }
 	public void setMatchReferee(Referee matchReferee) { this.matchReferee = matchReferee; }
 
-	public Date getDateAndTime() { return dateAndTime; }
-	public void setDateAndTime(Date dateAndTime) { this.dateAndTime = dateAndTime; }
+	public int getHomeScore() { return homeScore; }
+	public void setHomeScore(int homeScore) { this.homeScore = homeScore; }
+
+	public int getAwayScore() { return awayScore; }
+	public void setAwayScore(int awayScore) { this.awayScore = awayScore; }
 }

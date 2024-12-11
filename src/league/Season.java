@@ -7,7 +7,7 @@ public class Season {
 	private String seasonEnd;
 	private Team[] teams;
 	private Match[] fixtures;
-	private Result[] results;
+	private Match[] results;
 	private boolean isCurrent;
 	
 	public Season(int id, String seasonStart, String seasonEnd, boolean isCurrent) {
@@ -35,8 +35,8 @@ public class Season {
 	public Match[] getFixtures() { return fixtures; }
 	public void setFixtures(Match[] fixtures) { this.fixtures = fixtures; }
 
-	public Result[] getResults() { return results; }
-	public void setResults(Result[] results) { this.results = results; }
+	public Match[] getResults() { return results; }
+	public void setResults(Match[] results) { this.results = results; }
 
 	public boolean getIsCurrent() { return this.isCurrent; }
 	public void setIsCurrent(boolean current) { this.isCurrent = current; }

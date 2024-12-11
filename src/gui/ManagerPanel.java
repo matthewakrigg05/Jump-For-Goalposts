@@ -9,34 +9,30 @@ import javax.swing.*;
 import accounts.ManagerAccount;
 
 @SuppressWarnings("serial")
-public class ManagerPanel extends panel {
+public class ManagerPanel extends JPanel {
 
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
+	JfgpWindow frame;
+	
+	public ManagerPanel(JfgpWindow frame, ManagerAccount manager) { this.frame = frame; initialise(); }
+	
 
-	public ManagerPanel() { initialise(); }
-	
-	public ManagerPanel(ManagerAccount manager) { initialise(); }
-	
-	@Override
 	public void initialise() {
-		setButtonNames(managerButtons);
-		setPanel(new JPanel());
-		getPanel().setLayout(new GridBagLayout());
-		setInsets(new Insets(0, 0, 10, 25));
+		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
-		panelButton = new JButton[getButtonNames().size()];
-		addPanelComponents(getPanel());
+		JButton[] panelButton = new JButton[managerButtons.size()];
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	@Override
+
 	public void addPanelComponents(JPanel panel) {
 		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
 		
 	}
 	
-	@Override
+
 	public void addActionListeners() {
 		
 	}

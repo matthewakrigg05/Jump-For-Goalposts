@@ -7,6 +7,17 @@ public class MatchEvent {
 	private String eventType;
 	private int eventMinute;
 	private Player playerInvolved;
+	private Team team;
+	
+	public MatchEvent(Team team, String eventType, int eventMinute, Player playerInvolved) {
+		setEventType(eventType);
+		setEventMinute(eventMinute);
+		setPlayerInvolved(playerInvolved);
+	}
+	
+	public MatchEvent() {}
+	
+	public String getEventSummary() { return "Event: " + this.eventType + "    Minute: " + this.eventMinute + "    Player: " + this.playerInvolved.getLName(); }
 	
 	public Player getPlayerInvolved() { return playerInvolved; }
 	public void setPlayerInvolved(Player playerInvolved) { this.playerInvolved = playerInvolved; }
@@ -18,4 +29,7 @@ public class MatchEvent {
 	public void setEventMinute(int eventMinute) { this.eventMinute = eventMinute; }
 	
 	public int getMatchEventId() { return matchEventId; }
+
+	public Team getTeam() { return team; }
+	public void setTeam(Team team) { this.team = team; }
 }

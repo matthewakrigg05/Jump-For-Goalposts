@@ -71,18 +71,6 @@ public class JFGPdb {
             		+ " FOREIGN KEY (userId) REFERENCES userAccounts(userId) ON DELETE CASCADE\r\n"
             		+ "	);";
             
-            String createStatsTable = "CREATE TABLE IF NOT EXISTS statsForPlayerOrTeam(\r\n"
-            		+ "	statsId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	assists INT(4),\r\n"
-            		+ "	goals INT(4),\r\n"
-            		+ "	fouls INT(4),\r\n"
-            		+ "	yellowCards INT(4),\r\n"
-            		+ "	redCards INT(4),\r\n"
-            		+ "	wins INT(4),\r\n"
-            		+ "	draws INT(4),\r\n"
-            		+ "	losses INT(4) \r\n"
-            		+ "	);";
-            
             String createStadiumsTable = "CREATE TABLE IF NOT EXISTS stadiums(\r\n"
             		+ "	stadiumId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	stadiumName VARCHAR(100),\r\n"
@@ -94,9 +82,7 @@ public class JFGPdb {
             String createTeamsTable = "CREATE TABLE IF NOT EXISTS teams(\r\n"
             		+ "	teamId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	teamName VARCHAR(100),\r\n"
-            		+ "	statsId INTEGER, \r\n"
             		+ " stadiumId INTEGER, \r\n"
-            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId) ON DELETE CASCADE, \r\n"
             		+ "	FOREIGN KEY (stadiumId) REFERENCES stadiums(stadiumId)"
             		+ "	);";
             
@@ -109,29 +95,22 @@ public class JFGPdb {
             String createMatchesTable = "CREATE TABLE IF NOT EXISTS matches(\r\n"
             		+ "	matchId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	isComplete BOOLEAN NOT NULL,\r\n"
+            		+ " score VARCHAR(5), \r\n"
+            		+ " matchOutcome VARCHAR(50), \r\n"
             		+ "	matchWeek INTEGER NOT NULL,\r\n"
-            		+ "	seasonId INTEGER NOT NULL,\r\n"
+            		+ "	seasonId INTEGER NOT NULL REFERENCES seasons(seasonId) ON DELETE CASCADE,\r\n"
             		+ "	refereeId INTEGER REFERENCES referees(refereeId) ON DELETE CASCADE,\r\n"
             		+ " homeTeamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE,\r\n"
-            		+ " awayTeamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE, \r\n"
-            		+ "	FOREIGN KEY (seasonId) REFERENCES seasons(seasonId) ON DELETE CASCADE, \r\n"
-            		+ "	FOREIGN KEY (refereeId) REFERENCES referees(refereeId) ON DELETE SET NULL \r\n"
-            		+ "	);";
-            
-            String createResultsTable = "CREATE TABLE IF NOT EXISTS results(\r\n"
-            		+ "	resultId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	resultScore VARCHAR(5) NOT NULL,\r\n"
-            		+ "	resultOutcome VARCHAR(100),\r\n"
-            		+ "	matchId INTEGER NOT NULL, \r\n"
-            		+ "	FOREIGN KEY (matchId) REFERENCES matches(matchId) ON DELETE CASCADE \r\n"
+            		+ " awayTeamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE \r\n"
             		+ "	);";
             
             String createMatchEventsTable = "CREATE TABLE IF NOT EXISTS matchEvents(\r\n"
             		+ "	eventId INTEGER NOT NULL PRIMARY KEY,\r\n"
             		+ "	eventType VARCHAR(25),\r\n"
             		+ "	eventMinute TINYINT,\r\n"
-            		+ "	resultId INTEGER NOT NULL,\r\n"
-            		+ "	FOREIGN KEY (resultId) REFERENCES results(resultId) ON DELETE CASCADE\r\n"
+            		+ "	teamId INTEGER NOT NULL REFERENCES teams(teamId) ON DELETE CASCADE, \r\n"
+            		+ "	matchId INTEGER NOT NULL REFERENCES matches(matchId) ON DELETE CASCADE,\r\n"
+            		+ "	playerId INTEGER NOT NULL REFERENCES players(playerId) ON DELETE CASCADE\r\n"
             		+ "	);";
             
             String createTeamEmployeeTable = "CREATE TABLE IF NOT EXISTS teamEmployee(\r\n"
@@ -145,24 +124,19 @@ public class JFGPdb {
             		+ "	preferredFormation VARCHAR(10),\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
-            		+ "	teamEmployeeId INTEGER,\r\n"
-            		+ " userId INTEGER NOT NULL, \r\n"
-            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
-            		+ " FOREIGN KEY (userId) REFERENCES userAccounts(userId) ON DELETE CASCADE\r\n"
+            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(employeeId) ON DELETE SET NULL,\r\n"
+            		+ " userId INTEGER NOT NULL REFERENCES userAccounts(userId) ON DELETE CASCADE \r\n"
             		+ "	);";
             
             String createPlayersTable = "CREATE TABLE IF NOT EXISTS players(\r\n"
             		+ "	playerId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	teamEmployeeId INTEGER,\r\n"
+            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(employeeId) ON DELETE SET NULL,\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
             		+ "	positionType VARCHAR(15),\r\n"
             		+ "	shirtNumber TINYINT,\r\n"
             		+ "	isSuspended BOOLEAN,\r\n"
-            		+ "	isInjured BOOLEAN,\r\n"
-            		+ "	statsId INTEGER NOT NULL,\r\n"
-            		+ "	FOREIGN KEY (teamEmployeeId) REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
-            		+ "	FOREIGN KEY (statsId) REFERENCES statsForPlayerOrTeam(statsId) ON DELETE CASCADE\r\n"
+            		+ "	isInjured BOOLEAN\r\n"
             		+ "	);";
 
             // The only two default instances of information in the application - the league and the admin account.
@@ -174,9 +148,9 @@ public class JFGPdb {
             String byeWeek = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (1, 'BYE');";
             
             String[] statements ={createleaguetable, createUserAccountTable, createSeasonsTable, createRefereesTable,
-    				createStatsTable, createStadiumsTable, createTeamsTable, teamsSeason, createMatchesTable,
-    				createResultsTable, createMatchEventsTable, createTeamEmployeeTable, createManagersTable,
-    				createPlayersTable, createLeague, createAdmin, byeWeek};
+            		createStadiumsTable, createTeamsTable, teamsSeason, createMatchesTable,
+    				createTeamEmployeeTable, createManagersTable,createPlayersTable, createMatchEventsTable, 
+    				createLeague, createAdmin, byeWeek};
             
             for (String statement : statements) {
             	PreparedStatement DBstatement = (conn).prepareStatement(statement);

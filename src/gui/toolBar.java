@@ -11,7 +11,7 @@ public class toolBar extends JToolBar {
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
 	
-	public toolBar(JfgpWindow frame, Connection connection) {
+	public toolBar(JfgpWindow frame) {
 		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
@@ -51,17 +51,17 @@ public class toolBar extends JToolBar {
 		switch (frame.getUserType()) {
 		case "Admin":
 			AdminPanel admin = new AdminPanel(frame);
-			rolePanel = admin.getPanel();
+			rolePanel = admin;
 			break;
 		
 		case "Referee":
 			RefereePanel refPanel = new RefereePanel(frame);
-			rolePanel = refPanel.getPanel();
+			rolePanel = refPanel;
 			break;
 			
 		case "Manager":
-			ManagerPanel manPanel = new ManagerPanel(frame.getManagerAccount());
-			rolePanel = manPanel.getPanel();
+			ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
+			rolePanel = manPanel;
 			break;
 		}
 		
@@ -73,16 +73,16 @@ public class toolBar extends JToolBar {
 			add(toolBarButton[6]);
 		
 			toolBarButton[6].addActionListener(e -> {
-				new logInWindow(connection).setVisible(true);
+				new logInWindow(frame.getDbConnection()).setVisible(true);
 				frame.dispose();
 			});
 		}
 		
-		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel()); });
-		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel()); });
-		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel()); });
-		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel()); });
-		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel()); });
+		toolBarButton[0].addActionListener(e -> { updateFrame(frame, new HomePanel(frame)); });
+		toolBarButton[1].addActionListener(e -> { updateFrame(frame, new TeamsPanel(frame)); });
+		toolBarButton[2].addActionListener(e -> { updateFrame(frame, new PlayersPanel(frame)); });
+		toolBarButton[3].addActionListener(e -> { updateFrame(frame, new FixturesPanel(frame)); });
+		toolBarButton[4].addActionListener(e -> { updateFrame(frame, new ResultsPanel(frame)); });
 		toolBarButton[5].addActionListener(e -> { updateFrame(frame, rolePanel); });
 		
 		toolBarButton[7].addActionListener(e -> {
