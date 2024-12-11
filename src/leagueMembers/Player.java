@@ -1,10 +1,8 @@
 package leagueMembers;
-import league.Statistics;
 
 public class Player extends Person {
 	
 	private String preferredFoot;
-	private Statistics stats;
 	private boolean isInjured;
 	private boolean isSuspended;
 	private int shirtNum;
@@ -18,10 +16,7 @@ public class Player extends Person {
 	// Standard getters and setters
 	public String getPreferredFoot() { return preferredFoot; }
 	public void setPreferredFoot(String preferredFoot) { this.preferredFoot = preferredFoot; }
-
-	public Statistics getStats() { return stats; }
-	public void setStats(Statistics stats) { this.stats = stats; }
-
+	
 	public boolean isInjured() { return isInjured; }
 	public void setInjured(boolean isInjured) { this.isInjured = isInjured; }
 

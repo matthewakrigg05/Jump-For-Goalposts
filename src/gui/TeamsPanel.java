@@ -103,9 +103,9 @@ public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 				foulsLabel.setText("Fouls: " + ComputeTeamStatistics.getTeamFouls(frame.getDbConnection(), selectedTeam));
 				yellowsLabel.setText("Yellow Cards: " + ComputeTeamStatistics.getTeamYellows(frame.getDbConnection(), selectedTeam));
 				redsLabel.setText("Red Cards: " + ComputeTeamStatistics.getTeamRed(frame.getDbConnection(), selectedTeam));
-//				winsLabel.setText("Wins: " + selectedTeam.getStats().getWins());
-//				drawsLabel.setText("Draws: " + selectedTeam.getStats().getDraws());
-//				lossesLabel.setText("Losses: " + selectedTeam.getStats().getLosses());
+				winsLabel.setText("Wins: " + ComputeTeamStatistics.getTeamWins(frame.getDbConnection(), selectedTeam));
+				drawsLabel.setText("Draws: " + ComputeTeamStatistics.getTeamDraws(frame.getDbConnection(), selectedTeam));
+				lossesLabel.setText("Losses: " + ComputeTeamStatistics.getTeamLosses(frame.getDbConnection(), selectedTeam));
 			}
 		});
 		

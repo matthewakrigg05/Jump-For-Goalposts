@@ -8,12 +8,7 @@ import java.util.List;
 
 import accounts.ManagerAccount;
 import accounts.RefereeAccount;
-import league.League;
-import league.Match;
-import league.Season;
-import league.Stadium;
-import league.Statistics;
-import league.Team;
+import league.*;
 import leagueMembers.*;
 
 public interface leagueData {

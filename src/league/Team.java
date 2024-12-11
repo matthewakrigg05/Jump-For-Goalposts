@@ -12,7 +12,6 @@ public class Team {
 	private Player[] players;
 	private Player[] currentLineup;
 	private Team rivalTeam;
-	private Statistics stats;
 	
 	public Team(int id, String name, Stadium stadium, Manager manager, Player[] players) {
 		setTeamId(id);
@@ -47,7 +46,4 @@ public class Team {
 	
 	public Team getRivalTeam() { return rivalTeam; }
 	public void setRivalTeam(Team rivalTeam) { this.rivalTeam = rivalTeam; }
-	
-	public Statistics getStats() { return stats; }
-	public void setStats(Statistics stats) { this.stats = stats; }
 }

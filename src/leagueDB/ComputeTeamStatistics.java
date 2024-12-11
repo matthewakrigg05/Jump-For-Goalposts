@@ -88,4 +88,49 @@ public interface ComputeTeamStatistics {
 		
 		return fouls;
 	}
+	
+	public static int getTeamWins(Connection connection, Team team) {
+		int wins = 0;
+		
+		try {
+			PreparedStatement goalsStatement = connection.prepareStatement( 
+					"SELECT COUNT(*) AS fouls FROM matches WHERE (homeTeamId = ? AND matchOutcome = 'Home Win') OR (awayTeamId = ? AND matchOutcome = 'Away Win');");
+			goalsStatement.setInt(1, team.getTeamId());
+			ResultSet res = goalsStatement.executeQuery();
+			wins = res.getInt(1);
+			 
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return wins;
+	}
+	
+	public static int getTeamDraws(Connection connection, Team team) {
+		int draws = 0;
+		
+		try {
+			PreparedStatement goalsStatement = connection.prepareStatement( 
+					"SELECT COUNT(*) AS fouls FROM matches WHERE (homeTeamId = ? OR awayTeamId = ?) AND  matchOutcome = 'Draw';");
+			goalsStatement.setInt(1, team.getTeamId());
+			ResultSet res = goalsStatement.executeQuery();
+			draws = res.getInt(1);
+			 
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return draws;
+	}
+	
+	public static int getTeamLosses(Connection connection, Team team) {
+		int losses = 0;
+		
+		try {
+			PreparedStatement goalsStatement = connection.prepareStatement( 
+					"SELECT COUNT(*) AS fouls FROM matches WHERE (homeTeamId = ? AND matchOutcome = 'Away Win') OR (awayTeamId = ? AND matchOutcome = 'Home Win');");
+			goalsStatement.setInt(1, team.getTeamId());
+			ResultSet res = goalsStatement.executeQuery();
+			losses = res.getInt(1);
+			 
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return losses;
+	}
 }

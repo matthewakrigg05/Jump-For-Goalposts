@@ -31,9 +31,7 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 	JLabel foulsLabel;
 	JLabel yellowsLabel;
 	JLabel redsLabel;
-	JLabel winsLabel;
-	JLabel drawsLabel;
-	JLabel lossesLabel;
+
 
 	public PlayersPanel(JfgpWindow frame) {
 		this.frame = frame;
@@ -74,9 +72,6 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 		foulsLabel = new JLabel("Fouls: ");
 		yellowsLabel = new JLabel("Yellow Cards: ");
 		redsLabel = new JLabel("Red Cards: ");
-		winsLabel = new JLabel("Wins: ");
-		drawsLabel = new JLabel("Draws: ");
-		lossesLabel = new JLabel("Losses: ");
 		
 		playerProfile.add(playerNameLabel);
 		playerProfile.add(teamLabel);
@@ -86,9 +81,7 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 		playerProfile.add(foulsLabel);
 		playerProfile.add(yellowsLabel);
 		playerProfile.add(redsLabel);
-		playerProfile.add(winsLabel);
-		playerProfile.add(drawsLabel);
-		playerProfile.add(lossesLabel);
+
 		
 		panel.add(playerProfile, gbc_recMatchesLabel);
 		
@@ -109,9 +102,6 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 				foulsLabel.setText("Fouls: " + ComputePlayerStatistics.getPlayerFouls(frame.getDbConnection(), selectedPlayer));
 				yellowsLabel.setText("Yellow Cards: " + ComputePlayerStatistics.getPlayerYellows(frame.getDbConnection(), selectedPlayer));
 				redsLabel.setText("Red Cards: " + ComputePlayerStatistics.getPlayerRed(frame.getDbConnection(), selectedPlayer));
-//				winsLabel.setText("Wins: " + selectedPlayer.getStats().getWins());
-//				drawsLabel.setText("Draws: " + selectedPlayer.getStats().getDraws());
-//				lossesLabel.setText("Losses: " + selectedPlayer.getStats().getLosses());
 			}
 		});
 		
