@@ -8,11 +8,13 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import leagueDB.ComputePlayerStatistics;
 import leagueDB.leagueData;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class PlayersPanel extends JPanel implements leagueData {
+public class PlayersPanel extends JPanel implements leagueData, ComputePlayerStatistics {
 	
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
@@ -100,16 +102,16 @@ public class PlayersPanel extends JPanel implements leagueData {
 				selectedPlayer = players.get(playerList.getSelectedIndex());
 				
 				playerNameLabel.setText("Player: " + selectedPlayer.getFullName());
-				teamLabel.setText("Plays for: " + selectedPlayer.getFullName());
-				gamesPlayedLabel.setText("Games Played: " + selectedPlayer.getStats().getGamesPlayed());
-				goalsLabel.setText("Goals: " + selectedPlayer.getStats().getGoalsScored());
-				assitsLabel.setText("Assits: " + selectedPlayer.getStats().getAssits());
-				foulsLabel.setText("Fouls: " + selectedPlayer.getStats().getFoulsCommitted());
-				yellowsLabel.setText("Yellow Cards: " + selectedPlayer.getStats().getYellowCards());
-				redsLabel.setText("Red Cards: " + selectedPlayer.getStats().getRedCards());
-				winsLabel.setText("Wins: " + selectedPlayer.getStats().getWins());
-				drawsLabel.setText("Draws: " + selectedPlayer.getStats().getDraws());
-				lossesLabel.setText("Losses: " + selectedPlayer.getStats().getLosses());
+				teamLabel.setText("Plays for: ");
+				gamesPlayedLabel.setText("Games Played: ");
+				goalsLabel.setText("Goals: " + ComputePlayerStatistics.getPlayerGoals(frame.getDbConnection(), selectedPlayer));
+//				assitsLabel.setText("Assits: " + selectedPlayer.getStats().getAssits());
+//				foulsLabel.setText("Fouls: " + selectedPlayer.getStats().getFoulsCommitted());
+//				yellowsLabel.setText("Yellow Cards: " + selectedPlayer.getStats().getYellowCards());
+//				redsLabel.setText("Red Cards: " + selectedPlayer.getStats().getRedCards());
+//				winsLabel.setText("Wins: " + selectedPlayer.getStats().getWins());
+//				drawsLabel.setText("Draws: " + selectedPlayer.getStats().getDraws());
+//				lossesLabel.setText("Losses: " + selectedPlayer.getStats().getLosses());
 			}
 		});
 		

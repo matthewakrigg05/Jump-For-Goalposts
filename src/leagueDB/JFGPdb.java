@@ -124,13 +124,13 @@ public class JFGPdb {
             		+ "	preferredFormation VARCHAR(10),\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
-            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
+            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(employeeId) ON DELETE SET NULL,\r\n"
             		+ " userId INTEGER NOT NULL REFERENCES userAccounts(userId) ON DELETE CASCADE \r\n"
             		+ "	);";
             
             String createPlayersTable = "CREATE TABLE IF NOT EXISTS players(\r\n"
             		+ "	playerId INTEGER NOT NULL PRIMARY KEY,\r\n"
-            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(teamEmployeeId) ON DELETE SET NULL,\r\n"
+            		+ "	teamEmployeeId INTEGER REFERENCES teamEmployee(employeeId) ON DELETE SET NULL,\r\n"
             		+ "	fName VARCHAR(100),\r\n"
             		+ "	lName VARCHAR(100),\r\n"
             		+ "	positionType VARCHAR(15),\r\n"

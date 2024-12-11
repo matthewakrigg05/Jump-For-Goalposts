@@ -38,7 +38,7 @@ public interface IRefereeRole {
 		for (MatchEvent event : matchEvents) {
 			try {
 				PreparedStatement eventStatement = connection.prepareStatement(
-						"INSERT INTO matchEvents(eventType, eventMinute, playerId, matchId) VALUES (?, ?, ?, ?, ?)");
+						"INSERT INTO matchEvents(eventType, eventMinute, teamId, playerId, matchId) VALUES (?, ?, ?, ?, ?)");
 				
 				eventStatement.setString(1, event.getEventType());
 				eventStatement.setInt(2, event.getEventMinute());

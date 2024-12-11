@@ -12,11 +12,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import league.Team;
+import leagueDB.ComputeTeamStatistics;
 import leagueDB.leagueData;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class TeamsPanel extends JPanel {
+public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 
 	List<String> teamSelection = new ArrayList<String>();
 	List<Team> teams;
@@ -100,15 +101,15 @@ public class TeamsPanel extends JPanel {
 				selectedTeam = teams.get(playerList.getSelectedIndex());
 				
 				teamLabel.setText("Team: " + selectedTeam.getName());
-				gamesPlayedLabel.setText("Games Played: " + selectedTeam.getStats().getGamesPlayed());
-				goalsLabel.setText("Goals: " + selectedTeam.getStats().getGoalsScored());
-				assitsLabel.setText("Assits: " + selectedTeam.getStats().getAssits());
-				foulsLabel.setText("Fouls: " + selectedTeam.getStats().getFoulsCommitted());
-				yellowsLabel.setText("Yellow Cards: " + selectedTeam.getStats().getYellowCards());
-				redsLabel.setText("Red Cards: " + selectedTeam.getStats().getRedCards());
-				winsLabel.setText("Wins: " + selectedTeam.getStats().getWins());
-				drawsLabel.setText("Draws: " + selectedTeam.getStats().getDraws());
-				lossesLabel.setText("Losses: " + selectedTeam.getStats().getLosses());
+//				gamesPlayedLabel.setText("Games Played: " + selectedTeam.getStats().getGamesPlayed());
+				goalsLabel.setText("Goals: " + ComputeTeamStatistics.getTeamGoals(frame.getDbConnection(), selectedTeam));
+//				assitsLabel.setText("Assits: " + selectedTeam.getStats().getAssits());
+//				foulsLabel.setText("Fouls: " + selectedTeam.getStats().getFoulsCommitted());
+//				yellowsLabel.setText("Yellow Cards: " + selectedTeam.getStats().getYellowCards());
+//				redsLabel.setText("Red Cards: " + selectedTeam.getStats().getRedCards());
+//				winsLabel.setText("Wins: " + selectedTeam.getStats().getWins());
+//				drawsLabel.setText("Draws: " + selectedTeam.getStats().getDraws());
+//				lossesLabel.setText("Losses: " + selectedTeam.getStats().getLosses());
 			}
 		});
 		
