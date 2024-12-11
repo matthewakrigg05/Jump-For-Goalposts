@@ -9,6 +9,7 @@ import javax.swing.*;
 import accounts.IRefereeRole;
 import league.Match;
 import league.MatchEvent;
+import league.Result;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -48,8 +49,6 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 		JButton[] panelButton = new JButton[managerButtons.size()];
 		
 		JLabel lblNewLabel = new JLabel("Match: " + match.getMatchSummary());
-		
-		
 		
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -105,12 +104,15 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 			});
 		
 		
-		recordButton.addActionListener(e -> {
-			/*
-			 * on record, go through list and add events, record match result, update stats where appropriate too
-			 *
-			 * */
-			 
+		recordButton.addActionListener(e -> {			
+			Result res = IRefereeRole.matchToResult(frame.getDbConnection(), match, homeScore, awayScore);
+			IRefereeRole.recordMatchEvents(frame.getDbConnection(), events, res);
+			JOptionPane.showMessageDialog(frame, "Successfully recorded!");
+			frame.getContentPane().removeAll();
+			frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
+			frame.getContentPane().add(new HomePanel(frame), BorderLayout.CENTER);
+			frame.revalidate();
+			frame.repaint();
 		});
 		
 		backButton.addActionListener(e -> {

@@ -219,27 +219,8 @@ public interface leagueData {
 	        Player playerFound = new Player(
 	        		playerResult.getInt("playerId"),
 	        		playerResult.getString("fname"),
-	        		playerResult.getString("lName"),
-	        		playerResult.getInt("statsId")
+	        		playerResult.getString("lName")
 	        		);
-	        
-	        PreparedStatement statsStatement = connection.prepareStatement(
-	                "SELECT * FROM statsForPlayerOrTeam WHERE statsId = ?;" );
-	        statsStatement.setInt(1, playerFound.getStatsId());
-	        ResultSet statsResult = statsStatement.executeQuery();
-	        
-	        Statistics playerStats = new Statistics(
-	        		statsResult.getInt("assists"),
-	        		statsResult.getInt("goals"),
-	        		statsResult.getInt("fouls"),
-	        		statsResult.getInt("yellowCards"),
-	        		statsResult.getInt("redCards"),
-	        		statsResult.getInt("wins"),
-	        		statsResult.getInt("draws"),
-	        		statsResult.getInt("losses")
-	        		);
-	        
-	        playerFound.setStats(playerStats);
 	        
 			return playerFound;
 		
@@ -260,35 +241,10 @@ public interface leagueData {
 				Player player = new Player(
 						playerResult.getInt("playerId"),
 						playerResult.getString("fname"),
-						playerResult.getString("lName"),
-						playerResult.getInt("statsId")
+						playerResult.getString("lName")
 		        		);
 				players.add(player);
 			}
-			
-			
-			for(Player player : players) {
-				PreparedStatement statsStatement = connection.prepareStatement(
-		                "SELECT * FROM statsForPlayerOrTeam WHERE statsId = ?;" );
-		        statsStatement.setInt(1, player.getStatsId());
-		        ResultSet statsResult = statsStatement.executeQuery();
-		        
-		        Statistics playerStats = new Statistics(
-		        		statsResult.getInt("assists"),
-		        		statsResult.getInt("goals"),
-		        		statsResult.getInt("fouls"),
-		        		statsResult.getInt("yellowCards"),
-		        		statsResult.getInt("redCards"),
-		        		statsResult.getInt("wins"),
-		        		statsResult.getInt("draws"),
-		        		statsResult.getInt("losses")
-		        		);
-		        
-		        player.setStats(playerStats);
-			}
-			
-			
-			
 			return players;
 		} catch (SQLException e) { e.printStackTrace(); }
 		return null;
@@ -365,26 +321,6 @@ public interface leagueData {
 		        		);
 				teams.add(team);
 				}
-				
-				for(Team team: teams) {
-					PreparedStatement statsStatement = connection.prepareStatement(
-			                "SELECT * FROM statsForPlayerOrTeam WHERE statsId = ?;" );
-			        statsStatement.setInt(1, team.getStatsId());
-			        ResultSet statsResult = statsStatement.executeQuery();
-			        
-			        Statistics playerStats = new Statistics(
-			        		statsResult.getInt("assists"),
-			        		statsResult.getInt("goals"),
-			        		statsResult.getInt("fouls"),
-			        		statsResult.getInt("yellowCards"),
-			        		statsResult.getInt("redCards"),
-			        		statsResult.getInt("wins"),
-			        		statsResult.getInt("draws"),
-			        		statsResult.getInt("losses")
-			        		);
-			        
-			        team.setStats(playerStats);
-				}
 			}				
 			return teams;
 			
@@ -406,24 +342,6 @@ public interface leagueData {
 					teamResult.getString("teamName"),
 					teamResult.getInt("statsId")
 					); 
-			
-			PreparedStatement statsStatement = connection.prepareStatement(
-	                "SELECT * FROM statsForPlayerOrTeam WHERE statsId = ?;" );
-	        statsStatement.setInt(1, team.getStatsId());
-	        ResultSet statsResult = statsStatement.executeQuery();
-	        
-	        Statistics playerStats = new Statistics(
-	        		statsResult.getInt("assists"),
-	        		statsResult.getInt("goals"),
-	        		statsResult.getInt("fouls"),
-	        		statsResult.getInt("yellowCards"),
-	        		statsResult.getInt("redCards"),
-	        		statsResult.getInt("wins"),
-	        		statsResult.getInt("draws"),
-	        		statsResult.getInt("losses")
-	        		);
-	        
-	        team.setStats(playerStats);
 					
 			return team;
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -693,16 +611,12 @@ public interface leagueData {
 				Player player = new Player(
 						players.getInt("playerId"),
 						players.getString("fname"),
-						players.getString("lName"),
-						players.getInt("statsId")
+						players.getString("lName")
 		        		);
 				teamPlayers.add(player);
 			}
 			
 		} catch (SQLException e) { e.printStackTrace(); }
-		
-		
-		
 		
 		return teamPlayers;
 	}

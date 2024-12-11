@@ -4,7 +4,6 @@ import league.Statistics;
 public class Player extends Person {
 	
 	private String preferredFoot;
-	private int statsId;
 	private Statistics stats;
 	private boolean isInjured;
 	private boolean isSuspended;
@@ -12,9 +11,8 @@ public class Player extends Person {
 	private String positionType;
 	
 
-	public Player(int id, String fName, String lName, int statsId) {
+	public Player(int id, String fName, String lName) {
 		super(id, fName, lName);
-		this.setStatsId(statsId);
 	}
 
 	// Standard getters and setters
@@ -35,8 +33,5 @@ public class Player extends Person {
 
 	public String getPositionType() { return positionType; }
 	public void setPositionType(String positionType) { this.positionType = positionType; }
-
-	public int getStatsId() { return statsId; }
-	public void setStatsId(int statsId) { this.statsId = statsId; }
 
 }

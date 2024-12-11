@@ -70,13 +70,9 @@ public class AdminAccount extends Account implements leagueData {
 	public void createTeam(Connection connection, String teamName) {
 		try {
 			
-			int newStatsId = createStats(connection);
-			
 			PreparedStatement teamStatement = (connection).prepareStatement(
-			        "INSERT INTO teams(teamName, statsId) VALUES (?, ?);");
-			
+			        "INSERT INTO teams(teamName) VALUES (?);");
 			teamStatement.setString(1, teamName);
-			teamStatement.setInt(2, newStatsId);
 			teamStatement.executeUpdate();
 			
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -93,35 +89,13 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public static int createStats(Connection connection) {
-		try {
-			PreparedStatement statsStatement = (connection).prepareStatement(
-			        "INSERT INTO statsForPlayerOrTeam(assists, goals, fouls, yellowCards, redCards, wins, draws, losses) "
-			        + "VALUES (0, 0, 0, 0, 0, 0, 0, 0);");
-			statsStatement.executeUpdate();
-			
-			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT statsId FROM statsForPlayerOrTeam ORDER BY ROWID DESC limit 1;"));
-			
-			ResultSet id = lastId.executeQuery();
-			int statsId = id.getInt("statsId");
-
-			return statsId;
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return 0;
-	}
-	
 	public void createPlayer(Connection connection, String fname, String lname, String positionType) {
 		try {
-			int statsId = createStats(connection);
 			PreparedStatement playerStatement = connection.prepareStatement(
-			        "INSERT INTO players(fName, lName, positionType, statsId) VALUES (?, ?, ?, ?);");
-			
+			        "INSERT INTO players(fName, lName, positionType) VALUES (?, ?, ?);");
 			playerStatement.setString(1, fname);
 			playerStatement.setString(2, lname);
 			playerStatement.setString(3, positionType);
-			playerStatement.setInt(4, statsId);
 			playerStatement.executeUpdate();
 			
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -129,11 +103,11 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void removePlayer(Connection connection, Player player) {
 		try {
-			PreparedStatement attackerStatement = connection.prepareStatement(
+			PreparedStatement playerStatement = connection.prepareStatement(
 			        "DELETE FROM players WHERE playerId = ?;");
 			
-			attackerStatement.setInt(1, player.getId());
-			attackerStatement.executeUpdate();
+			playerStatement.setInt(1, player.getId());
+			playerStatement.executeUpdate();
 
 			
 		} catch (SQLException e) { e.printStackTrace(); }
