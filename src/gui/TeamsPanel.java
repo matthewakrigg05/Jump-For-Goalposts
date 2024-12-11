@@ -29,7 +29,6 @@ public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 	JLabel teamLabel;
 	JLabel gamesPlayedLabel;
 	JLabel goalsLabel;
-	JLabel assitsLabel;
 	JLabel foulsLabel;
 	JLabel yellowsLabel;
 	JLabel redsLabel;
@@ -68,10 +67,9 @@ public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 		gbc_recMatchesLabel.gridx = 5;
 		gbc_recMatchesLabel.gridy = 1;
 		
-		teamLabel = new JLabel("Player: ");
+		teamLabel = new JLabel("Team: ");
 		gamesPlayedLabel = new JLabel("Games Played: ");
 		goalsLabel = new JLabel("Goals: ");
-		assitsLabel = new JLabel("Assits: ");
 		foulsLabel = new JLabel("Fouls: ");
 		yellowsLabel = new JLabel("Yellow Cards: ");
 		redsLabel = new JLabel("Red Cards: ");
@@ -82,7 +80,6 @@ public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 		playerProfile.add(teamLabel);
 		playerProfile.add(gamesPlayedLabel);
 		playerProfile.add(goalsLabel);
-		playerProfile.add(assitsLabel);
 		playerProfile.add(foulsLabel);
 		playerProfile.add(yellowsLabel);
 		playerProfile.add(redsLabel);
@@ -101,12 +98,11 @@ public class TeamsPanel extends JPanel implements ComputeTeamStatistics {
 				selectedTeam = teams.get(playerList.getSelectedIndex());
 				
 				teamLabel.setText("Team: " + selectedTeam.getName());
-//				gamesPlayedLabel.setText("Games Played: " + selectedTeam.getStats().getGamesPlayed());
+				gamesPlayedLabel.setText("Games Played: " + ComputeTeamStatistics.getGamesPlayed(frame.getDbConnection(), selectedTeam));
 				goalsLabel.setText("Goals: " + ComputeTeamStatistics.getTeamGoals(frame.getDbConnection(), selectedTeam));
-//				assitsLabel.setText("Assits: " + selectedTeam.getStats().getAssits());
-//				foulsLabel.setText("Fouls: " + selectedTeam.getStats().getFoulsCommitted());
-//				yellowsLabel.setText("Yellow Cards: " + selectedTeam.getStats().getYellowCards());
-//				redsLabel.setText("Red Cards: " + selectedTeam.getStats().getRedCards());
+				foulsLabel.setText("Fouls: " + ComputeTeamStatistics.getTeamFouls(frame.getDbConnection(), selectedTeam));
+				yellowsLabel.setText("Yellow Cards: " + ComputeTeamStatistics.getTeamYellows(frame.getDbConnection(), selectedTeam));
+				redsLabel.setText("Red Cards: " + ComputeTeamStatistics.getTeamRed(frame.getDbConnection(), selectedTeam));
 //				winsLabel.setText("Wins: " + selectedTeam.getStats().getWins());
 //				drawsLabel.setText("Draws: " + selectedTeam.getStats().getDraws());
 //				lossesLabel.setText("Losses: " + selectedTeam.getStats().getLosses());
