@@ -1,6 +1,7 @@
 package league;
 
 import leagueMembers.Manager;
+import leagueMembers.Player;
 
 public class Team {
 	
@@ -8,13 +9,12 @@ public class Team {
 	private String name;
 	private Stadium stadium;
 	private Manager currentManager;
-	private Object[] players;
-	private Object[] currentLineup;
+	private Player[] players;
+	private Player[] currentLineup;
 	private Team rivalTeam;
-	private int statsId;
 	private Statistics stats;
 	
-	public Team(int id, String name, Stadium stadium, Manager manager, Object[] players) {
+	public Team(int id, String name, Stadium stadium, Manager manager, Player[] players) {
 		setTeamId(id);
 		setName(name);
 		setStadium(stadium);
@@ -22,10 +22,9 @@ public class Team {
 		setPlayers(players);
 	}
 	
-	public Team(int id, String name, int statsId) {
+	public Team(int id, String name) {
 		setTeamId(id);
 		setName(name);
-		setStatsId(statsId);
 	}
 	
 	public int getTeamId() { return teamId; }
@@ -40,17 +39,14 @@ public class Team {
 	public Manager getManager() { return currentManager; }
 	public void setManager(Manager manager) { this.currentManager = manager; }
 	
-	public Object[] getPlayers() { return players; }
-	public void setPlayers(Object[] players) { this.players = players; }
+	public Player[] getPlayers() { return players; }
+	public void setPlayers(Player[] players) { this.players = players; }
 	
-	public Object[] getCurrentLineup() { return currentLineup; }
-	public void setCurrentLineup(Object[] currentLineup) { this.currentLineup = currentLineup; }
+	public Player[] getCurrentLineup() { return currentLineup; }
+	public void setCurrentLineup(Player[] currentLineup) { this.currentLineup = currentLineup; }
 	
 	public Team getRivalTeam() { return rivalTeam; }
 	public void setRivalTeam(Team rivalTeam) { this.rivalTeam = rivalTeam; }
-	
-	public int getStatsId() { return statsId; }
-	public void setStatsId(int statsId) { this.statsId = statsId; }
 	
 	public Statistics getStats() { return stats; }
 	public void setStats(Statistics stats) { this.stats = stats; }

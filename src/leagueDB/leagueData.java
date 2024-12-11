@@ -316,8 +316,7 @@ public interface leagueData {
 				else {
 				Team team = new Team(
 						teamResult.getInt("teamId"),
-						teamResult.getString("teamName"),
-						teamResult.getInt("statsId")
+						teamResult.getString("teamName")
 		        		);
 				teams.add(team);
 				}
@@ -339,8 +338,7 @@ public interface leagueData {
 			teamStatement.setInt(1, id);
 			ResultSet teamResult = teamStatement.executeQuery();
 			team = new Team(teamResult.getInt("teamId"), 
-					teamResult.getString("teamName"),
-					teamResult.getInt("statsId")
+					teamResult.getString("teamName")
 					); 
 					
 			return team;

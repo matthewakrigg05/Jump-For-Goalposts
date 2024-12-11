@@ -7,6 +7,8 @@ public class Match {
 	private Referee matchReferee;
 	private Team homeTeam;
 	private Team awayTeam;
+	private int homeScore = 0;
+	private int awayScore = 0;
 	private int matchWeek;
 	
 	public Match(int matchId, Team homeTeam, Team awayTeam, int matchWeek) {
@@ -31,4 +33,10 @@ public class Match {
 	
 	public Referee getMatchReferee() { return matchReferee; }
 	public void setMatchReferee(Referee matchReferee) { this.matchReferee = matchReferee; }
+
+	public int getHomeScore() { return homeScore; }
+	public void setHomeScore(int homeScore) { this.homeScore = homeScore; }
+
+	public int getAwayScore() { return awayScore; }
+	public void setAwayScore(int awayScore) { this.awayScore = awayScore; }
 }

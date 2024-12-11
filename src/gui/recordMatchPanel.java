@@ -9,7 +9,6 @@ import javax.swing.*;
 import accounts.IRefereeRole;
 import league.Match;
 import league.MatchEvent;
-import league.Result;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -100,12 +99,10 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 			events.add(event);
 			demoList.addElement(event.getEventSummary());
 			eventsList.setModel(demoList);
-			
 			});
 		
-		
 		recordButton.addActionListener(e -> {			
-			Result res = IRefereeRole.matchToResult(frame.getDbConnection(), match, homeScore, awayScore);
+			Match res = IRefereeRole.matchToResult(frame.getDbConnection(), match, homeScore, awayScore);
 			IRefereeRole.recordMatchEvents(frame.getDbConnection(), events, res);
 			JOptionPane.showMessageDialog(frame, "Successfully recorded!");
 			frame.getContentPane().removeAll();

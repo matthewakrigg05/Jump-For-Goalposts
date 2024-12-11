@@ -9,57 +9,42 @@ import javax.swing.*;
 import gui.JfgpWindow;
 import league.Match;
 import league.MatchEvent;
-import league.Result;
 import leagueDB.leagueData;
 import leagueMembers.Player;
 
 public interface IRefereeRole {
 	
-	public static Result matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
-		Result result = new Result(match.getMatchId(), match.getHomeTeam(), match.getAwayTeam(), match.getMatchWeek());
+	public static Match  matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
 		String matchOutcome;
 		
-		if (homeScore > awayScore) {
-			matchOutcome = "Home Win";
-		}
-		else if (homeScore == awayScore) {
-			matchOutcome = "Draw";
-		}
-		else {
-			matchOutcome = "Away Win";
-		}
+		if (homeScore > awayScore) { matchOutcome = "Home Win"; }
+		else if (homeScore == awayScore) { matchOutcome = "Draw"; }
+		else { matchOutcome = "Away Win"; }
 		
-		try {
-			PreparedStatement resultStatement = connection.prepareStatement(
-					"INSERT INTO results(resultScore, resultOutcome, matchId) VALUES (?, ?, ?)");
-			
-			resultStatement.setString(1, String.valueOf(homeScore) + "-" + String.valueOf(awayScore));
-			resultStatement.setString(2, matchOutcome);
-			resultStatement.setInt(3, match.getMatchId());
-			resultStatement.executeUpdate();
-			
+		try {			
 			PreparedStatement isCompleteUpdate = connection.prepareStatement(
-					"UPDATE matches SET isComplete = 1 WHERE matchId = ?");
-			isCompleteUpdate.setInt(1, match.getMatchId());
+					"UPDATE matches SET isComplete = 1, score = ?, matchOutcome = ? WHERE matchId = ?");
+			isCompleteUpdate.setString(1, String.valueOf(homeScore) + "-" + String.valueOf(awayScore));
+			isCompleteUpdate.setString(2, matchOutcome);
+			isCompleteUpdate.setInt(3, match.getMatchId());
 			isCompleteUpdate.executeUpdate();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
+		} catch (SQLException e) { e.printStackTrace(); }	
 		
-		return result;
+		return match;
 	}
 	
-	public static void recordMatchEvents(Connection connection, List<MatchEvent> matchEvents, Result result) {
+	public static void recordMatchEvents(Connection connection, List<MatchEvent> matchEvents, Match match) {
 		for (MatchEvent event : matchEvents) {
 			try {
 				PreparedStatement eventStatement = connection.prepareStatement(
-						"INSERT INTO matchEvents(eventType, eventMinute, playerId, resultId) VALUES (?, ?, ?, ?)");
+						"INSERT INTO matchEvents(eventType, eventMinute, playerId, matchId) VALUES (?, ?, ?, ?, ?)");
 				
 				eventStatement.setString(1, event.getEventType());
 				eventStatement.setInt(2, event.getEventMinute());
-				eventStatement.setInt(3, event.getPlayerInvolved().getId());
-				eventStatement.setInt(4, result.getResultId());
+				eventStatement.setInt(3, event.getTeam().getTeamId());
+				eventStatement.setInt(4, event.getPlayerInvolved().getId());
+				eventStatement.setInt(5, match.getMatchId());
 				eventStatement.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -120,6 +105,13 @@ public interface IRefereeRole {
 		matchEventDialog.add(addButton);
 
 		addButton.addActionListener(e -> {
+			if (homeTeamPlayers.contains(players.get(playerSelect.getSelectedIndex()))) {
+				newEvent.setTeam(match.getHomeTeam());
+			}
+			else {
+				newEvent.setTeam(match.getAwayTeam());
+			}
+			
 			newEvent.setEventType(eventTypes[eventSelect.getSelectedIndex()]);
 			newEvent.setEventMinute(Integer.parseInt(minuteArea.getText()));
 			newEvent.setPlayerInvolved(players.get(playerSelect.getSelectedIndex()));
