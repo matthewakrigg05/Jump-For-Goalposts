@@ -614,4 +614,42 @@ public interface leagueData {
 		return teamPlayers;
 	}
 	
+	public static String[][] getLeagueTableData(Connection connection, List<Team> teams) {
+		String[][] leagueTableData = new String[teams.size()][6];
+		
+		for(int i = 0; i < teams.size(); i++) {
+			leagueTableData[i][0] = teams.get(i).getName(); 
+			leagueTableData[i][1] = String.valueOf(ComputeTeamStatistics.getGamesPlayed(connection, teams.get(i)));
+			leagueTableData[i][2] = String.valueOf(ComputeTeamStatistics.getTeamWins(connection, teams.get(i)));
+			leagueTableData[i][3] = String.valueOf(ComputeTeamStatistics.getTeamDraws(connection, teams.get(i)));
+			leagueTableData[i][4] = String.valueOf(ComputeTeamStatistics.getTeamLosses(connection, teams.get(i)));
+			leagueTableData[i][5] = String.valueOf(ComputeTeamStatistics.getTeamPoints(connection, teams.get(i)));
+		}
+		return leagueTableData;
+	}
+	
+	public static List<Team> getSeasonTeams(Connection connection, int currentSeason) {
+		List<Team> teams = new ArrayList<Team>();
+		try {
+			PreparedStatement teamsStatement = (connection).prepareStatement( "SELECT * FROM teams WHERE teamId IN (SELECT teamId FROM teamSeason WHERE seasonId = ?);");
+			teamsStatement.setInt(1, currentSeason);
+			ResultSet teamResult = teamsStatement.executeQuery();
+			
+			while(teamResult.next()) {
+				if (teamResult.getInt("teamId") == 1) { continue; } 
+				else {
+				Team team = new Team(
+						teamResult.getInt("teamId"),
+						teamResult.getString("teamName")
+		        		);
+				teams.add(team);
+					}
+				}	
+			} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teams;
+		
+	}
+	
+	
 }

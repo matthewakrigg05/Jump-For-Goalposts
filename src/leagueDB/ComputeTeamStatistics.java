@@ -133,4 +133,11 @@ public interface ComputeTeamStatistics {
 		
 		return losses;
 	}
+	
+	public static int getTeamPoints(Connection connection, Team team) {
+		int points = 0;
+		points += getTeamWins(connection, team) * 3;
+		points += getTeamDraws(connection, team);
+		return points;
+	}
 }

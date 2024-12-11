@@ -283,6 +283,17 @@ public class AdminAccount extends Account implements leagueData {
 	        }
 	        Collections.rotate(rotatingTeams, 1);
 	    }
+	   
+		try {
+			for (Team team : teams) {
+				PreparedStatement teamSeasonStatement = connection.prepareStatement(
+					"INSERT INTO teamSeason(teamId, seasonId) VALUES (?, ?);"
+					);
+			teamSeasonStatement.setInt(1, team.getTeamId()); 
+			teamSeasonStatement.setInt(2, season.getId()); 
+			teamSeasonStatement.executeUpdate();
+			}
+		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
 	public void createStadium(Connection connection, String name, String cap, String loc) {
