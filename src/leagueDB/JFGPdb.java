@@ -43,6 +43,63 @@ public class JFGPdb {
 	
 	public static void exampleData() {
 		
+		String player1 = "INSERT INTO players(fName, lName, positionType) VALUES('John', 'Smith', 'Attacker');";
+		String player2 = "INSERT INTO players (fName, lName, positionType) VALUES ('Michael', 'Johnson', 'midfielder');";
+		String player3 = "INSERT INTO players (fName, lName, positionType) VALUES ('David', 'Brown', 'defender');";
+		String player4 = "INSERT INTO players (fName, lName, positionType) VALUES ('Robert', 'Taylor', 'goalkeeper');";
+		String player5 = "INSERT INTO players (fName, lName, positionType) VALUES ('James', 'Anderson', 'attacker');";
+		String player6 = "INSERT INTO players (fName, lName, positionType) VALUES ('William', 'Jones', 'midfielder');";
+		String player7 = "INSERT INTO players (fName, lName, positionType) VALUES ('Joseph', 'Davis', 'defender');";
+		String player8 = "INSERT INTO players (fName, lName, positionType) VALUES ('Thomas', 'Wilson', 'goalkeeper');";
+		String player9 = "INSERT INTO players (fName, lName, positionType) VALUES ('Charles', 'Moore', 'attacker');";
+		String player10 = "INSERT INTO players (fName, lName, positionType) VALUES ('Daniel', 'Taylor', 'midfielder');";
+		String player11 = "INSERT INTO players (fName, lName, positionType) VALUES ('Matthew', 'White', 'defender');";
+		String player12 = "INSERT INTO players (fName, lName, positionType) VALUES ('Christopher', 'Martin', 'goalkeeper');";
+		String player13 = "INSERT INTO players (fName, lName, positionType) VALUES ('Andrew', 'Thompson', 'attacker');";
+		String player14 = "INSERT INTO players (fName, lName, positionType) VALUES ('Anthony', 'Garcia', 'midfielder');";
+		String player15 = "INSERT INTO players (fName, lName, positionType) VALUES ('Mark', 'Martinez', 'defender');";
+		
+		String team1 = "INSERT INTO teams(teamName) VALUES ('Queens Park Rangers');";
+		String team2 = "INSERT INTO teams(teamName) VALUES ('Leicester City');";
+		String team3 = "INSERT INTO teams(teamName) VALUES ('Aston Villa');";
+		String team4 = "INSERT INTO teams(teamName) VALUES ('Swansea City');";
+		String team5 = "INSERT INTO teams(teamName) VALUES ('Stoke City');";
+		String team6 = "INSERT INTO teams(teamName) VALUES ('Southampton');";
+		String team7 = "INSERT INTO teams(teamName) VALUES ('West Bromwich Albion');";
+		String team8 = "INSERT INTO teams(teamName) VALUES ('Crystal Palace');";
+		String team9 = "INSERT INTO teams(teamName) VALUES ('Tottenham Hotspur');";
+		String team10 = "INSERT INTO teams(teamName) VALUES ('Manchester United');";
+		String team11 = "INSERT INTO teams(teamName) VALUES ('Manchester City');";
+		String team12 = "INSERT INTO teams(teamName) VALUES ('Newcastle United');";
+		String team13 = "INSERT INTO teams(teamName) VALUES ('Chelsea');";
+		String team14 = "INSERT INTO teams(teamName) VALUES ('Burnley');";
+		String team15 = "INSERT INTO teams(teamName) VALUES ('West Ham United');";
+		String team16 = "INSERT INTO teams(teamName) VALUES ('Arsenal');";
+		String team17 = "INSERT INTO teams(teamName) VALUES ('Hull City');";
+		String team18 = "INSERT INTO teams(teamName) VALUES ('Everton');";
+		String team19 = "INSERT INTO teams(teamName) VALUES ('Liverpool');";
+		String team20 = "INSERT INTO teams(teamName) VALUES ('Sunderland');";
+		
+		String[] playerStatements = {player1, player2, player3, player4, player5, player6, player7, 
+				player8, player9, player10, player11, player12, player13, player14, player15};
+		
+		String[] teamStatements = {team1, team2, team3, team4, team5, team6, team7, team8, 
+				team9, team10, team11, team12, team13, team14, team15, team16, team17, team18, team19, team20}; 
+		
+		try {
+	        for (String statement : playerStatements) {
+	        	PreparedStatement DBstatement = connection.prepareStatement(statement);
+	        	DBstatement.executeUpdate();
+	        }
+	        
+	        for (String statement : teamStatements) {
+	        	PreparedStatement DBstatement = connection.prepareStatement(statement);
+	        	DBstatement.executeUpdate();
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+			}
 	}
 	
 	public static void initTables() {
