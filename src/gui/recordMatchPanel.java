@@ -107,12 +107,12 @@ public class recordMatchPanel extends JPanel {
 		
 		eventButton.addActionListener(e -> { 
 			if (admin == null) {
-				MatchEvent event = referee.getMatchEventDialog(frame, match); 
+				MatchEvent event = referee.matchEventDialog(frame, match); 
 				events.add(event);
 				demoList.addElement(event.getEventSummary());
 				eventsList.setModel(demoList);
 			} else {
-				MatchEvent event = admin.getMatchEventDialog(frame, match); 
+				MatchEvent event = admin.matchEventDialog(frame, match); 
 				events.add(event);
 				demoList.addElement(event.getEventSummary());
 				eventsList.setModel(demoList);

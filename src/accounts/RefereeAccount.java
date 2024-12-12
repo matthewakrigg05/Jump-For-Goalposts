@@ -94,7 +94,7 @@ public class RefereeAccount extends Account {
 		}
 	}
 	
-	public MatchEvent getMatchEventDialog(JfgpWindow frame, Match match) {
+	public MatchEvent matchEventDialog(JfgpWindow frame, Match match) {
 		JDialog matchEventDialog = new JDialog();
 		MatchEvent newEvent = new MatchEvent();
 		

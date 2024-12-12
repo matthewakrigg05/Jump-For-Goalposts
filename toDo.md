@@ -1,4 +1,3 @@
-- assign shirt nums
 - example data method
 - comments
 - javadoc

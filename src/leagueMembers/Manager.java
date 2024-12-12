@@ -24,9 +24,6 @@ public class Manager extends Person {
 	public void setUserId(int id) { this.managerAccId = id; }
 	public int getUserId() { return this.managerAccId; }
 	
-	public void assignShirtNum(Connection connection, int shirtNum, Player player) {
-		}
-	
 	public Team getManagerTeam(Connection connection) {
 		Team managerTeam = null;
 		

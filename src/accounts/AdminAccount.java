@@ -231,23 +231,6 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }	
 	}
 	
-	public static Season getCurrentSeason(JFGPdb db) {
-		try {
-			PreparedStatement currentSeasonStatement = (db.getConnection()).prepareStatement(
-					"SELECT * FROM seasons WHERE isCurrent = true LIMIT 1;" );
-			ResultSet seasonResult = currentSeasonStatement.executeQuery();
-			
-			Season currentSeason = new Season( 
-					seasonResult.getInt("seasonId"),
-					seasonResult.getString("seasonStart"),
-					seasonResult.getString("seasonEnd"),
-					seasonResult.getBoolean("isCurrent")
-					);
-			
-			return currentSeason;
-		} catch (SQLException e) { e.printStackTrace(); return null; }	
-	}
-	
 	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
