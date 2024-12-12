@@ -92,8 +92,8 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			logIn(email, password, db.getConnection());
 			dispose();
+			logIn(email, password, db.getConnection());
 		});
 		
 		setVisible(true);

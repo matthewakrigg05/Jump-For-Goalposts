@@ -39,7 +39,7 @@ public class Manager extends Person {
 			
 			while(managers.next()) {
 				Team team = new Team(
-						managers.getInt("playerId"),
+						managers.getInt("teamId"),
 						managers.getString("teamName")
 		        		);
 				managerTeam = team;

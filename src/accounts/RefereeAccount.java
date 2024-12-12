@@ -129,6 +129,7 @@ public class RefereeAccount extends Account {
 		
 		JLabel addEventMinuteLabel = new JLabel("Minute of event: ");
 		JTextArea minuteArea = new JTextArea();
+		minuteArea.setColumns(10);
 		
 		JLabel playerLabel = new JLabel("Player Involved: ");
 		JComboBox playerSelect = new JComboBox(playersList.toArray());

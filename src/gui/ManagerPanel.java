@@ -61,8 +61,13 @@ public class ManagerPanel extends JPanel {
 		shirtNumLabel = new JLabel("Assign a shirt number to selected player: ");
 		
 		shirtNum = new JTextArea();
+		shirtNum.setColumns(10);
 		
 		assign = new JButton("Assign");
+		
+		panel.add(shirtNumLabel);
+		panel.add(shirtNum);
+		panel.add(assign);
 	}
 	
 	public void addActionListeners() {

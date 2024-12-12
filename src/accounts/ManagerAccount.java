@@ -29,7 +29,7 @@ public class ManagerAccount extends Account {
 	public Manager getManager(Connection connection) {
 		try {
 	        PreparedStatement manStatement = connection.prepareStatement(
-	                "SELECT * FROM manager WHERE userId = ?;" );
+	                "SELECT * FROM managers WHERE userId = ?;" );
 	
 	        manStatement.setInt(1, getId());
 	        ResultSet manResult = manStatement.executeQuery(); 
