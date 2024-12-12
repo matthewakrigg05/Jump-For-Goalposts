@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-import accounts.IRefereeRole;
+import accounts.AdminAccount;
+import accounts.RefereeAccount;
 import league.Match;
 import league.MatchEvent;
 
@@ -14,26 +15,37 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 @SuppressWarnings("serial")
-public class recordMatchPanel extends JPanel implements IRefereeRole {
+public class recordMatchPanel extends JPanel {
 	
 	private List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 	private List<MatchEvent> events = new ArrayList<MatchEvent>();
 	private List<String> eventSummaries = new ArrayList<String>();
 	private JfgpWindow frame;
 	private JList eventsList;
-	 DefaultListModel demoList = new DefaultListModel();
+	DefaultListModel demoList = new DefaultListModel();
 	
-	 private int homeScore= 0;
-	 private int awayScore = 0;
+	private int homeScore= 0;
+	private int awayScore = 0;
 	 
 	private JButton recordButton;
 	private JButton backButton;
 	private Match match;
 	private JButton eventButton;
+	
+	AdminAccount admin;
+	RefereeAccount referee;
 
-	public recordMatchPanel(JfgpWindow frame, Match match) { 
+	public recordMatchPanel(JfgpWindow frame, Match match, AdminAccount admin) { 
 		this.frame = frame; 
 		this.match = match;
+		this.admin = admin;
+		initialise(frame);
+		}
+	
+	public recordMatchPanel(JfgpWindow frame, Match match, RefereeAccount referee) { 
+		this.frame = frame; 
+		this.match = match;
+		this.referee = referee;
 		initialise(frame); }
 	
 	public void initialise(JfgpWindow frame) {
@@ -94,23 +106,40 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 	public void addActionListeners() {
 		
 		eventButton.addActionListener(e -> { 
-			
-			MatchEvent event = IRefereeRole.getMatchEventDialog(frame, match); 
-			events.add(event);
-			demoList.addElement(event.getEventSummary());
-			eventsList.setModel(demoList);
-			});
+			if (admin == null) {
+				MatchEvent event = referee.getMatchEventDialog(frame, match); 
+				events.add(event);
+				demoList.addElement(event.getEventSummary());
+				eventsList.setModel(demoList);
+			} else {
+				MatchEvent event = admin.getMatchEventDialog(frame, match); 
+				events.add(event);
+				demoList.addElement(event.getEventSummary());
+				eventsList.setModel(demoList);
+			}
+		}); 
 		
-		recordButton.addActionListener(e -> {			
-			Match res = IRefereeRole.matchToResult(frame.getDb().getConnection(), match, homeScore, awayScore);
-			IRefereeRole.recordMatchEvents(frame.getDb().getConnection(), events, res);
-			JOptionPane.showMessageDialog(frame, "Successfully recorded!");
-			frame.getContentPane().removeAll();
-			frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
-			frame.getContentPane().add(new HomePanel(frame), BorderLayout.CENTER);
-			frame.revalidate();
-			frame.repaint();
-		});
+		recordButton.addActionListener(e -> {	
+			if (admin == null) {
+				Match res = referee.matchToResult(frame.getDb().getConnection(), match, homeScore, awayScore);
+				referee.recordMatchEvents(frame.getDb().getConnection(), events, res);
+				JOptionPane.showMessageDialog(frame, "Successfully recorded!");
+				frame.getContentPane().removeAll();
+				frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
+				frame.getContentPane().add(new HomePanel(frame), BorderLayout.CENTER);
+				frame.revalidate();
+				frame.repaint(); 
+				} else {
+					Match res = admin.matchToResult(frame.getDb().getConnection(), match, homeScore, awayScore);
+					admin.recordMatchEvents(frame.getDb().getConnection(), events, res);
+					JOptionPane.showMessageDialog(frame, "Successfully recorded!");
+					frame.getContentPane().removeAll();
+					frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
+					frame.getContentPane().add(new HomePanel(frame), BorderLayout.CENTER);
+					frame.revalidate();
+					frame.repaint();
+				}
+			} ); 
 		
 		backButton.addActionListener(e -> {
 			frame.getContentPane().removeAll();

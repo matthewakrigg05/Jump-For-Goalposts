@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import league.Team;
-import leagueDB.ComputeGeneralStatistics;
+import leagueDB.RetrieveGeneralStatistics;
 
-public class Player extends Person implements ComputeGeneralStatistics {
+public class Player extends Person implements RetrieveGeneralStatistics {
 	
 	private String preferredFoot;
 	private boolean isInjured;

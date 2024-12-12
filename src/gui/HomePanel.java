@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 
 import league.Season;
 import league.Team;
-import leagueDB.ComputeGeneralStatistics;
+import leagueDB.RetrieveGeneralStatistics;
 import leagueDB.JFGPdb;
 import leagueMembers.Player;
 

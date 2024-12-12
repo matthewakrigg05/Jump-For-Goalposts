@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import leagueDB.ComputeGeneralStatistics;
+import leagueDB.RetrieveGeneralStatistics;
 import leagueMembers.Manager;
 import leagueMembers.Player;
 
-public class Team implements ComputeGeneralStatistics {
+public class Team implements RetrieveGeneralStatistics {
 	
 	private int teamId;
 	private String name;

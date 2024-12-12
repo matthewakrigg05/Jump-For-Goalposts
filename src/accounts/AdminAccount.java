@@ -10,11 +10,9 @@ import league.*;
 import leagueDB.JFGPdb;
 import leagueMembers.*;
 
-public class AdminAccount extends Account {
+public class AdminAccount extends RefereeAccount {
 	
-	public AdminAccount(int id, String emailAddress, String password) {
-		super(id, emailAddress, password, true);
-	}
+	public AdminAccount(int id, String emailAddress, String password) { super(id, emailAddress, password, true); }
 
 	public void removeManager(Connection connection, Manager man) {
 		try {

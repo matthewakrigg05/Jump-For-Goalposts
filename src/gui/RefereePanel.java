@@ -92,7 +92,7 @@ public class RefereePanel extends JPanel {
 		toRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				new recordMatchPanel(frame,matchesToAttend.get(toAttendList.getSelectedIndex())).setVisible(true);
+				new recordMatchPanel(frame,matchesToAttend.get(toAttendList.getSelectedIndex()), frame.getRefereeAccount()).setVisible(true);
 			}
 		});
 	}

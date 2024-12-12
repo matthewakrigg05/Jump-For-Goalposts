@@ -1,16 +1,7 @@
 package leagueDB;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
-import league.Season;
-import league.Team;
-import leagueMembers.Player;
-
-public interface ComputeGeneralStatistics {
+public interface RetrieveGeneralStatistics {
 	
 	public int getYellows(Connection connection);
 	

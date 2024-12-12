@@ -191,7 +191,7 @@ public class AdminPanel extends JPanel {
 				
 				frame.getContentPane().removeAll();
 				frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
-				frame.getContentPane().add(new recordMatchPanel(frame, selectedMatch), BorderLayout.CENTER);
+				frame.getContentPane().add(new recordMatchPanel(frame, selectedMatch, frame.getAdminAccount()), BorderLayout.CENTER);
 				frame.revalidate();
 				frame.repaint();
 			}

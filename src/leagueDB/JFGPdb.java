@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import league.League;
-import league.Match;
 import league.Season;
 import league.Stadium;
 import league.Team;
