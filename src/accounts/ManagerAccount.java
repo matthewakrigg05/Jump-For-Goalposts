@@ -14,7 +14,7 @@ public class ManagerAccount extends Account {
 		super(id, emailAddress, password, false);
 	}
 	
-	public static void assignShirtNumDialog(Connection connection, Player player, int shirtNum) {
+	public void assignShirtNum(Connection connection, Player player, int shirtNum) {
 		 player.setShirtNum(shirtNum); 
 		 
 		 try {

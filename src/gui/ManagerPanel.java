@@ -19,6 +19,9 @@ public class ManagerPanel extends JPanel {
 	List<Player> players;
 	JfgpWindow frame;
 	JList playerList;
+	JLabel shirtNumLabel;
+	JTextArea shirtNum;
+	JButton assign;
 	ManagerAccount manager;
 	Insets insets;
 	Team team;
@@ -54,9 +57,18 @@ public class ManagerPanel extends JPanel {
 		gbc_matchesToRecordList.gridx = 1;
 		gbc_matchesToRecordList.gridy = 1;
 		panel.add(playerList, gbc_matchesToRecordList);
+		
+		shirtNumLabel = new JLabel("Assign a shirt number to selected player: ");
+		
+		shirtNum = new JTextArea();
+		
+		assign = new JButton("Assign");
 	}
 	
 	public void addActionListeners() {
 		
+		assign.addActionListener(e -> {
+			manager.assignShirtNum(frame.getDb().getConnection(), players.get(playerList.getSelectedIndex()), Integer.parseInt(shirtNum.getText()));
+		});
 	}
 }
