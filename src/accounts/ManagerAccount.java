@@ -14,8 +14,16 @@ public class ManagerAccount extends Account {
 		super(id, emailAddress, password, false);
 	}
 	
-	public static void assignShirtNumDialog(Player player, int shirtNum) {
+	public static void assignShirtNumDialog(Connection connection, Player player, int shirtNum) {
 		 player.setShirtNum(shirtNum); 
+		 
+		 try {
+			 PreparedStatement shirtNumStatement = connection.prepareStatement(
+					 "UPDATE players SET shirtNumber = ? WHERE playerId = ?;");
+			 shirtNumStatement.setInt(1, shirtNum);
+			 shirtNumStatement.setInt(2, player.getId());
+			 shirtNumStatement.executeUpdate();
+		 } catch (SQLException e) { e.printStackTrace(); }
 	}
 	
 	public Manager getManager(Connection connection) {
