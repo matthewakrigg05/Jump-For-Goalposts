@@ -1,1 +1,4 @@
-- select players for lineup (first 11, then max 9 subs)
+- assign shirt nums
+- example data method
+- comments
+- javadoc

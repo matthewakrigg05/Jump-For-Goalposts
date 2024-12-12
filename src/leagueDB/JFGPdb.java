@@ -10,8 +10,9 @@ public class JFGPdb {
 	
 	public JFGPdb() {
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:./JFGP.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:src/projectUtils/JFGP.db");
 			initTables(connection);
+			exampleData(connection);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,6 +28,10 @@ public class JFGPdb {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void exampleData(Connection connection) {
+		
 	}
 	
 	public static void initTables(Connection conn) {
