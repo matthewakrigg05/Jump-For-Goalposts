@@ -1,7 +1,7 @@
 package gui;
 import javax.swing.*;
 import accounts.*;
-import leagueDB.leagueData;
+import leagueDB.JFGPdb;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +14,11 @@ public class logInWindow extends JFrame {
 	
 	private JTextField emailField;
 	private JPasswordField passwordField;
-	private Connection connection;
+	private JFGPdb db;
 
-	public logInWindow(Connection connection) { 
+	public logInWindow(JFGPdb db) { 
 		initialise();
-		this.connection = connection; 
+		this.db = db; 
 		}
 
 	private void initialise() {
@@ -92,14 +92,14 @@ public class logInWindow extends JFrame {
 		logInButton.addActionListener(e -> {
 			String email = emailField.getText();
 			String password = String.valueOf(passwordField.getPassword());
-			logIn(email, password, connection);
 			dispose();
+			logIn(email, password, db.getConnection());
 		});
 		
 		setVisible(true);
 	}
 	
-	public static void logIn(String email, String password, Connection connection) {
+	public void logIn(String email, String password, Connection connection) {
 		try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
 	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
@@ -121,7 +121,7 @@ public class logInWindow extends JFrame {
 	                		
 	                	case "referee":
 	                		new JfgpWindow(new RefereeAccount(userId, email, password, 
-	                				leagueData.getRefereeFromId(connection, userId)), connection);
+	                				db.getRefereeFromId(userId)), connection);
 	                		break;
 	                		
 	                	case "manager":

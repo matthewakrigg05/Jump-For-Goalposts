@@ -1,10 +1,14 @@
 package gui;
+import java.util.List;
 
-import java.awt.GridBagConstraints;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
+import league.Season;
+import league.Team;
+import leagueDB.RetrieveGeneralStatistics;
+import leagueDB.JFGPdb;
+import leagueMembers.Player;
 
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
@@ -13,46 +17,33 @@ public class HomePanel extends JPanel {
 	// any interaction with this panel. Displays league table, some top goalscorers/assists and maybe
 	// some information on upcoming matches
 	JfgpWindow frame;
+	JFGPdb db;
+	Player topScorer;
+	
 	
 	public HomePanel(JfgpWindow frame) {
 		this.frame = frame;
-
-		JLabel label = new JLabel("test");
-		label.setFont(getFont());
-		GridBagConstraints gbc_recMatchesLabel = new GridBagConstraints();
-		gbc_recMatchesLabel.insets = getInsets();
-		gbc_recMatchesLabel.gridx = 5;
-		gbc_recMatchesLabel.gridy = 1;
-		add(label, gbc_recMatchesLabel);
+		this.db = frame.getDb();
+		Season currentSeason = db.findCurrentSeason();
 		
-		JList playerList = new JList();
-		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
-		gbc_matchesToRecordList.insets = getInsets();
-		gbc_matchesToRecordList.gridx = 5;
-		gbc_matchesToRecordList.gridy = 3;
-		add(playerList, gbc_matchesToRecordList);
+		List<Team> seasonTeams = db.findCurrentSeason().getSeasonTeams(db.getConnection());
+		String[] leagueTableCols = {"Team", "GP", "W", "D", "L", "Points"};
+		String[][] leagueTableData = db.findCurrentSeason().getLeagueTableData(db.getConnection());
+		topScorer = currentSeason.getTopScorer(db, db.findCurrentSeason());
 		
-		// league table
+		DefaultTableModel tableModel = new DefaultTableModel(leagueTableData, leagueTableCols);
+        JTable table = new JTable(tableModel);
+        table.setEnabled(false);
+        table.setOpaque(false);
+        table.setShowVerticalLines(false);
+        table.getColumnModel().getColumn(0).setMinWidth(200);
+        
+        JScrollPane tablePane = new JScrollPane(table);
+		add(tablePane);
 		
-		// top scorers and top assists
+		JLabel topScorerLabel = new JLabel("Top Scorer: " + topScorer.getFullName() + " " + topScorer.getGoals(db.getConnection()));
+		add(topScorerLabel);
 		
-		// upcoming matches - game weeks
-
 	}
-	
-//	@Override
-//	public void initialise() {
-//		
-//	}
-//	
-//	@Override
-//	public void addPanelComponents(JPanel panel) {
-//		
-//	}
-//	
-//	@Override
-//	public void addActionListeners() {
-//		
-//	}
 
 }

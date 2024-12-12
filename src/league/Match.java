@@ -1,4 +1,9 @@
 package league;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import leagueMembers.Referee;
 
 public class Match {
@@ -39,4 +44,18 @@ public class Match {
 
 	public int getAwayScore() { return awayScore; }
 	public void setAwayScore(int awayScore) { this.awayScore = awayScore; }
+	
+	public boolean checkRefAssigned(Connection connection) {
+		try {
+			PreparedStatement matchStatement = (connection).prepareStatement(
+			        "SELECT refereeId FROM matches WHERE matchId = ? AND refereeId IS NOT NULL;");
+			
+			matchStatement.setInt(1, getMatchId());
+			ResultSet res = matchStatement.executeQuery();
+			return res.next();
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return false;
+	}
 }

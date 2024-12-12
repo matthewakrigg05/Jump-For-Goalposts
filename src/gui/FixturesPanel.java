@@ -13,12 +13,14 @@ import league.Match;
 import league.Season;
 import league.Stadium;
 import league.Team;
-import leagueDB.leagueData;
+import leagueDB.JFGPdb;
+
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
 public class FixturesPanel extends JPanel {
 	JfgpWindow frame;
+	JFGPdb db;
 	Insets insets;
 	List<String> matchSelection = new ArrayList<String>();
 	List<Match> matches;
@@ -34,6 +36,7 @@ public class FixturesPanel extends JPanel {
 	
 	public FixturesPanel(JfgpWindow frame) {
 		this.frame = frame;
+		this.db = frame.getDb();
 		initialise();
 	}
 
@@ -46,8 +49,8 @@ public class FixturesPanel extends JPanel {
 	}
 	
 	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
-		currentSeason = leagueData.getCurrentSeason(frame.getDbConnection());
-		matches = new ArrayList<Match>(leagueData.getSeasonFixtures(frame.getDbConnection(), currentSeason));
+		currentSeason = db.findCurrentSeason();
+		matches = new ArrayList<Match>(currentSeason.getSeasonFixtures(db));
 		for(Match fixture : matches) { matchSelection.add(fixture.getMatchSummary()); }
 		
 		matchList = new JList(matchSelection.toArray());

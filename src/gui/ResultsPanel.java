@@ -6,17 +6,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import league.Match;
 import league.Season;
 import league.Stadium;
-import leagueDB.leagueData;
 import leagueMembers.Referee;
 
 public class ResultsPanel extends JPanel {
@@ -55,8 +52,8 @@ public class ResultsPanel extends JPanel {
 	}
 	
 	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
-		currentSeason = leagueData.getCurrentSeason(frame.getDbConnection());
-		results = new ArrayList<Match>(leagueData.getSeasonResults(frame.getDbConnection(), currentSeason));
+		currentSeason = frame.getDb().findCurrentSeason();
+		results = new ArrayList<Match>(currentSeason.getSeasonResults(frame.getDb()));
 		for(Match result : results) { matchSelection.add(result.getMatchSummary()); }
 		
 		matchList = new JList(matchSelection.toArray());
