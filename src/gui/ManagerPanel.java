@@ -41,7 +41,6 @@ public class ManagerPanel extends JPanel {
 		addActionListeners();
 	}
 	
-
 	public void addPanelComponents(JPanel panel) {
 		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
 		
