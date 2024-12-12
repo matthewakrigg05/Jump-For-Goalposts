@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import accounts.ManagerAccount;
 import league.Team;
-import leagueDB.leagueData;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
@@ -27,7 +26,7 @@ public class ManagerPanel extends JPanel {
 	public ManagerPanel(JfgpWindow frame, ManagerAccount manager) { 
 		this.frame = frame; 
 		this.manager = manager;
-		this.team = leagueData.getManagerTeam(frame.getDbConnection(), leagueData.getManagerFromId(frame.getDbConnection(), manager.getId()));
+		this.team = manager.getManager(frame.getDb().getConnection()).getManagerTeam(frame.getDb().getConnection());
 		initialise(); }
 	
 
@@ -45,7 +44,7 @@ public class ManagerPanel extends JPanel {
 		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
 		
 		if (team != null){
-			players = new ArrayList<Player>(leagueData.getTeamPlayers(frame.getDbConnection(), team));
+			players = new ArrayList<Player>(team.getTeamPlayers(frame.getDb().getConnection()));
 			for(Player player : players) { playerSelection.add(player.getFullName()); }
 		}
 		

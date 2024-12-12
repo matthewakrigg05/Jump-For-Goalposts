@@ -2,7 +2,19 @@ package leagueDB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import league.League;
+import league.Match;
+import league.Season;
+import league.Stadium;
+import league.Team;
+import leagueMembers.Manager;
+import leagueMembers.Player;
+import leagueMembers.Referee;
 
 public class JFGPdb {
 	
@@ -11,8 +23,8 @@ public class JFGPdb {
 	public JFGPdb() {
 		try {
 			connection = DriverManager.getConnection("jdbc:sqlite:src/projectUtils/JFGP.db");
-			initTables(connection);
-			exampleData(connection);
+			initTables();
+			exampleData();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -30,11 +42,11 @@ public class JFGPdb {
 		}
 	}
 	
-	public static void exampleData(Connection connection) {
+	public static void exampleData() {
 		
 	}
 	
-	public static void initTables(Connection conn) {
+	public static void initTables() {
 		/*
 		 * Following set of statements are responsible for initialising the database,
 		 * creating all the tables that should be necessary for the db to function as 
@@ -158,7 +170,7 @@ public class JFGPdb {
     				createLeague, createAdmin, byeWeek};
             
             for (String statement : statements) {
-            	PreparedStatement DBstatement = (conn).prepareStatement(statement);
+            	PreparedStatement DBstatement = connection.prepareStatement(statement);
             	DBstatement.executeUpdate();
             }
 
@@ -167,4 +179,279 @@ public class JFGPdb {
 			System.exit(0);
 		}
 	}
+	
+	public Referee getRefereeFromId(int id) {
+		try {
+	        PreparedStatement refStatement = connection.prepareStatement(
+	                "SELECT * FROM referees WHERE userId = ?;" );
+	
+	        refStatement.setInt(1, id);
+	        ResultSet refResult = refStatement.executeQuery(); 
+	        
+	        Referee ref = new Referee(
+	        		refResult.getInt("refereeId"),
+	        		refResult.getString("fname"),
+	        		refResult.getString("lName"), 
+	        		refResult.getString("preferredLocation"),
+	        		id
+	        		);
+	       
+			return ref;
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public List<Referee> getAllReferees() {
+		List<Referee> referees = new ArrayList<Referee>();
+		
+		try {
+			PreparedStatement refsStatement = (connection).prepareStatement(
+			        "SELECT * FROM referees");
+			ResultSet refResult = refsStatement.executeQuery();
+			
+			while(refResult.next()) {
+				Referee ref = new Referee(
+		        		refResult.getInt("refereeId"),
+		        		refResult.getString("fname"),
+		        		refResult.getString("lName"), 
+		        		refResult.getString("preferredLocation"),
+		        		refResult.getInt("userId")
+		        		);
+				
+				referees.add(ref);
+			}
+			
+			for(Referee ref : referees) { ref.setRefAcc(ref.getRefereeAccount(connection, ref.getUserId())); }
+					
+			return referees;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public Manager getManagerFromId(int id) {
+		try {
+	        PreparedStatement manStatement = connection.prepareStatement(
+	                "SELECT * FROM managers WHERE userId = ?;" );
+	
+	        manStatement.setInt(1, id);
+	        ResultSet manResult = manStatement.executeQuery(); 
+	        
+	        Manager man = new Manager(
+	        		manResult.getInt("managerId"),
+	        		manResult.getString("fname"),
+	        		manResult.getString("lName"),
+	        		id
+	        		);
+	       
+			return man;
+		
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public List<Manager> getAllManagers() {
+		List<Manager> managers = new ArrayList<Manager>();
+		
+		try {
+			PreparedStatement manStatement = (connection).prepareStatement(
+			        "SELECT * FROM managers;");
+			ResultSet manResult = manStatement.executeQuery();
+			
+			while(manResult.next()) {
+				Manager man = new Manager(
+						manResult.getInt("managerId"),
+						manResult.getString("fname"),
+						manResult.getString("lName"), 
+						manResult.getInt("userId")
+		        		);
+				
+				managers.add(man);
+			}
+			
+			for(Manager man : managers) { man.setManagerAcc(man.getManagerAccount(connection, man.getUserId())); }
+					
+			return managers;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public List<Player> getAllPlayers() {
+		List<Player> players = new ArrayList<Player>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM players;");
+			ResultSet playerResult = playerStatement.executeQuery();
+			
+			while(playerResult.next()) {
+				Player player = new Player(
+						playerResult.getInt("playerId"),
+						playerResult.getString("fname"),
+						playerResult.getString("lName")
+		        		);
+				players.add(player);
+			}
+			return players;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return null;
+	}
+	
+	public List<Team> getAllTeams() {
+		List<Team> teams = new ArrayList<Team>();
+		
+		try {
+			PreparedStatement teamsStatement = (connection).prepareStatement( "SELECT * FROM teams");
+			ResultSet teamResult = teamsStatement.executeQuery();
+			
+			while(teamResult.next()) {
+				if (teamResult.getInt("teamId") == 1) { continue; } 
+				else {
+				Team team = new Team(
+						teamResult.getInt("teamId"),
+						teamResult.getString("teamName")
+		        		);
+				teams.add(team);
+				}
+			}				
+			return teams;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public Team getTeam(int id) { 
+		Team team = null;
+		
+		try {
+			PreparedStatement teamStatement = (connection).prepareStatement(
+			        "SELECT * FROM teams WHERE teamId = ?;");
+			
+			teamStatement.setInt(1, id);
+			ResultSet teamResult = teamStatement.executeQuery();
+			team = new Team(teamResult.getInt("teamId"), 
+					teamResult.getString("teamName")
+					); 
+					
+			return team;
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public Season findCurrentSeason() {
+		try {
+			PreparedStatement currentSeasonStatement = (connection).prepareStatement(
+					"SELECT * FROM seasons WHERE isCurrent = true LIMIT 1;" );
+			ResultSet seasonResult = currentSeasonStatement.executeQuery();
+			
+			Season currentSeason = new Season( 
+					seasonResult.getInt("seasonId"),
+					seasonResult.getString("seasonStart"),
+					seasonResult.getString("seasonEnd"),
+					seasonResult.getBoolean("isCurrent")
+					);
+			
+			return currentSeason;
+		} catch (SQLException e) { e.printStackTrace(); return null; }	
+	}
+	
+	public static List<Stadium> getAllStadiums() {
+		List<Stadium> stadiums = new ArrayList<Stadium>();
+		
+		try {
+			PreparedStatement stadiumStatement = (connection).prepareStatement( "SELECT * FROM stadiums");
+			ResultSet stadiumResult = stadiumStatement.executeQuery();
+			
+			while(stadiumResult.next()) {
+				Stadium stadium = new Stadium(
+						stadiumResult.getInt("stadiumId"),
+						stadiumResult.getString("stadiumName"),
+						stadiumResult.getString("capacity"),
+						stadiumResult.getString("stadiumLocation")
+		        		);
+				stadiums.add(stadium);
+			}				
+			return stadiums;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
+	public static List<Manager> allTeamManagers() {
+		List<Manager> teamManagers = new ArrayList<Manager>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM managers "
+			        + "JOIN teamEmployee ON managers.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId IS NOT NULL;");
+			
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Manager manager = new Manager(
+						managers.getInt("playerId"),
+						managers.getString("fname"),
+						managers.getString("lName"),
+						managers.getInt("userId")
+		        		);
+				teamManagers.add(manager);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teamManagers;
+	}
+	
+	public static List<Player> allTeamPlayers() {
+		List<Player> teamManagers = new ArrayList<Player>();
+		
+		try {
+			PreparedStatement playerStatement = connection.prepareStatement(
+			        "SELECT * FROM players "
+			        + "JOIN teamEmployee ON players.teamEmployeeId = teamEmployee.employeeId "
+			        + "WHERE teamId IS NOT NULL;");
+			
+			ResultSet managers = playerStatement.executeQuery();
+			
+			while(managers.next()) {
+				Player manager = new Player(
+						managers.getInt("playerId"),
+						managers.getString("fname"),
+						managers.getString("lName")
+		        		);
+				teamManagers.add(manager);
+			}
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return teamManagers;
+	}
+	
+	public League getLeague() {
+		try {
+			PreparedStatement leagueStatement = connection.prepareStatement(
+			        "SELECT * FROM league WHERE leagueId = 1");
+			ResultSet leagueResult = leagueStatement.executeQuery();
+			
+			League jfgpLeague = new League(
+					leagueResult.getInt("leagueId"),
+					leagueResult.getString("leagueName"));
+					
+			return jfgpLeague;
+			
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
+	
 }

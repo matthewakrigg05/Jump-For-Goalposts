@@ -73,7 +73,7 @@ public class toolBar extends JToolBar {
 			add(toolBarButton[6]);
 		
 			toolBarButton[6].addActionListener(e -> {
-				new logInWindow(frame.getDbConnection()).setVisible(true);
+				new logInWindow(frame.getDb()).setVisible(true);
 				frame.dispose();
 			});
 		}

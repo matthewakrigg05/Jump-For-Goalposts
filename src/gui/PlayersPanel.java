@@ -8,13 +8,10 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import leagueDB.ComputePlayerStatistics;
-import leagueDB.leagueData;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class PlayersPanel extends JPanel implements leagueData, ComputePlayerStatistics {
+public class PlayersPanel extends JPanel {
 	
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
@@ -47,7 +44,7 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 	}
 	
 	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
-		players = new ArrayList<Player>(leagueData.getAllPlayers(frame.getDbConnection()));
+		players = new ArrayList<Player>(frame.getDb().getAllPlayers());
 		for(Player player : players) { playerSelection.add(player.getFullName()); }
 		
 		playerList = new JList(playerSelection.toArray());
@@ -66,7 +63,6 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 		
 		playerNameLabel = new JLabel("Player: ");
 		teamLabel = new JLabel("Plays for: ");
-		gamesPlayedLabel = new JLabel("Games Played: ");
 		goalsLabel = new JLabel("Goals: ");
 		assitsLabel = new JLabel("Assits: ");
 		foulsLabel = new JLabel("Fouls: ");
@@ -75,7 +71,6 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 		
 		playerProfile.add(playerNameLabel);
 		playerProfile.add(teamLabel);
-		playerProfile.add(gamesPlayedLabel);
 		playerProfile.add(goalsLabel);
 		playerProfile.add(assitsLabel);
 		playerProfile.add(foulsLabel);
@@ -94,13 +89,12 @@ public class PlayersPanel extends JPanel implements leagueData, ComputePlayerSta
 			public void valueChanged(ListSelectionEvent e) {
 				selectedPlayer = players.get(playerList.getSelectedIndex());
 				playerNameLabel.setText("Player: " + selectedPlayer.getFullName());
-				teamLabel.setText("Plays for: " + leagueData.getPlayerTeam(frame.getDbConnection(), selectedPlayer));
-				gamesPlayedLabel.setText("Games Played: ");
-				goalsLabel.setText("Goals: " + ComputePlayerStatistics.getPlayerGoals(frame.getDbConnection(), selectedPlayer));
-				assitsLabel.setText("Assits: " + ComputePlayerStatistics.getPlayerAssists(frame.getDbConnection(), selectedPlayer));
-				foulsLabel.setText("Fouls: " + ComputePlayerStatistics.getPlayerFouls(frame.getDbConnection(), selectedPlayer));
-				yellowsLabel.setText("Yellow Cards: " + ComputePlayerStatistics.getPlayerYellows(frame.getDbConnection(), selectedPlayer));
-				redsLabel.setText("Red Cards: " + ComputePlayerStatistics.getPlayerRed(frame.getDbConnection(), selectedPlayer));
+				teamLabel.setText("Plays for: " + selectedPlayer.getPlayerTeam(frame.getDb().getConnection()));
+				goalsLabel.setText("Goals: " + selectedPlayer.getGoals(frame.getDb().getConnection()));
+				assitsLabel.setText("Assits: " + selectedPlayer.getAssists(frame.getDb().getConnection()));
+				foulsLabel.setText("Fouls: " + selectedPlayer.getFouls(frame.getDb().getConnection()));
+				yellowsLabel.setText("Yellow Cards: " + selectedPlayer.getYellows(frame.getDb().getConnection()));
+				redsLabel.setText("Red Cards: " + selectedPlayer.getReds(frame.getDb().getConnection()));
 			}
 		});
 		

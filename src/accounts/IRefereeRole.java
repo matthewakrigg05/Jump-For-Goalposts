@@ -9,12 +9,11 @@ import javax.swing.*;
 import gui.JfgpWindow;
 import league.Match;
 import league.MatchEvent;
-import leagueDB.leagueData;
 import leagueMembers.Player;
 
 public interface IRefereeRole {
 	
-	public static Match  matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
+	public static Match matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
 		String matchOutcome;
 		
 		if (homeScore > awayScore) { matchOutcome = "Home Win"; }
@@ -59,12 +58,12 @@ public interface IRefereeRole {
 		List<String> playersList = new ArrayList<String>();
 		List<Player> players = new ArrayList<Player>();
 		
-		List<Player> homeTeamPlayers = leagueData.getTeamPlayers(frame.getDbConnection(), match.getHomeTeam()); 
+		List<Player> homeTeamPlayers = match.getHomeTeam().getTeamPlayers(frame.getDb().getConnection()); 
         for(Player i : homeTeamPlayers) { 
         	playersList.add(match.getHomeTeam().getName() + " " + i.getFullName());
         	players.add(i); }
         
-        List<Player> awayTeamPlayers = leagueData.getTeamPlayers(frame.getDbConnection(), match.getAwayTeam()); 
+        List<Player> awayTeamPlayers = match.getAwayTeam().getTeamPlayers(frame.getDb().getConnection()); 
         for(Player i : awayTeamPlayers) { 
         	playersList.add(match.getAwayTeam().getName() + " " + i.getFullName());
         	players.add(i);

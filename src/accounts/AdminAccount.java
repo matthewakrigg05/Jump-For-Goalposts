@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import league.*;
-import leagueDB.leagueData;
+import leagueDB.JFGPdb;
 import leagueMembers.*;
 
-public class AdminAccount extends Account implements leagueData {
+public class AdminAccount extends Account {
 	
 	public AdminAccount(int id, String emailAddress, String password) {
 		super(id, emailAddress, password, true);
@@ -18,13 +18,13 @@ public class AdminAccount extends Account implements leagueData {
 
 	public void removeManager(Connection connection, Manager man) {
 		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM referees WHERE refereeId = ?;");
 			
 			seasonStatement.setInt(1, man.getId());
 			seasonStatement.executeUpdate();
 			
-			PreparedStatement refAccDel = (connection).prepareStatement(
+			PreparedStatement refAccDel = connection.prepareStatement(
 			        "DELETE FROM userAccounts WHERE userId = ?;");
 			
 			refAccDel.setInt(1, man.getUserId());
@@ -35,7 +35,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void createManager(Connection connection, String fname, String lname, int id) {
 		try {
-			PreparedStatement manStatement = (connection).prepareStatement(
+			PreparedStatement manStatement = connection.prepareStatement(
 			        "INSERT INTO managers(fName, lName, userId) VALUES (?, ?, ?);");
 			
 			manStatement.setString(1, fname);
@@ -70,7 +70,7 @@ public class AdminAccount extends Account implements leagueData {
 	public void createTeam(Connection connection, String teamName) {
 		try {
 			
-			PreparedStatement teamStatement = (connection).prepareStatement(
+			PreparedStatement teamStatement = connection.prepareStatement(
 			        "INSERT INTO teams(teamName) VALUES (?);");
 			teamStatement.setString(1, teamName);
 			teamStatement.executeUpdate();
@@ -80,7 +80,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void removeTeam(Connection connection, Team team) {
 		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM teams WHERE teamId = ?;");
 			
 			seasonStatement.setInt(1, team.getTeamId());
@@ -115,7 +115,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void assignRef(Connection connection, Match match, Referee ref) {
 		try {
-			PreparedStatement assignRefStatement = (connection).prepareStatement(
+			PreparedStatement assignRefStatement = connection.prepareStatement(
 			        "UPDATE matches SET refereeId = ? WHERE matchId = ?;");
 			
 			assignRefStatement.setInt(1, ref.getId());
@@ -127,13 +127,13 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void removeReferee(Connection connection, Referee ref) {
 		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM referees WHERE refereeId = ?;");
 			
 			seasonStatement.setInt(1, ref.getId());
 			seasonStatement.executeUpdate();
 			
-			PreparedStatement refAccDel = (connection).prepareStatement(
+			PreparedStatement refAccDel = connection.prepareStatement(
 			        "DELETE FROM userAccounts WHERE userId = ?;");
 			
 			refAccDel.setInt(1, ref.getUserId());
@@ -144,7 +144,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void createReferee(Connection connection, String fname, String lname, String city, int id) {
 		try {
-			PreparedStatement refStatement = (connection).prepareStatement(
+			PreparedStatement refStatement = connection.prepareStatement(
 			        "INSERT INTO referees(fName, lName, preferredLocation, leagueId, userId) VALUES (?, ?, ?, 1, ?);");
 			
 			refStatement.setString(1, fname);
@@ -158,15 +158,15 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void createRefereeAccount(Connection connection, String fname, String lname, String city) {
 		try {
-			PreparedStatement refAccStatement = (connection).prepareStatement(
+			PreparedStatement refAccStatement = connection.prepareStatement(
 			        "INSERT INTO userAccounts(userType, emailAddress, password, leagueId) VALUES ('referee', ?, ?, 1);");
 			
 			refAccStatement.setString(1, lname + "@jfgp.org");
 			refAccStatement.setString(2, lname + city);
 			refAccStatement.executeUpdate();
 			
-			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT userId FROM userAccounts ORDER BY ROWID DESC limit 1;"));
+			PreparedStatement lastId = connection.prepareStatement(
+					"SELECT userId FROM userAccounts ORDER BY ROWID DESC limit 1;");
 			
 			ResultSet id = lastId.executeQuery();
 			
@@ -179,7 +179,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void changeLeagueName(Connection connection, String newName) {
 		try {
-			PreparedStatement leagueStatement = (connection).prepareStatement(
+			PreparedStatement leagueStatement = connection.prepareStatement(
 			        "UPDATE league SET leagueName = ? WHERE leagueId = 1;");
 			
 			leagueStatement.setString(1, newName);
@@ -191,11 +191,11 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void createSeason(Connection connection, String start, String end) {
 		try {
-			PreparedStatement isCurrentSeason = (connection).prepareStatement(
+			PreparedStatement isCurrentSeason = connection.prepareStatement(
 					"SELECT isCurrent FROM seasons WHERE isCurrent = true;");
 			ResultSet isCurrent = isCurrentSeason.executeQuery();
 			
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "INSERT INTO seasons(seasonStart, seasonEnd, isCurrent, leagueId) VALUES (?, ?, ?, 1);");
 			seasonStatement.setString(1, start);
 			seasonStatement.setString(2, end);
@@ -209,7 +209,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void removeSeason(Connection connection, Season season) {
 		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM seasons WHERE seasonId = ?;");
 			
 			seasonStatement.setInt(1, season.getId());
@@ -221,11 +221,11 @@ public class AdminAccount extends Account implements leagueData {
 	public void setCurrentSeason(Connection connection, int seasonId) {
 		
 		try {
-			PreparedStatement deselectCurrSeasonStatement = (connection).prepareStatement(
+			PreparedStatement deselectCurrSeasonStatement = connection.prepareStatement(
 					"UPDATE seasons SET isCurrent = false WHERE isCurrent = true;" );
 			deselectCurrSeasonStatement.executeUpdate();
 			
-			PreparedStatement setCurrSeasonStatement = (connection).prepareStatement(
+			PreparedStatement setCurrSeasonStatement = connection.prepareStatement(
 					"UPDATE seasons SET isCurrent = true WHERE seasonId = ?;" );
 			
 			setCurrSeasonStatement.setInt(1, seasonId);
@@ -233,9 +233,9 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }	
 	}
 	
-	public static Season getCurrentSeason(Connection connection) {
+	public static Season getCurrentSeason(JFGPdb db) {
 		try {
-			PreparedStatement currentSeasonStatement = (connection).prepareStatement(
+			PreparedStatement currentSeasonStatement = (db.getConnection()).prepareStatement(
 					"SELECT * FROM seasons WHERE isCurrent = true LIMIT 1;" );
 			ResultSet seasonResult = currentSeasonStatement.executeQuery();
 			
@@ -252,7 +252,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		try {
-			PreparedStatement seasonStatement = (connection).prepareStatement(
+			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
 			
 			seasonStatement.setInt(1 , matchWeek);
@@ -264,8 +264,8 @@ public class AdminAccount extends Account implements leagueData {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	public void createSeasonMatches(Connection connection, List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(leagueData.getTeam(connection, 1)); }
+	public void createSeasonMatches(JFGPdb db, List<Team> teams, Season season) {
+		if (teams.size() % 2 != 0) {teams.add(db.getTeam(1)); }
 	
 	    int numRounds = teams.size() - 1; // Number of rounds
 	    int numMatchesPerRound = teams.size() / 2;
@@ -278,15 +278,15 @@ public class AdminAccount extends Account implements leagueData {
 	            Team homeTeam = (i == 0) ? teams.get(0) : rotatingTeams.get(i - 1);
 	            Team awayTeam = rotatingTeams.get(rotatingTeams.size() - i - 1);
 	            
-	            createMatch(connection, homeTeam, awayTeam, season, round + 1);
-	            createMatch(connection, awayTeam, homeTeam, season,  numRounds + round + 1);
+	            createMatch(db.getConnection(), homeTeam, awayTeam, season, round + 1);
+	            createMatch(db.getConnection(), awayTeam, homeTeam, season,  numRounds + round + 1);
 	        }
 	        Collections.rotate(rotatingTeams, 1);
 	    }
 	   
 		try {
 			for (Team team : teams) {
-				PreparedStatement teamSeasonStatement = connection.prepareStatement(
+				PreparedStatement teamSeasonStatement = db.getConnection().prepareStatement(
 					"INSERT INTO teamSeason(teamId, seasonId) VALUES (?, ?);"
 					);
 			teamSeasonStatement.setInt(1, team.getTeamId()); 
@@ -298,7 +298,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void createStadium(Connection connection, String name, String cap, String loc) {
 		try {
-			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			PreparedStatement stadiumStatement = connection.prepareStatement(
 			        "INSERT INTO stadiums(stadiumName, capacity, stadiumLocation) VALUES (?, ?, ?);");
 			stadiumStatement.setString(1, name);
 			stadiumStatement.setString(2, cap);
@@ -310,7 +310,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void removeStadium(Connection connection, Stadium stadium) {
 		try {
-			PreparedStatement stadiumStatement = (connection).prepareStatement(
+			PreparedStatement stadiumStatement = connection.prepareStatement(
 			        "DELETE FROM stadiums WHERE stadiumId = ?;");
 			stadiumStatement.setInt(1, stadium.getStadiumId());
 			stadiumStatement.executeUpdate();
@@ -320,7 +320,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void assignStadium(Connection connection, Team team, Stadium stadium) {
 		try {
-			PreparedStatement assignStadiumStatement = (connection).prepareStatement(
+			PreparedStatement assignStadiumStatement = connection.prepareStatement(
 			        "UPDATE teams SET stadiumId = ? WHERE teamId = ?;");
 			assignStadiumStatement.setInt(1, team.getTeamId());
 			assignStadiumStatement.setInt(2, stadium.getStadiumId());
@@ -331,18 +331,18 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void assignPlayerToTeam(Connection connection, Team team, Player player, String contract) {
 		try {
-			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			PreparedStatement newEmpStatement = connection.prepareStatement(
 			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
 			newEmpStatement.setInt(1, team.getTeamId());
 			newEmpStatement.setString(2, contract);
 			newEmpStatement.executeUpdate();
-		
-			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+		 
+			PreparedStatement lastId = connection.prepareStatement(
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;");
 			ResultSet res = lastId.executeQuery();	
 			int playerEmpId = res.getInt("employeeId");
 			
-			PreparedStatement playerEmp = (connection).prepareStatement(
+			PreparedStatement playerEmp = connection.prepareStatement(
 			        "UPDATE players SET teamEmployeeId = ? WHERE playerId = ?;");
 			playerEmp.setInt(1, playerEmpId);
 			playerEmp.setInt(2, player.getId());
@@ -352,18 +352,18 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void assignManagerToTeam(Connection connection, Team team, Manager manager, String contract) {
 		try {
-			PreparedStatement newEmpStatement = (connection).prepareStatement(
+			PreparedStatement newEmpStatement = connection.prepareStatement(
 			        "INSERT INTO teamEmployee(teamId, contractType) VALUES (?, ?);");
 			newEmpStatement.setInt(1, team.getTeamId());
 			newEmpStatement.setString(2, contract);
 			newEmpStatement.executeUpdate();
 		
-			PreparedStatement lastId = (connection.prepareStatement(
-					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;"));
+			PreparedStatement lastId = connection.prepareStatement(
+					"SELECT employeeId FROM teamEmployee ORDER BY ROWID DESC limit 1;");
 			ResultSet res = lastId.executeQuery();	
 			int playerEmpId = res.getInt("employeeId");
 			
-			PreparedStatement playerEmp = (connection).prepareStatement(
+			PreparedStatement playerEmp = connection.prepareStatement(
 			        "UPDATE managers SET teamEmployeeId = ? WHERE managerId = ?;");
 			playerEmp.setInt(1, playerEmpId);
 			playerEmp.setInt(2, manager.getId());
@@ -374,7 +374,7 @@ public class AdminAccount extends Account implements leagueData {
 	
 	public void unassignManagerFromTeam(Connection connection, Manager manager) {
 		try {
-			PreparedStatement playerEmp = (connection).prepareStatement(
+			PreparedStatement playerEmp = connection.prepareStatement(
 			        "DELETE FROM teamEmployee WHERE employeeId IN (SELECT teamEmployeeId FROM managers WHERE managerId = ?);");
 			playerEmp.setInt(2, manager.getId());
 			playerEmp.executeUpdate();

@@ -102,8 +102,8 @@ public class recordMatchPanel extends JPanel implements IRefereeRole {
 			});
 		
 		recordButton.addActionListener(e -> {			
-			Match res = IRefereeRole.matchToResult(frame.getDbConnection(), match, homeScore, awayScore);
-			IRefereeRole.recordMatchEvents(frame.getDbConnection(), events, res);
+			Match res = IRefereeRole.matchToResult(frame.getDb().getConnection(), match, homeScore, awayScore);
+			IRefereeRole.recordMatchEvents(frame.getDb().getConnection(), events, res);
 			JOptionPane.showMessageDialog(frame, "Successfully recorded!");
 			frame.getContentPane().removeAll();
 			frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
