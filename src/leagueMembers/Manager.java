@@ -10,7 +10,6 @@ import league.Team;
 public class Manager extends Person {
 	
 	private String preferredFormation;
-	private int managerAccId;
 	private ManagerAccount managerAcc;
 
 	public Manager(int id, String fName, String lName, int userId) { super(id, fName, lName, userId); }
@@ -21,9 +20,6 @@ public class Manager extends Person {
 	public ManagerAccount getManagerAcc() { return managerAcc; }
 	public void setManagerAcc(ManagerAccount managerAcc) { this.managerAcc = managerAcc; }
 	
-	public void setUserId(int id) { this.managerAccId = id; }
-	public int getUserId() { return this.managerAccId; }
-	
 	public Team getManagerTeam(Connection connection) {
 		Team managerTeam = null;
 		
@@ -33,7 +29,6 @@ public class Manager extends Person {
 			        + "JOIN teamEmployee ON teams.teamId = teamEmployee.teamId "
 			        + "JOIN managers ON managers.teamEmployeeId = teamEmployee.employeeId "
 			        + "WHERE managerId = ?;");
-			
 			playerStatement.setInt(1, getId());
 			ResultSet managers = playerStatement.executeQuery();
 			
@@ -54,7 +49,6 @@ public class Manager extends Person {
 		try {
 	        PreparedStatement manAccStatement = connection.prepareStatement(
 	                "SELECT * FROM userAccounts WHERE userId = ? AND userType = 'manager';" );
-	
 	        manAccStatement.setInt(1, id);
 	        ResultSet refAccResult = manAccStatement.executeQuery(); 
 	        
@@ -71,10 +65,13 @@ public class Manager extends Person {
 		return null;
 	}
 	
+	// searches through employees of teams to see if manager appears, this is so that when
+	// assigning managers, appropriate dialog can be displayed asking the user if they are
+	// sure that they want to carry out the assignment
 	public boolean checkManagerAssigned(Connection connection) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(
-			        "SELECT teamId FROM teams WHERE teamId = ? AND stadiumId IS NOT NULL;");
+					"SELECT teamEmployeeId FROM managers WHERE managerId = ? AND teamEmployeeId IS NOT NULL;");
 			
 			matchStatement.setInt(1, getId());
 			ResultSet res = matchStatement.executeQuery();

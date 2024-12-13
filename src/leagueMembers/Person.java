@@ -1,12 +1,15 @@
 package leagueMembers;
-import java.sql.Date;
+
+/*
+ * A template for the other classes that are in this package, handling basic functionality and 
+ * holding generic data that all people within the system are likely to have
+ */
 
 abstract class Person {
 
 	private int id;
 	private String fName;
 	private String lName;
-	private Date DoB;
 	private String contractType;
 	private int userId;
 	
@@ -33,9 +36,6 @@ abstract class Person {
 	
 	public String getLName() { return this.lName; }
 	public void setLName(String lName) { this.lName = lName; }
-	
-	public Date getDoB() { return this.DoB; }
-	public void setDoB(Date DoB) { this.DoB = DoB; }
 	
 	public String getContractType() { return this.contractType; }
 	public void setContractType(String type) { this.contractType = type; }

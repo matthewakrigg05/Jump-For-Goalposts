@@ -14,7 +14,6 @@ public class Referee extends Person {
 	
 	private String preferredLocation;
 	private RefereeAccount refereesAccount;
-	private int refAccId;
 	private String[] gamesOfficiated;
 	private String[] matchesToAttend;
 
@@ -25,8 +24,7 @@ public class Referee extends Person {
 	}
 	
 	public Referee(int id, String fName, String lName, String location, int refAccId) {
-		super(id, fName, lName);
-		this.refAccId = refAccId;
+		super(id, fName, lName, refAccId);
 		setPreferredLocation(location);
 	}
 
@@ -43,15 +41,11 @@ public class Referee extends Person {
 	public String[] getMatchesToAttend() { return matchesToAttend; }
 	public void setMatchesToAttend(String[] matchesToAttend) { this.matchesToAttend = matchesToAttend; }
 	
-	public int getUserId() { return this.refAccId; }
-	
 	public void setRefAcc(RefereeAccount refAcc) { this.refereesAccount = refAcc; }
-	
 	public RefereeAccount getRefereeAccount(Connection connection, int id) {
 		try {
 	        PreparedStatement refAccStatement = connection.prepareStatement(
 	                "SELECT * FROM userAccounts WHERE userId = ? AND userType = 'referee';" );
-	
 	        refAccStatement.setInt(1, getId());
 	        ResultSet refAccResult = refAccStatement.executeQuery(); 
 	        
@@ -69,6 +63,8 @@ public class Referee extends Person {
 		return null;
 	}
 	
+	// retrieves only matches that the specific instance of the referee is assigned to,
+	// this is used to display the matches that the referee can record on the record matches panel
 	public List<Match> getNextFiveRefMatches(JFGPdb db) {
 		List<Match> matchesToAttend = new ArrayList<Match>();
 		
