@@ -47,7 +47,6 @@ public class Player extends Person implements RetrieveGeneralStatistics {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
 		return goals;
 	}
 

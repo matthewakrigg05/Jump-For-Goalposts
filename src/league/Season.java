@@ -89,7 +89,7 @@ public class Season {
 	public int getCurrentGameWeek(Connection connection) {
 		try {
 			PreparedStatement currentMatchWeekStatement = (connection).prepareStatement(
-					"SELECT MIN(matchWeek) AS currentWeek FROM matches WHERE isComplete = 0 AND AND (homeTeamId <> 1 AND awayTeamId <> 1) seasonId = ?;" );
+					"SELECT MIN(matchWeek) AS currentWeek FROM matches WHERE isComplete = 0 AND (homeTeamId <> 1 AND awayTeamId <> 1) AND seasonId = ?;" );
 			currentMatchWeekStatement.setInt(1, getId());
 			ResultSet matchweekResult = currentMatchWeekStatement.executeQuery();
 			

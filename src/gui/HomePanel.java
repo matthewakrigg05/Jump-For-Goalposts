@@ -1,12 +1,9 @@
 package gui;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import league.Season;
-import league.Team;
-import leagueDB.RetrieveGeneralStatistics;
 import leagueDB.JFGPdb;
 import leagueMembers.Player;
 
@@ -21,16 +18,16 @@ public class HomePanel extends JPanel implements IPanel {
 	Player topScorer;
 	Season currentSeason;
 	
-	
 	public HomePanel(JfgpWindow frame) {
 		this.frame = frame;
 		this.db = frame.getDb();
-		currentSeason = db.findCurrentSeason();
+		this.currentSeason = db.findCurrentSeason();
+		initialise();
 	}
 
 	@Override
 	public void initialise() {
-		addPanelComponents(new JPanel());
+		addPanelComponents(this);
 		addActionListeners();
 	}
 
@@ -39,7 +36,6 @@ public class HomePanel extends JPanel implements IPanel {
 
 	@Override
 	public void addPanelComponents(JPanel panel) {
-		List<Team> seasonTeams = db.findCurrentSeason().getSeasonTeams(db.getConnection());
 		String[] leagueTableCols = {"Team", "GP", "W", "D", "L", "Points"};
 		String[][] leagueTableData = db.findCurrentSeason().getLeagueTableData(db.getConnection());
 		topScorer = currentSeason.getTopScorer(db, db.findCurrentSeason());
@@ -56,6 +52,5 @@ public class HomePanel extends JPanel implements IPanel {
 		
 		JLabel topScorerLabel = new JLabel("Top Scorer: " + topScorer.getFullName() + " " + topScorer.getGoals(db.getConnection()));
 		panel.add(topScorerLabel);
-		
 	}
 }
