@@ -17,6 +17,7 @@ public class Team implements RetrieveGeneralStatistics {
 	private String name;
 	private Stadium stadium;
 	private Manager currentManager;
+	private List<Player> players;
 	
 	public Team(int id, String name) {
 		setTeamId(id);
@@ -34,6 +35,9 @@ public class Team implements RetrieveGeneralStatistics {
 	
 	public Manager getManager() { return currentManager; }
 	public void setManager(Manager manager) { this.currentManager = manager; }
+	
+	public List<Player> getPlayers() { return this.players; }
+	public void setPlayers(List<Player> teamPlayers) { this.players = teamPlayers; }
 
 	@Override
 	public int getYellows(Connection connection) {
@@ -239,9 +243,10 @@ public class Team implements RetrieveGeneralStatistics {
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setPlayers(teamPlayers);
 		return teamPlayers;
 	}
-	
+
 	public boolean checkStadiumAssigned(Connection connection) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(

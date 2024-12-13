@@ -14,8 +14,8 @@ public class Referee extends Person {
 	
 	private String preferredLocation;
 	private RefereeAccount refereesAccount;
-	private String[] gamesOfficiated;
-	private String[] matchesToAttend;
+	private List<Match> gamesOfficiated;
+	private List<Match> matchesToAttend;
 
 	public Referee(int id, String fName, String lName, String location, RefereeAccount refAcc) {
 		super(id, fName, lName);
@@ -35,11 +35,11 @@ public class Referee extends Person {
 	public RefereeAccount getRefereesAccount() { return refereesAccount; }
 	public void setRefereesAccount(RefereeAccount refereesAccount) { this.refereesAccount = refereesAccount; }
 
-	public String[] getGamesOfficiated() { return gamesOfficiated; }
-	public void setGamesOfficiated(String[] gamesOfficiated) { this.gamesOfficiated = gamesOfficiated; }
+	public List<Match> getGamesOfficiated() { return gamesOfficiated; }
+	public void setGamesOfficiated(List<Match> gamesOfficiated) { this.gamesOfficiated = gamesOfficiated; }
 
-	public String[] getMatchesToAttend() { return matchesToAttend; }
-	public void setMatchesToAttend(String[] matchesToAttend) { this.matchesToAttend = matchesToAttend; }
+	public List<Match> getMatchesToAttend() { return matchesToAttend; }
+	public void setMatchesToAttend(List<Match> matchesToAttend) { this.matchesToAttend = matchesToAttend; }
 	
 	public void setRefAcc(RefereeAccount refAcc) { this.refereesAccount = refAcc; }
 	public RefereeAccount getRefereeAccount(Connection connection, int id) {
@@ -87,6 +87,7 @@ public class Referee extends Person {
 					
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setMatchesToAttend(matchesToAttend);
 		return matchesToAttend;
 	}
 }

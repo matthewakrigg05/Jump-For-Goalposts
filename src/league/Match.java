@@ -49,11 +49,10 @@ public class Match {
 	// the user for confirmation that they want to reassign the referee
 	public boolean checkRefAssigned(Connection connection) {
 		try {
-			PreparedStatement matchStatement = (connection).prepareStatement(
+			PreparedStatement assignedStatement = (connection).prepareStatement(
 			        "SELECT refereeId FROM matches WHERE matchId = ? AND refereeId IS NOT NULL;");
-			
-			matchStatement.setInt(1, getMatchId());
-			ResultSet res = matchStatement.executeQuery();
+			assignedStatement.setInt(1, getMatchId());
+			ResultSet res = assignedStatement.executeQuery();
 			return res.next();
 			
 		} catch (SQLException e) { e.printStackTrace(); }

@@ -10,7 +10,6 @@ import leagueDB.RetrieveGeneralStatistics;
 
 public class Player extends Person implements RetrieveGeneralStatistics {
 	
-	private String preferredFoot;
 	private boolean isInjured;
 	private boolean isSuspended;
 	private int shirtNum;
@@ -22,9 +21,6 @@ public class Player extends Person implements RetrieveGeneralStatistics {
 	}
 
 	// Standard getters and setters
-	public String getPreferredFoot() { return preferredFoot; }
-	public void setPreferredFoot(String preferredFoot) { this.preferredFoot = preferredFoot; }
-	
 	public boolean isInjured() { return isInjured; }
 	public void setInjured(boolean isInjured) { this.isInjured = isInjured; }
 

@@ -16,6 +16,8 @@ public class Season {
 	private String seasonStart;
 	private String seasonEnd;
 	private boolean isCurrent;
+	private List<Match> fixtures;
+	private List<Match> results;
 	
 	public Season(int id, String seasonStart, String seasonEnd, boolean isCurrent) {
 		setId(id);
@@ -37,6 +39,12 @@ public class Season {
 
 	public boolean getIsCurrent() { return this.isCurrent; }
 	public void setIsCurrent(boolean current) { this.isCurrent = current; }
+	
+	public List<Match> getFixtures() { return fixtures; }
+	public void setFixtures(List<Match> fixtures) { this.fixtures = fixtures; }
+
+	public List<Match> getResults() { return results; }
+	public void setResults(List<Match> results) { this.results = results; }
 	
 	public Player getTopScorer(JFGPdb db, Season season) {
 		List<Player> players = db.getAllPlayers();
@@ -160,6 +168,7 @@ public class Season {
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setFixtures(fixtures);
 		return fixtures;
 	}
 	
@@ -183,6 +192,7 @@ public class Season {
 			}
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setResults(results);
 		return results;
 	}
 	
@@ -226,4 +236,5 @@ public class Season {
 		
 		return matches;
 	}
+
 }
