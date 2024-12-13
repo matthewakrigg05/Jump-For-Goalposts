@@ -4,6 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		// launches application
 		try { new JfgpWindow(); } catch (Exception e) { e.printStackTrace(); }
 	}
 }

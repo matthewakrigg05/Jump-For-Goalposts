@@ -38,7 +38,6 @@ public class RefereeAccount extends Account {
 		try {
 	        PreparedStatement refStatement = connection.prepareStatement(
 	                "SELECT * FROM referees WHERE userId = ?;" );
-	
 	        refStatement.setInt(1, getId());
 	        ResultSet refResult = refStatement.executeQuery(); 
 	        
@@ -82,7 +81,6 @@ public class RefereeAccount extends Account {
 			try {
 				PreparedStatement eventStatement = connection.prepareStatement(
 						"INSERT INTO matchEvents(eventType, eventMinute, teamId, playerId, matchId) VALUES (?, ?, ?, ?, ?)");
-				
 				eventStatement.setString(1, event.getEventType());
 				eventStatement.setInt(2, event.getEventMinute());
 				eventStatement.setInt(3, event.getTeam().getTeamId());
@@ -98,9 +96,13 @@ public class RefereeAccount extends Account {
 		JDialog matchEventDialog = new JDialog();
 		MatchEvent newEvent = new MatchEvent();
 		
+		// types of event in the match
 		String[] eventTypes = {"Goal", "Assist", "Foul", "Yellow Card", "Red Card"};
 		List<String> playersList = new ArrayList<String>();
-		List<Player> players = new ArrayList<Player>();
+		
+		// needs separate list so that the player can be found in the home and away teams afterwards
+		List<Player> players = new ArrayList<Player>(); 
+															
 		
 		List<Player> homeTeamPlayers = match.getHomeTeam().getTeamPlayers(frame.getDb().getConnection()); 
         for(Player i : homeTeamPlayers) { 
@@ -119,8 +121,6 @@ public class RefereeAccount extends Account {
 		matchEventDialog.setSize(760, 500);
 		matchEventDialog.setTitle("Match Event");
 		matchEventDialog.setLayout(new GridBagLayout());
-		
-		// type, minute, team & player, add event
 		
 		JLabel newEventLabel = new JLabel("Add New Match Event");
 		

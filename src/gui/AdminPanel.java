@@ -1396,8 +1396,9 @@ public class AdminPanel extends JPanel {
 		gbc_playerSelected.gridy = 1;
 		dialog.add(playerSelected, gbc_playerSelected);
 		
-		JButton playerConfirmationButton = new JButton("Remove Manager");
+		JButton playerConfirmationButton = new JButton("Remove Player");
 		GridBagConstraints gbc_playerConfirmationButton = new GridBagConstraints();
+		gbc_playerConfirmationButton.insets = new Insets(0, 0, 5, 0);
 		gbc_playerConfirmationButton.gridx = 1;
 		gbc_playerConfirmationButton.gridy = 4;
 		dialog.add(playerConfirmationButton, gbc_playerConfirmationButton);

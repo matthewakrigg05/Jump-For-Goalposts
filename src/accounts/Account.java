@@ -2,6 +2,8 @@ package accounts;
 
 abstract class Account {
 	
+	// template to be used by subclasses - utilising inheritance of general attributes and methods
+	
 	private int id;
 	private String emailAddress;
 	private String password;
@@ -9,8 +11,8 @@ abstract class Account {
 	
 	public Account(int id, String emailAddress, String password, boolean isAdmin) {
 		this.id = id;
-		this.setEmail(emailAddress);
-		this.setPassword(password);
+		setEmail(emailAddress);
+		setPassword(password);
 		this.isAdmin = isAdmin;
 	}
 	
