@@ -14,18 +14,19 @@ import leagueMembers.*;
 @SuppressWarnings("serial")
 public class AdminPanel extends JPanel {
 	
-	private List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
+	List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
 			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Assign Players' Team", 
 			"Assign Teams' Manager", "Stadiums", "Assign Teams' Stadium", "Unassign Team Members"));
 	JButton[] panelButton = new JButton[adminButtons.size()];
+	JList<String> matchesToRecordList;
+	
 	JfgpWindow frame;
 	JFGPdb db;
 	Insets insets;
 	
 	List<String> matches = new ArrayList<String>();
-	Season currentSeason;
-	JList<String> matchesToRecordList;
 	List<Match> matchesToRecord;
+	Season currentSeason;
 
 	public AdminPanel(JfgpWindow frame) { 
 		 this.frame = frame;
@@ -170,19 +171,19 @@ public class AdminPanel extends JPanel {
 	}
 
 	protected void addActionListeners() {
-		panelButton[0].addActionListener(e -> { getLeagueDialog(frame); });
-		panelButton[1].addActionListener(e -> { getGenFixturesDialog(frame); });
-		panelButton[2].addActionListener(e -> { getSeasonDialog(frame); });
-		panelButton[3].addActionListener(e -> { getAssignRefDialog(frame); });
-		panelButton[4].addActionListener(e -> { getTeamDialog(frame); });
-		panelButton[5].addActionListener(e -> { getManagersDialog(frame); });
-		panelButton[6].addActionListener(e -> { getPlayerDialog(frame); });
-		panelButton[7].addActionListener(e -> { getRefereeDialog(frame); });
-		panelButton[8].addActionListener(e -> { getAssignPlayerDialog(frame); });
-		panelButton[9].addActionListener(e -> { getAssignManagerDialog(frame); });
-		panelButton[10].addActionListener(e -> { getStadiumDialog(frame); });
-		panelButton[11].addActionListener(e -> { getAssignStadiumDialog(frame); });
-		panelButton[12].addActionListener(e -> { getRemoveFromTeamDialog(frame); });
+		panelButton[0].addActionListener(e -> { getLeagueDialog(); });
+		panelButton[1].addActionListener(e -> { getGenFixturesDialog(); });
+		panelButton[2].addActionListener(e -> { getSeasonDialog(); });
+		panelButton[3].addActionListener(e -> { getAssignRefDialog(); });
+		panelButton[4].addActionListener(e -> { getTeamDialog(); });
+		panelButton[5].addActionListener(e -> { getManagersDialog(); });
+		panelButton[6].addActionListener(e -> { getPlayerDialog(); });
+		panelButton[7].addActionListener(e -> { getRefereeDialog(); });
+		panelButton[8].addActionListener(e -> { getAssignPlayerDialog(); });
+		panelButton[9].addActionListener(e -> { getAssignManagerDialog(); });
+		panelButton[10].addActionListener(e -> { getStadiumDialog(); });
+		panelButton[11].addActionListener(e -> { getAssignStadiumDialog(); });
+		panelButton[12].addActionListener(e -> { getRemoveFromTeamDialog(); });
 		
 		matchesToRecordList.addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -199,7 +200,7 @@ public class AdminPanel extends JPanel {
 		
 	}	
 	
-	public JDialog getAssignRefDialog(JfgpWindow frame) {
+	public JDialog getAssignRefDialog() {
 		JDialog assignRefDialog = new JDialog();
 	    List<String> refSelection = new ArrayList<String>();
 	    List<String> matches = new ArrayList<String>();
@@ -272,7 +273,7 @@ public class AdminPanel extends JPanel {
 		return assignRefDialog;
 	}
 	
-	public JDialog getGenFixturesDialog(JfgpWindow frame) {
+	public JDialog getGenFixturesDialog() {
 		JDialog genFixturesDialog = new JDialog();
 		
 	     List<String> seasonSelection = new ArrayList<String>();
@@ -354,7 +355,7 @@ public class AdminPanel extends JPanel {
 		return genFixturesDialog;
 	}
 
-	public JDialog getLeagueDialog(JfgpWindow frame) {
+	public JDialog getLeagueDialog() {
 		JDialog leagueDialog = new JDialog();
 		
 		List<String> seasonSelection = new ArrayList<String>();
@@ -434,7 +435,7 @@ public class AdminPanel extends JPanel {
         return leagueDialog;
 	}
 
-	public JDialog getManagersDialog(JfgpWindow frame) {
+	public JDialog getManagersDialog() {
 		JDialog managerDialog = new JDialog();
 		List<Manager> managers;
 	    List<String> managerSelection = new ArrayList<String>();
@@ -538,7 +539,7 @@ public class AdminPanel extends JPanel {
         return managerDialog;
 	}
 	
-	public JDialog getPlayerDialog(JfgpWindow frame) {
+	public JDialog getPlayerDialog() {
 		JDialog playerDialog = new JDialog();
 		
 		Insets insets = new Insets(0, 0, 5, 5);
@@ -658,7 +659,7 @@ public class AdminPanel extends JPanel {
         return playerDialog;
 	}
 	
-	public JDialog getRefereeDialog(JfgpWindow frame) {
+	public JDialog getRefereeDialog() {
 		JDialog refereeDialog = new JDialog();
 	    Insets insets = new Insets(0, 0, 5, 5);
 	    
@@ -775,7 +776,7 @@ public class AdminPanel extends JPanel {
         return refereeDialog;
 	}
 	
-	public JDialog getSeasonDialog(JfgpWindow frame) {
+	public JDialog getSeasonDialog() {
 		JDialog seasonDialog = new JDialog();
 		List<Season> seasons;
 	    List<String> seasonSelection = new ArrayList<String>();
@@ -878,7 +879,7 @@ public class AdminPanel extends JPanel {
 		return seasonDialog;
 	}
 	
-	public JDialog getTeamDialog(JfgpWindow frame) {
+	public JDialog getTeamDialog() {
 		JDialog teamDialog = new JDialog();
 		
 		List<Team> teams;
@@ -969,7 +970,7 @@ public class AdminPanel extends JPanel {
 		return teamDialog;
 	}
 	
-	public JDialog getAssignPlayerDialog(JfgpWindow frame) {
+	public JDialog getAssignPlayerDialog() {
 		JDialog playerDialog = new JDialog();
 		String[] contractTypes = {"Full-Time", "Part-Time"};
 		List<String> playerSelection = new ArrayList<String>();
@@ -1057,7 +1058,7 @@ public class AdminPanel extends JPanel {
 		return playerDialog;
 	}
 	
-	public JDialog getAssignManagerDialog(JfgpWindow frame) {
+	public JDialog getAssignManagerDialog() {
 		JDialog managerDialog = new JDialog();
 		List<String> managerSelection = new ArrayList<String>();
 	    List<String> teamsSelect = new ArrayList<String>();
@@ -1145,7 +1146,7 @@ public class AdminPanel extends JPanel {
 		return managerDialog;
 	}
 	
-	public JDialog getAssignStadiumDialog(JfgpWindow frame) {
+	public JDialog getAssignStadiumDialog() {
 		JDialog assignStadiumDialog = new JDialog();
 		List<String> stadiumSelection = new ArrayList<String>();
 	    List<String> teamsSelect = new ArrayList<String>();
@@ -1220,7 +1221,7 @@ public class AdminPanel extends JPanel {
 		return assignStadiumDialog;
 	}
 	
-	public JDialog getStadiumDialog(JfgpWindow frame) {
+	public JDialog getStadiumDialog() {
 		JDialog stadiumDialog = new JDialog();
 		
 		List<Stadium> stadiums;
@@ -1342,7 +1343,7 @@ public class AdminPanel extends JPanel {
 		return stadiumDialog;
 	}
 	
-	public JDialog getRemoveFromTeamDialog(JfgpWindow frame) {
+	public JDialog getRemoveFromTeamDialog() {
 		JDialog dialog = new JDialog();
 		List<String> managerSelect = new ArrayList<String>();
 		List<String> playerSelect = new ArrayList<String>();

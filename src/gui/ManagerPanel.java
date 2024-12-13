@@ -17,14 +17,16 @@ public class ManagerPanel extends JPanel {
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
+	ManagerAccount manager;
+	Team team;
+	
 	JfgpWindow frame;
+	Insets insets;
+	
 	JList playerList;
 	JLabel shirtNumLabel;
 	JTextArea shirtNum;
 	JButton assign;
-	ManagerAccount manager;
-	Insets insets;
-	Team team;
 	
 	public ManagerPanel(JfgpWindow frame, ManagerAccount manager) { 
 		this.frame = frame; 
@@ -37,8 +39,6 @@ public class ManagerPanel extends JPanel {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		
-		JButton[] panelButton = new JButton[managerButtons.size()];
 		addPanelComponents(this);
 		addActionListeners();
 	}
@@ -71,7 +71,6 @@ public class ManagerPanel extends JPanel {
 	}
 	
 	public void addActionListeners() {
-		
 		assign.addActionListener(e -> {
 			manager.assignShirtNum(frame.getDb().getConnection(), players.get(playerList.getSelectedIndex()), Integer.parseInt(shirtNum.getText()));
 		});

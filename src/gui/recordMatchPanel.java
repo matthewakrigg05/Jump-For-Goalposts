@@ -17,20 +17,20 @@ import java.awt.Insets;
 @SuppressWarnings("serial")
 public class recordMatchPanel extends JPanel {
 	
-	private List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
-	private List<MatchEvent> events = new ArrayList<MatchEvent>();
-	private List<String> eventSummaries = new ArrayList<String>();
-	private JfgpWindow frame;
-	private JList eventsList;
-	DefaultListModel demoList = new DefaultListModel();
+	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
+	List<MatchEvent> events = new ArrayList<MatchEvent>();
+	List<String> eventSummaries = new ArrayList<String>();
+	Match match;
 	
-	private int homeScore= 0;
-	private int awayScore = 0;
+	int homeScore= 0;
+	int awayScore = 0;
 	 
-	private JButton recordButton;
-	private JButton backButton;
-	private Match match;
-	private JButton eventButton;
+	JfgpWindow frame;
+	JList eventsList;
+	DefaultListModel demoList = new DefaultListModel();
+	JButton recordButton;
+	JButton backButton;
+	JButton eventButton;
 	
 	AdminAccount admin;
 	RefereeAccount referee;
@@ -39,19 +39,18 @@ public class recordMatchPanel extends JPanel {
 		this.frame = frame; 
 		this.match = match;
 		this.admin = admin;
-		initialise(frame);
+		initialise();
 		}
 	
 	public recordMatchPanel(JfgpWindow frame, Match match, RefereeAccount referee) { 
 		this.frame = frame; 
 		this.match = match;
 		this.referee = referee;
-		initialise(frame); }
+		initialise(); }
 	
-	public void initialise(JfgpWindow frame) {
+	public void initialise() {
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		
 		addPanelComponents(this);
 		addActionListeners();
 	}

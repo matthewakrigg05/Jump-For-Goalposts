@@ -43,7 +43,5 @@ public class HomePanel extends JPanel {
 		
 		JLabel topScorerLabel = new JLabel("Top Scorer: " + topScorer.getFullName() + " " + topScorer.getGoals(db.getConnection()));
 		add(topScorerLabel);
-		
 	}
-
 }

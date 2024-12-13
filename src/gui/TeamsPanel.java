@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -16,10 +17,10 @@ public class TeamsPanel extends JPanel {
 	List<String> teamSelection = new ArrayList<String>();
 	List<Team> teams;
 	Team selectedTeam;
-	JList playerList;
 	Insets insets;
 	JfgpWindow frame;
 	
+	JList playerList;
 	JLabel teamLabel;
 	JLabel gamesPlayedLabel;
 	JLabel goalsLabel;
@@ -40,11 +41,11 @@ public class TeamsPanel extends JPanel {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	public void addPanelComponents(JPanel panel) {
 		teams = new ArrayList<Team>(frame.getDb().getAllTeams());
 		for(Team team : teams) { teamSelection.add(team.getName()); }
 		
@@ -87,22 +88,25 @@ public class TeamsPanel extends JPanel {
 	}
 	
 	public void addActionListeners() {
+		// Whenever a player is selected from the list of players, the stats and information is updated to
+		// show the information of the player selected, essentially their profile
 		
 		playerList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectedTeam = teams.get(playerList.getSelectedIndex());
+				Connection connection = frame.getDb().getConnection();
 				
 				teamLabel.setText("Team: " + selectedTeam.getName());
-				gamesPlayedLabel.setText("Games Played: " + selectedTeam.getGamesPlayed(frame.getDb().getConnection()));
-				goalsLabel.setText("Goals: " + selectedTeam.getGoals(frame.getDb().getConnection()));
-				assistsLabel.setText("Assits: " + selectedTeam.getAssists(frame.getDb().getConnection()));
-				foulsLabel.setText("Fouls: " + selectedTeam.getFouls(frame.getDb().getConnection()));
-				yellowsLabel.setText("Yellow Cards: " + selectedTeam.getYellows(frame.getDb().getConnection()));
-				redsLabel.setText("Red Cards: " + selectedTeam.getReds(frame.getDb().getConnection()));
-				winsLabel.setText("Wins: " + selectedTeam.getTeamWins(frame.getDb().getConnection()));
-				drawsLabel.setText("Draws: " + selectedTeam.getTeamDraws(frame.getDb().getConnection()));
-				lossesLabel.setText("Losses: " + selectedTeam.getTeamLosses(frame.getDb().getConnection()));
+				gamesPlayedLabel.setText("Games Played: " + selectedTeam.getGamesPlayed(connection));
+				goalsLabel.setText("Goals: " + selectedTeam.getGoals(connection));
+				assistsLabel.setText("Assits: " + selectedTeam.getAssists(connection));
+				foulsLabel.setText("Fouls: " + selectedTeam.getFouls(connection));
+				yellowsLabel.setText("Yellow Cards: " + selectedTeam.getYellows(connection));
+				redsLabel.setText("Red Cards: " + selectedTeam.getReds(connection));
+				winsLabel.setText("Wins: " + selectedTeam.getTeamWins(connection));
+				drawsLabel.setText("Draws: " + selectedTeam.getTeamDraws(connection));
+				lossesLabel.setText("Losses: " + selectedTeam.getTeamLosses(connection));
 			}
 		});
 		

@@ -17,8 +17,8 @@ public class logInWindow extends JFrame {
 	private JFGPdb db;
 
 	public logInWindow(JFGPdb db) { 
-		initialise();
 		this.db = db; 
+		initialise();
 		}
 
 	private void initialise() {
@@ -95,16 +95,13 @@ public class logInWindow extends JFrame {
 			dispose();
 			logIn(email, password, db.getConnection());
 		});
-		
 		setVisible(true);
 	}
 	
 	public void logIn(String email, String password, Connection connection) {
 		try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
-	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?"
-	            );
-
+	                    "SELECT * FROM userAccounts WHERE emailAddress = ? AND password = ?");
 	            preparedStatement.setString(1, email);
 	            preparedStatement.setString(2, password);
 	            ResultSet resultSet = preparedStatement.executeQuery();
@@ -112,7 +109,11 @@ public class logInWindow extends JFrame {
 	            if (resultSet.next()) {
 	                int userId = resultSet.getInt("userId");
 	                String userType = resultSet.getString("userType");
-	                connection.close();
+	                
+	             // in this window the connection to the db must be closed because the new window will 
+	             // establish a new connection and you cannot have two simultaneous db connections
+	             // trying to work alongside eachother
+	                connection.close(); 
 	                
 	                switch (userType) {
 	                	case "admin":
@@ -134,7 +135,8 @@ public class logInWindow extends JFrame {
 	                }
 	            }
 	            else { 
-		            JfgpWindow window = new JfgpWindow();
+	        		connection.close();
+	        		JfgpWindow window = new JfgpWindow();
 	        		JOptionPane.showMessageDialog(window, "Log In Failed");
 	            }
 	        } catch (SQLException e) { e.printStackTrace(); }

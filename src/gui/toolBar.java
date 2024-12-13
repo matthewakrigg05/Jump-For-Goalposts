@@ -9,20 +9,20 @@ public class toolBar extends JToolBar {
 	
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
+	private String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
+			"Your View", "Log In", "Log Out"};
+	
 	
 	public toolBar(JfgpWindow frame) {
-		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setBorder(new EmptyBorder(0, 0, 10, 20));
 		setOrientation(SwingConstants.VERTICAL);
 		
-		// toolbar buttons are indexed in this list
-		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
-				"Your View", "Log In", "Log Out"};
 		toolBarButton = new JButton[toolBarButtonNames.length];
 		
+		// sets the common attributes of the buttons that are all going to be the same in the toolbar
 		for (int i = 0; i < toolBarButtonNames.length; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
 			toolBarButton[i].setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -47,6 +47,8 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[4]);
 		add(toolBarSep);
 		
+		if (frame.isLoggedIn()) { 
+			// dependant on the type of user that is signed in, a panel dedicated to be used by them is made accessible
 			if (frame.getAdminAccount() != null) {
 				AdminPanel admin = new AdminPanel(frame);
 				rolePanel = admin;
@@ -60,8 +62,7 @@ public class toolBar extends JToolBar {
 				ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
 				rolePanel = manPanel;
 			}
-		
-		if (frame.isLoggedIn()) { 
+			
 			add(toolBarButton[5]);
 			add(toolBarButton[7]); 
 			}

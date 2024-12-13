@@ -12,7 +12,6 @@ import javax.swing.event.ListSelectionListener;
 import league.Match;
 import league.Season;
 import league.Stadium;
-import league.Team;
 import leagueDB.JFGPdb;
 
 import leagueMembers.Referee;
@@ -22,17 +21,19 @@ public class FixturesPanel extends JPanel {
 	JfgpWindow frame;
 	JFGPdb db;
 	Insets insets;
+	
 	List<String> matchSelection = new ArrayList<String>();
 	List<Match> matches;
 	Match selectedMatch;
-	JList matchList;
 	Season currentSeason;
-	private JLabel teamsLabel;
-	private JLabel home;
-	private JLabel away;
-	private JLabel gameWeek;
-	private JLabel stadium;
-	private JLabel referee; 
+	
+	JList matchList;
+	JLabel teamsLabel;
+	JLabel home;
+	JLabel away;
+	JLabel gameWeek;
+	JLabel stadium;
+	JLabel referee; 
 	
 	public FixturesPanel(JfgpWindow frame) {
 		this.frame = frame;
@@ -87,7 +88,6 @@ public class FixturesPanel extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectedMatch = matches.get(matchList.getSelectedIndex());
-				
 				teamsLabel.setText("Match: " + selectedMatch.getMatchSummary());
 				home.setText("Home: " + selectedMatch.getHomeTeam().getName());
 				away.setText("Away: " + selectedMatch.getAwayTeam().getName());
@@ -114,6 +114,4 @@ public class FixturesPanel extends JPanel {
 			}
 		});
 	}
-	
-	
 }

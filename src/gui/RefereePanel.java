@@ -14,15 +14,15 @@ import java.awt.GridBagConstraints;
 @SuppressWarnings("serial")
 public class RefereePanel extends JPanel {
 
-	private JList<String> toAttendList;
-	private JList<String> toRecordList;
-	private Referee referee;
-	private JfgpWindow frame;
-	private JFGPdb db;
+	JList<String> toAttendList;
+	JList<String> toRecordList;
+	Referee referee;
+	JfgpWindow frame;
+	JFGPdb db;
 	
-	private List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
-	private List<Match> matchesToAttend = new ArrayList<Match>(); 
-	private List<String> matchSummaries = new ArrayList<String>();
+	List<String> refereeButtons = new ArrayList<String>(List.of("Record Matches", "View My Upcoming Fixtures"));
+	List<Match> matchesToAttend = new ArrayList<Match>(); 
+	List<String> matchSummaries = new ArrayList<String>();
 	
 	public RefereePanel(JfgpWindow frame) { 
 		this.frame = frame;
@@ -36,7 +36,6 @@ public class RefereePanel extends JPanel {
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		setLayout(new GridBagLayout());
 		
-		JButton[] panelButton = new JButton[refereeButtons.size()];
 		matchesToAttend = referee.getNextFiveRefMatches(db);
 		
 		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
@@ -47,7 +46,6 @@ public class RefereePanel extends JPanel {
 	}
 
 	public void addPanelComponents(JPanel panel) {
-		
 		JLabel nextFiveGamesLabel = new JLabel("Your next five matches to attend:");
 		GridBagConstraints gbc_nextFiveGamesLabel = new GridBagConstraints();
 		gbc_nextFiveGamesLabel.insets = getInsets();
@@ -76,17 +74,13 @@ public class RefereePanel extends JPanel {
 		gbc_toRecordList.insets = getInsets();
 		gbc_toRecordList.gridx = 0;
 		gbc_toRecordList.gridy = 3;
-		panel.add(toRecordList, gbc_toRecordList);
-		
+		panel.add(toRecordList, gbc_toRecordList);	
 	}
 	
 	public void addActionListeners() {	
 		toAttendList.addListSelectionListener(new ListSelectionListener() {
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				toAttendList.getSelectedIndex();
-				
-			}
+			public void valueChanged(ListSelectionEvent e) { toAttendList.getSelectedIndex(); }
 		});
 		
 		toRecordList.addListSelectionListener(new ListSelectionListener() {

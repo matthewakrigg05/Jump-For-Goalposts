@@ -16,10 +16,11 @@ public class PlayersPanel extends JPanel {
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
 	Player selectedPlayer;
-	JList playerList;
+
 	Insets insets;
 	JfgpWindow frame;
 	
+	JList playerList;
 	JLabel playerNameLabel;
 	JLabel teamLabel;
 	JLabel gamesPlayedLabel;
@@ -29,21 +30,20 @@ public class PlayersPanel extends JPanel {
 	JLabel yellowsLabel;
 	JLabel redsLabel;
 
-
 	public PlayersPanel(JfgpWindow frame) {
 		this.frame = frame;
-		initialise(frame);
+		initialise();
 		}
 
-	public void initialise(JfgpWindow frame) {
+	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	public void addPanelComponents(JPanel panel) {
 		players = new ArrayList<Player>(frame.getDb().getAllPlayers());
 		for(Player player : players) { playerSelection.add(player.getFullName()); }
 		
@@ -77,9 +77,7 @@ public class PlayersPanel extends JPanel {
 		playerProfile.add(yellowsLabel);
 		playerProfile.add(redsLabel);
 
-		
 		panel.add(playerProfile, gbc_recMatchesLabel);
-		
 	}
 	
 	public void addActionListeners() {
@@ -97,6 +95,5 @@ public class PlayersPanel extends JPanel {
 				redsLabel.setText("Red Cards: " + selectedPlayer.getReds(frame.getDb().getConnection()));
 			}
 		});
-		
 	}
 }

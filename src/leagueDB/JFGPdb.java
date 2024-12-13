@@ -421,7 +421,7 @@ public class JFGPdb {
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
 	}
 	
-	public static List<Stadium> getAllStadiums() {
+	public List<Stadium> getAllStadiums() {
 		List<Stadium> stadiums = new ArrayList<Stadium>();
 		
 		try {
@@ -470,7 +470,7 @@ public class JFGPdb {
 		return teamManagers;
 	}
 	
-	public static List<Player> allTeamPlayers() {
+	public List<Player> allTeamPlayers() {
 		List<Player> teamManagers = new ArrayList<Player>();
 		
 		try {
