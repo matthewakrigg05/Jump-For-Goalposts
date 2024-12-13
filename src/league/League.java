@@ -11,7 +11,6 @@ public class League {
 	
 	private int leagueId;
 	private String leagueName;
-	private List<Season> seasons;
 	
 	public League(int id, String name) {
 		setLeagueId(id);

@@ -8,10 +8,10 @@ public class Stadium {
 	private String location;
 	
 	public Stadium(int stadiumId, String name, String capacity, String location) {
-		this.setStadiumId(stadiumId);
-		this.setStadiumName(name);
-		this.setCapacity(capacity);
-		this.setLocation(location);
+		setStadiumId(stadiumId);
+		setStadiumName(name);
+		setCapacity(capacity);
+		setLocation(location);
 	}
 	
 	// Standard getters and setters

@@ -45,6 +45,8 @@ public class Match {
 	public int getAwayScore() { return awayScore; }
 	public void setAwayScore(int awayScore) { this.awayScore = awayScore; }
 	
+	// Asserts whether the match already has a referee assigned in order to prompt
+	// the user for confirmation that they want to reassign the referee
 	public boolean checkRefAssigned(Connection connection) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(
