@@ -1,31 +1,31 @@
 package accounts;
 
+// Abstract class to be used by subclasses - utilising inheritance of general attributes and methods
 abstract class Account {
-	
-	// template to be used by subclasses - utilising inheritance of general attributes and methods
-	
 	private int id;
 	private String emailAddress;
 	private String password;
 	private boolean isAdmin;
 	
 	public Account(int id, String emailAddress, String password, boolean isAdmin) {
-		this.id = id;
+		setId(id);
 		setEmail(emailAddress);
 		setPassword(password);
-		this.isAdmin = isAdmin;
+		setIsUserAdmin(isAdmin);
 	}
 	
-	public void changeUserPassword(String password) { this.setPassword(password); }
+	protected void changeUserPassword(String password) { this.setPassword(password); }
 	
 	// Standard getter and setter methods
-	public boolean isUserAdmin() { return this.isAdmin; }
+	protected boolean isUserAdmin() { return this.isAdmin; }
+	protected void setIsUserAdmin(boolean admin) { this.isAdmin = admin; }
 	
-	public int getId() { return this.id; }
+	protected int getId() { return this.id; }
+	protected void setId(int id) { this.id = id; }
 	
-	public String getEmail() { return this.emailAddress; }
-	public void setEmail(String emailAddress) { this.emailAddress = emailAddress; }
+	protected String getEmail() { return this.emailAddress; }
+	protected void setEmail(String emailAddress) { this.emailAddress = emailAddress; }
 
-	public String getPassword() { return password; }
-	public void setPassword(String password) { this.password = password; }
+	protected String getPassword() { return password; }
+	protected void setPassword(String password) { this.password = password; }
 }

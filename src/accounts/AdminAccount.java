@@ -16,10 +16,16 @@ public class AdminAccount extends RefereeAccount {
 	public AdminAccount(int id, String emailAddress, String password) { super(id, emailAddress, password, true); }
 	
 	/*
-	 * Assign and remove referee methods allows referees to be assigned to matches,
+	 * The assign referee method allows referees to be assigned to matches,
 	 * this is important as the referee accounts can only record matches that they are 
-	 * assigned to. This same idea applies to the methods for assigning managers,
-	 * players and stadiums to teams.
+	 * assigned to.
+	 * 
+	 * @param connection  The connection to the database must be passed on in order
+	 * 					  for the methods to interact safely with the database.
+	 * 
+	 * @param match		  Match that is having a referee assigned to it.	
+	 * 
+	 * @param ref		  Referee being assigned to the match.
 	 */
 			
 	public void assignRef(Connection connection, Match match, Referee ref) {
@@ -33,6 +39,19 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * The assign stadium method allows referees to be assigned to teams. This is then the
+	 * stadium that is referred to when the team is playing a match at their home ground as
+	 * the match location.
+	 * 
+	 * @param connection  The connection to the database must be passed on in order
+	 * 					  for the methods to interact safely with the database.
+	 * 
+	 * @param team		  Team that is having a stadium assigned to it.	
+	 * 
+	 * @param stadium	  Stadium being assigned as the home ground for the team.
+	 */
+	
 	public void assignStadium(Connection connection, Team team, Stadium stadium) {
 		try {
 			PreparedStatement assignStadiumStatement = connection.prepareStatement(
@@ -43,6 +62,21 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * The assign player to team method enables the player to be registered as one of 
+	 * the teams employees and can record goals and other match events for both teams 
+	 * and the players with ease.
+	 * 
+	 * @param connection  The connection to the database must be passed on in order
+	 * 					  for the methods to interact safely with the database.
+	 * 
+	 * @param team		  The team that is having the player assigned to it.	
+	 * 
+	 * @param player	  Player being assigned to a team.
+	 * 
+	 * @param contract 	  The type of contract that the player has at the team (full-time/
+	 * 					  part-time).
+	 */
 	public void assignPlayerToTeam(Connection connection, Team team, Player player, String contract) {
 		try {
 			PreparedStatement assignPlayerToTeamStatement = connection.prepareStatement(
@@ -64,6 +98,22 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * The assign manager to team method enables the player to be registered as one of 
+	 * the teams employees and enables that manager to access the players of that team
+	 * through their manager panel in the 'Your View' section of the application where
+	 * the manager can change the players shirt number.
+	 * 
+	 * @param connection  The connection to the database must be passed on in order
+	 * 					  for the methods to interact safely with the database.
+	 * 
+	 * @param team		  The team that is having the manager assigned to it.	
+	 * 
+	 * @param manager	  Manager being assigned to a team.
+	 * 
+	 * @param contract 	  The type of contract that the player has at the team (full-time/
+	 * 					  part-time).
+	 */
 	public void assignManagerToTeam(Connection connection, Team team, Manager manager, String contract) {
 		try {
 			PreparedStatement newEmpStatement = connection.prepareStatement(
@@ -86,6 +136,15 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Unassign manager from team method refers to the team employee table, locates the manager by ID
+	 * and consequently deletes that row from the teamEmployee table; the teamEmployeeId in the respective 
+	 * managers table is then set to NULL as a result of an ON DELETE clause in the database table initialisation.
+	 * 
+	 * @param connection 	Connection to the database in order to safely interact with it.
+	 * 
+	 * @param manager 		The manager being unassigned from the team that they are currently assigned to.
+	 */
 	public void unassignManagerFromTeam(Connection connection, Manager manager) {
 		try {
 			PreparedStatement removeManagerEmpStatement = connection.prepareStatement(
@@ -95,6 +154,15 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Unassign player from team method refers to the team employee table, locates the manager by ID
+	 * and consequently deletes that row from the teamEmployee table; the teamEmployeeId in the respective 
+	 * players table is then set to NULL as a result of an ON DELETE clause in the database table initialisation.
+	 * 
+	 * @param connection 	Connection to the database in order to safely interact with it.
+	 * 
+	 * @param player 		The player being unassigned from the team that they are currently assigned to.
+	 */
 	public void unassignPlayerFromTeam(Connection connection, Player player) {
 		try {
 			PreparedStatement removePlayerEmpStatement = connection.prepareStatement(
@@ -108,9 +176,19 @@ public class AdminAccount extends RefereeAccount {
      * Following method is the logic used to create alternating home and away games for a team, as well as
      * creating the second fixture between two teams in the second half of the season when the teams
      * swap being home and away.
+     * 
+     * @param db		The database object itself rather than the connection, this is because the db class
+     * 					contains a method to retrieve teams by their team ID and this is necessary to 
+     * 					add the bye-week team to the teams list if there are an odd number of teams.
+     * 
+     * @param teams		The teams selected to participate in the season and therefore need to have matches
+     * 					scheduled for them.
+     * 
+     * @param season	The season that the selected teams will be playing in.
      */
+	
 	public void createSeasonMatches(JFGPdb db, List<Team> teams, Season season) {
-		if (teams.size() % 2 != 0) {teams.add(db.getTeam(1)); } // in case there are an odd number of teams, add the BYE team - meaning bye week where team doesnt play
+		if (teams.size() % 2 != 0) {teams.add(db.getTeam(1)); } // in the event that there are an odd number of teams, add BYE team - meaning bye week where a team doesnt play
 	
 	    int numMatchesPerRound = teams.size() / 2;
 	    Connection connection = db.getConnection();
@@ -140,6 +218,14 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Change league name method allows for customisation of the application and the league 
+	 * that the admin is managing.
+	 * 
+	 * @param connection 	Connection to the database in order to safely interact with it.
+	 * 
+	 * @param newName 		The new inputted name for the league
+	 */
 	public void changeLeagueName(Connection connection, String newName) {
 		try {
 			PreparedStatement leagueStatement = connection.prepareStatement(
@@ -150,6 +236,14 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Allows the admin to tell the system which season is the season that is currently being 
+	 * played or the season that is due to be started.
+	 * 
+	 * @param connection 	Connection to the database in order to safely interact with it.
+	 * 
+	 * @param seasonId 		The season being set as active/current
+	 */
 	public void setCurrentSeason(Connection connection, int seasonId) {
 		try {
 			PreparedStatement deselectCurrSeasonStatement = connection.prepareStatement(
@@ -250,7 +344,6 @@ public class AdminAccount extends RefereeAccount {
 		try {
 			PreparedStatement playerStatement = connection.prepareStatement(
 			        "DELETE FROM players WHERE playerId = ?;");
-			
 			playerStatement.setInt(1, player.getId());
 			playerStatement.executeUpdate();
 
@@ -262,13 +355,11 @@ public class AdminAccount extends RefereeAccount {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM referees WHERE refereeId = ?;");
-			
 			seasonStatement.setInt(1, ref.getId());
 			seasonStatement.executeUpdate();
 			
 			PreparedStatement refAccDel = connection.prepareStatement(
 			        "DELETE FROM userAccounts WHERE userId = ?;");
-			
 			refAccDel.setInt(1, ref.getUserId());
 			refAccDel.executeUpdate();
 			
@@ -279,7 +370,6 @@ public class AdminAccount extends RefereeAccount {
 		try {
 			PreparedStatement refStatement = connection.prepareStatement(
 			        "INSERT INTO referees(fName, lName, preferredLocation, leagueId, userId) VALUES (?, ?, ?, 1, ?);");
-			
 			refStatement.setString(1, fname);
 			refStatement.setString(2, lname);
 			refStatement.setString(3, city);
@@ -328,7 +418,6 @@ public class AdminAccount extends RefereeAccount {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "DELETE FROM seasons WHERE seasonId = ?;");
-			
 			seasonStatement.setInt(1, season.getId());
 			seasonStatement.executeUpdate();
 			
@@ -339,7 +428,6 @@ public class AdminAccount extends RefereeAccount {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
-			
 			seasonStatement.setInt(1 , matchWeek);
 			seasonStatement.setInt(2, season.getId());
 			seasonStatement.setInt(3, homeTeam.getTeamId());
