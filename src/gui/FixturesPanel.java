@@ -17,7 +17,7 @@ import leagueDB.JFGPdb;
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
-public class FixturesPanel extends JPanel {
+public class FixturesPanel extends JPanel implements IPanel {
 	JfgpWindow frame;
 	JFGPdb db;
 	Insets insets;
@@ -41,15 +41,17 @@ public class FixturesPanel extends JPanel {
 		initialise();
 	}
 
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		currentSeason = db.findCurrentSeason();
 		matches = new ArrayList<Match>(currentSeason.getSeasonFixtures(db));
 		for(Match fixture : matches) { matchSelection.add(fixture.getMatchSummary()); }
@@ -82,8 +84,8 @@ public class FixturesPanel extends JPanel {
 		panel.add(playerProfile);
 	}
 	
+	@Override
 	public void addActionListeners() {
-		
 		matchList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -92,7 +94,6 @@ public class FixturesPanel extends JPanel {
 				home.setText("Home: " + selectedMatch.getHomeTeam().getName());
 				away.setText("Away: " + selectedMatch.getAwayTeam().getName());
 				gameWeek.setText("Week: " + selectedMatch.getMatchWeek());
-				
 				
 				if (selectedMatch.getHomeTeam().getStadium() == null) {
 					String stad = "TBC";

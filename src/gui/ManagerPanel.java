@@ -12,7 +12,7 @@ import league.Team;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class ManagerPanel extends JPanel {
+public class ManagerPanel extends JPanel implements IPanel {
 
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 	List<String> playerSelection = new ArrayList<String>();
@@ -34,7 +34,7 @@ public class ManagerPanel extends JPanel {
 		this.team = manager.getManager(frame.getDb().getConnection()).getManagerTeam(frame.getDb().getConnection());
 		initialise(); }
 	
-
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
@@ -43,6 +43,7 @@ public class ManagerPanel extends JPanel {
 		addActionListeners();
 	}
 	
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
 		
@@ -70,6 +71,7 @@ public class ManagerPanel extends JPanel {
 		panel.add(assign);
 	}
 	
+	@Override
 	public void addActionListeners() {
 		assign.addActionListener(e -> {
 			manager.assignShirtNum(frame.getDb().getConnection(), players.get(playerList.getSelectedIndex()), Integer.parseInt(shirtNum.getText()));

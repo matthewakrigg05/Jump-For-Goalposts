@@ -15,7 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 @SuppressWarnings("serial")
-public class recordMatchPanel extends JPanel {
+public class recordMatchPanel extends JPanel implements IPanel {
 	
 	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
 	List<MatchEvent> events = new ArrayList<MatchEvent>();
@@ -48,6 +48,7 @@ public class recordMatchPanel extends JPanel {
 		this.referee = referee;
 		initialise(); }
 	
+	@Override
 	public void initialise() {
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -55,6 +56,7 @@ public class recordMatchPanel extends JPanel {
 		addActionListeners();
 	}
 	
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		JButton[] panelButton = new JButton[managerButtons.size()];
 		
@@ -102,6 +104,7 @@ public class recordMatchPanel extends JPanel {
 		add(recordButton, gbc_btnNewButton_1_1);
 	}
 	
+	@Override
 	public void addActionListeners() {
 		
 		eventButton.addActionListener(e -> { 

@@ -16,7 +16,7 @@ import league.Stadium;
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
-public class ResultsPanel extends JPanel {
+public class ResultsPanel extends JPanel implements IPanel {
 	
 	JfgpWindow frame;
 	Insets insets;
@@ -41,6 +41,7 @@ public class ResultsPanel extends JPanel {
 		initialise();
 	}
 
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
@@ -49,6 +50,7 @@ public class ResultsPanel extends JPanel {
 		addActionListeners();
 	}
 	
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		currentSeason = frame.getDb().findCurrentSeason();
 		results = new ArrayList<Match>(currentSeason.getSeasonResults(frame.getDb()));
@@ -83,6 +85,7 @@ public class ResultsPanel extends JPanel {
 		panel.add(resultProfile);
 	}
 	
+	@Override
 	public void addActionListeners() {
 		matchList.addListSelectionListener(new ListSelectionListener() {
 			@Override

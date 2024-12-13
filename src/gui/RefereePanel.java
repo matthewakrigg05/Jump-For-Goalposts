@@ -12,7 +12,7 @@ import leagueMembers.Referee;
 import java.awt.GridBagConstraints;
 
 @SuppressWarnings("serial")
-public class RefereePanel extends JPanel {
+public class RefereePanel extends JPanel implements IPanel {
 
 	JList<String> toAttendList;
 	JList<String> toRecordList;
@@ -31,6 +31,7 @@ public class RefereePanel extends JPanel {
 		initialise();
 		}
 	
+	@Override
 	public void initialise() {
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -45,6 +46,7 @@ public class RefereePanel extends JPanel {
 		addActionListeners();
 	}
 
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		JLabel nextFiveGamesLabel = new JLabel("Your next five matches to attend:");
 		GridBagConstraints gbc_nextFiveGamesLabel = new GridBagConstraints();
@@ -77,6 +79,7 @@ public class RefereePanel extends JPanel {
 		panel.add(toRecordList, gbc_toRecordList);	
 	}
 	
+	@Override
 	public void addActionListeners() {	
 		toAttendList.addListSelectionListener(new ListSelectionListener() {
 			@Override

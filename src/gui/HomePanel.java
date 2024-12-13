@@ -11,7 +11,7 @@ import leagueDB.JFGPdb;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class HomePanel extends JPanel {
+public class HomePanel extends JPanel implements IPanel {
 
 	// all static - information based dashboard, no jdialogues required as there should not be 
 	// any interaction with this panel. Displays league table, some top goalscorers/assists and maybe
@@ -19,13 +19,26 @@ public class HomePanel extends JPanel {
 	JfgpWindow frame;
 	JFGPdb db;
 	Player topScorer;
+	Season currentSeason;
 	
 	
 	public HomePanel(JfgpWindow frame) {
 		this.frame = frame;
 		this.db = frame.getDb();
-		Season currentSeason = db.findCurrentSeason();
-		
+		currentSeason = db.findCurrentSeason();
+	}
+
+	@Override
+	public void initialise() {
+		addPanelComponents(new JPanel());
+		addActionListeners();
+	}
+
+	@Override
+	public void addActionListeners() {}
+
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		List<Team> seasonTeams = db.findCurrentSeason().getSeasonTeams(db.getConnection());
 		String[] leagueTableCols = {"Team", "GP", "W", "D", "L", "Points"};
 		String[][] leagueTableData = db.findCurrentSeason().getLeagueTableData(db.getConnection());
@@ -39,9 +52,10 @@ public class HomePanel extends JPanel {
         table.getColumnModel().getColumn(0).setMinWidth(200);
         
         JScrollPane tablePane = new JScrollPane(table);
-		add(tablePane);
+		panel.add(tablePane);
 		
 		JLabel topScorerLabel = new JLabel("Top Scorer: " + topScorer.getFullName() + " " + topScorer.getGoals(db.getConnection()));
-		add(topScorerLabel);
+		panel.add(topScorerLabel);
+		
 	}
 }

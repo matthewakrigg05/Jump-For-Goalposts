@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class PlayersPanel extends JPanel {
+public class PlayersPanel extends JPanel implements IPanel {
 	
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
@@ -35,6 +35,7 @@ public class PlayersPanel extends JPanel {
 		initialise();
 		}
 
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
@@ -43,6 +44,7 @@ public class PlayersPanel extends JPanel {
 		addActionListeners();
 	}
 	
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		players = new ArrayList<Player>(frame.getDb().getAllPlayers());
 		for(Player player : players) { playerSelection.add(player.getFullName()); }
@@ -80,8 +82,8 @@ public class PlayersPanel extends JPanel {
 		panel.add(playerProfile, gbc_recMatchesLabel);
 	}
 	
+	@Override
 	public void addActionListeners() {
-		
 		playerList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {

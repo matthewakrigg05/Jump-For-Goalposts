@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import league.Team;
 
 @SuppressWarnings("serial")
-public class TeamsPanel extends JPanel {
+public class TeamsPanel extends JPanel implements IPanel {
 
 	List<String> teamSelection = new ArrayList<String>();
 	List<Team> teams;
@@ -34,10 +34,11 @@ public class TeamsPanel extends JPanel {
 
 	public TeamsPanel(JfgpWindow frame) {
 		this.frame = frame;
-		initialise(frame);
+		initialise();
 		}
 
-	public void initialise(JfgpWindow frame) {
+	@Override
+	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -45,6 +46,7 @@ public class TeamsPanel extends JPanel {
 		addActionListeners();
 	}
 	
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		teams = new ArrayList<Team>(frame.getDb().getAllTeams());
 		for(Team team : teams) { teamSelection.add(team.getName()); }
@@ -87,6 +89,7 @@ public class TeamsPanel extends JPanel {
 		panel.add(playerProfile, gbc_recMatchesLabel);
 	}
 	
+	@Override
 	public void addActionListeners() {
 		// Whenever a player is selected from the list of players, the stats and information is updated to
 		// show the information of the player selected, essentially their profile

@@ -12,7 +12,7 @@ import leagueDB.JFGPdb;
 import leagueMembers.*;
 
 @SuppressWarnings("serial")
-public class AdminPanel extends JPanel {
+public class AdminPanel extends JPanel implements IPanel {
 	
 	List<String> adminButtons = new ArrayList<String>(List.of("League", "Generate Fixtures", "Season", 
 			"Assign Match Referees", "Team", "Managers", "Players", "Referees", "Assign Players' Team", 
@@ -35,6 +35,7 @@ public class AdminPanel extends JPanel {
 		 initialise();
 		 }
 	
+	@Override
 	public void initialise() {
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		setLayout(new GridBagLayout());
@@ -42,7 +43,8 @@ public class AdminPanel extends JPanel {
 		addActionListeners();
 	}
 	
-	protected void addPanelComponents(JPanel panel) {
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		for(int i = 0; i < adminButtons.size(); i++) {
 			panelButton[i] = new JButton(adminButtons.get(i));
 			panelButton[i].setFont(getFont());
@@ -149,10 +151,10 @@ public class AdminPanel extends JPanel {
 		panel.add(panelButton[11], gbc_assignStadiumsButton);
 		
 		GridBagConstraints gbc_unassignPeopleButton = new GridBagConstraints();
-		gbc_assignStadiumsButton.insets = insets;
-		gbc_assignStadiumsButton.gridx = 3;
-		gbc_assignStadiumsButton.gridy = 9;
-		panel.add(panelButton[12], gbc_assignStadiumsButton);
+		gbc_unassignPeopleButton.insets = insets;
+		gbc_unassignPeopleButton.gridx = 3;
+		gbc_unassignPeopleButton.gridy = 9;
+		panel.add(panelButton[12], gbc_unassignPeopleButton);
 		
 		JLabel recMatchesLabel = new JLabel("Record A Match This Week: ");
 		recMatchesLabel.setFont(getFont());
@@ -170,7 +172,8 @@ public class AdminPanel extends JPanel {
 		panel.add(matchesToRecordList, gbc_matchesToRecordList);
 	}
 
-	protected void addActionListeners() {
+	@Override
+	public void addActionListeners() {
 		panelButton[0].addActionListener(e -> { getLeagueDialog(); });
 		panelButton[1].addActionListener(e -> { getGenFixturesDialog(); });
 		panelButton[2].addActionListener(e -> { getSeasonDialog(); });
