@@ -42,7 +42,6 @@ public class JFGPdb {
 	}
 	
 	public static void exampleData() {
-		
 		String player1 = "INSERT OR IGNORE INTO players(playerId, fName, lName, positionType) VALUES(1, 'John', 'Smith', 'Attacker');";
 		String player2 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (2, 'Michael', 'Johnson', 'midfielder');";
 		String player3 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (3, 'David', 'Brown', 'defender');";
@@ -58,7 +57,6 @@ public class JFGPdb {
 		String player13 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (13, 'Andrew', 'Thompson', 'attacker');";
 		String player14 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (14, 'Anthony', 'Garcia', 'midfielder');";
 		String player15 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (15, 'Mark', 'Martinez', 'defender');";
-		
 		String team1 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (2, 'Queens Park Rangers');";
 		String team2 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (3, 'Leicester City');";
 		String team3 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (4, 'Aston Villa');";
@@ -236,11 +234,15 @@ public class JFGPdb {
 		}
 	}
 	
+	/*
+	 * Remaning methods are for more generic data retrieval from database, including both retrieval
+	 * of single instances of classes and all instances of a class. For example, all the managers in the 
+	 * database can be found at once and then have objects instantiated for each one using the data found.
+	 */
 	public Referee getRefereeFromId(int id) {
 		try {
 	        PreparedStatement refStatement = connection.prepareStatement(
 	                "SELECT * FROM referees WHERE userId = ?;" );
-	
 	        refStatement.setInt(1, id);
 	        ResultSet refResult = refStatement.executeQuery(); 
 	        
