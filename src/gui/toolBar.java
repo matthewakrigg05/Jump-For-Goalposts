@@ -1,6 +1,5 @@
 package gui;
 import java.awt.*;
-import java.sql.Connection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +20,7 @@ public class toolBar extends JToolBar {
 		
 		// toolbar buttons are indexed in this list
 		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
-				frame.getUserType() + " View", "Log In", "Log Out"};
+				"Your View", "Log In", "Log Out"};
 		toolBarButton = new JButton[toolBarButtonNames.length];
 		
 		for (int i = 0; i < toolBarButtonNames.length; i++) {
@@ -48,22 +47,19 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[4]);
 		add(toolBarSep);
 		
-		switch (frame.getUserType()) {
-		case "Admin":
-			AdminPanel admin = new AdminPanel(frame);
-			rolePanel = admin;
-			break;
-		
-		case "Referee":
-			RefereePanel refPanel = new RefereePanel(frame);
-			rolePanel = refPanel;
-			break;
+			if (frame.getAdminAccount() != null) {
+				AdminPanel admin = new AdminPanel(frame);
+				rolePanel = admin;
+			}
 			
-		case "Manager":
-			ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
-			rolePanel = manPanel;
-			break;
-		}
+			else if (frame.getRefereeAccount() != null) {
+				RefereePanel refPanel = new RefereePanel(frame);
+				rolePanel = refPanel;
+			}
+			else if (frame.getManagerAccount() != null) {
+				ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
+				rolePanel = manPanel;
+			}
 		
 		if (frame.isLoggedIn()) { 
 			add(toolBarButton[5]);

@@ -12,48 +12,39 @@ import java.sql.Connection;
 public class JfgpWindow extends JFrame {
 
 	private boolean isLoggedIn;
-	private String userType;
 	private ManagerAccount managerAccount;
 	private RefereeAccount refereeAccount;
 	private AdminAccount admin;
 	private JFGPdb db;
 	
 	public JfgpWindow() {
-		JFGPdb db = new JFGPdb();
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(false);
-		setUserType("User");
-		setDb(db);
+		setDb(new JFGPdb());
 		initialise();
 	}
 	
 	public JfgpWindow(AdminAccount admin) {
-		JFGPdb db = new JFGPdb();
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(true);
-		setUserType("Admin");
-		setDb(db);
+		setDb(new JFGPdb());
 		setAdminUser(admin);
 		initialise();
 	}
 	
 	public JfgpWindow(ManagerAccount manager) {	
-		JFGPdb db = new JFGPdb();
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(true);
-		setUserType("Manager");
 		setManagerUser(manager);
-		setDb(db);
+		setDb(new JFGPdb());
 		initialise();
 	}
 	
 	public JfgpWindow(RefereeAccount referee, Connection connection) {	
-		JFGPdb db = new JFGPdb();
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(true);
-		setUserType("Referee");
 		setRefereeUser(referee);
-		setDb(db);
+		setDb(new JFGPdb());
 		initialise();
 	}
 	 
@@ -72,9 +63,6 @@ public class JfgpWindow extends JFrame {
 	
 	public boolean isLoggedIn() { return isLoggedIn; }
 	public void setLoggedIn(boolean isLoggedIn) { this.isLoggedIn = isLoggedIn; }
-	
-	public String getUserType() { return userType; }
-	public void setUserType(String userType) { this.userType = userType; }
 	
 	public void setManagerUser(ManagerAccount manager) { this.managerAccount = manager; }
 	public ManagerAccount getManagerAccount() { return this.managerAccount; }
