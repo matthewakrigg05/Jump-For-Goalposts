@@ -1,5 +1,4 @@
 package gui;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,42 +15,48 @@ import league.Season;
 import league.Stadium;
 import leagueMembers.Referee;
 
-public class ResultsPanel extends JPanel {
-
-	private static final long serialVersionUID = 1L;
+@SuppressWarnings("serial")
+public class ResultsPanel extends JPanel implements IPanel {
+	
 	JfgpWindow frame;
 	Insets insets;
+	
 	List<String> matchSelection = new ArrayList<String>();
 	List<Match> results;
 	Match selectedMatch;
-	JList matchList;
 	Season currentSeason;
-	private JLabel teamsLabel;
-	private JLabel score;
-	private JList events;
-	private JLabel home;
-	private JLabel away;
-	private JLabel gameWeek;
-	private JLabel stadium;
-	private JLabel referee; 
-	/**
-	 * Create the panel.
-	 */
+	
+	JList matchList;
+	JLabel teamsLabel;
+	JLabel score;
+	JList events;
+	JLabel home;
+	JLabel away;
+	JLabel gameWeek;
+	JLabel stadium;
+    JLabel referee; 
 		
+    /*
+     * Class responsible for displaying results of matches to the user in the form of a list. Each
+     * result can be selected and then information about the game is displayed such as the score and 
+     * the important highlights of the match.
+     */
 	public ResultsPanel(JfgpWindow frame) {
 		this.frame = frame;
 		initialise();
 	}
 
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		currentSeason = frame.getDb().findCurrentSeason();
 		results = new ArrayList<Match>(currentSeason.getSeasonResults(frame.getDb()));
 		for(Match result : results) { matchSelection.add(result.getMatchSummary()); }
@@ -82,12 +87,11 @@ public class ResultsPanel extends JPanel {
 		resultProfile.add(gameWeek);
 		resultProfile.add(stadium);
 		resultProfile.add(referee);
-		
 		panel.add(resultProfile);
 	}
 	
+	@Override
 	public void addActionListeners() {
-		
 		matchList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {

@@ -15,47 +15,55 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 @SuppressWarnings("serial")
-public class recordMatchPanel extends JPanel {
+public class recordMatchPanel extends JPanel implements IPanel {
 	
-	private List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
-	private List<MatchEvent> events = new ArrayList<MatchEvent>();
-	private List<String> eventSummaries = new ArrayList<String>();
-	private JfgpWindow frame;
-	private JList eventsList;
-	DefaultListModel demoList = new DefaultListModel();
+	List<String> managerButtons = new ArrayList<String>(List.of("Assign Player Shirt Numbers", "View My Upcoming Fixtures", "Update Current Lineup"));
+	List<MatchEvent> events = new ArrayList<MatchEvent>();
+	List<String> eventSummaries = new ArrayList<String>();
+	Match match;
 	
-	private int homeScore= 0;
-	private int awayScore = 0;
+	int homeScore= 0;
+	int awayScore = 0;
 	 
-	private JButton recordButton;
-	private JButton backButton;
-	private Match match;
-	private JButton eventButton;
+	JfgpWindow frame;
+	JList eventsList;
+	DefaultListModel demoList = new DefaultListModel();
+	JButton recordButton;
+	JButton backButton;
+	JButton eventButton;
 	
 	AdminAccount admin;
 	RefereeAccount referee;
 
+	// Constructor used if the user attempting to record a matcg is an admin
 	public recordMatchPanel(JfgpWindow frame, Match match, AdminAccount admin) { 
 		this.frame = frame; 
 		this.match = match;
 		this.admin = admin;
-		initialise(frame);
+		initialise();
 		}
 	
+	// Constructor used if the user attempting to record a matcg is a referee
 	public recordMatchPanel(JfgpWindow frame, Match match, RefereeAccount referee) { 
 		this.frame = frame; 
 		this.match = match;
 		this.referee = referee;
-		initialise(frame); }
+		initialise(); }
 	
-	public void initialise(JfgpWindow frame) {
+	@Override
+	public void initialise() {
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		
 		addPanelComponents(this);
 		addActionListeners();
 	}
 	
+	/*
+	 * Shows information about the match and accesses the record match event dialog in which the user can add details
+	 * of a highlight of the game, once this has been done and the event has been added, the event is then added to 
+	 * the list of events which are displayed on the record match panel so that the user can see what they have added.
+	 */
+	@Override
 	public void addPanelComponents(JPanel panel) {
 		JButton[] panelButton = new JButton[managerButtons.size()];
 		
@@ -103,6 +111,7 @@ public class recordMatchPanel extends JPanel {
 		add(recordButton, gbc_btnNewButton_1_1);
 	}
 	
+	@Override
 	public void addActionListeners() {
 		
 		eventButton.addActionListener(e -> { 

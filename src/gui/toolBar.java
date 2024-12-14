@@ -1,6 +1,5 @@
 package gui;
 import java.awt.*;
-import java.sql.Connection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,20 +9,24 @@ public class toolBar extends JToolBar {
 	
 	private JButton[] toolBarButton;
 	private JPanel rolePanel;
+	private String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
+			"Your View", "Log In", "Log Out"};
 	
+	/*
+	 * Class responsible for the JToolBar that appears on the west side of the UI, allows for navigation
+	 * between the different panels, as well as giving logged in users accses to their role specific
+	 * panels.
+	 */
 	public toolBar(JfgpWindow frame) {
-		
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setBorder(new EmptyBorder(0, 0, 10, 20));
 		setOrientation(SwingConstants.VERTICAL);
 		
-		// toolbar buttons are indexed in this list
-		final String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
-				frame.getUserType() + " View", "Log In", "Log Out"};
 		toolBarButton = new JButton[toolBarButtonNames.length];
 		
+		// sets the common attributes of the buttons that are all going to be the same in the toolbar
 		for (int i = 0; i < toolBarButtonNames.length; i++) {
 			toolBarButton[i] = new JButton(toolBarButtonNames[i]);
 			toolBarButton[i].setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -48,24 +51,22 @@ public class toolBar extends JToolBar {
 		add(toolBarButton[4]);
 		add(toolBarSep);
 		
-		switch (frame.getUserType()) {
-		case "Admin":
-			AdminPanel admin = new AdminPanel(frame);
-			rolePanel = admin;
-			break;
-		
-		case "Referee":
-			RefereePanel refPanel = new RefereePanel(frame);
-			rolePanel = refPanel;
-			break;
-			
-		case "Manager":
-			ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
-			rolePanel = manPanel;
-			break;
-		}
-		
 		if (frame.isLoggedIn()) { 
+			// dependant on the type of user that is signed in, a panel dedicated to be used by them is made accessible
+			if (frame.getAdminAccount() != null) {
+				AdminPanel admin = new AdminPanel(frame);
+				rolePanel = admin;
+			}
+			
+			else if (frame.getRefereeAccount() != null) {
+				RefereePanel refPanel = new RefereePanel(frame);
+				rolePanel = refPanel;
+			}
+			else if (frame.getManagerAccount() != null) {
+				ManagerPanel manPanel = new ManagerPanel(frame, frame.getManagerAccount());
+				rolePanel = manPanel;
+			}
+			
 			add(toolBarButton[5]);
 			add(toolBarButton[7]); 
 			}

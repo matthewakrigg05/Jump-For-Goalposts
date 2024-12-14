@@ -15,10 +15,9 @@ public class Season {
 	private int seasonId;
 	private String seasonStart;
 	private String seasonEnd;
-	private Team[] teams;
-	private Match[] fixtures;
-	private Match[] results;
 	private boolean isCurrent;
+	private List<Match> fixtures;
+	private List<Match> results;
 	
 	public Season(int id, String seasonStart, String seasonEnd, boolean isCurrent) {
 		setId(id);
@@ -27,45 +26,49 @@ public class Season {
 		setIsCurrent(isCurrent);
 	}
 
-	// Standard getters and setters
+	// Gets and sets the season id.
 	public int getId() { return this.seasonId; }
 	public void setId(int id) { this.seasonId = id; }
 
+	// Gets and sets the start year of the season.
 	public String getSeasonStart() { return seasonStart; }
 	public void setSeasonStart(String seasonYear) { this.seasonStart = seasonYear; }
 	
+	// Gets and sets the season end year.
 	public String getSeasonEnd() { return seasonEnd; }
 	public void setSeasonEnd(String seasonEnd) { this.seasonEnd = seasonEnd; }
-	
 	public String getSeasonStartEnd() { return this.seasonStart + "/" + this.seasonEnd; }
-	
-	public Team[] getTeams() { return teams; }
-	public void setTeams(Team[] teams) { this.teams = teams; }
 
-	public Match[] getFixtures() { return fixtures; }
-	public void setFixtures(Match[] fixtures) { this.fixtures = fixtures; }
-
-	public Match[] getResults() { return results; }
-	public void setResults(Match[] results) { this.results = results; }
-
+	// Gets and sets whether instance of the season is the current one.
 	public boolean getIsCurrent() { return this.isCurrent; }
 	public void setIsCurrent(boolean current) { this.isCurrent = current; }
 	
+	// Gets and sets the fixtures of a season.
+	public List<Match> getFixtures() { return fixtures; }
+	public void setFixtures(List<Match> fixtures) { this.fixtures = fixtures; }
+
+	// Gets and sets the results from a season.
+	public List<Match> getResults() { return results; }
+	public void setResults(List<Match> results) { this.results = results; }
+	
+	// Calculates the top scorer of a season.
 	public Player getTopScorer(JFGPdb db, Season season) {
 		List<Player> players = db.getAllPlayers();
 		Player topScorer = new Player(0, "No", "Player");
 		int highestGoals = 0;
 		
+		// loop iterates through each player determining their num of goals and assigning
+		// them as the top scorer if they have more goals than the current assigned top scorer
 		for(Player player : players) {
 			if (highestGoals < player.getGoals(db.getConnection())) {
 				topScorer = player;
 				highestGoals = player.getGoals(db.getConnection());
 			}
 		}
-		
 		return topScorer;
 	}
 	
+	// Retrieves all the teams playing in the season.
 	public  List<Team> getSeasonTeams(Connection connection) {
 		List<Team> teams = new ArrayList<Team>();
 		try {
@@ -88,10 +91,12 @@ public class Season {
 		return teams;
 	}
 	
+	// frequent appearing AND (homeTeamId <> 1 AND awayTeamId <> 1) in the sql statements simply ensures that 
+	// no bye week matches are unnecessarily displayed in the gui
 	public int getCurrentGameWeek(Connection connection) {
 		try {
 			PreparedStatement currentMatchWeekStatement = (connection).prepareStatement(
-					"SELECT MIN(matchWeek) AS currentWeek FROM matches WHERE isComplete = 0 AND seasonId = ?;" );
+					"SELECT MIN(matchWeek) AS currentWeek FROM matches WHERE isComplete = 0 AND (homeTeamId <> 1 AND awayTeamId <> 1) AND seasonId = ?;" );
 			currentMatchWeekStatement.setInt(1, getId());
 			ResultSet matchweekResult = currentMatchWeekStatement.executeQuery();
 			
@@ -101,14 +106,14 @@ public class Season {
 		} catch (SQLException e) { e.printStackTrace(); return 0; }	
 	}
 	
+	// Retrieves all matches to be played within the next five match weeks.
 	public List<Match> getNextFiveGameWeeks(JFGPdb db) {
 		List<Match> matches = new ArrayList<Match>();
 		int currentGameWeek = getCurrentGameWeek(db.getConnection());
 		
 		try {
 			PreparedStatement gameWeeksStatement = (db.getConnection()).prepareStatement(
-			        "SELECT * FROM matches WHERE seasonId = ? AND matchWeek < ? + 5 ORDER BY matchWeek ASC;");
-			
+			        "SELECT * FROM matches WHERE seasonId = ? AND (homeTeamId <> 1 AND awayTeamId <> 1) AND matchWeek < ? + 5 ORDER BY matchWeek ASC;");
 			gameWeeksStatement.setInt(1, getId());
 			gameWeeksStatement.setInt(2, currentGameWeek);
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
@@ -127,13 +132,13 @@ public class Season {
 		return matches;
 	}
 	
+	// Retrieves all the matches to be played in a season
 	public List<Match> getSeasonMatches(JFGPdb db) {
 		List<Match> matches = new ArrayList<Match>();
 		
 		try {
 			PreparedStatement gameWeeksStatement = (db.getConnection()).prepareStatement(
-			        "SELECT * FROM matches WHERE seasonId = ? ORDER BY matchWeek ASC;");
-			
+			        "SELECT * FROM matches WHERE seasonId = ? AND (homeTeamId <> 1 AND awayTeamId <> 1) ORDER BY matchWeek ASC;");
 			gameWeeksStatement.setInt(1, seasonId);
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
 			
@@ -146,19 +151,18 @@ public class Season {
 						);
 				matches.add(match);
 			}
-			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return matches;
 	}
 	
+	// Retrieves all matches that are not completed.
 	public List<Match> getSeasonFixtures(JFGPdb db) {
 		List<Match> fixtures = new ArrayList<Match>();
 		
 		try {
 			PreparedStatement gameWeeksStatement = (db.getConnection()).prepareStatement(
-			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 0 ORDER BY matchWeek ASC;");
-			
+			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 0 AND (homeTeamId <> 1 AND awayTeamId <> 1) ORDER BY matchWeek ASC;");
 			gameWeeksStatement.setInt(1, getId());
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
 			
@@ -174,16 +178,17 @@ public class Season {
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setFixtures(fixtures);
 		return fixtures;
 	}
 	
+	// Retrieves all the matches of a season that are completed
 	public List<Match> getSeasonResults(JFGPdb db) {
 		List<Match> results = new ArrayList<Match>();
 		
 		try {
 			PreparedStatement gameWeeksStatement = (db.getConnection()).prepareStatement(
-			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 1 ORDER BY matchWeek ASC;");
-			
+			        "SELECT * FROM matches WHERE seasonId = ? AND isComplete = 1 AND (homeTeamId <> 1 AND awayTeamId <> 1) ORDER BY matchWeek ASC;");
 			gameWeeksStatement.setInt(1, getId());
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
 			
@@ -196,34 +201,44 @@ public class Season {
 						);
 				results.add(match);
 			}
-			
 		} catch (SQLException e) { e.printStackTrace(); }
 		
+		setResults(results);
 		return results;
 	}
 	
+	// Calculates league table data.
 	public String[][] getLeagueTableData(Connection connection) {
 		List<Team> teams = getSeasonTeams(connection);
-		String[][] leagueTableData = new String[teams.size()][6];
+		
+		// Sort teams based on the number of points that they have.
+		teams.sort((team1, team2) -> Integer.compare(
+		        team2.getTeamPoints(connection), 
+		        team1.getTeamPoints(connection)
+		    ));
+		
+		// num of teams and columns (team name, games played, wins, draws, losses and points)
+		String[][] leagueTableData = new String[teams.size()][6]; 
 		
 		for(int i = 0; i < teams.size(); i++) {
-			leagueTableData[i][0] = teams.get(i).getName(); 
-			leagueTableData[i][1] = String.valueOf(teams.get(i).getGamesPlayed(connection));
-			leagueTableData[i][2] = String.valueOf(teams.get(i).getTeamWins(connection));
-			leagueTableData[i][3] = String.valueOf(teams.get(i).getTeamDraws(connection));
-			leagueTableData[i][4] = String.valueOf(teams.get(i).getTeamLosses(connection));
-			leagueTableData[i][5] = String.valueOf(teams.get(i).getTeamPoints(connection));
+			Team team = teams.get(i);
+			leagueTableData[i][0] = team.getName(); 
+			leagueTableData[i][1] = String.valueOf(team.getGamesPlayed(connection));
+			leagueTableData[i][2] = String.valueOf(team.getTeamWins(connection));
+			leagueTableData[i][3] = String.valueOf(team.getTeamDraws(connection));
+			leagueTableData[i][4] = String.valueOf(team.getTeamLosses(connection));
+			leagueTableData[i][5] = String.valueOf(team.getTeamPoints(connection));
 		}
 		return leagueTableData;
 	}
 	
+	// Retrieves matches to be played in a specific match week.
 	public List<Match> getMatchWeekMatches(JFGPdb db, int matchWeek) {
 		List<Match> matches = new ArrayList<Match>();
 		
 		try {
 			PreparedStatement gameWeeksStatement = (db.getConnection()).prepareStatement(
 			        "SELECT * FROM matches WHERE matchweek = ? AND isComplete = 0 AND (homeTeamId <> 1 AND awayTeamId <> 1);");
-			
 			gameWeeksStatement.setInt(1, matchWeek);
 			ResultSet gameWeeks = gameWeeksStatement.executeQuery();
 			

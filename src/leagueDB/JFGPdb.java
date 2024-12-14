@@ -17,7 +17,7 @@ import leagueMembers.Referee;
 
 public class JFGPdb {
 	
-	private static Connection connection;
+	private Connection connection;
 	
 	public JFGPdb() {
 		try {
@@ -31,6 +31,7 @@ public class JFGPdb {
 		}
 	}
 	
+	// Gets database connection to interact with it.
 	public Connection getConnection() { return connection; }
 	
 	public void closeConnection() {
@@ -41,44 +42,43 @@ public class JFGPdb {
 		}
 	}
 	
-	public static void exampleData() {
-		
-		String player1 = "INSERT INTO players(fName, lName, positionType) VALUES('John', 'Smith', 'Attacker');";
-		String player2 = "INSERT INTO players (fName, lName, positionType) VALUES ('Michael', 'Johnson', 'midfielder');";
-		String player3 = "INSERT INTO players (fName, lName, positionType) VALUES ('David', 'Brown', 'defender');";
-		String player4 = "INSERT INTO players (fName, lName, positionType) VALUES ('Robert', 'Taylor', 'goalkeeper');";
-		String player5 = "INSERT INTO players (fName, lName, positionType) VALUES ('James', 'Anderson', 'attacker');";
-		String player6 = "INSERT INTO players (fName, lName, positionType) VALUES ('William', 'Jones', 'midfielder');";
-		String player7 = "INSERT INTO players (fName, lName, positionType) VALUES ('Joseph', 'Davis', 'defender');";
-		String player8 = "INSERT INTO players (fName, lName, positionType) VALUES ('Thomas', 'Wilson', 'goalkeeper');";
-		String player9 = "INSERT INTO players (fName, lName, positionType) VALUES ('Charles', 'Moore', 'attacker');";
-		String player10 = "INSERT INTO players (fName, lName, positionType) VALUES ('Daniel', 'Taylor', 'midfielder');";
-		String player11 = "INSERT INTO players (fName, lName, positionType) VALUES ('Matthew', 'White', 'defender');";
-		String player12 = "INSERT INTO players (fName, lName, positionType) VALUES ('Christopher', 'Martin', 'goalkeeper');";
-		String player13 = "INSERT INTO players (fName, lName, positionType) VALUES ('Andrew', 'Thompson', 'attacker');";
-		String player14 = "INSERT INTO players (fName, lName, positionType) VALUES ('Anthony', 'Garcia', 'midfielder');";
-		String player15 = "INSERT INTO players (fName, lName, positionType) VALUES ('Mark', 'Martinez', 'defender');";
-		
-		String team1 = "INSERT INTO teams(teamName) VALUES ('Queens Park Rangers');";
-		String team2 = "INSERT INTO teams(teamName) VALUES ('Leicester City');";
-		String team3 = "INSERT INTO teams(teamName) VALUES ('Aston Villa');";
-		String team4 = "INSERT INTO teams(teamName) VALUES ('Swansea City');";
-		String team5 = "INSERT INTO teams(teamName) VALUES ('Stoke City');";
-		String team6 = "INSERT INTO teams(teamName) VALUES ('Southampton');";
-		String team7 = "INSERT INTO teams(teamName) VALUES ('West Bromwich Albion');";
-		String team8 = "INSERT INTO teams(teamName) VALUES ('Crystal Palace');";
-		String team9 = "INSERT INTO teams(teamName) VALUES ('Tottenham Hotspur');";
-		String team10 = "INSERT INTO teams(teamName) VALUES ('Manchester United');";
-		String team11 = "INSERT INTO teams(teamName) VALUES ('Manchester City');";
-		String team12 = "INSERT INTO teams(teamName) VALUES ('Newcastle United');";
-		String team13 = "INSERT INTO teams(teamName) VALUES ('Chelsea');";
-		String team14 = "INSERT INTO teams(teamName) VALUES ('Burnley');";
-		String team15 = "INSERT INTO teams(teamName) VALUES ('West Ham United');";
-		String team16 = "INSERT INTO teams(teamName) VALUES ('Arsenal');";
-		String team17 = "INSERT INTO teams(teamName) VALUES ('Hull City');";
-		String team18 = "INSERT INTO teams(teamName) VALUES ('Everton');";
-		String team19 = "INSERT INTO teams(teamName) VALUES ('Liverpool');";
-		String team20 = "INSERT INTO teams(teamName) VALUES ('Sunderland');";
+	// Inserts some example data for testing application.
+	public void exampleData() {
+		String player1 = "INSERT OR IGNORE INTO players(playerId, fName, lName, positionType) VALUES(1, 'John', 'Smith', 'Attacker');";
+		String player2 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (2, 'Michael', 'Johnson', 'midfielder');";
+		String player3 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (3, 'David', 'Brown', 'defender');";
+		String player4 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (4, 'Robert', 'Taylor', 'goalkeeper');";
+		String player5 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (5, 'James', 'Anderson', 'attacker');";
+		String player6 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (6, 'William', 'Jones', 'midfielder');";
+		String player7 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (7, 'Joseph', 'Davis', 'defender');";
+		String player8 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (8, 'Thomas', 'Wilson', 'goalkeeper');";
+		String player9 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (9, 'Charles', 'Moore', 'attacker');";
+		String player10 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (10, 'Daniel', 'Taylor', 'midfielder');";
+		String player11 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (11, 'Matthew', 'White', 'defender');";
+		String player12 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (12, 'Christopher', 'Martin', 'goalkeeper');";
+		String player13 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (13, 'Andrew', 'Thompson', 'attacker');";
+		String player14 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (14, 'Anthony', 'Garcia', 'midfielder');";
+		String player15 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (15, 'Mark', 'Martinez', 'defender');";
+		String team1 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (2, 'Queens Park Rangers');";
+		String team2 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (3, 'Leicester City');";
+		String team3 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (4, 'Aston Villa');";
+		String team4 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (5, 'Swansea City');";
+		String team5 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (6, 'Stoke City');";
+		String team6 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (7, 'Southampton');";
+		String team7 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (8, 'West Bromwich Albion');";
+		String team8 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (9, 'Crystal Palace');";
+		String team9 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (10, 'Tottenham Hotspur');";
+		String team10 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (11, 'Manchester United');";
+		String team11 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (12, 'Manchester City');";
+		String team12 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (13, 'Newcastle United');";
+		String team13 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (14, 'Chelsea');";
+		String team14 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (15, 'Burnley');";
+		String team15 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (16, 'West Ham United');";
+		String team16 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (17, 'Arsenal');";
+		String team17 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (18, 'Hull City');";
+		String team18 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (19, 'Everton');";
+		String team19 = "INSERT OR IGNORE  INTO teams(teamId, teamName) VALUES (20, 'Liverpool');";
+		String team20 = "INSERT OR IGNORE INTO teams(teamId, teamName) VALUES (21, 'Sunderland');";
 		
 		String[] playerStatements = {player1, player2, player3, player4, player5, player6, player7, 
 				player8, player9, player10, player11, player12, player13, player14, player15};
@@ -102,7 +102,7 @@ public class JFGPdb {
 			}
 	}
 	
-	public static void initTables() {
+	public void initTables() {
 		/*
 		 * Following set of statements are responsible for initialising the database,
 		 * creating all the tables that should be necessary for the db to function as 
@@ -236,11 +236,15 @@ public class JFGPdb {
 		}
 	}
 	
+	/*
+	 * Remaning methods are for more generic data retrieval from database, including both retrieval
+	 * of single instances of classes and all instances of a class. For example, all the managers in the 
+	 * database can be found at once and then have objects instantiated for each one using the data found.
+	 */
 	public Referee getRefereeFromId(int id) {
 		try {
 	        PreparedStatement refStatement = connection.prepareStatement(
 	                "SELECT * FROM referees WHERE userId = ?;" );
-	
 	        refStatement.setInt(1, id);
 	        ResultSet refResult = refStatement.executeQuery(); 
 	        
@@ -419,7 +423,7 @@ public class JFGPdb {
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
 	}
 	
-	public static List<Stadium> getAllStadiums() {
+	public List<Stadium> getAllStadiums() {
 		List<Stadium> stadiums = new ArrayList<Stadium>();
 		
 		try {
@@ -442,7 +446,7 @@ public class JFGPdb {
 		return null;
 	}
 	
-	public static List<Manager> allTeamManagers() {
+	public List<Manager> allTeamManagers() {
 		List<Manager> teamManagers = new ArrayList<Manager>();
 		
 		try {
@@ -455,7 +459,7 @@ public class JFGPdb {
 			
 			while(managers.next()) {
 				Manager manager = new Manager(
-						managers.getInt("playerId"),
+						managers.getInt("managerId"),
 						managers.getString("fname"),
 						managers.getString("lName"),
 						managers.getInt("userId")
@@ -468,7 +472,7 @@ public class JFGPdb {
 		return teamManagers;
 	}
 	
-	public static List<Player> allTeamPlayers() {
+	public List<Player> allTeamPlayers() {
 		List<Player> teamManagers = new ArrayList<Player>();
 		
 		try {

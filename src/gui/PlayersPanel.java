@@ -11,15 +11,16 @@ import javax.swing.event.ListSelectionListener;
 import leagueMembers.Player;
 
 @SuppressWarnings("serial")
-public class PlayersPanel extends JPanel {
+public class PlayersPanel extends JPanel implements IPanel {
 	
 	List<String> playerSelection = new ArrayList<String>();
 	List<Player> players;
 	Player selectedPlayer;
-	JList playerList;
+
 	Insets insets;
 	JfgpWindow frame;
 	
+	JList playerList;
 	JLabel playerNameLabel;
 	JLabel teamLabel;
 	JLabel gamesPlayedLabel;
@@ -29,30 +30,34 @@ public class PlayersPanel extends JPanel {
 	JLabel yellowsLabel;
 	JLabel redsLabel;
 
-
 	public PlayersPanel(JfgpWindow frame) {
 		this.frame = frame;
-		initialise(frame);
+		initialise();
 		}
 
-	public void initialise(JfgpWindow frame) {
+	@Override
+	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	// Shows all the players in the league and they can be selected to show information
+	// about them and their generic stats.
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		players = new ArrayList<Player>(frame.getDb().getAllPlayers());
 		for(Player player : players) { playerSelection.add(player.getFullName()); }
 		
 		playerList = new JList(playerSelection.toArray());
+		JScrollPane playerPane = new JScrollPane(playerList);
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = insets;
 		gbc_matchesToRecordList.gridx = 1;
 		gbc_matchesToRecordList.gridy = 1;
-		panel.add(playerList, gbc_matchesToRecordList);
+		panel.add(playerPane, gbc_matchesToRecordList);
 		
 		JPanel playerProfile = new JPanel();
 		playerProfile.setFont(getFont());
@@ -77,13 +82,11 @@ public class PlayersPanel extends JPanel {
 		playerProfile.add(yellowsLabel);
 		playerProfile.add(redsLabel);
 
-		
 		panel.add(playerProfile, gbc_recMatchesLabel);
-		
 	}
 	
+	@Override
 	public void addActionListeners() {
-		
 		playerList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -97,6 +100,5 @@ public class PlayersPanel extends JPanel {
 				redsLabel.setText("Red Cards: " + selectedPlayer.getReds(frame.getDb().getConnection()));
 			}
 		});
-		
 	}
 }

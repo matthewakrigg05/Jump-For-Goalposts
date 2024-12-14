@@ -21,24 +21,16 @@ import leagueMembers.Referee;
 
 public class RefereeAccount extends Account {
 	
-	Referee referee;
-
-	public RefereeAccount(int id, String emailAddress, String password, Referee referee) {
-		super(id, emailAddress, password, false);
-		setReferee(referee);
-	}
+	public RefereeAccount(int id, String emailAddress, String password) { super(id, emailAddress, password); }
 	
-	public RefereeAccount(int id, String emailAddress, String password, boolean isAdmin) { super(id, emailAddress, password, isAdmin); }
-	
-	// Standard getter and setter methods
-	public Referee getReferee() { return this.referee; }
-	public void setReferee(Referee referee) { this.referee = referee; }
-	
+	/*
+	 * Retrieves the referee from the database that is associated with the instance of the referee
+	 * using the user id of the account and returns the referee.
+	 */
 	public Referee getReferee(Connection connection) {
 		try {
 	        PreparedStatement refStatement = connection.prepareStatement(
 	                "SELECT * FROM referees WHERE userId = ?;" );
-	
 	        refStatement.setInt(1, getId());
 	        ResultSet refResult = refStatement.executeQuery(); 
 	        
@@ -57,6 +49,19 @@ public class RefereeAccount extends Account {
 		return null;
 	}
 	
+	/*
+	 * Updates information in the matches table so that the match can be recognised as a result
+	 * rather than a fixture, as well as automatically deciding the outcome of the match using the 
+	 * score.
+	 * 
+	 * @param connection 	Connection to the database.
+	 * 
+	 * @param match			The match which is being updated in order to register as a result.
+	 * 
+	 * @param homeScore		Score for the home team.
+	 * 
+	 * @param awayScore		Score for the away team.
+	 */
 	public Match matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
 		String matchOutcome;
 		
@@ -77,12 +82,20 @@ public class RefereeAccount extends Account {
 		return match;
 	}
 	
+	/*
+	 * Takes a list of match events and uses the instances to add them to the database.
+	 * 
+	 * @param connection 	Connection to the database permitting interaction with it.
+	 * 
+	 * @param matchEvents	The list of events that occurred in the match being added to the database.
+	 * 
+	 * @param match			The match that is having the event added to it.
+	 */
 	public void recordMatchEvents(Connection connection, List<MatchEvent> matchEvents, Match match) {
 		for (MatchEvent event : matchEvents) {
 			try {
 				PreparedStatement eventStatement = connection.prepareStatement(
 						"INSERT INTO matchEvents(eventType, eventMinute, teamId, playerId, matchId) VALUES (?, ?, ?, ?, ?)");
-				
 				eventStatement.setString(1, event.getEventType());
 				eventStatement.setInt(2, event.getEventMinute());
 				eventStatement.setInt(3, event.getTeam().getTeamId());
@@ -94,13 +107,26 @@ public class RefereeAccount extends Account {
 		}
 	}
 	
+	/*
+	 * Generates the dialog box to add the details of the match event and returns the instance of match event
+	 * that has been created using the dialog box. This can then be used when adding the match and match events
+	 * to the database upon recording the match.
+	 * 
+	 * @param frame 	The main window holding the database and account information.
+	 * 
+	 * @param match		The match that is having the event added to it.
+	 */
 	public MatchEvent matchEventDialog(JfgpWindow frame, Match match) {
 		JDialog matchEventDialog = new JDialog();
 		MatchEvent newEvent = new MatchEvent();
 		
+		// types of event in the match
 		String[] eventTypes = {"Goal", "Assist", "Foul", "Yellow Card", "Red Card"};
 		List<String> playersList = new ArrayList<String>();
-		List<Player> players = new ArrayList<Player>();
+		
+		// needs separate list so that the player can be found in the home and away teams afterwards
+		List<Player> players = new ArrayList<Player>(); 
+															
 		
 		List<Player> homeTeamPlayers = match.getHomeTeam().getTeamPlayers(frame.getDb().getConnection()); 
         for(Player i : homeTeamPlayers) { 
@@ -119,8 +145,6 @@ public class RefereeAccount extends Account {
 		matchEventDialog.setSize(760, 500);
 		matchEventDialog.setTitle("Match Event");
 		matchEventDialog.setLayout(new GridBagLayout());
-		
-		// type, minute, team & player, add event
 		
 		JLabel newEventLabel = new JLabel("Add New Match Event");
 		

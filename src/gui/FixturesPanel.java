@@ -12,50 +12,56 @@ import javax.swing.event.ListSelectionListener;
 import league.Match;
 import league.Season;
 import league.Stadium;
-import league.Team;
 import leagueDB.JFGPdb;
 
 import leagueMembers.Referee;
 
 @SuppressWarnings("serial")
-public class FixturesPanel extends JPanel {
+public class FixturesPanel extends JPanel implements IPanel {
 	JfgpWindow frame;
 	JFGPdb db;
 	Insets insets;
+	
 	List<String> matchSelection = new ArrayList<String>();
 	List<Match> matches;
 	Match selectedMatch;
-	JList matchList;
 	Season currentSeason;
-	private JLabel teamsLabel;
-	private JLabel home;
-	private JLabel away;
-	private JLabel gameWeek;
-	private JLabel stadium;
-	private JLabel referee; 
 	
+	JList matchList;
+	JLabel teamsLabel;
+	JLabel home;
+	JLabel away;
+	JLabel gameWeek;
+	JLabel stadium;
+	JLabel referee; 
+	
+	// Panel responsible for displaying all the matches and the information about those matches
 	public FixturesPanel(JfgpWindow frame) {
 		this.frame = frame;
 		this.db = frame.getDb();
 		initialise();
 	}
 
+	@Override
 	public void initialise() {
 		insets = new Insets(0, 0, 10, 25);
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
-		addPanelComponents(this, frame);
+		addPanelComponents(this);
 		addActionListeners();
 	}
 	
-	public void addPanelComponents(JPanel panel, JfgpWindow frame) {
+	@Override
+	public void addPanelComponents(JPanel panel) {
 		currentSeason = db.findCurrentSeason();
 		matches = new ArrayList<Match>(currentSeason.getSeasonFixtures(db));
 		for(Match fixture : matches) { matchSelection.add(fixture.getMatchSummary()); }
 		
 		matchList = new JList(matchSelection.toArray());
 		
-		panel.add(matchList);
+		JScrollPane matchListPane = new JScrollPane(matchList);
+		
+		panel.add(matchListPane);
 		
 		JPanel playerProfile = new JPanel();
 		playerProfile.setFont(getFont());
@@ -81,18 +87,17 @@ public class FixturesPanel extends JPanel {
 		panel.add(playerProfile);
 	}
 	
+	// Updates the information when a match from the list has been selected
+	@Override
 	public void addActionListeners() {
-		
 		matchList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectedMatch = matches.get(matchList.getSelectedIndex());
-				
 				teamsLabel.setText("Match: " + selectedMatch.getMatchSummary());
 				home.setText("Home: " + selectedMatch.getHomeTeam().getName());
 				away.setText("Away: " + selectedMatch.getAwayTeam().getName());
 				gameWeek.setText("Week: " + selectedMatch.getMatchWeek());
-				
 				
 				if (selectedMatch.getHomeTeam().getStadium() == null) {
 					String stad = "TBC";
@@ -114,6 +119,4 @@ public class FixturesPanel extends JPanel {
 			}
 		});
 	}
-	
-	
 }

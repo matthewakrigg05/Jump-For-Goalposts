@@ -11,19 +11,21 @@ public class League {
 	
 	private int leagueId;
 	private String leagueName;
-	private List<Season> seasons;
 	
 	public League(int id, String name) {
 		setLeagueId(id);
 		setLeagueName(name);
 	}
 	
+	// Gets and sets league id
 	public void setLeagueId(int Id) { this.leagueId = Id; }
 	public int getLeagueId() { return leagueId; }
 
+	// Gets and sets league name
 	public String getLeagueName() { return leagueName; }
 	public void setLeagueName(String leagueName) { this.leagueName = leagueName; }
 	
+	// Gets all the seasons of the league
 	public List<Season> getSeasons(Connection connection) {
 		List<Season> seasons = new ArrayList<Season>();
 		
