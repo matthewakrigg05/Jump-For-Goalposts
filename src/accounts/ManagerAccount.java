@@ -25,6 +25,10 @@ public class ManagerAccount extends Account {
 		 } catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Retrieves the manager from the database that is associated with the instance of the manager
+	 * using the user id of the account and returns the manager.
+	 */
 	public Manager getManager(Connection connection) {
 		try {
 	        PreparedStatement manStatement = connection.prepareStatement(

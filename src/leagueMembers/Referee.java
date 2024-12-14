@@ -52,9 +52,7 @@ public class Referee extends Person {
 	        RefereeAccount refAcc = new RefereeAccount(
 	        		refAccResult.getInt("userId"),
 	        		refAccResult.getString("emailAddress"),
-	        		refAccResult.getString("password"), 
-	        		this
-	        		);
+	        		refAccResult.getString("password"));
 	        
 	        return refAcc;
 	        

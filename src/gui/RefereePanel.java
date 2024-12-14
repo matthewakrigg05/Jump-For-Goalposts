@@ -39,7 +39,7 @@ public class RefereePanel extends JPanel implements IPanel {
 		
 		matchesToAttend = referee.getNextFiveRefMatches(db);
 		
-		if (matchesToAttend.size() == 0) { this.matchSummaries.add("You have no matches to attend..."); }
+		if (matchesToAttend.size() == 0) { matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
 		
 		addPanelComponents(this);
@@ -55,7 +55,7 @@ public class RefereePanel extends JPanel implements IPanel {
 		gbc_nextFiveGamesLabel.gridy = 0;
 		panel.add(nextFiveGamesLabel, gbc_nextFiveGamesLabel);
 		
-		toAttendList = new JList<String>((String[]) matchSummaries.toArray());
+		toAttendList = new JList(matchSummaries.toArray());
 		GridBagConstraints gbc_toAttendList = new GridBagConstraints();
 		gbc_toAttendList.insets = getInsets();
 		gbc_toAttendList.fill = GridBagConstraints.BOTH;
@@ -70,7 +70,7 @@ public class RefereePanel extends JPanel implements IPanel {
 		gbc_matchesToRecordLabel.gridy = 2;
 		panel.add(matchesToRecordLabel, gbc_matchesToRecordLabel);
 		
-		toRecordList = new JList<String>((String[]) matchSummaries.toArray());
+		toRecordList = new JList(matchSummaries.toArray());
 		GridBagConstraints gbc_toRecordList = new GridBagConstraints();
 		gbc_toRecordList.fill = GridBagConstraints.BOTH;
 		gbc_toRecordList.insets = getInsets();
