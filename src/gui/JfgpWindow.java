@@ -17,6 +17,7 @@ public class JfgpWindow extends JFrame {
 	private AdminAccount admin;
 	private JFGPdb db;
 	
+	// Constructors that are called depending on the kind of user who has logged in, is without a user by default
 	public JfgpWindow() {
 		setTitle("Jump For Goalposts - League Manager");
 		setLoggedIn(false);
@@ -58,18 +59,24 @@ public class JfgpWindow extends JFrame {
 		setVisible(true);
 	}
 	
+	// Get the instance of the database
 	public JFGPdb getDb() { return this.db;	}
 	public void setDb(JFGPdb db) { this.db = db;	}
 	
+	// Is logged, used to aid the tool bar and add role panel tab and change log in button
+	// to a log out button.
 	public boolean isLoggedIn() { return isLoggedIn; }
 	public void setLoggedIn(boolean isLoggedIn) { this.isLoggedIn = isLoggedIn; }
 	
+	// Sets the manager user
 	public void setManagerUser(ManagerAccount manager) { this.managerAccount = manager; }
 	public ManagerAccount getManagerAccount() { return this.managerAccount; }
 	
+	// Sets the referee user
 	public void setRefereeUser(RefereeAccount referee) { this.refereeAccount = referee; }
 	public RefereeAccount getRefereeAccount() { return this.refereeAccount; }
 	
+	// Sets the admin user
 	public void setAdminUser(AdminAccount admin) { this.admin = admin; }
 	public AdminAccount getAdminAccount() { return this.admin; }
 }

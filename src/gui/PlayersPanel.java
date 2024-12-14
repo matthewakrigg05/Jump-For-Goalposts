@@ -44,17 +44,20 @@ public class PlayersPanel extends JPanel implements IPanel {
 		addActionListeners();
 	}
 	
+	// Shows all the players in the league and they can be selected to show information
+	// about them and their generic stats.
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		players = new ArrayList<Player>(frame.getDb().getAllPlayers());
 		for(Player player : players) { playerSelection.add(player.getFullName()); }
 		
 		playerList = new JList(playerSelection.toArray());
+		JScrollPane playerPane = new JScrollPane(playerList);
 		GridBagConstraints gbc_matchesToRecordList = new GridBagConstraints();
 		gbc_matchesToRecordList.insets = insets;
 		gbc_matchesToRecordList.gridx = 1;
 		gbc_matchesToRecordList.gridy = 1;
-		panel.add(playerList, gbc_matchesToRecordList);
+		panel.add(playerPane, gbc_matchesToRecordList);
 		
 		JPanel playerProfile = new JPanel();
 		playerProfile.setFont(getFont());

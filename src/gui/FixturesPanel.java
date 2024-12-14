@@ -35,6 +35,7 @@ public class FixturesPanel extends JPanel implements IPanel {
 	JLabel stadium;
 	JLabel referee; 
 	
+	// Panel responsible for displaying all the matches and the information about those matches
 	public FixturesPanel(JfgpWindow frame) {
 		this.frame = frame;
 		this.db = frame.getDb();
@@ -58,7 +59,9 @@ public class FixturesPanel extends JPanel implements IPanel {
 		
 		matchList = new JList(matchSelection.toArray());
 		
-		panel.add(matchList);
+		JScrollPane matchListPane = new JScrollPane(matchList);
+		
+		panel.add(matchListPane);
 		
 		JPanel playerProfile = new JPanel();
 		playerProfile.setFont(getFont());
@@ -84,6 +87,7 @@ public class FixturesPanel extends JPanel implements IPanel {
 		panel.add(playerProfile);
 	}
 	
+	// Updates the information when a match from the list has been selected
 	@Override
 	public void addActionListeners() {
 		matchList.addListSelectionListener(new ListSelectionListener() {

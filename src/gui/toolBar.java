@@ -12,7 +12,11 @@ public class toolBar extends JToolBar {
 	private String[] toolBarButtonNames = {"Home", "Teams", "Players", "Fixtures", "Results",
 			"Your View", "Log In", "Log Out"};
 	
-	
+	/*
+	 * Class responsible for the JToolBar that appears on the west side of the UI, allows for navigation
+	 * between the different panels, as well as giving logged in users accses to their role specific
+	 * panels.
+	 */
 	public toolBar(JfgpWindow frame) {
 		setBackground(new Color(0, 128, 128));
 		setFloatable(false);

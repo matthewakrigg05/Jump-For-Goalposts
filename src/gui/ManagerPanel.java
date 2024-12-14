@@ -43,9 +43,9 @@ public class ManagerPanel extends JPanel implements IPanel {
 		addActionListeners();
 	}
 	
+	// Allows the manager to assign a shirt number to player in their team
 	@Override
 	public void addPanelComponents(JPanel panel) {
-		// need to be able to pick a player in their team and change their shirt number, have a squad lineup and view next 5 games
 		
 		if (team != null){
 			players = new ArrayList<Player>(team.getTeamPlayers(frame.getDb().getConnection()));

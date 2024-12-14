@@ -28,6 +28,9 @@ public class AdminPanel extends JPanel implements IPanel {
 	List<Match> matchesToRecord;
 	Season currentSeason;
 
+	/*
+	 * The admin panel is a panel that contains only dialog boxes that are used by an admin user.
+	 */
 	public AdminPanel(JfgpWindow frame) { 
 		 this.frame = frame;
 		 this.db = frame.getDb();
@@ -43,6 +46,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		addActionListeners();
 	}
 	
+	// The main panel components
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		for(int i = 0; i < adminButtons.size(); i++) {
@@ -203,6 +207,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		
 	}	
 	
+	// Dialog used to assign referees to matches.
 	public JDialog getAssignRefDialog() {
 		JDialog assignRefDialog = new JDialog();
 	    List<String> refSelection = new ArrayList<String>();
@@ -276,6 +281,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return assignRefDialog;
 	}
 	
+	// The dialog box responsible for allowing the admin to generate the season fixtures.
 	public JDialog getGenFixturesDialog() {
 		JDialog genFixturesDialog = new JDialog();
 		
@@ -324,7 +330,8 @@ public class AdminPanel extends JPanel implements IPanel {
 		
 		JList<String> teamSelectionList = new JList(teamSelection.toArray());
 		
-		// https://stackoverflow.com/questions/2404546/select-multiple-items-in-jlist-without-using-the-ctrl-command-key
+		// Overwritten method from the list selection model, allows the user to select multiple indices
+		// from the list without them being adjacent.
 		teamSelectionList.setSelectionModel(new DefaultListSelectionModel() {
 		    @Override
 		    public void setSelectionInterval(int index0, int index1) {
@@ -358,6 +365,8 @@ public class AdminPanel extends JPanel implements IPanel {
 		return genFixturesDialog;
 	}
 
+	// The dialog box that allows the admin to change the name of the league, as well
+	// as setting the current season being played.
 	public JDialog getLeagueDialog() {
 		JDialog leagueDialog = new JDialog();
 		
@@ -438,6 +447,7 @@ public class AdminPanel extends JPanel implements IPanel {
         return leagueDialog;
 	}
 
+	// Dialog box that enables the admin to create and remove managers from the system.
 	public JDialog getManagersDialog() {
 		JDialog managerDialog = new JDialog();
 		List<Manager> managers;
@@ -542,6 +552,7 @@ public class AdminPanel extends JPanel implements IPanel {
         return managerDialog;
 	}
 	
+	// Same as manager dialog but for players
 	public JDialog getPlayerDialog() {
 		JDialog playerDialog = new JDialog();
 		
@@ -662,6 +673,7 @@ public class AdminPanel extends JPanel implements IPanel {
         return playerDialog;
 	}
 	
+	// Same as manager dialog but for referees
 	public JDialog getRefereeDialog() {
 		JDialog refereeDialog = new JDialog();
 	    Insets insets = new Insets(0, 0, 5, 5);
@@ -779,6 +791,7 @@ public class AdminPanel extends JPanel implements IPanel {
         return refereeDialog;
 	}
 	
+	// Dialog box for creating seasons by inputting the start and end year of the season.
 	public JDialog getSeasonDialog() {
 		JDialog seasonDialog = new JDialog();
 		List<Season> seasons;
@@ -882,6 +895,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return seasonDialog;
 	}
 	
+	// Same as manager dialog but for teams, using a team name
 	public JDialog getTeamDialog() {
 		JDialog teamDialog = new JDialog();
 		
@@ -973,6 +987,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return teamDialog;
 	}
 	
+	// Assign players to teams and give them a contract type
 	public JDialog getAssignPlayerDialog() {
 		JDialog playerDialog = new JDialog();
 		String[] contractTypes = {"Full-Time", "Part-Time"};
@@ -1061,6 +1076,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return playerDialog;
 	}
 	
+	// Assign managers to team and give them a contract type
 	public JDialog getAssignManagerDialog() {
 		JDialog managerDialog = new JDialog();
 		List<String> managerSelection = new ArrayList<String>();
@@ -1149,6 +1165,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return managerDialog;
 	}
 	
+	// Assign stadium to a team as their home ground
 	public JDialog getAssignStadiumDialog() {
 		JDialog assignStadiumDialog = new JDialog();
 		List<String> stadiumSelection = new ArrayList<String>();
@@ -1224,6 +1241,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return assignStadiumDialog;
 	}
 	
+	// Dialog for creating stadiums
 	public JDialog getStadiumDialog() {
 		JDialog stadiumDialog = new JDialog();
 		
@@ -1346,6 +1364,7 @@ public class AdminPanel extends JPanel implements IPanel {
 		return stadiumDialog;
 	}
 	
+	// Dialog for removing players and managers from teams
 	public JDialog getRemoveFromTeamDialog() {
 		JDialog dialog = new JDialog();
 		List<String> managerSelect = new ArrayList<String>();

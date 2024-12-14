@@ -46,6 +46,7 @@ public class TeamsPanel extends JPanel implements IPanel {
 		addActionListeners();
 	}
 	
+	// Displays all the teams in the league and some generic information about each one.
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		teams = new ArrayList<Team>(frame.getDb().getAllTeams());

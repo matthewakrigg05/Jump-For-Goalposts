@@ -36,6 +36,11 @@ public class ResultsPanel extends JPanel implements IPanel {
 	JLabel stadium;
     JLabel referee; 
 		
+    /*
+     * Class responsible for displaying results of matches to the user in the form of a list. Each
+     * result can be selected and then information about the game is displayed such as the score and 
+     * the important highlights of the match.
+     */
 	public ResultsPanel(JfgpWindow frame) {
 		this.frame = frame;
 		initialise();

@@ -35,6 +35,7 @@ public class recordMatchPanel extends JPanel implements IPanel {
 	AdminAccount admin;
 	RefereeAccount referee;
 
+	// Constructor used if the user attempting to record a matcg is an admin
 	public recordMatchPanel(JfgpWindow frame, Match match, AdminAccount admin) { 
 		this.frame = frame; 
 		this.match = match;
@@ -42,6 +43,7 @@ public class recordMatchPanel extends JPanel implements IPanel {
 		initialise();
 		}
 	
+	// Constructor used if the user attempting to record a matcg is a referee
 	public recordMatchPanel(JfgpWindow frame, Match match, RefereeAccount referee) { 
 		this.frame = frame; 
 		this.match = match;
@@ -56,6 +58,11 @@ public class recordMatchPanel extends JPanel implements IPanel {
 		addActionListeners();
 	}
 	
+	/*
+	 * Shows information about the match and accesses the record match event dialog in which the user can add details
+	 * of a highlight of the game, once this has been done and the event has been added, the event is then added to 
+	 * the list of events which are displayed on the record match panel so that the user can see what they have added.
+	 */
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		JButton[] panelButton = new JButton[managerButtons.size()];

@@ -36,16 +36,15 @@ public class RefereePanel extends JPanel implements IPanel {
 		setLayout(new GridBagLayout());
 		setFont(new Font("Tahoma", Font.PLAIN, 25));
 		setLayout(new GridBagLayout());
-		
 		matchesToAttend = referee.getNextFiveRefMatches(db);
-		
 		if (matchesToAttend.size() == 0) { matchSummaries.add("You have no matches to attend..."); }
 		else { for (Match match : matchesToAttend) { matchSummaries.add(match.getMatchSummary()); } }
-		
 		addPanelComponents(this);
 		addActionListeners();
 	}
 
+	// Lets the referee see their upcoming matches and when a match has been selected,
+	// it takes them to the record match panel for that game
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		JLabel nextFiveGamesLabel = new JLabel("Your next five matches to attend:");

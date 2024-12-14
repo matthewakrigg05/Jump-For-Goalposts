@@ -34,6 +34,7 @@ public class HomePanel extends JPanel implements IPanel {
 	@Override
 	public void addActionListeners() {}
 
+	// Displays the league table and the leagues top scorer
 	@Override
 	public void addPanelComponents(JPanel panel) {
 		String[] leagueTableCols = {"Team", "GP", "W", "D", "L", "Points"};

@@ -98,6 +98,8 @@ public class logInWindow extends JFrame {
 		setVisible(true);
 	}
 	
+	// Checks email and password against the database and logs in dependant on the provided credentials and
+	// the type of user who is trying to log in.
 	public void logIn(String email, String password, Connection connection) {
 		try {
 	            PreparedStatement preparedStatement = connection.prepareStatement(
