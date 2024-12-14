@@ -12,8 +12,8 @@ import leagueMembers.*;
 
 public class AdminAccount extends RefereeAccount {
 	
-	// assigns account as admin
-	public AdminAccount(int id, String emailAddress, String password) { super(id, emailAddress, password, true); }
+	// Creates admin account within 
+	public AdminAccount(int id, String emailAddress, String password) { super(id, emailAddress, password); }
 	
 	/*
 	 * The assign referee method allows referees to be assigned to matches,
@@ -259,25 +259,41 @@ public class AdminAccount extends RefereeAccount {
 	}
 
 	/*
-	 * Remaining methods are responisble for removing and adding instances of objects into the SQLite db,
-	 * they pass the details from the objects into the db, and if they are a referee or manager, these methods
-	 * also create an account for them, automatically generating an email address and password.
+	 * Removes manager as a person from the database and then goes on to remove their account 
+	 * from the database too, this ensures that the manager no longer has access to the system
+	 * with manager access.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param manager		Manager to be removed.
 	 */
 	public void removeManager(Connection connection, Manager manager) {
 		try {
-			PreparedStatement seasonStatement = connection.prepareStatement(
-			        "DELETE FROM referees WHERE refereeId = ?;");
-			seasonStatement.setInt(1, manager.getId());
-			seasonStatement.executeUpdate();
+			PreparedStatement delManStatement = connection.prepareStatement(
+			        "DELETE FROM managers WHERE managerId = ?;");
+			delManStatement.setInt(1, manager.getId());
+			delManStatement.executeUpdate();
 			
-			PreparedStatement refAccDel = connection.prepareStatement(
+			PreparedStatement delManAccStatement = connection.prepareStatement(
 			        "DELETE FROM userAccounts WHERE userId = ?;");
-			refAccDel.setInt(1, manager.getUserId());
-			refAccDel.executeUpdate();
+			delManAccStatement.setInt(1, manager.getUserId());
+			delManAccStatement.executeUpdate();
 			
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Adds manager person into the managers table, along with their userId when their account
+	 * is created.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param fname			Managers first name.
+	 * 
+	 * @param lname 		Managers last name.
+	 * 
+	 * @param id			User ID associated with managers account for accessing the system.
+	 */
 	public void createManager(Connection connection, String fname, String lname, int id) {
 		try {
 			PreparedStatement manStatement = connection.prepareStatement(
@@ -290,6 +306,16 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Adds manager account into the userAccounts table, then goes on to create a new manager
+	 * in the managers table using the createManager method.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param fname			Managers first name.
+	 * 
+	 * @param lname 		Managers last name.
+	 */
 	public void createManagerAccount(Connection connection, String fname, String lname) {
 		try {
 			PreparedStatement refAccStatement = connection.prepareStatement(
@@ -308,6 +334,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 
+	/*
+	 * Creates a row in teams table of database for new team.
+	 * 
+	 * @param connection	Connection to the database.
+	 * 
+	 * @param teamName		Name of team being added.
+	 */
 	public void createTeam(Connection connection, String teamName) {
 		try {
 			PreparedStatement teamStatement = connection.prepareStatement(
@@ -318,6 +351,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Removes a row in teams table of database associated with a team.
+	 * 
+	 * @param connection	Connection to the database.
+	 * 
+	 * @param team			Team being removed.
+	 */
 	public void removeTeam(Connection connection, Team team) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
@@ -328,6 +368,17 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Adds player person into the players table.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param fname			Players first name.
+	 * 
+	 * @param lname 		Players last name.
+	 * 
+	 * @param positionType  The position that the player plays in most often.
+	 */
 	public void createPlayer(Connection connection, String fname, String lname, String positionType) {
 		try {
 			PreparedStatement playerStatement = connection.prepareStatement(
@@ -340,6 +391,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Removes player person from the players table.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param player		Instance of the player that is to be removed from the database.
+	 */
 	public void removePlayer(Connection connection, Player player) {
 		try {
 			PreparedStatement playerStatement = connection.prepareStatement(
@@ -351,6 +409,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Removes referee person from the referees table.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param ref			Instance of the referee that is to be removed from the database.
+	 */
 	public void removeReferee(Connection connection, Referee ref) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
@@ -366,6 +431,20 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Adds referee person into the referees table.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param fname			Referees first name.
+	 * 
+	 * @param lname 		Referees last name.
+	 * 
+	 * @param city		    The city that the referee is based in - would be used for deciding 
+	 * 						which matches they officiate.
+	 * 
+	 * @param id			UserID associated with the referee being created.
+	 */
 	public void createReferee(Connection connection, String fname, String lname, String city, int id) {
 		try {
 			PreparedStatement refStatement = connection.prepareStatement(
@@ -379,6 +458,19 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Adds referee account into the userAccounts table, then goes on to create a new referee
+	 * in the referees table using the createReferee method.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param fname			Referees first name.
+	 * 
+	 * @param lname 		Referees last name.
+	 * 
+	 * @param city			The city that the referee is based in - would be used for deciding 
+	 * 						which matches they officiate.
+	 */
 	public void createRefereeAccount(Connection connection, String fname, String lname, String city) {
 		try {
 			PreparedStatement refAccStatement = connection.prepareStatement(
@@ -396,6 +488,18 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Searches database for a season that has been assigned as the current season, if
+	 * there is a season assigned as the current one, the new season is created and sets
+	 * isCurrent to false, however if there is no current season already, this season
+	 * being created is assigned as current.
+	 * 
+	 * @param connection	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param start			Start year for the season.
+	 * 
+	 * @param end			End year for the season.
+	 */
 	public void createSeason(Connection connection, String start, String end) {
 		try {
 			PreparedStatement isCurrentSeason = connection.prepareStatement(
@@ -414,6 +518,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Removes instance of a stadium from the database.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param season		Instance of a season that is to be removed from the database.
+	 */
 	public void removeSeason(Connection connection, Season season) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
@@ -424,6 +535,19 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Creates a match row to be added to the matches table of the database.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param homeTeam		Home team for the match.
+	 * 
+	 * @param awayTeam		Away team for the match.
+	 * 
+	 * @param season		Season that the match is going to be played in.
+	 * 
+	 * @param matchWeek		The week that the match will be played.
+	 */
 	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
@@ -437,6 +561,17 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Creates stadium to be added to the stadiums table of the database.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param name			Name of the stadium being added to the database.
+	 * 
+	 * @param cap			Capacity of the stadium being added.
+	 * 
+	 * @param loc			Location of the stadium/city that stadium is based in.
+	 */
 	public void createStadium(Connection connection, String name, String cap, String loc) {
 		try {
 			PreparedStatement stadiumStatement = connection.prepareStatement(
@@ -449,6 +584,13 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
+	/*
+	 * Removes stadium from the stadiums table.
+	 * 
+	 * @param connection  	Connection to the database ensuring safe interaction with it.
+	 * 
+	 * @param stadium		Instance of a stadium that is to be removed from the database.
+	 */
 	public void removeStadium(Connection connection, Stadium stadium) {
 		try {
 			PreparedStatement stadiumStatement = connection.prepareStatement(

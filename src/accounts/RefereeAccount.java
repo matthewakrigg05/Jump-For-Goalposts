@@ -24,11 +24,11 @@ public class RefereeAccount extends Account {
 	Referee referee;
 
 	public RefereeAccount(int id, String emailAddress, String password, Referee referee) {
-		super(id, emailAddress, password, false);
+		super(id, emailAddress, password);
 		setReferee(referee);
 	}
 	
-	public RefereeAccount(int id, String emailAddress, String password, boolean isAdmin) { super(id, emailAddress, password, isAdmin); }
+	public RefereeAccount(int id, String emailAddress, String password) { super(id, emailAddress, password); }
 	
 	// Standard getter and setter methods
 	public Referee getReferee() { return this.referee; }

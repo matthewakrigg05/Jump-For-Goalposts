@@ -5,21 +5,14 @@ abstract class Account {
 	private int id;
 	private String emailAddress;
 	private String password;
-	private boolean isAdmin;
 	
-	public Account(int id, String emailAddress, String password, boolean isAdmin) {
+	public Account(int id, String emailAddress, String password) {
 		setId(id);
 		setEmail(emailAddress);
 		setPassword(password);
-		setIsUserAdmin(isAdmin);
 	}
 	
-	protected void changeUserPassword(String password) { this.setPassword(password); }
-	
-	// Standard getter and setter methods
-	protected boolean isUserAdmin() { return this.isAdmin; }
-	protected void setIsUserAdmin(boolean admin) { this.isAdmin = admin; }
-	
+	// Retrive Id, used most often for interaction with database
 	protected int getId() { return this.id; }
 	protected void setId(int id) { this.id = id; }
 	

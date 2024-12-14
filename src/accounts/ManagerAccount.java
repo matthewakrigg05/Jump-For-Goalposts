@@ -9,7 +9,7 @@ import leagueMembers.Player;
 
 public class ManagerAccount extends Account {
 
-	public ManagerAccount(int id, String emailAddress,  String password) { super(id, emailAddress, password, false); }
+	public ManagerAccount(int id, String emailAddress,  String password) { super(id, emailAddress, password); }
 	
 	// previous methods ensure that the manager is only able to update the shirt numbers of players
 	// who play for the team that they manage
