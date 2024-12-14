@@ -14,33 +14,37 @@ abstract class Person {
 	private int userId;
 	
 	public Person(int id, String fName, String lName, int userId) {
-		this.setId(id);
-		this.fName = fName;
-		this.lName = lName;
-		this.userId = userId;
+		setId(id);
+		setFName(fName);
+		setLName(lName);
+		setUserId(userId);
 	}
 	
 	public Person(int id, String fName, String lName) {
-		this.setId(id);
-		this.fName = fName;
-		this.lName = lName;
+		setId(id);
+		setFName(fName);
+		setLName(lName);
 	}
 
 	public String getFullName() { return String.format("%1$s %2$s", getFName(), getLName()); }
 	
-	//Standard getters and setters
+	// Gets and sets first name of person
 	public String getFName() { return this.fName; }
 	public void setFName(String fName) { this.fName = fName; }
 	
+	// Gets and sets last name of person
 	public String getLName() { return this.lName; }
 	public void setLName(String lName) { this.lName = lName; }
 	
+	// Gets and sets persons contract type
 	public String getContractType() { return this.contractType; }
 	public void setContractType(String type) { this.contractType = type; }
 
+	// Gets and sets id of person
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 	
+	// Gets and sets userId of person
 	public int getUserId() { return userId; }
 	public void setUserId(int id) { this.userId = id; }
 }

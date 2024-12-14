@@ -13,9 +13,30 @@ public class Manager extends Person {
 
 	public Manager(int id, String fName, String lName, int userId) { super(id, fName, lName, userId); }
 
-	public ManagerAccount getManagerAcc() { return managerAcc; }
+	// Gets and sets for managers associated account.
 	public void setManagerAcc(ManagerAccount managerAcc) { this.managerAcc = managerAcc; }
+	public ManagerAccount getManagerAcc() { return this.managerAcc; }
+	public ManagerAccount getManagerAccount(Connection connection, int id) {
+		try {
+	        PreparedStatement manAccStatement = connection.prepareStatement(
+	                "SELECT * FROM userAccounts WHERE userId = ? AND userType = 'manager';" );
+	        manAccStatement.setInt(1, id);
+	        ResultSet refAccResult = manAccStatement.executeQuery(); 
+	        
+	        ManagerAccount manAcc = new ManagerAccount(
+	        		refAccResult.getInt("userId"),
+	        		refAccResult.getString("emailAddress"),
+	        		refAccResult.getString("password")
+	        		);
+	        		
+	        return manAcc;
+	        
+		} catch (SQLException e) { e.printStackTrace(); }
+		
+		return null;
+	}
 	
+	// Gets the team that the manager is assigned to.
 	public Team getManagerTeam(Connection connection) {
 		Team managerTeam = null;
 		
@@ -39,26 +60,6 @@ public class Manager extends Person {
 		} catch (SQLException e) { e.printStackTrace(); }
 		
 		return managerTeam;
-	}
-	
-	public ManagerAccount getManagerAccount(Connection connection, int id) {
-		try {
-	        PreparedStatement manAccStatement = connection.prepareStatement(
-	                "SELECT * FROM userAccounts WHERE userId = ? AND userType = 'manager';" );
-	        manAccStatement.setInt(1, id);
-	        ResultSet refAccResult = manAccStatement.executeQuery(); 
-	        
-	        ManagerAccount manAcc = new ManagerAccount(
-	        		refAccResult.getInt("userId"),
-	        		refAccResult.getString("emailAddress"),
-	        		refAccResult.getString("password")
-	        		);
-	        		
-	        return manAcc;
-	        
-		} catch (SQLException e) { e.printStackTrace(); }
-		
-		return null;
 	}
 	
 	// searches through employees of teams to see if manager appears, this is so that when
