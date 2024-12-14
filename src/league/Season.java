@@ -211,6 +211,7 @@ public class Season {
 	public String[][] getLeagueTableData(Connection connection) {
 		List<Team> teams = getSeasonTeams(connection);
 		
+		// Sort teams based on the number of points that they have.
 		teams.sort((team1, team2) -> Integer.compare(
 		        team2.getTeamPoints(connection), 
 		        team1.getTeamPoints(connection)
