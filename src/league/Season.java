@@ -26,26 +26,32 @@ public class Season {
 		setIsCurrent(isCurrent);
 	}
 
-	// Standard getters and setters
+	// Gets and sets the season id.
 	public int getId() { return this.seasonId; }
 	public void setId(int id) { this.seasonId = id; }
 
+	// Gets and sets the start year of the season.
 	public String getSeasonStart() { return seasonStart; }
 	public void setSeasonStart(String seasonYear) { this.seasonStart = seasonYear; }
 	
+	// Gets and sets the season end year.
 	public String getSeasonEnd() { return seasonEnd; }
 	public void setSeasonEnd(String seasonEnd) { this.seasonEnd = seasonEnd; }
 	public String getSeasonStartEnd() { return this.seasonStart + "/" + this.seasonEnd; }
 
+	// Gets and sets whether instance of the season is the current one.
 	public boolean getIsCurrent() { return this.isCurrent; }
 	public void setIsCurrent(boolean current) { this.isCurrent = current; }
 	
+	// Gets and sets the fixtures of a season.
 	public List<Match> getFixtures() { return fixtures; }
 	public void setFixtures(List<Match> fixtures) { this.fixtures = fixtures; }
 
+	// Gets and sets the results from a season.
 	public List<Match> getResults() { return results; }
 	public void setResults(List<Match> results) { this.results = results; }
 	
+	// Calculates the top scorer of a season.
 	public Player getTopScorer(JFGPdb db, Season season) {
 		List<Player> players = db.getAllPlayers();
 		Player topScorer = new Player(0, "No", "Player");
@@ -62,6 +68,7 @@ public class Season {
 		return topScorer;
 	}
 	
+	// Retrieves all the teams playing in the season.
 	public  List<Team> getSeasonTeams(Connection connection) {
 		List<Team> teams = new ArrayList<Team>();
 		try {
@@ -99,6 +106,7 @@ public class Season {
 		} catch (SQLException e) { e.printStackTrace(); return 0; }	
 	}
 	
+	// Retrieves all matches to be played within the next five match weeks.
 	public List<Match> getNextFiveGameWeeks(JFGPdb db) {
 		List<Match> matches = new ArrayList<Match>();
 		int currentGameWeek = getCurrentGameWeek(db.getConnection());
@@ -124,6 +132,7 @@ public class Season {
 		return matches;
 	}
 	
+	// Retrieves all the matches to be played in a season
 	public List<Match> getSeasonMatches(JFGPdb db) {
 		List<Match> matches = new ArrayList<Match>();
 		
@@ -147,6 +156,7 @@ public class Season {
 		return matches;
 	}
 	
+	// Retrieves all matches that are not completed.
 	public List<Match> getSeasonFixtures(JFGPdb db) {
 		List<Match> fixtures = new ArrayList<Match>();
 		
@@ -172,6 +182,7 @@ public class Season {
 		return fixtures;
 	}
 	
+	// Retrieves all the matches of a season that are completed
 	public List<Match> getSeasonResults(JFGPdb db) {
 		List<Match> results = new ArrayList<Match>();
 		
@@ -196,8 +207,15 @@ public class Season {
 		return results;
 	}
 	
+	// Calculates league table data.
 	public String[][] getLeagueTableData(Connection connection) {
 		List<Team> teams = getSeasonTeams(connection);
+		
+		teams.sort((team1, team2) -> Integer.compare(
+		        team2.getTeamPoints(connection), 
+		        team1.getTeamPoints(connection)
+		    ));
+		
 		// num of teams and columns (team name, games played, wins, draws, losses and points)
 		String[][] leagueTableData = new String[teams.size()][6]; 
 		
@@ -213,6 +231,7 @@ public class Season {
 		return leagueTableData;
 	}
 	
+	// Retrieves matches to be played in a specific match week.
 	public List<Match> getMatchWeekMatches(JFGPdb db, int matchWeek) {
 		List<Match> matches = new ArrayList<Match>();
 		
@@ -236,5 +255,4 @@ public class Season {
 		
 		return matches;
 	}
-
 }

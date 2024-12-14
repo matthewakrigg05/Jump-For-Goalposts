@@ -17,7 +17,7 @@ import leagueMembers.Referee;
 
 public class JFGPdb {
 	
-	private static Connection connection;
+	private Connection connection;
 	
 	public JFGPdb() {
 		try {
@@ -31,6 +31,7 @@ public class JFGPdb {
 		}
 	}
 	
+	// Gets database connection to interact with it.
 	public Connection getConnection() { return connection; }
 	
 	public void closeConnection() {
@@ -41,7 +42,8 @@ public class JFGPdb {
 		}
 	}
 	
-	public static void exampleData() {
+	// Inserts some example data for testing application.
+	public void exampleData() {
 		String player1 = "INSERT OR IGNORE INTO players(playerId, fName, lName, positionType) VALUES(1, 'John', 'Smith', 'Attacker');";
 		String player2 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (2, 'Michael', 'Johnson', 'midfielder');";
 		String player3 = "INSERT OR IGNORE INTO players (playerId, fName, lName, positionType) VALUES (3, 'David', 'Brown', 'defender');";
@@ -100,7 +102,7 @@ public class JFGPdb {
 			}
 	}
 	
-	public static void initTables() {
+	public void initTables() {
 		/*
 		 * Following set of statements are responsible for initialising the database,
 		 * creating all the tables that should be necessary for the db to function as 

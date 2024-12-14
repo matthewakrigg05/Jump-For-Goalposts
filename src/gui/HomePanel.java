@@ -42,10 +42,12 @@ public class HomePanel extends JPanel implements IPanel {
 		
 		DefaultTableModel tableModel = new DefaultTableModel(leagueTableData, leagueTableCols);
         JTable table = new JTable(tableModel);
+        
         table.setEnabled(false);
         table.setOpaque(false);
         table.setShowVerticalLines(false);
         table.getColumnModel().getColumn(0).setMinWidth(200);
+        table.setRowSorter(null);
         
         JScrollPane tablePane = new JScrollPane(table);
 		panel.add(tablePane);
