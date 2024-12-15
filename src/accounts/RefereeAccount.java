@@ -24,7 +24,7 @@ public class RefereeAccount extends Account {
 	
 	public RefereeAccount(int id, String emailAddress, String password) { super(id, emailAddress, password); }
 	
-	/*
+	/**
 	 * Retrieves the referee from the database that is associated with the instance of the referee
 	 * using the user id of the account and returns the referee.
 	 */
@@ -50,7 +50,7 @@ public class RefereeAccount extends Account {
 		return null;
 	}
 	
-	/*
+	/**
 	 * Updates information in the matches table so that the match can be recognised as a result
 	 * rather than a fixture, as well as automatically deciding the outcome of the match using the 
 	 * score.
@@ -62,6 +62,8 @@ public class RefereeAccount extends Account {
 	 * @param homeScore		Score for the home team.
 	 * 
 	 * @param awayScore		Score for the away team.
+	 * 
+	 * @return Returns the match as the completed version and any match events that were part of that match
 	 */
 	public Match matchToResult(Connection connection, Match match, int homeScore, int awayScore) {
 		String matchOutcome;
@@ -83,7 +85,7 @@ public class RefereeAccount extends Account {
 		return match;
 	}
 	
-	/*
+	/**
 	 * Takes a list of match events and uses the instances to add them to the database.
 	 * 
 	 * @param connection 	Connection to the database permitting interaction with it.
@@ -108,7 +110,7 @@ public class RefereeAccount extends Account {
 		}
 	}
 	
-	/*
+	/**
 	 * Generates the dialog box to add the details of the match event and returns the instance of match event
 	 * that has been created using the dialog box. This can then be used when adding the match and match events
 	 * to the database upon recording the match.
@@ -116,6 +118,8 @@ public class RefereeAccount extends Account {
 	 * @param frame 	The main window holding the database and account information.
 	 * 
 	 * @param match		The match that is having the event added to it.
+	 * 
+	 * @return Shows the user the JDialog that permits recording the events.
 	 */
 	public MatchEvent matchEventDialog(JfgpWindow frame, Match match) {
 		JDialog matchEventDialog = new JDialog();

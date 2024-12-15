@@ -28,20 +28,19 @@ public class Referee extends Person {
 		setCity(location);
 	}
 
-	// Gets and sets referes city.
+	/** @return Referees city. */
 	public String getCity() { return city; }
 	public void setCity(String city) { this.city = city; }
 
-	// Gets and sets referees games officiated.
+	/** @return Referees games that they have officiated. */
 	public List<Match> getGamesOfficiated() { return gamesOfficiated; }
 	public void setGamesOfficiated(List<Match> gamesOfficiated) { this.gamesOfficiated = gamesOfficiated; }
 
-	// Gets and sets referees matches to attend.
+	/** @return Referees games to officiate in the future. */
 	public List<Match> getMatchesToAttend() { return matchesToAttend; }
 	public void setMatchesToAttend(List<Match> matchesToAttend) { this.matchesToAttend = matchesToAttend; }
 	
-	// Gets and sets referees account.
-	public void setRefAcc(RefereeAccount refAcc) { this.refereesAccount = refAcc; }
+	/** @return The associated referee account. */
 	public RefereeAccount getRefereeAccount(Connection connection, int id) {
 		try {
 	        PreparedStatement refAccStatement = connection.prepareStatement(
@@ -61,9 +60,14 @@ public class Referee extends Person {
 		
 		return null;
 	}
+	public void setRefAcc(RefereeAccount refAcc) { this.refereesAccount = refAcc; }
 	
-	// Retrieves only matches that the specific instance of the referee is assigned to,
-	// this is used to display the matches that the referee can record on the record matches panel
+	/**
+	 * 	 Retrieves only matches that the specific instance of the referee is assigned to,
+	 * 	this is used to display the matches that the referee can record on the record matches panel.
+	 * 
+	 * @return the referees next five matches that they are assigned to.
+	 */
 	public List<Match> getNextFiveRefMatches(JFGPdb db) {
 		List<Match> matchesToAttend = new ArrayList<Match>();
 		

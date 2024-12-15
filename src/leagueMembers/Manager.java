@@ -62,9 +62,13 @@ public class Manager extends Person {
 		return managerTeam;
 	}
 	
-	// searches through employees of teams to see if manager appears, this is so that when
-	// assigning managers, appropriate dialog can be displayed asking the user if they are
-	// sure that they want to carry out the assignment
+	/**
+	 * Searches through employees of teams to see if manager appears, this is so that when
+	 * assigning managers, appropriate dialog can be displayed asking the user if they are
+	 * sure that they want to carry out the assignment.
+	 * 
+	 * @return whether the manager is assigned to a team
+	 */
 	public boolean checkManagerAssigned(Connection connection) {
 		try {
 			PreparedStatement matchStatement = (connection).prepareStatement(

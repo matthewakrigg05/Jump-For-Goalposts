@@ -1,6 +1,6 @@
 package leagueMembers;
 
-/*
+/**
  * A template for the other classes that are in this package, handling basic functionality and 
  * holding generic data that all people within the system are likely to have
  */

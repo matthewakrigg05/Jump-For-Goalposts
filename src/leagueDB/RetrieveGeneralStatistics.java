@@ -1,7 +1,7 @@
 package leagueDB;
 import java.sql.Connection;
 
-/*
+/**
  * Interface implemented by players and teams that are for retrieval of generic data
  * and must be implemented differently between the two
  */

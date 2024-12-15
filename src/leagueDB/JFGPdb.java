@@ -102,13 +102,12 @@ public class JFGPdb {
 			}
 	}
 	
+	/**
+	 * Following set of statements are responsible for initialising the database,
+	 * creating all the tables that should be necessary for the db to function as 
+	 * expected. There are no other methods in this interface.
+	 */
 	public void initTables() {
-		/*
-		 * Following set of statements are responsible for initialising the database,
-		 * creating all the tables that should be necessary for the db to function as 
-		 * expected. There are no other methods in this interface.
-		 */
-		
 		try {
 			String createleaguetable = "CREATE TABLE IF NOT EXISTS league(\r\n"
 					+ "	leagueId INTEGER NOT NULL PRIMARY KEY,\r\n"

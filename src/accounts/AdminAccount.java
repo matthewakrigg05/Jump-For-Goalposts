@@ -12,10 +12,20 @@ import leagueMembers.*;
 
 public class AdminAccount extends RefereeAccount {
 	
-	// Creates admin account within 
+	/**
+	 * The assign referee method allows referees to be assigned to matches,
+	 * this is important as the referee accounts can only record matches that they are 
+	 * assigned to.
+	 * 
+	 * @param id  			The ID of the user account in the user accounts table of the database.
+	 * 
+	 * @param emailAddress	The email address associated with the instance account.
+	 * 
+	 * @param password		The password associated with the instance account.	
+	 */
 	public AdminAccount(int id, String emailAddress, String password) { super(id, emailAddress, password); }
 	
-	/*
+	/**
 	 * The assign referee method allows referees to be assigned to matches,
 	 * this is important as the referee accounts can only record matches that they are 
 	 * assigned to.
@@ -27,7 +37,6 @@ public class AdminAccount extends RefereeAccount {
 	 * 
 	 * @param ref		  Referee being assigned to the match.
 	 */
-			
 	public void assignRef(Connection connection, Match match, Referee ref) {
 		try {
 			PreparedStatement assignRefStatement = connection.prepareStatement(
@@ -39,7 +48,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * The assign stadium method allows referees to be assigned to teams. This is then the
 	 * stadium that is referred to when the team is playing a match at their home ground as
 	 * the match location.
@@ -62,7 +71,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * The assign player to team method enables the player to be registered as one of 
 	 * the teams employees and can record goals and other match events for both teams 
 	 * and the players with ease.
@@ -98,7 +107,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * The assign manager to team method enables the player to be registered as one of 
 	 * the teams employees and enables that manager to access the players of that team
 	 * through their manager panel in the 'Your View' section of the application where
@@ -136,7 +145,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Unassign manager from team method refers to the team employee table, locates the manager by ID
 	 * and consequently deletes that row from the teamEmployee table; the teamEmployeeId in the respective 
 	 * managers table is then set to NULL as a result of an ON DELETE clause in the database table initialisation.
@@ -154,7 +163,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Unassign player from team method refers to the team employee table, locates the manager by ID
 	 * and consequently deletes that row from the teamEmployee table; the teamEmployeeId in the respective 
 	 * players table is then set to NULL as a result of an ON DELETE clause in the database table initialisation.
@@ -172,7 +181,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-    /*
+    /**
      * Following method is the logic used to create alternating home and away games for a team, as well as
      * creating the second fixture between two teams in the second half of the season when the teams
      * swap being home and away.
@@ -218,7 +227,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Change league name method allows for customisation of the application and the league 
 	 * that the admin is managing.
 	 * 
@@ -236,7 +245,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Allows the admin to tell the system which season is the season that is currently being 
 	 * played or the season that is due to be started.
 	 * 
@@ -258,7 +267,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }	
 	}
 
-	/*
+	/**
 	 * Removes manager as a person from the database and then goes on to remove their account 
 	 * from the database too, this ensures that the manager no longer has access to the system
 	 * with manager access.
@@ -282,7 +291,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Adds manager person into the managers table, along with their userId when their account
 	 * is created.
 	 * 
@@ -306,7 +315,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Adds manager account into the userAccounts table, then goes on to create a new manager
 	 * in the managers table using the createManager method.
 	 * 
@@ -334,7 +343,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 
-	/*
+	/**
 	 * Creates a row in teams table of database for new team.
 	 * 
 	 * @param connection	Connection to the database.
@@ -351,7 +360,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Removes a row in teams table of database associated with a team.
 	 * 
 	 * @param connection	Connection to the database.
@@ -368,7 +377,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Adds player person into the players table.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -391,7 +400,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Removes player person from the players table.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -409,7 +418,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Removes referee person from the referees table.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -431,7 +440,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Adds referee person into the referees table.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -458,7 +467,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Adds referee account into the userAccounts table, then goes on to create a new referee
 	 * in the referees table using the createReferee method.
 	 * 
@@ -488,7 +497,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Searches database for a season that has been assigned as the current season, if
 	 * there is a season assigned as the current one, the new season is created and sets
 	 * isCurrent to false, however if there is no current season already, this season
@@ -518,7 +527,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Removes instance of a stadium from the database.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -535,7 +544,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Creates a match row to be added to the matches table of the database.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -548,7 +557,7 @@ public class AdminAccount extends RefereeAccount {
 	 * 
 	 * @param matchWeek		The week that the match will be played.
 	 */
-	public static void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
+	public void createMatch(Connection connection, Team homeTeam, Team awayTeam, Season season, int matchWeek) {
 		try {
 			PreparedStatement seasonStatement = connection.prepareStatement(
 			        "INSERT INTO matches(isComplete, matchWeek, seasonId, homeTeamId, awayTeamId) VALUES (FALSE, ?, ?, ?, ?);");
@@ -561,7 +570,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Creates stadium to be added to the stadiums table of the database.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.
@@ -584,7 +593,7 @@ public class AdminAccount extends RefereeAccount {
 		} catch (SQLException e) { e.printStackTrace(); }
 	}
 	
-	/*
+	/**
 	 * Removes stadium from the stadiums table.
 	 * 
 	 * @param connection  	Connection to the database ensuring safe interaction with it.

@@ -14,7 +14,6 @@ public class Player extends Person implements RetrieveGeneralStatistics {
 	private boolean isSuspended;
 	private int shirtNum;
 	private String positionType;
-	
 
 	public Player(int id, String fName, String lName) { super(id, fName, lName); }
 
