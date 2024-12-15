@@ -55,16 +55,13 @@ public class AdminPanel extends JPanel implements IPanel {
 		}
 		
 		currentSeason = db.findCurrentSeason();
-		
 		int currentMatchWeek = currentSeason.getCurrentGameWeek(db.getConnection());
 		
 		matchesToRecord = currentSeason.getMatchWeekMatches(db, currentMatchWeek);
 		for(Match match : matchesToRecord) { 
 			matches.add(match.getMatchSummary()); }
 
-		if (matches.isEmpty()) {
-			matches.add("There are no matches to record");
-		}
+		if (matches.isEmpty()) { matches.add("There are no matches to record"); }
 		
 		JLabel leagueOptLabel = new JLabel("League Options:");
 		leagueOptLabel.setFont(getFont());
@@ -196,7 +193,6 @@ public class AdminPanel extends JPanel implements IPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				Match selectedMatch = matchesToRecord.get(matchesToRecordList.getSelectedIndex());
-				
 				frame.getContentPane().removeAll();
 				frame.getContentPane().add(new toolBar(frame), BorderLayout.WEST);
 				frame.getContentPane().add(new recordMatchPanel(frame, selectedMatch, frame.getAdminAccount()), BorderLayout.CENTER);
@@ -204,7 +200,6 @@ public class AdminPanel extends JPanel implements IPanel {
 				frame.repaint();
 			}
 		});
-		
 	}	
 	
 	// Dialog used to assign referees to matches.
@@ -269,11 +264,14 @@ public class AdminPanel extends JPanel implements IPanel {
 				if(areYouSure == JOptionPane.YES_OPTION) { 
 					frame.getAdminAccount().assignRef(db.getConnection(), 
 							nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
-							referees.get(refSelect.getSelectedIndex())); }
-			} else { 
+							referees.get(refSelect.getSelectedIndex())); 
+					JOptionPane.showMessageDialog(assignRefDialog, "Referee Successfully Assinged!"); }
+			} else {
 				frame.getAdminAccount().assignRef(db.getConnection(), 
 						nextFiveGameWeeks.get(matchSelect.getSelectedIndex()), 
-						referees.get(refSelect.getSelectedIndex())); }
+						referees.get(refSelect.getSelectedIndex())); 
+				JOptionPane.showMessageDialog(assignRefDialog, "Referee Successfully Assinged!");
+			}
         	assignRefDialog.dispose();
 		});
 		
@@ -358,6 +356,7 @@ public class AdminPanel extends JPanel implements IPanel {
 				List<Team> selectedTeams = new ArrayList<Team>();
 				for(int i : teamSelectionList.getSelectedIndices()) { selectedTeams.add(teams.get(i)); }
 				frame.getAdminAccount().createSeasonMatches(db, selectedTeams, seasons.get(seasonSelect.getSelectedIndex()));
+				JOptionPane.showMessageDialog(genFixturesDialog, "Fixtures successfully generated!");
 				genFixturesDialog.dispose();
 			});
 		
@@ -435,11 +434,13 @@ public class AdminPanel extends JPanel implements IPanel {
         
         saveButton.addActionListener(e -> {
         	frame.getAdminAccount().changeLeagueName(db.getConnection(), newName.getText());
+        	JOptionPane.showMessageDialog(leagueDialog, "League name successfully updated!");
         	leagueDialog.dispose();
         });
         
         updateButton.addActionListener(e -> {
         	frame.getAdminAccount().setCurrentSeason(db.getConnection(), seasons.get(seasonSelect.getSelectedIndex()).getId());
+        	JOptionPane.showMessageDialog(leagueDialog, "Current season successfully updated!");
         	leagueDialog.dispose();
         });
         
@@ -539,12 +540,14 @@ public class AdminPanel extends JPanel implements IPanel {
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createManagerAccount(db.getConnection(), 
         			firstNameField.getText(), lastNameField.getText());
+        	JOptionPane.showMessageDialog(managerDialog, "Manager Successfully added!");
         	managerDialog.dispose();
         });
         
         delManBut.addActionListener(e -> {
         	frame.getAdminAccount().removeManager(db.getConnection(), 
         			managers.get(refSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(managerDialog, "Manager successfully removed!");
         	managerDialog.dispose();
         });
         
@@ -661,11 +664,13 @@ public class AdminPanel extends JPanel implements IPanel {
         
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createPlayer(db.getConnection(), firstNameField.getText(), lastNameField.getText(), positions[positionSelect.getSelectedIndex()].toLowerCase());
+        	JOptionPane.showMessageDialog(playerDialog, "Player Successfully added!");
         	playerDialog.dispose();
         });
         
         delPlayerBut.addActionListener(e -> {
         	frame.getAdminAccount().removePlayer(db.getConnection(), players.get(playerSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(playerDialog, "Player successfully removed!");
         	playerDialog.dispose();
         });
         
@@ -779,11 +784,13 @@ public class AdminPanel extends JPanel implements IPanel {
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createRefereeAccount(db.getConnection(), 
         			firstNameField.getText(), lastNameField.getText(), cityField.getText());
+        	JOptionPane.showMessageDialog(refereeDialog, "Referee Successfully added!");
         	refereeDialog.dispose();
         });
         
         delRefBut.addActionListener(e -> {
         	frame.getAdminAccount().removeReferee(db.getConnection(), referees.get(refSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(refereeDialog, "Referee Successfully removed!");
         	refereeDialog.dispose();
         });
         
@@ -883,11 +890,13 @@ public class AdminPanel extends JPanel implements IPanel {
         
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createSeason(db.getConnection(), seasonStartField.getText(), seasonEndField.getText());
+        	JOptionPane.showMessageDialog(seasonDialog, "Season Successfully added!");
         	seasonDialog.dispose();
         });
         
         deleteSeasonBut.addActionListener(e -> {
         	frame.getAdminAccount().removeSeason(db.getConnection(), seasons.get(seasonSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(seasonDialog, "Season Successfully Removed!");
         	seasonDialog.dispose();
         });
 		
@@ -975,11 +984,13 @@ public class AdminPanel extends JPanel implements IPanel {
         
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createTeam(db.getConnection(), teamNameField.getText());
+        	JOptionPane.showMessageDialog(teamDialog, "Team Successfully added!");
         	teamDialog.dispose();
         });
         
         delTeamBut.addActionListener(e -> {
         	frame.getAdminAccount().removeTeam(db.getConnection(), teams.get(teamSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(teamDialog, "Team Successfully removed!");
         	teamDialog.dispose();
         });
 		
@@ -1063,12 +1074,17 @@ public class AdminPanel extends JPanel implements IPanel {
 					frame.getAdminAccount().assignPlayerToTeam(db.getConnection(), 
 							teams.get(teamSelect.getSelectedIndex()), 
 							players.get(playerSelect.getSelectedIndex()),
-							contractTypes[contractSelect.getSelectedIndex()]); }
-			} else { 
+							contractTypes[contractSelect.getSelectedIndex()]);
+					JOptionPane.showMessageDialog(playerDialog, "Player Successfully Assinged!");
+					}
+			} else {
 				frame.getAdminAccount().assignPlayerToTeam(db.getConnection(), 
 						teams.get(teamSelect.getSelectedIndex()), 
 						players.get(playerSelect.getSelectedIndex()),
-						contractTypes[contractSelect.getSelectedIndex()]); }
+						contractTypes[contractSelect.getSelectedIndex()]); 
+				JOptionPane.showMessageDialog(playerDialog, "Player Successfully Assinged!");
+			}
+			
 			playerDialog.dispose();
 		});
 		
@@ -1152,12 +1168,14 @@ public class AdminPanel extends JPanel implements IPanel {
 					frame.getAdminAccount().assignManagerToTeam(db.getConnection(), 
 							teams.get(teamSelect.getSelectedIndex()), 
 							managers.get(managerSelect.getSelectedIndex()),
-							contractTypes[contractSelect.getSelectedIndex()]); }
+							contractTypes[contractSelect.getSelectedIndex()]); 
+					JOptionPane.showMessageDialog(managerDialog, "Manager Successfully Assinged!"); }
 			} else { 
 				frame.getAdminAccount().assignManagerToTeam(db.getConnection(), 
 						teams.get(teamSelect.getSelectedIndex()), 
 						managers.get(managerSelect.getSelectedIndex()),
-						contractTypes[contractSelect.getSelectedIndex()]); }
+						contractTypes[contractSelect.getSelectedIndex()]); 
+				JOptionPane.showMessageDialog(managerDialog, "Manager Successfully Assinged!"); }
 			managerDialog.dispose();
 		});
 		
@@ -1229,11 +1247,13 @@ public class AdminPanel extends JPanel implements IPanel {
 				if(areYouSure == JOptionPane.YES_OPTION) { 
 					frame.getAdminAccount().assignStadium(db.getConnection(), 
 							teams.get(matchSelect.getSelectedIndex()), 
-							stadiums.get(stadiumSelect.getSelectedIndex())); }
+							stadiums.get(stadiumSelect.getSelectedIndex())); 
+					JOptionPane.showMessageDialog(assignStadiumDialog , "Stadium Successfully Assigned!");}
 			} else { 
 				frame.getAdminAccount().assignStadium(db.getConnection(), 
 						teams.get(matchSelect.getSelectedIndex()), 
-						stadiums.get(stadiumSelect.getSelectedIndex())); }
+						stadiums.get(stadiumSelect.getSelectedIndex()));
+				JOptionPane.showMessageDialog(assignStadiumDialog , "Stadium Successfully Assigned!"); }
         	assignStadiumDialog.dispose();
 		});
 		
@@ -1351,12 +1371,14 @@ public class AdminPanel extends JPanel implements IPanel {
         addBut.addActionListener(e -> {
         	frame.getAdminAccount().createStadium(db.getConnection(), 
         			stadiumNameField.getText(), capacityField.getText(), locationField.getText());
+        	JOptionPane.showMessageDialog(stadiumDialog, "Stadium Successfully Added!");
         	stadiumDialog.dispose();
         });
         
         delStadiumButton.addActionListener(e -> {
         	frame.getAdminAccount().removeStadium(db.getConnection(), 
         			stadiums.get(stadiumSelect.getSelectedIndex()));
+        	JOptionPane.showMessageDialog(stadiumDialog, "Stadium Successfully Removed!");
         	stadiumDialog.dispose();
         });
 		
@@ -1427,13 +1449,14 @@ public class AdminPanel extends JPanel implements IPanel {
 		dialog.add(playerConfirmationButton, gbc_playerConfirmationButton);
 		
 		confirmationButton.addActionListener(e -> {
-				int areYouSure = JOptionPane.showConfirmDialog(dialog, 
-						"Are you sure you want to overwrite this?",
-						"", JOptionPane.YES_NO_OPTION);
+			int areYouSure = JOptionPane.showConfirmDialog(dialog, 
+					"Are you sure you want to overwrite this?",
+					"", JOptionPane.YES_NO_OPTION);
 				
 			if(areYouSure == JOptionPane.YES_OPTION) { 
 				frame.getAdminAccount().unassignManagerFromTeam(db.getConnection(), 
 						managers.get(managerSelected.getSelectedIndex()));
+				JOptionPane.showMessageDialog(dialog, "Manager Successfully Unassigned!");
 				dialog.dispose();}
 		});
 		
@@ -1445,6 +1468,7 @@ public class AdminPanel extends JPanel implements IPanel {
 			if(areYouSure == JOptionPane.YES_OPTION) { 
 				frame.getAdminAccount().unassignPlayerFromTeam(db.getConnection(), 
 						players.get(playerSelected.getSelectedIndex())); 
+				JOptionPane.showMessageDialog(dialog, "Player Successfully Unassigned!");
 				dialog.dispose();}
 			});
 		
