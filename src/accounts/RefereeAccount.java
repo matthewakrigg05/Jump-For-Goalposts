@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import gui.JfgpWindow;
@@ -170,17 +171,29 @@ public class RefereeAccount extends Account {
 		matchEventDialog.add(addButton);
 
 		addButton.addActionListener(e -> {
-			if (homeTeamPlayers.contains(players.get(playerSelect.getSelectedIndex()))) {
-				newEvent.setTeam(match.getHomeTeam());
-			}
-			else {
-				newEvent.setTeam(match.getAwayTeam());
-			}
 			
-			newEvent.setEventType(eventTypes[eventSelect.getSelectedIndex()]);
-			newEvent.setEventMinute(Integer.parseInt(minuteArea.getText()));
-			newEvent.setPlayerInvolved(players.get(playerSelect.getSelectedIndex()));
-			matchEventDialog.dispose();
+			try 
+			{ 
+				Integer.parseInt(minuteArea.getText()); 
+				
+				if (homeTeamPlayers.contains(players.get(playerSelect.getSelectedIndex()))) {
+					newEvent.setTeam(match.getHomeTeam());
+				}
+				else {
+					newEvent.setTeam(match.getAwayTeam());
+				}
+				
+				newEvent.setEventType(eventTypes[eventSelect.getSelectedIndex()]);
+				newEvent.setEventMinute(Integer.parseInt(minuteArea.getText()));
+				newEvent.setPlayerInvolved(players.get(playerSelect.getSelectedIndex()));
+				matchEventDialog.dispose();
+				
+				JOptionPane.showMessageDialog(frame, "Match Event recorded!");
+			}  
+			catch (NumberFormatException notInt)  
+			{ 
+				JOptionPane.showMessageDialog(frame, "Please make sure the minute is a valid integer!");
+			} 
 		});
 		
 		matchEventDialog.setVisible(true);

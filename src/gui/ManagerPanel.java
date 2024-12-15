@@ -74,7 +74,17 @@ public class ManagerPanel extends JPanel implements IPanel {
 	@Override
 	public void addActionListeners() {
 		assign.addActionListener(e -> {
-			manager.assignShirtNum(frame.getDb().getConnection(), players.get(playerList.getSelectedIndex()), Integer.parseInt(shirtNum.getText()));
+			
+			try 
+			{ 
+				Integer.parseInt(shirtNum.getText()); 
+				manager.assignShirtNum(frame.getDb().getConnection(), players.get(playerList.getSelectedIndex()), Integer.parseInt(shirtNum.getText()));
+				JOptionPane.showMessageDialog(frame, "Player Shirt number assigned!");
+			}  
+			catch (NumberFormatException notInt)  
+			{ 
+				JOptionPane.showMessageDialog(frame, "Please make sure the shirt number is a valid integer!");
+			} 
 		});
 	}
 }
